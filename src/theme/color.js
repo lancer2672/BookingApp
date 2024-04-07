@@ -1,14 +1,21 @@
 export const generalColor = {
   white: {
     100: '#fff',
+    50: '#f5f5f5',
+    25: '#e0e0e0',
+    10: '#d3d3d3',
   },
   black: {
     100: '#000',
+    50: '#333',
+    25: '#666',
+    10: '#bdbbbb',
   },
   other: {
     yellow: '#e1fa25',
     bluepurple: '#514eb6',
   },
+  error: 'tomato',
 };
 
 export const whiteThemeColors = {
