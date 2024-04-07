@@ -1,3 +1,26 @@
+// https://code.visualstudio.com/docs/languages/jsconfig
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@assets": ["src/assets"],
+      "@src/*": ["src/*"],
+      "@utils": ["src/utils"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "exclude": ["node_modules", "build"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.js", "**/*.tsx"]
 }
