@@ -28,7 +28,8 @@ const AppTextInput = props => {
     onPress,
     labelColor = generalColor.black['25'],
     hasPress = false,
-    colorText = generalColor.black['25'],
+    colorText = generalColor.white['100'],
+    placeholderColor = generalColor.white['100'],
     heightTextInput,
     multiline = false,
     active = true,
@@ -37,6 +38,7 @@ const AppTextInput = props => {
     isMask = false,
     editable = true,
     mask,
+    style,
     containerStyle,
     autoFocus,
   } = props;
@@ -66,10 +68,11 @@ const AppTextInput = props => {
       </View>
       <View
         style={[
-          styles.textInputContainer,
           {
             backgroundColor: generalColor.black[10],
           },
+          styles.textInputContainer,
+          style,
         ]}>
         {leftContent && leftContent}
         <Pressable onPress={onPress} style={styles.flexGrow}>
@@ -83,6 +86,7 @@ const AppTextInput = props => {
               keyboardType={keyboardType}
               onChangeText={onChangeText}
               value={value}
+              placeholderTextColor={placeholderColor}
               autoFocus={autoFocus}
               placeholder={placeholder}
               style={[
@@ -118,9 +122,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 8,
-    borderWidth: 1,
     borderColor: generalColor.black[10],
-    borderRadius: 20,
+    borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: Platform.OS === 'ios' ? 12 : 0,
   },

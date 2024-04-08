@@ -1,4 +1,6 @@
 export const generalColor = {
+  primary: '#091E3D',
+  secondary: '#747268',
   white: {
     100: '#fff',
     50: '#f5f5f5',
@@ -14,6 +16,8 @@ export const generalColor = {
   other: {
     yellow: '#e1fa25',
     bluepurple: '#514eb6',
+    gray: '#747268',
+    lightgray: '#F0F0F1CC',
   },
   error: 'tomato',
 };
@@ -26,7 +30,7 @@ export const whiteThemeColors = {
     tertiary: '#3c50c7',
   },
   text: {
-    primary: '#000000',
+    primary: '#747268',
     secondary: '#5068f2',
     error: '#b85454',
     success: '#138000',
