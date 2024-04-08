@@ -1,5 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpScreen from '@src/screens/Authentication/SignUp/SignUp';
+import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
+import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
+import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
 import {navigationRef} from './NavigationController';
 
 const screenOptions = {
@@ -7,7 +11,7 @@ const screenOptions = {
   cardOverlayEnabled: true,
   headerShown: false,
 };
-
+const Stack = createNativeStackNavigator();
 const AuthenticationStack = () => {
   const username = null;
   return (
@@ -15,25 +19,25 @@ const AuthenticationStack = () => {
       {username == null ? (
         <Stack.Screen name={'SignUp'} component={SignUpScreen} />
       ) : null}
-      {/* <Stack.Screen
-        name={'SignIn'}
-        // component={}
-      /> */}
     </Stack.Navigator>
   );
 };
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'BottomTab'}
+      initialRouteName={'UserSearchScreen'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
-      <Stack.Screen name={'BottomTab'} component={MyTabs} />
-      <Stack.Group screenOptions={screenOptions}>
-        {/* <Stack.Screen
-          name={'Other'}
-          //   component={}
-        /> */}
-      </Stack.Group>
+      {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
+      <Stack.Screen
+        name={'UserSearchDetailScreen'}
+        component={UserSearchDetailScreen}
+      />
+      <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
+      <Stack.Screen
+        name={'UserSearchResultScreen'}
+        component={UserSearchResultScreen}
+      />
+      <Stack.Group screenOptions={screenOptions}></Stack.Group>
     </Stack.Navigator>
   );
 };
@@ -42,10 +46,10 @@ const Root = () => {
   const isLogin = false;
 
   return (
-    <NavigationContainer linking={linking} ref={navigationRef}>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={screenOptions}
-        initialRouteName="AuthenticationStack">
+        initialRouteName="MainStack">
         <Stack.Screen
           options={{
             animationTypeForReplace: !isLogin ? 'push' : 'pop',

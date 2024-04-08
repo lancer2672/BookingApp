@@ -6,7 +6,7 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 Geolocation.setRNConfiguration({
-  skipPermissionRequests: true,
+  skipPermissionRequests: false,
 });
 
 const GGMap = () => {
