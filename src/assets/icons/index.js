@@ -58,3 +58,43 @@ export const MapSVG = ({width = 17, height = 20, color = '##747268'}) => (
     />
   </Svg>
 );
+
+export const TargetSVG = ({width = 21, height = 20, color = '#747268'}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 21 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M9.34089 18.3333C14.1176 18.3333 17.9899 14.6024 17.9899 9.99999C17.9899 5.39762 14.1176 1.66666 9.34089 1.66666C4.56418 1.66666 0.691895 5.39762 0.691895 9.99999C0.691895 14.6024 4.56418 18.3333 9.34089 18.3333Z"
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M17.9899 10H14.5303"
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M4.15149 10H0.691895"
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9.34088 4.99999V1.66666"
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9.34088 18.3333V15"
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

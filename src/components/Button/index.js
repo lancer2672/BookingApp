@@ -1,27 +1,30 @@
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import {StyleSheet, Text, View} from 'react-native';
-const ButtonComponent = ({style = {}, text, txtStyle = {}}) => {
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+const ButtonComponent = ({style = {}, text, txtStyle = {}, onPress}) => {
   return (
-    <View
-      style={{
-        backgroundColor: generalColor.primary,
-        borderRadius: 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: 55,
-        ...style,
-      }}>
-      <Text
+    <Pressable onPress={onPress}>
+      <View
         style={{
-          color: 'white',
-          textAlign: 'center',
-          ...textStyle.h[4],
-          ...txtStyle,
+          backgroundColor: generalColor.primary,
+          borderRadius: 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 8,
+          minHeight: 48,
+          ...style,
         }}>
-        {text}
-      </Text>
-    </View>
+        <Text
+          style={{
+            color: 'white',
+            textAlign: 'center',
+            ...textStyle.h[4],
+            ...txtStyle,
+          }}>
+          {text}
+        </Text>
+      </View>
+    </Pressable>
   );
 };
 

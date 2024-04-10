@@ -1,8 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpScreen from '@src/screens/Authentication/SignUp/SignUp';
-import UserSearchScreen from '@src/screens/UserScreens/Search';
-import UserSearchDetailScreen from '@src/screens/UserScreens/SearchDetail';
+import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
+import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
+import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
 import {navigationRef} from './NavigationController';
 
 const screenOptions = {
@@ -32,6 +33,10 @@ const MainStack = () => {
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
+      <Stack.Screen
+        name={'UserSearchResultScreen'}
+        component={UserSearchResultScreen}
+      />
       <Stack.Group screenOptions={screenOptions}></Stack.Group>
     </Stack.Navigator>
   );
