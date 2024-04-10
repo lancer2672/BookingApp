@@ -7,6 +7,8 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {showMessage} from 'react-native-flash-message';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AgentHeader from '../components/Header';
+
+
 const AgentDashboard = () => {
   const [value, setValue] = useState('');
   useEffect(() => {

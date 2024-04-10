@@ -1,23 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ButtonComponent from '@src/components/Button';
-
+import Header from '@src/components/Header/Header';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const HomeHeader = () => {
   return (
     <View style={styles.homeHeader}>
-      <ButtonComponent style={styles.button}>
-        <Text style={styles.buttonText}>X</Text>
+      <ButtonComponent txtStyle={styles.button} text={"Home"} onPress={ () => {}}>
       </ButtonComponent>
-      <ButtonComponent style={styles.button}>
-        <Text style={styles.buttonText}>X</Text>
+      <ButtonComponent txtStyle={styles.button} text={"Find"} onPress={ () => {}}>
       </ButtonComponent>
-      <ButtonComponent style={styles.button}>
-        <Text style={styles.buttonText}>X</Text>
+      <ButtonComponent txtStyle={styles.button} text={"Sales"} onPress={ () => {}}> 
       </ButtonComponent>
-      <ButtonComponent style={styles.button}>
-        <Text style={styles.buttonText}>X</Text>
+      <ButtonComponent txtStyle={styles.button} text={"Profile"} onPress={ () => {}}>
       </ButtonComponent>
+      
     </View>
   );
 };
@@ -45,12 +43,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 5,
     padding: 5,
-    width:80,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    width:70,
   },
 });
 
