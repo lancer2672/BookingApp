@@ -15,42 +15,30 @@ import {
 import {Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const hotels = [
-  {
-    id: '1',
-    name: 'Khách sạn A',
-    image: 'https://picsum.photos/200',
-    bed: 1,
-    guest: 3,
-  },
-  {
-    id: '2',
-    name: 'Khách sạn B',
-    image: 'https://picsum.photos/200',
-    bed: 2,
-    guest: 4,
-  },
-  {
-    id: '3',
-    name: 'Khách sạn C',
-    image: 'https://picsum.photos/200',
-    bed: 2,
-    guest: 4,
-  },
-  // Thêm các khách sạn khác vào đây
-];
 
 const ReviewBooking = () => {
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{padding: 12, marginTop: 12}}>
+        <View style={{padding: 12, marginTop: 12, ...rowCenter}}>
           <Pressable onPress={goBack}>
             <AntDesign
               name="left"
               size={24}
               color={generalColor.other.gray}></AntDesign>
           </Pressable>
+          <Text
+            style={{
+              textTransform: 'uppercase',
+              color: generalColor.primary,
+              ...textStyle.h[2],
+              flex: 1,
+              textAlign: 'center',
+              marginRight: 24,
+              fontFamily: 'serif',
+            }}>
+            Review
+          </Text>
         </View>
         <View style={[rowCenter, styles.header]}>
           <View style={{flex: 1}}>

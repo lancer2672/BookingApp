@@ -1,6 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpScreen from '@src/screens/Authentication/SignUp/SignUp';
+import Payment from '@src/screens/UserScreens/Payment';
+import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
@@ -33,6 +35,8 @@ const MainStack = () => {
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
+      <Stack.Screen name={'Payment'} component={Payment} />
+      <Stack.Screen name={'ReviewBooking'} component={ReviewBooking} />
       <Stack.Screen
         name={'UserSearchResultScreen'}
         component={UserSearchResultScreen}
