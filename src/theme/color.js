@@ -18,6 +18,7 @@ export const generalColor = {
     bluepurple: '#514eb6',
     gray: '#747268',
     lightgray: '#F0F0F1CC',
+    stronggray: '#4C4C4C',
   },
   error: 'tomato',
 };
