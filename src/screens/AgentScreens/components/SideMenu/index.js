@@ -19,14 +19,30 @@ const user = {
 
 const menu = [
   {
-    text: 'Item 1',
+    text: 'Trang chủ',
     onClick: () => console.log('Item 1 clicked'),
-    leftIcon: <AntDesign name="home" size={24} color="blue" />,
+    leftIcon: <AntDesign name="home" size={24} color="white" />,
   },
   {
-    text: 'Item 2',
+    text: 'Quản lý khách sạn',
+    onClick: () => console.log('Item 1 clicked'),
+    leftIcon: <AntDesign name="home" size={24} color="white" />,
+  },
+  {
+    text: 'Thêm khách sạn mới',
+    onClick: () => console.log('Item 1 clicked'),
+    leftIcon: <AntDesign name="home" size={24} color="white" />,
+  },
+  
+  {
+    text: 'Thông tin cá nhân',
     onClick: () => console.log('Item 2 clicked'),
-    leftIcon: <AntDesign name="user" size={24} color="blue" />,
+    leftIcon: <AntDesign name="user" size={24} color="white" />,
+  },
+  {
+    text: 'Đăng xuất',
+    onClick: () => console.log('Item 2 clicked'),
+    leftIcon: <AntDesign name="user" size={24} color="white" />,
   },
 ];
 
@@ -46,7 +62,7 @@ const SideMenu = ({isVisible, onClose}) => {
         style={[
           styles.menuContainer,
           {
-            backgroundColor: 'black',
+            backgroundColor: 'white',
           },
         ]}>
         <View
@@ -65,7 +81,7 @@ const SideMenu = ({isVisible, onClose}) => {
                 style={[
                   styles.name,
                   {
-                    color: 'white',
+                    color: 'black',
                   },
                 ]}>
                 {user.nickname}
@@ -74,7 +90,7 @@ const SideMenu = ({isVisible, onClose}) => {
                 style={[
                   styles.email,
                   {
-                    color: 'white',
+                    color: 'black',
                   },
                 ]}>
                 {user.email}
@@ -91,22 +107,23 @@ const SideMenu = ({isVisible, onClose}) => {
             alignSelf: 'center',
             marginVertical: 8,
             borderColor: 'red',
-            height: 4,
+            height: 2,
             borderRadius: 12,
+            backgroundColor: "black"
           }}
         />
         {menu.map((m, index) => {
           return <SideBarItem key={index} {...m}></SideBarItem>;
         })}
-        <Text style={textStyle.h[1]}>Khác</Text>
         <Divider
           style={{
             width: '100%',
             alignSelf: 'center',
             marginVertical: 8,
             borderColor: 'red',
-            height: 4,
+            height: 2,
             borderRadius: 12,
+            backgroundColor: "black"
           }}
         />
       </View>
@@ -118,9 +135,9 @@ const SideBarItem = ({text, onClick, leftIcon}) => {
   const theme = useTheme();
   return (
     <Pressable onPress={onClick} rippleColor="rgba(0, 0, 0, .32)">
-      <View style={[itemStyles.container, {backgroundColor: 'red'}]}>
+      <View style={[itemStyles.container, {backgroundColor: '#091E3D'}]}>
         {leftIcon}
-        <Text style={[itemStyles.text, {color: 'blue'}]}>{text}</Text>
+        <Text style={[itemStyles.text, {color: 'white'}]}>{text}</Text>
       </View>
     </Pressable>
   );

@@ -2,7 +2,7 @@ import TextInputComponent from '@src/components/TextInputComponent';
 import textStyle from '@src/theme/text';
 import {MASK_FORMAT} from '@src/utils/textFormat';
 import {useEffect, useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View, Image} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {showMessage} from 'react-native-flash-message';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -59,6 +59,8 @@ const AgentDashboard = () => {
       {imageSource1 && (
         <Image source={{uri: imageSource1}} style={{width: 200, height: 200}} />
       )}
+
+
       <AnimatedCircularProgress
         size={220}
         width={10}

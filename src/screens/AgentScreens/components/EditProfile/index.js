@@ -1,16 +1,19 @@
-import TextInputComponent from '@src/components/TextInputComponent';
-import textStyle from '@src/theme/text';
-import { MASK_FORMAT } from '@src/utils/textFormat';
 import { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { Avatar, IconButton } from 'react-native-paper';
+import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import AgentHeader from '../Header';
+import { generalColor } from '@src/theme/color';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import ButtonComponent from '@src/components/Button';
+import TextInputComponent from '@src/components/TextInputComponent';
+import { MASK_FORMAT } from '@src/utils/textFormat';
+import textStyle from '@src/theme/text';
 
 
-const CreateHotel = () => {
+const EditProfile = () => {
     const [value, setValue] = useState('');
     useEffect(() => {
         handleShowMessage();
@@ -21,7 +24,6 @@ const CreateHotel = () => {
             type: 'danger',
         });
     };
-    const imageSourceList = []
     const [imageSource, setImageSource] = useState(null);
     const selectImageFromCamera = () => {
         const options = {
@@ -31,7 +33,6 @@ const CreateHotel = () => {
         launchCamera(options, response => {
             if (response.uri) {
                 setImageSource(response.uri);
-                imageSourceList.push(response.uri)
             }
         });
     };
@@ -44,180 +45,161 @@ const CreateHotel = () => {
         launchImageLibrary(options, response => {
             if (response.uri) {
                 setImageSource1(response.uri);
-                imageSourceList.push(response.uri)
             }
         });
     };
-
-    const renderItem = ({ item }) => (
-        <Image source={imageSourceList[item]} ></Image>
-    );
     return (
-        <View>
-            <AgentHeader active="TẠO KHÁCH SẠN" detail="Chúng tôi sẽ đem về cho bạn những     - khách hàng tiềm năng -"></AgentHeader>
-            <Text style={{ fontSize: 15,width:"90%", marginLeft:"5%", marginTop:10, marginBottom:-5, fontWeight: "bold"}}>* THÊM THÔNG TIN VỀ KHÁCH SẠN</Text>
-            <View style={styles.container}>
-                <TextInputComponent
-                    placeholder="Tên Hotel ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
-                    value={value}
-                    widthTextInput={"80%"}
-                    heightTextInput={20}
-                    onChangeText={text => {
-                        setValue(text);
-                    }}
-                    keyboardType={'numeric'}
-                    marginBottom={0}
-                    autoFocus
-                    styleTextInput={[
-                        {
-                            maxWidth: '100%',
-                        },
-                        textStyle.h[5],
-                    ]}
-                    style={styles.textinput}
-                />
-                <View style={styles.location}>
-                    <TextInputComponent
-                        placeholder="Vị trí ..."
-                        isMask={true}
-                        mask={MASK_FORMAT.NUMBER}
-                        value={value}
-                        widthTextInput={"80%"}
-                        heightTextInput={20}
-                        onChangeText={text => {
-                            setValue(text);
-                        }}
-                        keyboardType={'numeric'}
-                        marginBottom={0}
-                        autoFocus
-                        styleTextInput={[
-                            {
-                                maxWidth: '100%',
-                            },
-                            textStyle.h[5],
-                        ]}
-                        style={styles.textinput}
-                    />
-                    <ButtonComponent style={styles.buttonLocation} text="MAP"></ButtonComponent>
+        <View >
+            <AgentHeader active="CHỈNH SỬA" ></AgentHeader>
+            <View style={{width: "100%", alignItems:"center"}}>
+                <View style={{ backgroundColor: "white", width: 140, height: 140, borderRadius: 75, justifyContent: "center", alignItems: "center", marginTop: -40 }}>
+                    <Avatar.Image size={130} source={{ uri: 'https://picsum.photos/200' }} />
                 </View>
-                <TextInputComponent
-                    placeholder="Giá phòng ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
-                    value={value}
-                    widthTextInput={"80%"}
-                    heightTextInput={20}
-                    onChangeText={text => {
-                        setValue(text);
-                    }}
-                    keyboardType={'numeric'}
-                    marginBottom={0}
-                    autoFocus
-                    styleTextInput={[
-                        {
-                            maxWidth: '100%',
-                        },
-                        textStyle.h[5],
-                    ]}
-                    style={styles.textinput}
-                />
-                <TextInputComponent
-                    placeholder="Chi tiết tiện tích ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
-                    value={value}
-                    widthTextInput={"80%"}
-                    heightTextInput={80}
-                    onChangeText={text => {
-                        setValue(text);
-                    }}
-                    keyboardType={'numeric'}
-                    marginBottom={0}
-                    autoFocus
-                    styleTextInput={[
-                        {
-                            maxWidth: '100%',
-                        },
-                        textStyle.h[5],
-                    ]}
-                    style={styles.textinput}
-                />
-                <TextInputComponent
-                    placeholder="Chính sách liên quan ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
-                    value={value}
-                    widthTextInput={"80%"}
-                    heightTextInput={80}
-                    onChangeText={text => {
-                        setValue(text);
-                    }}
-                    keyboardType={'numeric'}
-                    marginBottom={0}
-                    autoFocus
-                    styleTextInput={[
-                        {
-                            maxWidth: '100%',
-                        },
-                        textStyle.h[5],
-                    ]}
-                    style={styles.textinput}
-                />
             </View>
-            <View style={styles.imageChose}>
-            <Text style={{ fontSize: 15, width:"100%", marginTop:10, marginBottom:0, fontWeight: "bold"}}>* THÊM HÌNH ẢNH MÌNH HOẠ </Text>
-                <View style={styles.buttonImage}>
+            <View style={styles.buttonImage}>
                     <ButtonComponent title="Chụp ảnh" onPress={selectImageFromCamera} style={styles.buttonItem} text="Chụp Ảnh"/>
                     <ButtonComponent title="Chọn ảnh" onPress={selectImage} style={styles.buttonItem} text="Chọn Ảnh" />
-                </View>
-                <FlatList
-                    style={styles.flatList}
-                    data={imageSource}
-                    renderItem={renderItem}
-                    keyExtractor={(item, index) => index.toString()}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.imagelist}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                />
             </View>
-            <ButtonComponent onPress={() => {}} style={{width:"90%", marginLeft: "5%"}} text="Thêm khách sạn" />
+            <View style={styles.container}>
+                <View style={styles.containerTextInput}>
+                    <AntDesign name='user' size={20} style={styles.icon}></AntDesign>
+                    <TextInputComponent
+                    placeholder="Tên người dùng ..."
+                    isMask={true}
+                    mask={MASK_FORMAT.NUMBER}
+                    value={value}
+                    widthTextInput={"100%"}
+                    heightTextInput={20}
+                    onChangeText={text => {
+                        setValue(text);
+                    }}
+                    keyboardType={'numeric'}
+                    marginBottom={0}
+                    autoFocus
+                    styleTextInput={[
+                        {
+                            maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                    ]}
+                    style={styles.textinput}
+                />
+                </View>
+            
+                <View style={styles.containerTextInput}>
+                    <AntDesign name='mail' size={20} style={styles.icon}></AntDesign>
+                    <TextInputComponent
+                    placeholder="Gmail ..."
+                    isMask={true}
+                    mask={MASK_FORMAT.NUMBER}
+                    value={value}
+                    widthTextInput={"100%"}
+                    heightTextInput={20}
+                    onChangeText={text => {
+                        setValue(text);
+                    }}
+                    keyboardType={'numeric'}
+                    marginBottom={0}
+                    autoFocus
+                    styleTextInput={[
+                        {
+                            maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                    ]}
+                    style={styles.textinput}
+                />
+                </View>
+                <View style={styles.containerTextInput}>
+                    <AntDesign name='phone' size={20} style={styles.icon}></AntDesign>
+                    <TextInputComponent
+                    placeholder="Số điện thoại ..."
+                    isMask={true}
+                    mask={MASK_FORMAT.NUMBER}
+                    value={value}
+                    widthTextInput={"100%"}
+                    heightTextInput={20}
+                    onChangeText={text => {
+                        setValue(text);
+                    }}
+                    keyboardType={'numeric'}
+                    marginBottom={0}
+                    autoFocus
+                    styleTextInput={[
+                        {
+                            maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                    ]}
+                    style={styles.textinput}
+                />
+                </View>
+                <View style={styles.containerTextInput}>
+                    <Entypo name='eye-with-line' size={20} style={styles.icon}></Entypo>
+                    <TextInputComponent
+                    placeholder="Mật khẩu cũ ..."
+                    isMask={true}
+                    mask={MASK_FORMAT.NUMBER}
+                    value={value}
+                    widthTextInput={"100%"}
+                    heightTextInput={20}
+                    onChangeText={text => {
+                        setValue(text);
+                    }}
+                    keyboardType={'numeric'}
+                    marginBottom={0}
+                    autoFocus
+                    styleTextInput={[
+                        {
+                            maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                    ]}
+                    style={styles.textinput}
+                />
+                </View>
+                <View style={styles.containerTextInput}>
+                    <Entypo name='eye-with-line' size={20} style={styles.icon}></Entypo>
+                    <TextInputComponent
+                    placeholder="Mật khẩu mới ..."
+                    isMask={true}
+                    mask={MASK_FORMAT.NUMBER}
+                    value={value}
+                    widthTextInput={"100%"}
+                    heightTextInput={20}
+                    onChangeText={text => {
+                        setValue(text);
+                    }}
+                    keyboardType={'numeric'}
+                    marginBottom={0}
+                    autoFocus
+                    styleTextInput={[
+                        {
+                            maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                    ]}
+                    style={styles.textinput}
+                />
+                </View>
+            </View>
+            <ButtonComponent onPress={() => {}} style={{width:"70%", marginLeft: "15%", marginTop: "45%"}} text="Hoàn Tất" />
         </View>
     );
 };
 
-export default CreateHotel;
+export default EditProfile;
 
 const styles = StyleSheet.create({
+    textinput: {
+        borderBottomColor: "black",
+        borderBottomWidth:2,
+        marginTop:-5,
+    },
     container: {
         width: "90%",
         marginLeft: "5%",
-    },
-    location: {
-        position: "relative",
-    },
-    buttonLocation: {
-        position: "absolute",
-        width: "20%",
-        bottom: 4,
-        right: 10,
-        height: 30,
-        zIndex: 99,
-        borderRadius: 10,
-    },
-    imageChose: {
-        width: "90%",
-        marginLeft: "5%"
-    },
-    separator: {
-        width: 10,
-    },
-    flatList: {
-        width: "90%",
-        marginLeft: "5%",
-        height:"20%"
+        marginTop:"5%"
     },
     buttonImage: {
         display: "flex",
@@ -233,9 +215,15 @@ const styles = StyleSheet.create({
         marginLeft:10,
         height:35,
     },
-    textinput: {
-        borderBottomColor: "black",
-        borderBottomWidth:2,
-        marginBottom: -2,
+    containerTextInput: {
+        width:"100%",
+        height:50,
+        marginBottom: 10,
+    },
+    icon: {
+        position: "absolute",
+        zIndex: 99,
+        right:10,
+        top: 15,
     }
 });

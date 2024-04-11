@@ -5,7 +5,7 @@ export const generalColor = {
     100: '#fff',
     50: '#f5f5f5',
     25: '#e0e0e0',
-    10: '#d3d3d3',
+    10: '#D5D5D5',
   },
   black: {
     100: '#000',
