@@ -99,6 +99,7 @@ const AgentDashboard = () => {
           textStyle.h[3],
         ]}
       />
+       <Image source={{uri: imageSource1}} style={{width: 200, height: 200}} />
     </View>
   );
 };
