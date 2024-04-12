@@ -3,14 +3,17 @@ import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import {  IconButton } from 'react-native-paper';
 import SideMenu from '../SideMenu';
-
+import { useNavigation } from '@react-navigation/native';
 
 const AgentHeader = ({ active, detail }) => {
   const [visible, setVisible] = useState(false);
   const handleOpenSideMenu = () => {
     setVisible(true);
   };
-
+  const navigation = useNavigation()
+  const navigateToNotice = () => {
+    navigation.navigate("Notice")
+  }
   return (
     <View style={styles.container}>
       <IconButton icon="menu" size={24} onPress={handleOpenSideMenu} iconColor='white' />
@@ -21,7 +24,7 @@ const AgentHeader = ({ active, detail }) => {
       <IconButton
         icon="bell"
         size={24}
-        onPress={() => console.log('Bell pressed')}
+        onPress={navigateToNotice}
         iconColor='white'
       />
       <SideMenu isVisible={visible} onClose={() => setVisible(false)   } />

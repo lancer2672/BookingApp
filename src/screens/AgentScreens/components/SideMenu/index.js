@@ -10,6 +10,7 @@ import {
 import Modal from 'react-native-modal';
 import {Avatar, Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 const user = {
@@ -25,7 +26,7 @@ const menu = [
   {
     text: 'Tạo khách sạn',
     onClick: "CreateHotel",
-    leftIcon: <AntDesign name="home" size={24} color="white" />,
+    leftIcon: <Ionicons name="add-circle" size={24} color="white" />,
   },
   
   {
@@ -36,7 +37,7 @@ const menu = [
   {
     text: 'Đăng xuất',
     onClick: () => console.log('Item 2 clicked'),
-    leftIcon: <AntDesign name="user" size={24} color="white" />,
+    leftIcon: <AntDesign name="logout" size={24} color="white" />,
   },
 ];
 

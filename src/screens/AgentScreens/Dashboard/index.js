@@ -8,6 +8,7 @@ import CreateHotel from '../components/CreateHotel';
 import ListHotel from '../components/ListHotel';
 import EditProfile from '../components/EditProfile';
 import DetailHotel from '../components/DetailHotel';
+import Notice from '../components/Notice';
 const AgentDashboard = () => {
   const Stack = createStackNavigator();
   return (
@@ -18,6 +19,8 @@ const AgentDashboard = () => {
       <Stack.Screen name="ListHotel" component={ListHotel} options={{ headerShown: false }}/>
       <Stack.Screen name="CreateHotel" component={CreateHotel} options={{ headerShown: false }}/>
       <Stack.Screen name="DetailHotel" component={DetailHotel} options={{title: "Chi tiết khách sạn"}}/>
+      <Stack.Screen name="Notice" component={Notice} options={{title: "Thông báo"}}/>
+    
     </Stack.Navigator>
   </NavigationContainer>
   );
