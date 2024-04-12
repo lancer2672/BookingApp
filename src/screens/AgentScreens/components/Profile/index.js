@@ -2,46 +2,26 @@ import { useEffect, useState } from 'react';
 import { Avatar, IconButton } from 'react-native-paper';
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import AgentHeader from '../Header';
 import { generalColor } from '@src/theme/color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ButtonComponent from '@src/components/Button';
+import { useNavigation } from '@react-navigation/native';
+
 const Profile = () => {
-    const [value, setValue] = useState('');
-    useEffect(() => {
-        handleShowMessage();
-    }, []);
-    const handleShowMessage = () => {
-        showMessage({
-            message: 'Cập nhật thất bại',
-            type: 'danger',
-        });
-    };
-    const [imageSource, setImageSource] = useState(null);
-    const selectImageFromCamera = () => {
-        const options = {
-            noData: true,
-        };
-
-        launchCamera(options, response => {
-            if (response.uri) {
-                setImageSource(response.uri);
-            }
-        });
-    };
-    const [imageSource1, setImageSource1] = useState(null);
-    const selectImage = () => {
-        const options = {
-            noData: true,
-        };
-
-        launchImageLibrary(options, response => {
-            if (response.uri) {
-                setImageSource1(response.uri);
-            }
-        });
-    };
+    // useEffect(() => {
+    //     handleShowMessage();
+    // }, []);
+    // const handleShowMessage = () => {
+    //     showMessage({
+    //         message: 'Cập nhật thất bại',
+    //         type: 'danger',
+    //     });
+    // };
+    const navigation = useNavigation();
+    const navigateToProfile = () => {
+        navigation.navigate("EditProfile")
+    }
     return (
         <View >
             <AgentHeader active="TÀI KHOẢN"></AgentHeader>
@@ -79,7 +59,7 @@ const Profile = () => {
                 <AntDesign name='phone' size={20}></AntDesign>
                 <Text style={styles.textmain}>Darkmode</Text>
             </View>
-            <ButtonComponent onPress={() => {}} style={{width:"70%", marginLeft: "15%", marginTop: "40%"}} text="Sửa Thông Tin Cá Nhân" />
+            <ButtonComponent onPress={navigateToProfile} style={{width:"70%", marginLeft: "15%", marginTop: "40%"}} text="Sửa Thông Tin Cá Nhân" />
         </View>
     );
 };

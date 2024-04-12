@@ -12,15 +12,15 @@ import ButtonComponent from '@src/components/Button';
 
 const CreateHotel = () => {
     const [value, setValue] = useState('');
-    useEffect(() => {
-        handleShowMessage();
-    }, []);
-    const handleShowMessage = () => {
-        showMessage({
-            message: 'Cập nhật thất bại',
-            type: 'danger',
-        });
-    };
+    // useEffect(() => {
+    //     handleShowMessage();
+    // }, []);
+    // const handleShowMessage = () => {
+    //     showMessage({
+    //         message: 'Cập nhật thất bại',
+    //         type: 'danger',
+    //     });
+    // };
     const imageSourceList = []
     const [imageSource, setImageSource] = useState(null);
     const selectImageFromCamera = () => {
@@ -123,13 +123,34 @@ const CreateHotel = () => {
                     ]}
                     style={styles.textinput}
                 />
+                   <TextInputComponent
+                    placeholder="Khuyến mãi đi kèm ..."
+                    isMask={true}
+                    mask={MASK_FORMAT.NUMBER}
+                    value={value}
+                    widthTextInput={"80%"}
+                    heightTextInput={20}
+                    onChangeText={text => {
+                        setValue(text);
+                    }}
+                    keyboardType={'numeric'}
+                    marginBottom={0}
+                    autoFocus
+                    styleTextInput={[
+                        {
+                            maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                    ]}
+                    style={styles.textinput}
+                />
                 <TextInputComponent
                     placeholder="Chi tiết tiện tích ..."
                     isMask={true}
                     mask={MASK_FORMAT.NUMBER}
                     value={value}
                     widthTextInput={"80%"}
-                    heightTextInput={80}
+                    heightTextInput={50}
                     onChangeText={text => {
                         setValue(text);
                     }}
@@ -150,7 +171,7 @@ const CreateHotel = () => {
                     mask={MASK_FORMAT.NUMBER}
                     value={value}
                     widthTextInput={"80%"}
-                    heightTextInput={80}
+                    heightTextInput={50}
                     onChangeText={text => {
                         setValue(text);
                     }}

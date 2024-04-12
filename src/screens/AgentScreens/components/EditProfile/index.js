@@ -15,15 +15,15 @@ import textStyle from '@src/theme/text';
 
 const EditProfile = () => {
     const [value, setValue] = useState('');
-    useEffect(() => {
-        handleShowMessage();
-    }, []);
-    const handleShowMessage = () => {
-        showMessage({
-            message: 'Cập nhật thất bại',
-            type: 'danger',
-        });
-    };
+    // useEffect(() => {
+    //     handleShowMessage();
+    // }, []);
+    // const handleShowMessage = () => {
+    //     showMessage({
+    //         message: 'Cập nhật thất bại',
+    //         type: 'danger',
+    //     });
+    // };
     const [imageSource, setImageSource] = useState(null);
     const selectImageFromCamera = () => {
         const options = {
@@ -49,8 +49,8 @@ const EditProfile = () => {
         });
     };
     return (
-        <View >
-            <AgentHeader active="CHỈNH SỬA" ></AgentHeader>
+        <View style={styles.main}>
+            
             <View style={{width: "100%", alignItems:"center"}}>
                 <View style={{ backgroundColor: "white", width: 140, height: 140, borderRadius: 75, justifyContent: "center", alignItems: "center", marginTop: -40 }}>
                     <Avatar.Image size={130} source={{ uri: 'https://picsum.photos/200' }} />
@@ -183,7 +183,7 @@ const EditProfile = () => {
                 />
                 </View>
             </View>
-            <ButtonComponent onPress={() => {}} style={{width:"70%", marginLeft: "15%", marginTop: "45%"}} text="Hoàn Tất" />
+            <ButtonComponent onPress={() => {}} style={{width:"70%", marginLeft: "15%", marginTop: "50%"}} text="Hoàn Tất" />
         </View>
     );
 };
@@ -225,5 +225,8 @@ const styles = StyleSheet.create({
         zIndex: 99,
         right:10,
         top: 15,
+    },
+    main: {
+        marginTop: "10%"
     }
 });

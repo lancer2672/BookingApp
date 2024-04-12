@@ -24,7 +24,7 @@ const AgentHeader = ({ active, detail }) => {
         onPress={() => console.log('Bell pressed')}
         iconColor='white'
       />
-      <SideMenu isVisible={visible} onClose={() => setVisible(false)} />
+      <SideMenu isVisible={visible} onClose={() => setVisible(false)   } />
       <TextInput></TextInput>
     </View>
   );

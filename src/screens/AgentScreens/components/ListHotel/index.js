@@ -9,19 +9,47 @@ import { rowCenter } from '@src/theme/style';
 
 const ListHotel = () => {
   const hotels = [
-    { name: 'Hotel A', location: 'City A, Country A', price: '$100' , sales: "Miễn phí bữa sáng và đồ uống", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s"},
-    { name: 'Hotel A', location: 'City A, Country A', price: '$100' , sales: "Miễn phí bữa sáng và đồ uống", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s"},
-    { name: 'Hotel A', location: 'City A, Country A', price: '$100' , sales: "Miễn phí bữa sáng và đồ uống", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s"},
-    { name: 'Hotel A', location: 'City A, Country A', price: '$100' , sales: "Miễn phí bữa sáng và đồ uống", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s"},
-    { name: 'Hotel A', location: 'City A, Country A', price: '$100' , sales: "Miễn phí bữa sáng và đồ uống", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s"},
+    {
+      name: "Hotel 1",
+      location: "binh thach, ho chi minh",
+      price: "$300",
+      images: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
+        "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
+      ],
+      detail: "Khach san bao phong 1 phong ngu co giuong king , view thang ra bien, day du tien nghi ",
+      policy: "Duoc hoan tra coc khi huy dat phong",
+      sales: "Mien phi bua an sang di kem"
+    },
+    { name: "Hotel 2",
+    location: "binh thach, ho chi minh",
+    price: "$300",
+    images: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
+        "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
+    ],
+    detail: "Khach san bao phong 1 phong ngu co giuong king , view thang ra bien, day du tien nghi ",
+    policy: "Duoc hoan tra coc khi huy dat phong",
+    sales: "Mien phi bua an sang di kem" },
+    { name: "Hotel 3",
+    location: "binh thach, ho chi minh",
+    price: "$300",
+    images: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
+        "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
+    ],
+    detail: "Khach san bao phong 1 phong ngu co giuong king , view thang ra bien, day du tien nghi ",
+    policy: "Duoc hoan tra coc khi huy dat phong",
+    sales: "Mien phi bua an sang di kem" },
+    
   ];
   const renderItem = ({ item }) => (
-    <HotelCard image={item.image} name={item.name} location={item.location} price={item.price} sales={item.sales}/>
+    <HotelCard images={item.images} name={item.name} location={item.location} price={item.price} sales={item.sales} policy={item.policy} detail={item.detail} />
   );
 
   return (
     <View style={styles.container}>
-      <AgentHeader active="Danh sách" detail="* Danh sách khách sạn của bạn *"></AgentHeader>
+      <AgentHeader active="Xin chào" detail="* Tên người dùng *"></AgentHeader>
 
 
       <Text></Text>
@@ -46,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   hotelCards: {
-    width:"100%",
+    width: "100%",
   },
   separator: {
     width: 10,
