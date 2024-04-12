@@ -1,5 +1,5 @@
 import textStyle from '@src/theme/text';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -10,29 +10,45 @@ import {
 import Modal from 'react-native-modal';
 import {Avatar, Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'styled-components/native';
-
+import { useNavigation } from '@react-navigation/native';
 const user = {
   nickname: 'John Doe',
   email: 'john.doe@example.com',
 };
-
 const menu = [
   {
-    text: 'Item 1',
-    onClick: () => console.log('Item 1 clicked'),
-    leftIcon: <AntDesign name="home" size={24} color="blue" />,
+    text: 'Trang chủ',
+    onClick: "ListHotel",
+    leftIcon: <AntDesign name="home" size={24} color="white" />,
   },
   {
-    text: 'Item 2',
-    onClick: () => console.log('Item 2 clicked'),
-    leftIcon: <AntDesign name="user" size={24} color="blue" />,
+    text: 'Tạo khách sạn',
+    onClick: "CreateHotel",
+    leftIcon: <Ionicons name="add-circle" size={24} color="white" />,
+  },
+  
+  {
+    text: 'Thông tin cá nhân',
+    onClick: "Profile",
+    leftIcon: <AntDesign name="user" size={24} color="white" />,
   },
 ];
 
+
+
+
+
 const SideMenu = ({isVisible, onClose}) => {
+
+  
+  
+  
   const theme = useTheme();
+
   useEffect(() => {}, []);
+
   return (
     <Modal
       isVisible={isVisible}
@@ -46,7 +62,7 @@ const SideMenu = ({isVisible, onClose}) => {
         style={[
           styles.menuContainer,
           {
-            backgroundColor: 'black',
+            backgroundColor: 'white',
           },
         ]}>
         <View
@@ -65,7 +81,7 @@ const SideMenu = ({isVisible, onClose}) => {
                 style={[
                   styles.name,
                   {
-                    color: 'white',
+                    color: 'black',
                   },
                 ]}>
                 {user.nickname}
@@ -74,16 +90,17 @@ const SideMenu = ({isVisible, onClose}) => {
                 style={[
                   styles.email,
                   {
-                    color: 'white',
+                    color: 'black',
                   },
                 ]}>
                 {user.email}
               </Text>
             </View>
-          </View>
-          <TouchableOpacity onPress={onClose}>
-            <AntDesign name="close" size={30} color={'white'}></AntDesign>
+            <TouchableOpacity onPress={onClose} style={{marginLeft:60}}>
+              <AntDesign name="close" size={30} color={'black'}></AntDesign>
           </TouchableOpacity>
+          </View>
+        
         </View>
         <Divider
           style={{
@@ -91,40 +108,50 @@ const SideMenu = ({isVisible, onClose}) => {
             alignSelf: 'center',
             marginVertical: 8,
             borderColor: 'red',
-            height: 4,
+            height: 2,
             borderRadius: 12,
+            backgroundColor: "black"
           }}
         />
         {menu.map((m, index) => {
-          return <SideBarItem key={index} {...m}></SideBarItem>;
+          return <SideBarItem key={index} {...m} onclose={onClose}></SideBarItem>;
         })}
-        <Text style={textStyle.h[1]}>Khác</Text>
         <Divider
           style={{
             width: '100%',
             alignSelf: 'center',
             marginVertical: 8,
             borderColor: 'red',
-            height: 4,
+            height: 2,
             borderRadius: 12,
+            backgroundColor: "black"
           }}
         />
+        <SideBarItem text="Đăng xuất" leftIcon={<AntDesign name="logout" size={24} color="white" />} style={styles.logout} ></SideBarItem>
       </View>
     </Modal>
   );
 };
 
-const SideBarItem = ({text, onClick, leftIcon}) => {
+const SideBarItem = ({text, onClick, leftIcon, onclose}) => {
   const theme = useTheme();
+  const navigation = useNavigation();
+  const handlePress= () => {
+    
+    onclose,
+    navigation.navigate(onClick)
+  }
   return (
-    <Pressable onPress={onClick} rippleColor="rgba(0, 0, 0, .32)">
-      <View style={[itemStyles.container, {backgroundColor: 'red'}]}>
+    <Pressable onPress={handlePress} rippleColor="rgba(0, 0, 0, .32)">
+      <View style={[itemStyles.container, {backgroundColor: '#091E3D'}]}>
         {leftIcon}
-        <Text style={[itemStyles.text, {color: 'blue'}]}>{text}</Text>
+        <Text style={[itemStyles.text, {color: 'white'}]}>{text}</Text>
       </View>
     </Pressable>
   );
 };
+
+
 
 const itemStyles = StyleSheet.create({
   container: {
@@ -157,6 +184,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   header: {
+    marginTop:70,
     alignItems: 'center',
     flexDirection: 'row',
   },

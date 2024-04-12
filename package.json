@@ -16,6 +16,7 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@react-navigation/stack": "^6.3.29",
     "@shopify/flash-list": "^1.6.4",
     "babel-plugin-module-resolver": "^5.0.0",
     "date-fns": "^2.28.0",

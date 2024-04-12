@@ -11,7 +11,7 @@ const ButtonComponent = ({style = {}, text, txtStyle = {}, onPress}) => {
           alignItems: 'center',
           justifyContent: 'center',
           padding: 8,
-          minHeight: 48,
+          minHeight: 38,
           ...style,
         }}>
         <Text
