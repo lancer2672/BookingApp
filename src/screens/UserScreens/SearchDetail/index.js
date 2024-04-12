@@ -4,10 +4,12 @@ import TextInputComponent from '@src/components/TextInputComponent';
 import {goBack} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
+import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import DatePicker from 'react-native-date-ranges';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
 const UserSearchDetailScreen = () => {
+  const [datepickerVisible, setDatepickerVisible] = useState(false);
   return (
     <View style={{flex: 1, padding: 20, backgroundColor: 'white'}}>
       <View style={{paddingTop: 12}}>
@@ -38,21 +40,40 @@ const UserSearchDetailScreen = () => {
           }
           label={'Ngày'}
           value={'Chọn ngày'}
-          onPress={() => {}}></Item>
+          onPress={() => {
+            setDatepickerVisible(true);
+          }}></Item>
         <Item
           label={'Phòng và số lượng khách'}
           value={'Nhấn để chọn'}
           onPress={() => {}}></Item>
       </View>
       <ButtonComponent text={'Tìm phòng'}></ButtonComponent>
+      <DatePicker
+        style={{width: 350, height: 45}}
+        isVisible={datepickerVisible}
+        markText="Chọn ngày"
+        customStyles={{
+          placeholderText: {fontSize: 20}, // placeHolder style
+          headerStyle: {}, // title container style
+          headerMarkTitle: {}, // title mark style
+          headerDateTitle: {}, // title Date style
+          contentInput: {}, //content text container style
+          contentText: {}, //after selected text Style
+        }} // optional
+        centerAlign // optional text will align center or not
+        allowFontScaling={false} // optional
+        placeholder={''}
+        mode={'range'}
+      />
     </View>
   );
 };
 
 const Item = ({icon, label, value, onPress}) => {
   return (
-    <Pressable style={{marginTop: 12}}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <>
+      <View style={{flexDirection: 'row', marginTop: 12, alignItems: 'center'}}>
         {icon && <View style={{marginRight: 12}}>{icon}</View>}
         <Text style={styles.label}>{label}</Text>
       </View>
@@ -60,6 +81,7 @@ const Item = ({icon, label, value, onPress}) => {
         heightTextInput={60}
         colorText={'white'}
         editable={false}
+        onPress={onPress}
         placeholder={value}
         value={value}
         placeholderColor={generalColor.other.gray}
@@ -80,7 +102,7 @@ const Item = ({icon, label, value, onPress}) => {
           borderWidth: 0,
         }}
       />
-    </Pressable>
+    </>
   );
 };
 export default UserSearchDetailScreen;
