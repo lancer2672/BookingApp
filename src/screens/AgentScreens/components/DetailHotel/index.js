@@ -5,6 +5,9 @@ import { showMessage } from 'react-native-flash-message';
 import AgentHeader from '../Header';
 import { generalColor } from '@src/theme/color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 import ButtonComponent from '@src/components/Button';
 import Swiper from 'react-native-swiper';
 import { useRoute } from '@react-navigation/native';
@@ -43,15 +46,15 @@ const DetailHotel = () => {
             <View style={styles.title}><Text style={styles.text}>Thông tin chung</Text></View>
             
             <View style={styles.main}>
-                <AntDesign name='right' size={20}></AntDesign>
+                <FontAwesome5 name='hotel' size={20}></FontAwesome5>
                 <Text style={styles.textmain}>{hoteldata.name}</Text>
             </View>
             <View style={styles.main}>
-                <AntDesign name='right' size={20}></AntDesign>
+                <Entypo name='location' size={20}></Entypo>
                 <Text style={styles.textmain}>{hoteldata.location}</Text>
             </View>
             <View style={styles.main}>
-                <AntDesign name='right' size={20}></AntDesign>
+                <FontAwesome name='money' size={20}></FontAwesome>
                 <Text style={styles.textmain}>{hoteldata.price}</Text>
             </View>
             

@@ -27,7 +27,7 @@ const AgentHeader = ({ active, detail }) => {
         onPress={navigateToNotice}
         iconColor='white'
       />
-      <SideMenu isVisible={visible} onClose={() => setVisible(false)   } />
+      <SideMenu isVisible={visible} onClose={() => setVisible(false) } />
       <TextInput></TextInput>
     </View>
   );

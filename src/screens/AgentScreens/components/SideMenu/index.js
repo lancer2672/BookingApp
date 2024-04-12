@@ -34,11 +34,6 @@ const menu = [
     onClick: "Profile",
     leftIcon: <AntDesign name="user" size={24} color="white" />,
   },
-  {
-    text: 'Đăng xuất',
-    onClick: () => console.log('Item 2 clicked'),
-    leftIcon: <AntDesign name="logout" size={24} color="white" />,
-  },
 ];
 
 
@@ -101,10 +96,11 @@ const SideMenu = ({isVisible, onClose}) => {
                 {user.email}
               </Text>
             </View>
-          </View>
-          <TouchableOpacity onPress={onClose}>
-            <AntDesign name="close" size={30} color={'white'}></AntDesign>
+            <TouchableOpacity onPress={onClose} style={{marginLeft:60}}>
+              <AntDesign name="close" size={30} color={'black'}></AntDesign>
           </TouchableOpacity>
+          </View>
+        
         </View>
         <Divider
           style={{
@@ -131,6 +127,7 @@ const SideMenu = ({isVisible, onClose}) => {
             backgroundColor: "black"
           }}
         />
+        <SideBarItem text="Đăng xuất" leftIcon={<AntDesign name="logout" size={24} color="white" />} style={styles.logout} ></SideBarItem>
       </View>
     </Modal>
   );
@@ -143,8 +140,6 @@ const SideBarItem = ({text, onClick, leftIcon, onclose}) => {
     
     onclose,
     navigation.navigate(onClick)
-    
-    
   }
   return (
     <Pressable onPress={handlePress} rippleColor="rgba(0, 0, 0, .32)">
@@ -189,6 +184,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   header: {
+    marginTop:70,
     alignItems: 'center',
     flexDirection: 'row',
   },
