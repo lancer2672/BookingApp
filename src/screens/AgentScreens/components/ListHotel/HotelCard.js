@@ -47,10 +47,15 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         flex: 1,
         position: "relative",
-        paddingBottom: 40,
+        paddingBottom: 20,
+        backgroundColor: "white",
+        width:"90%",
+        marginLeft:"5%",
+        marginBottom:20,
+        borderRadius:20
     },
     delete: {
-        width: "20%",
+        width: "30%",
         position: "absolute",
         bottom: 5,
         right: 20
@@ -64,6 +69,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
+        borderTopLeftRadius:20,
+        borderTopRightRadius:20
     },
     slide: {
         justifyContent: 'center',

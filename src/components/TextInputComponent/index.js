@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 8,
     borderColor: generalColor.black[10],
-    borderRadius: 0,
+    borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: Platform.OS === 'ios' ? 12 : 0,
   },
