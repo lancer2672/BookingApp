@@ -62,7 +62,7 @@ const SideMenu = ({isVisible, onClose}) => {
         style={[
           styles.menuContainer,
           {
-            backgroundColor: 'white',
+            backgroundColor: "#F2F5FA"
           },
         ]}>
         <View
@@ -108,7 +108,7 @@ const SideMenu = ({isVisible, onClose}) => {
             alignSelf: 'center',
             marginVertical: 8,
             borderColor: 'red',
-            height: 2,
+            height: 1,
             borderRadius: 12,
             backgroundColor: "black"
           }}
@@ -122,7 +122,7 @@ const SideMenu = ({isVisible, onClose}) => {
             alignSelf: 'center',
             marginVertical: 8,
             borderColor: 'red',
-            height: 2,
+            height: 1,
             borderRadius: 12,
             backgroundColor: "black"
           }}
@@ -143,7 +143,7 @@ const SideBarItem = ({text, onClick, leftIcon, onclose}) => {
   }
   return (
     <Pressable onPress={handlePress} rippleColor="rgba(0, 0, 0, .32)">
-      <View style={[itemStyles.container, {backgroundColor: '#091E3D'}]}>
+      <View style={[itemStyles.container, {backgroundColor: '#18C0C1'}]}>
         {leftIcon}
         <Text style={[itemStyles.text, {color: 'white'}]}>{text}</Text>
       </View>

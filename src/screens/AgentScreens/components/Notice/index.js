@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
         flex: 1,
         position: "relative",
         paddingBottom: 40,
+        backgroundColor: "#F2F5FA"
     },
     main: {
         display: "flex",
@@ -68,7 +69,9 @@ const styles = StyleSheet.create({
         height:70,
         width:"90%",
         marginLeft:"5%",
-        borderRadius:20
+        borderRadius:20,
+        borderColor: "#18C0C1",
+        borderWidth:1,
     }
 });
 export default Notice;

@@ -25,7 +25,7 @@ const DetailHotel = () => {
     const route = useRoute();
     const { hoteldata } = route.params;
     return (
-        <View >
+        <View style={{backgroundColor: "#F2F5FA"}}>
             
             <View style={styles.slider}>
                 <Swiper
@@ -47,11 +47,11 @@ const DetailHotel = () => {
             
             <View style={styles.main}>
                 <FontAwesome5 name='hotel' size={20}></FontAwesome5>
-                <Text style={styles.textmain}>{hoteldata.name}</Text>
+                <Text style={styles.textmain}>{hoteldata.type}</Text>
             </View>
             <View style={styles.main}>
                 <Entypo name='location' size={20}></Entypo>
-                <Text style={styles.textmain}>{hoteldata.location}</Text>
+                <Text style={styles.textmain}>{hoteldata.detail}</Text>
             </View>
             <View style={styles.main}>
                 <FontAwesome name='money' size={20}></FontAwesome>
@@ -61,7 +61,7 @@ const DetailHotel = () => {
             <View style={styles.title}><Text style={styles.text}>Chi tiết tiện tích</Text></View>
             <View style={styles.main}>
                 <AntDesign name='right' size={20}></AntDesign>
-                <Text style={styles.textmain}>{hoteldata.detail}</Text>
+                <Text style={styles.textmain}>{hoteldata.tienich}</Text>
             </View>
             <View style={styles.main}>
                 <AntDesign name='right' size={20}></AntDesign>
@@ -84,20 +84,21 @@ const styles = StyleSheet.create({
     title: {
         display: "flex",
         justifyContent: "center",
-        height: 30,
-        backgroundColor: generalColor.black[10],
-        marginTop: 2.5,
-        marginBottom: 2.5,
+        height:30,
+        backgroundColor: "#18C0C1",
+        marginTop: 2.5, 
+        marginBottom:2.5,
     },
     text: {
         fontSize: 18,
-        fontWeight: "bold",
+        fontWeight:"bold", 
         marginLeft: 20,
+        color:"white",
     },
     textmain: {
-        fontSize: 18,
-        marginLeft: 5,
-        flexWrap: "wrap"
+        fontSize:16,
+        marginLeft:5,
+      
     },
     main: {
         display: "flex",
@@ -124,8 +125,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       delete: {
-        width:"80%",
-        marginLeft: "10%",
+        width:"60%",
+        marginLeft: "20%",
         marginTop: "50%",
+        backgroundColor: "#18C0C1",
+        borderRadius:20,
       }
 });

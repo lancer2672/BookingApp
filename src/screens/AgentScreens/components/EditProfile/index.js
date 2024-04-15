@@ -64,18 +64,14 @@ const EditProfile = () => {
                 <View style={styles.containerTextInput}>
                     <AntDesign name='user' size={20} style={styles.icon}></AntDesign>
                     <TextInputComponent
-                    placeholder="Tên người dùng ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
+                    placeholder="Họ và tên ..."
                     value={value}
-                    widthTextInput={"100%"}
+                    widthTextInput={"80%"}
                     heightTextInput={20}
                     onChangeText={text => {
                         setValue(text);
                     }}
-                    keyboardType={'numeric'}
                     marginBottom={0}
-                    autoFocus
                     styleTextInput={[
                         {
                             maxWidth: '100%',
@@ -83,6 +79,7 @@ const EditProfile = () => {
                         textStyle.h[5],
                     ]}
                     style={styles.textinput}
+                    placeholderColor="black"
                 />
                 </View>
             
@@ -90,17 +87,13 @@ const EditProfile = () => {
                     <AntDesign name='mail' size={20} style={styles.icon}></AntDesign>
                     <TextInputComponent
                     placeholder="Gmail ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
                     value={value}
-                    widthTextInput={"100%"}
+                    widthTextInput={"80%"}
                     heightTextInput={20}
                     onChangeText={text => {
                         setValue(text);
                     }}
-                    keyboardType={'numeric'}
                     marginBottom={0}
-                    autoFocus
                     styleTextInput={[
                         {
                             maxWidth: '100%',
@@ -108,23 +101,20 @@ const EditProfile = () => {
                         textStyle.h[5],
                     ]}
                     style={styles.textinput}
+                    placeholderColor="black"
                 />
                 </View>
                 <View style={styles.containerTextInput}>
                     <AntDesign name='phone' size={20} style={styles.icon}></AntDesign>
                     <TextInputComponent
                     placeholder="Số điện thoại ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
                     value={value}
-                    widthTextInput={"100%"}
+                    widthTextInput={"80%"}
                     heightTextInput={20}
                     onChangeText={text => {
                         setValue(text);
                     }}
-                    keyboardType={'numeric'}
                     marginBottom={0}
-                    autoFocus
                     styleTextInput={[
                         {
                             maxWidth: '100%',
@@ -132,23 +122,20 @@ const EditProfile = () => {
                         textStyle.h[5],
                     ]}
                     style={styles.textinput}
+                    placeholderColor="black"
                 />
                 </View>
                 <View style={styles.containerTextInput}>
                     <Entypo name='eye-with-line' size={20} style={styles.icon}></Entypo>
                     <TextInputComponent
                     placeholder="Mật khẩu cũ ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
                     value={value}
-                    widthTextInput={"100%"}
+                    widthTextInput={"80%"}
                     heightTextInput={20}
                     onChangeText={text => {
                         setValue(text);
                     }}
-                    keyboardType={'numeric'}
                     marginBottom={0}
-                    autoFocus
                     styleTextInput={[
                         {
                             maxWidth: '100%',
@@ -156,23 +143,20 @@ const EditProfile = () => {
                         textStyle.h[5],
                     ]}
                     style={styles.textinput}
+                    placeholderColor="black"
                 />
                 </View>
                 <View style={styles.containerTextInput}>
                     <Entypo name='eye-with-line' size={20} style={styles.icon}></Entypo>
                     <TextInputComponent
                     placeholder="Mật khẩu mới ..."
-                    isMask={true}
-                    mask={MASK_FORMAT.NUMBER}
                     value={value}
-                    widthTextInput={"100%"}
+                    widthTextInput={"80%"}
                     heightTextInput={20}
                     onChangeText={text => {
                         setValue(text);
                     }}
-                    keyboardType={'numeric'}
                     marginBottom={0}
-                    autoFocus
                     styleTextInput={[
                         {
                             maxWidth: '100%',
@@ -180,10 +164,11 @@ const EditProfile = () => {
                         textStyle.h[5],
                     ]}
                     style={styles.textinput}
+                    placeholderColor="black"
                 />
                 </View>
             </View>
-            <ButtonComponent onPress={() => {}} style={{width:"70%", marginLeft: "15%", marginTop: "50%"}} text="Hoàn Tất" />
+            <ButtonComponent onPress={() => {}} style={{width:"60%", marginLeft: "20%", marginTop: "50%",backgroundColor: "#18C0C1",borderRadius:30}} text="Hoàn Tất" />
         </View>
     );
 };
@@ -192,9 +177,9 @@ export default EditProfile;
 
 const styles = StyleSheet.create({
     textinput: {
-        borderBottomColor: "black",
-        borderBottomWidth:2,
-        marginTop:-5,
+       backgroundColor: "white",
+       borderColor: "#18C0C1",
+       borderWidth:1
     },
     container: {
         width: "90%",
@@ -209,11 +194,12 @@ const styles = StyleSheet.create({
         marginTop:5,
     },
     buttonItem: {
-        backgroundColor: "#091E3D",
+        backgroundColor: "#18C0C1",
         width:140,
         marginRight:10,
         marginLeft:10,
-        height:35,
+        height:40,
+        borderRadius:10
     },
     containerTextInput: {
         width:"100%",
@@ -224,9 +210,10 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 99,
         right:10,
-        top: 15,
+        top: 30,
     },
     main: {
-        marginTop: "10%"
+        marginTop: "10%",
+        backgroundColor: "#F2F5FA"
     }
 });
