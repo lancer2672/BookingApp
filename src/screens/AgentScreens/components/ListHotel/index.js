@@ -72,6 +72,7 @@ const ListHotel = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F2F5FA"
   },
   hotelCards: {
     width: "100%",

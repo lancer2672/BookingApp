@@ -10,7 +10,7 @@ import AgentHeader from '../Header';
 import ButtonComponent from '@src/components/Button';
 
 
-const CreateHotel = () => {
+const CreateRoom = () => {
     const [value, setValue] = useState('');
     // useEffect(() => {
     //     handleShowMessage();
@@ -140,7 +140,7 @@ const CreateHotel = () => {
     );
 };
 
-export default CreateHotel;
+export default CreateRoom;
 
 const styles = StyleSheet.create({
     container: {

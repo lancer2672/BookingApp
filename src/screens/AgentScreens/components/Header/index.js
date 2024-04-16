@@ -36,11 +36,13 @@ const AgentHeader = ({ active, detail }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: "#091E3D",
+    backgroundColor: "#18C0C1",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    height: 120,
+    height: 160,
+    borderEndEndRadius:50,
+    borderEndStartRadius:50,
   },
   center: {
     flexDirection: 'column',

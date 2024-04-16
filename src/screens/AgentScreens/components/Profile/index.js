@@ -23,10 +23,10 @@ const Profile = () => {
         navigation.navigate("EditProfile")
     }
     return (
-        <View >
+        <View style={{backgroundColor: "#F2F5FA"}}>
             <AgentHeader active="TÀI KHOẢN"></AgentHeader>
             <View style={{width: "100%", alignItems:"center"}}>
-                <View style={{ backgroundColor: "white", width: 140, height: 140, borderRadius: 75, justifyContent: "center", alignItems: "center", marginTop: -40 }}>
+                <View style={{ backgroundColor: "white", width: 140, height: 140, borderRadius: 75, justifyContent: "center", alignItems: "center", marginTop: -60 }}>
                     <Avatar.Image size={130} source={{ uri: 'https://picsum.photos/200' }} />
                 </View>
             </View>
@@ -47,19 +47,19 @@ const Profile = () => {
             </View>
             <View style={styles.title}><Text style={styles.text}>Thông tin khách sạn</Text></View>
             <View style={styles.main}>
-                <AntDesign name='phone' size={20}></AntDesign>
+                <AntDesign name='right' size={20}></AntDesign>
                 <Text style={styles.textmain}>Số lượt thích</Text>
             </View>
             <View style={styles.main}>
-                <AntDesign name='phone' size={20}></AntDesign>
+                <AntDesign name='right' size={20}></AntDesign>
                 <Text style={styles.textmain}>Đánh giá của khách hàng</Text>
             </View>
             <View style={styles.title}><Text style={styles.text}>Giao diện</Text></View>
             <View style={styles.main}>
-                <AntDesign name='phone' size={20}></AntDesign>
+                <AntDesign name='right' size={20}></AntDesign>
                 <Text style={styles.textmain}>Darkmode</Text>
             </View>
-            <ButtonComponent onPress={navigateToProfile} style={{width:"70%", marginLeft: "15%", marginTop: "40%"}} text="Sửa Thông Tin Cá Nhân" />
+            <ButtonComponent onPress={navigateToProfile} style={{width:"60%" , height:50, marginLeft: "20%", marginTop: "35%", backgroundColor:"#18C0C1", borderRadius:30}} text="Sửa Thông Tin Cá Nhân" />
         </View>
     );
 };
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         height:30,
-        backgroundColor: generalColor.black[10],
+        backgroundColor: "#18C0C1",
         marginTop: 2.5, 
         marginBottom:2.5,
     },
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight:"bold", 
         marginLeft: 20,
+        color:"white",
     },
     textmain: {
         fontSize:16,

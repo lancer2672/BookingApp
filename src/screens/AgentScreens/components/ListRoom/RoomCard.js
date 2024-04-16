@@ -3,11 +3,11 @@ import { View, StyleSheet, TextInput, Text, Image } from 'react-native';
 import ButtonComponent from '@src/components/Button';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
-const HotelCard = ({ name, location, price, sales, images, policy, detail }) => {
+const RoomCard = ({ type, tienich, price, sales, images, policy, detail }) => {
     const navigation = useNavigation()
     const hotel = {
-        name: name,
-        location: location,
+        type: type,
+        tienich: tienich,
         price:price,
         sales:sales,
         images:images,
@@ -15,7 +15,7 @@ const HotelCard = ({ name, location, price, sales, images, policy, detail }) => 
         detail:detail,
     }
     const navigateToDetail = () => {
-        navigation.navigate("ListRoom", {hoteldata: hotel })
+        navigation.navigate("DetailHotel", {hoteldata: hotel })
     } 
     return (
         <View style={styles.container}>
@@ -33,11 +33,11 @@ const HotelCard = ({ name, location, price, sales, images, policy, detail }) => 
                     ))}
                 </Swiper>
             </View>
-            <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20, marginTop: 20 }}>{name}</Text>
-            <Text style={{ fontSize: 15, marginLeft: 20, marginTop: 10 }}>{location}</Text>
+            <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20, marginTop: 20 }}>{type}</Text>
+            <Text style={{ fontSize: 15, marginLeft: 20, marginTop: 10 }}>{detail}</Text>
             <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: "bold", marginTop: 10 }}>{price}</Text>
             <Text style={{ fontSize: 12, marginLeft: 20, marginTop: 5, width: "30%" }}>{sales}</Text>
-            <ButtonComponent style={styles.delete} text="Chi tiết" onPress={navigateToDetail}></ButtonComponent>
+            <ButtonComponent style={styles.delete} text="Xem Phòng" onPress={navigateToDetail}></ButtonComponent>
         </View>
     )
 }
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         borderRadius:20
     },
     delete: {
-        width: "30%",
+        width: "40%",
         position: "absolute",
         bottom: 5,
         right: 20,
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-export default HotelCard;
+export default RoomCard;
