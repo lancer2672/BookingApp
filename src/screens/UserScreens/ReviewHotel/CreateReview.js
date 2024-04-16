@@ -12,15 +12,21 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Pressable,
   View,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Avatar} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
+import {goBack} from '@src/navigation/NavigationController';
+import {rowCenter} from '@src/theme/style';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {REVIEW_TEXT} from '@src/utils/constant'
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const CreateReviewModal = ({isVisible, onClose}) => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [rating, setRating] = useState(0);
   const selectImages = () => {
     const options = {
       noData: true,
@@ -42,7 +48,26 @@ const CreateReviewModal = ({isVisible, onClose}) => {
   return (
     <Modal transparent visible={isVisible} onRequestClose={onClose}>
       <View style={styles.container}>
-        <Text style={styles.title}>Đánh giá</Text>
+      <View style={{padding: 12,  ...rowCenter}}>
+          <Text
+            style={{
+              textTransform: 'uppercase',
+              color: generalColor.primary,
+              ...textStyle.h[2],
+              flex: 1,
+              textAlign: 'center',
+              margiLeft: 24,
+            }}>
+            Đánh giá
+          </Text>
+              <Pressable onPress={onClose}>
+            <AntDesign
+              name="close"
+              size={24}
+              color={generalColor.other.gray}></AntDesign>
+          </Pressable>
+        </View>
+       
         <View style={{flex: 1}}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.row}>
@@ -64,12 +89,16 @@ const CreateReviewModal = ({isVisible, onClose}) => {
             disabled={false}
             maxStars={5}
             rating={4} 
+            rating={rating} 
+            selectedStar={(value) => setRating(value)}
             starSize={30}
           />
             </View>
+            {rating != 0 &&
             <View style={styles.row}>
-              <Text style={textStyle.content.medium}>Trải nghiệm tốt</Text>
+              <Text style={textStyle.content.medium}>{REVIEW_TEXT[rating]}</Text>
             </View>
+            }
 
             <TextInputComponent
               placeholder="Viết đánh giá"
