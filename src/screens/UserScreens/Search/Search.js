@@ -8,6 +8,7 @@ import {useTheme} from 'styled-components';
 
 const UserSearchScreen = () => {
   const theme = useTheme();
+
   return (
     <View style={{flex: 1}}>
       <View
@@ -57,17 +58,19 @@ const UserSearchScreen = () => {
         </Pressable>
       </View>
       <View style={{flex: 1, padding: 20}}>
-        <View style={styles.item}>
-          <TargetSVG></TargetSVG>
-          <Text
-            style={{
-              //   color: theme.color.text.primary,
-              ...textStyle.content.medium,
-              marginLeft: 6,
-            }}>
-            Khách sạn và khu nghỉ dưỡng xung quanh bạn
-          </Text>
-        </View>
+        <Pressable onPress={() => navigate('GGMap')}>
+          <View style={styles.item}>
+            <TargetSVG></TargetSVG>
+            <Text
+              style={{
+                //   color: theme.color.text.primary,
+                ...textStyle.content.medium,
+                marginLeft: 6,
+              }}>
+              Khách sạn và khu nghỉ dưỡng xung quanh bạn
+            </Text>
+          </View>
+        </Pressable>
 
         <View style={{marginTop: 12}}>
           <RecentSearches></RecentSearches>

@@ -1,5 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import GGMap from '@src/components/GGMap';
 import SignUpScreen from '@src/screens/Authentication/SignUp/SignUp';
 import Payment from '@src/screens/UserScreens/Payment';
 import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
@@ -37,6 +38,7 @@ const MainStack = () => {
       />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
+      <Stack.Screen name={'GGMap'} component={GGMap} />
       <Stack.Screen name={'Review'} component={Review} />
       <Stack.Screen name={'ReviewBooking'} component={ReviewBooking} />
       <Stack.Screen
