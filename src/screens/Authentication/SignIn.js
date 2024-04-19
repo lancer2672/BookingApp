@@ -32,7 +32,7 @@ const SignIn = () => {
         ]}>
         Đăng Nhập
       </Text>
-      <Text style={styles.content}>Điền thông tin bên dưới</Text>
+      {/* <Text style={styles.content}>Điền thông tin bên dưới</Text> */}
 
       <View style={[rowCenter, {marginVertical: 12}]}>
         <View style={styles.sep}></View>
@@ -69,7 +69,6 @@ const SignIn = () => {
               }
               error={!!errors.email && !!touched.email}
               errorMessage={errors.email}
-              marginBottom={0}
               styleTextInput={[
                 {
                   paddingLeft: 12,
@@ -105,7 +104,6 @@ const SignIn = () => {
               value={values.password}
               error={!!errors.password && !!touched.password}
               errorMessage={errors.password}
-              marginBottom={0}
               styleTextInput={[
                 {
                   paddingLeft: 12,
