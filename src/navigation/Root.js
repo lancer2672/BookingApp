@@ -1,7 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GGMap from '@src/components/GGMap';
-import SignUpScreen from '@src/screens/Authentication/SignUp/SignUp';
+import SignIn from '@src/screens/Authentication/SignIn';
+import SignUpScreen from '@src/screens/Authentication/SignUp';
 import Payment from '@src/screens/UserScreens/Payment';
 import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
 import Review from '@src/screens/UserScreens/ReviewHotel/Review';
@@ -21,7 +22,10 @@ const AuthenticationStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       {username == null ? (
-        <Stack.Screen name={'SignUp'} component={SignUpScreen} />
+        <Stack.Group>
+          <Stack.Screen name={'SignUp'} component={SignUpScreen} />
+          <Stack.Screen name={'SignIn'} component={SignIn} />
+        </Stack.Group>
       ) : null}
     </Stack.Navigator>
   );

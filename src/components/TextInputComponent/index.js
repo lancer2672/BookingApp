@@ -1,4 +1,4 @@
-import { generalColor } from '@src/theme/color';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import React from 'react';
 import {
@@ -29,7 +29,7 @@ const AppTextInput = props => {
     onPress,
     labelColor = generalColor.black['25'],
     hasPress = false,
-    
+
     colorText = generalColor.white['100'],
     placeholderColor = generalColor.white['100'],
     heightTextInput,
@@ -40,6 +40,7 @@ const AppTextInput = props => {
     isMask = false,
     editable = true,
     mask,
+    secureTextEntry = false,
     style,
     containerStyle,
     autoFocus,
@@ -59,7 +60,12 @@ const AppTextInput = props => {
           marginBottom: 8,
         }}>
         {label && (
-          <Text style={{...textStyle.h[4], color: generalColor.black['25'],...labelStyle}}>
+          <Text
+            style={{
+              ...textStyle.h[4],
+              color: generalColor.black['25'],
+              ...labelStyle,
+            }}>
             {label}
           </Text>
         )}
@@ -85,6 +91,7 @@ const AppTextInput = props => {
               autoCapitalize={'none'}
               editable={editable}
               maxLength={maxLength}
+              secureTextEntry={secureTextEntry}
               keyboardType={keyboardType}
               onChangeText={onChangeText}
               value={value}
