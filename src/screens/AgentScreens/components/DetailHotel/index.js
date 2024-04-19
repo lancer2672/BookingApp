@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Avatar, IconButton } from 'react-native-paper';
-import { Button, StyleSheet, Text, View, Image } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
-import AgentHeader from '../Header';
-import { generalColor } from '@src/theme/color';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Entypo from 'react-native-vector-icons/Entypo';
-import ButtonComponent from '@src/components/Button';
-import Swiper from 'react-native-swiper';
 import { useRoute } from '@react-navigation/native';
+import ButtonComponent from '@src/components/Button';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import Swiper from 'react-native-swiper';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const DetailHotel = () => {
     // useEffect(() => {

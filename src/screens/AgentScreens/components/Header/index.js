@@ -1,33 +1,53 @@
-import Header from '@src/components/Header/Header';
-import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import {  IconButton } from 'react-native-paper';
+import {navigate} from '@src/navigation/NavigationController';
+import {useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {IconButton} from 'react-native-paper';
 import SideMenu from '../SideMenu';
-import { useNavigation } from '@react-navigation/native';
 
-const AgentHeader = ({ active, detail }) => {
+const AgentHeader = ({active, detail}) => {
   const [visible, setVisible] = useState(false);
   const handleOpenSideMenu = () => {
     setVisible(true);
   };
-  const navigation = useNavigation()
   const navigateToNotice = () => {
-    navigation.navigate("Notice")
-  }
+    navigate('Notice');
+  };
   return (
     <View style={styles.container}>
-      <IconButton icon="menu" size={24} onPress={handleOpenSideMenu} iconColor='white' />
-      <View style={styles.center} >
-        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: "center", color:"white" }}>{active}</Text>
-        <Text style={{ fontSize: 13, textAlign: "center", flexWrap: "wrap-reverse", width: "80%",color:"white" }}>{detail}</Text>
+      <IconButton
+        icon="menu"
+        size={24}
+        onPress={handleOpenSideMenu}
+        iconColor="white"
+      />
+      <View style={styles.center}>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: 'white',
+          }}>
+          {active}
+        </Text>
+        <Text
+          style={{
+            fontSize: 13,
+            textAlign: 'center',
+            flexWrap: 'wrap-reverse',
+            width: '80%',
+            color: 'white',
+          }}>
+          {detail}
+        </Text>
       </View>
       <IconButton
         icon="bell"
         size={24}
         onPress={navigateToNotice}
-        iconColor='white'
+        iconColor="white"
       />
-      <SideMenu isVisible={visible} onClose={() => setVisible(false) } />
+      <SideMenu isVisible={visible} onClose={() => setVisible(false)} />
       <TextInput></TextInput>
     </View>
   );
@@ -35,24 +55,24 @@ const AgentHeader = ({ active, detail }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    backgroundColor: "#18C0C1",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
+    width: '100%',
+    backgroundColor: '#18C0C1',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
     height: 160,
-    borderEndEndRadius:50,
-    borderEndStartRadius:50,
+    borderEndEndRadius: 50,
+    borderEndStartRadius: 50,
   },
   center: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    color: "white",
+    color: 'white',
     fontSize: 25,
-    fontWeight: "bold",
-    width: "70%",
-    textAlign: "center",
+    fontWeight: 'bold',
+    width: '70%',
+    textAlign: 'center',
   },
 });
 

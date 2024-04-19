@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Root from '@src/navigation/Root';
 import OnboardingScreen from '@src/screens/UserScreens/Onboarding';
-import UserSearchDetailScreen from '@src/screens/UserScreens/SearchDetail';
 import ThemeProviderComponent from '@src/theme/context';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
@@ -30,7 +30,8 @@ function App() {
   return (
     <ThemeProviderComponent>
       <SafeAreaView style={{flex: 1}}>
-        <UserSearchDetailScreen></UserSearchDetailScreen>
+        <Root></Root>
+        {/* <SortByModal isVisible={true}></SortByModal> */}
         <FlashMessage position="top" />
       </SafeAreaView>
     </ThemeProviderComponent>

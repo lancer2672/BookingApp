@@ -1,6 +1,12 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GGMap from '@src/components/GGMap';
+import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
+import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
+import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
+import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
+import Notice from '@src/screens/AgentScreens/components/Notice';
+import Profile from '@src/screens/AgentScreens/components/Profile';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import Payment from '@src/screens/UserScreens/Payment';
@@ -33,7 +39,7 @@ const AuthenticationStack = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'UserSearchScreen'}
+      initialRouteName={'CreateHotel'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
@@ -49,7 +55,38 @@ const MainStack = () => {
         name={'UserSearchResultScreen'}
         component={UserSearchResultScreen}
       />
-      <Stack.Group screenOptions={screenOptions}></Stack.Group>
+      <Stack.Group screenOptions={screenOptions}>
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{title: 'Chỉnh sửa thông tin'}}
+        />
+        <Stack.Screen
+          name="ListHotel"
+          component={ListHotel}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CreateHotel"
+          component={CreateHotel}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DetailHotel"
+          component={DetailHotel}
+          options={{title: 'Chi tiết khách sạn'}}
+        />
+        <Stack.Screen
+          name="Notice"
+          component={Notice}
+          options={{title: 'Thông báo'}}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

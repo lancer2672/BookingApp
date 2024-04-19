@@ -135,7 +135,7 @@ const SignUp = () => {
         style={{
           marginTop: 'auto',
           alignSelf: 'center',
-          marginBottom: 20,
+          marginBottom: 12,
           flexDirection: 'row',
         }}>
         <Text
