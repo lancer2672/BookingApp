@@ -1,9 +1,10 @@
 import ButtonComponent from '@src/components/Button';
-import {navigate} from '@src/navigation/NavigationController';
-import {StyleSheet, Text, View} from 'react-native';
-import {Avatar} from 'react-native-paper';
+import { navigate } from '@src/navigation/NavigationController';
+import { StyleSheet, Text, View } from 'react-native';
+import { Avatar } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AgentHeader from '../Header';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Profile = () => {
   // useEffect(() => {
@@ -19,9 +20,9 @@ const Profile = () => {
     navigate('EditProfile');
   };
   return (
-    <View style={{backgroundColor: '#F2F5FA'}}>
+    <View style={{ backgroundColor: 'white', flex:1 }}>
       <AgentHeader active="TÀI KHOẢN"></AgentHeader>
-      <View style={{width: '100%', alignItems: 'center'}}>
+      <View style={{ width: '100%', alignItems: 'center' }}>
         <View
           style={{
             backgroundColor: 'white',
@@ -34,7 +35,7 @@ const Profile = () => {
           }}>
           <Avatar.Image
             size={130}
-            source={{uri: 'https://picsum.photos/200'}}
+            source={{ uri: 'https://picsum.photos/200' }}
           />
         </View>
       </View>
@@ -47,7 +48,7 @@ const Profile = () => {
         }}>
         Tên Người Dùng
       </Text>
-      <Text style={{fontSize: 15, textAlign: 'center', marginBottom: 20}}>
+      <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 20 }}>
         20520383@gm.uit.edu.vn
       </Text>
       <View style={styles.title}>
@@ -65,15 +66,23 @@ const Profile = () => {
         <AntDesign name="phone" size={20}></AntDesign>
         <Text style={styles.textmain}>Số điện thoại người dùng</Text>
       </View>
+      <View style={styles.main}>
+        <AntDesign name="phone" size={20}></AntDesign>
+        <Text style={styles.textmain}>CMND</Text>
+      </View>
+      <View style={styles.main}>
+        <AntDesign name="check" size={20}></AntDesign>
+        <Text style={styles.textmain}>Đã xác minh</Text>
+      </View>
       <View style={styles.title}>
         <Text style={styles.text}>Thông tin khách sạn</Text>
       </View>
       <View style={styles.main}>
-        <AntDesign name="right" size={20}></AntDesign>
-        <Text style={styles.textmain}>Số lượt thích</Text>
+        <FontAwesome5 name='hotel' size={20}></FontAwesome5>
+        <Text style={styles.textmain}>Số lượng khách sạn đang quản lý</Text>
       </View>
       <View style={styles.main}>
-        <AntDesign name="right" size={20}></AntDesign>
+        <AntDesign name="right" size={20} ></AntDesign>
         <Text style={styles.textmain}>Đánh giá của khách hàng</Text>
       </View>
       <View style={styles.title}>
@@ -89,7 +98,7 @@ const Profile = () => {
           width: '60%',
           height: 50,
           marginLeft: '20%',
-          marginTop: '35%',
+          marginTop: '25%',
           backgroundColor: '#18C0C1',
           borderRadius: 30,
         }}

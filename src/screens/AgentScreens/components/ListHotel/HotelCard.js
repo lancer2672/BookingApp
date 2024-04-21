@@ -3,17 +3,9 @@ import {navigate} from '@src/navigation/NavigationController';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 const HotelCard = ({name, location, price, sales, images, policy, detail}) => {
-  const hotel = {
-    name: name,
-    location: location,
-    price: price,
-    sales: sales,
-    images: images,
-    policy: policy,
-    detail: detail,
-  };
+
   const navigateToDetail = () => {
-    navigate('ListRoom', {hoteldata: hotel});
+    navigate('ListRoom');
   };
   return (
     <View style={styles.container}>
@@ -64,7 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     paddingBottom: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#F2F5FA',
     width: '90%',
     marginLeft: '5%',
     marginBottom: 20,

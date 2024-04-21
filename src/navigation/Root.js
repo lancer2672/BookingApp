@@ -1,11 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GGMap from '@src/components/GGMap';
+import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
-import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
+import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
 import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
 import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
 import Notice from '@src/screens/AgentScreens/components/Notice';
+import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
 import Profile from '@src/screens/AgentScreens/components/Profile';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
@@ -39,7 +41,7 @@ const AuthenticationStack = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'CreateHotel'}
+      initialRouteName={'ListHotel'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
@@ -76,15 +78,25 @@ const MainStack = () => {
           component={CreateHotel}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name="CreateRoom"
+          component={CreateRoom}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
-          name="DetailHotel"
-          component={DetailHotel}
+          name="DetailRoom"
+          component={DetailRoom}
           options={{title: 'Chi tiết khách sạn'}}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
           options={{title: 'Thông báo'}}
+        />
+         <Stack.Screen
+          name="ListRoom"
+          component={ListRoom}
+          options={{title: 'Danh sách phòng'}}
         />
       </Stack.Group>
     </Stack.Navigator>

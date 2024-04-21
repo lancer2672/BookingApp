@@ -11,6 +11,7 @@ import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
 import { MASK_FORMAT } from '@src/utils/textFormat';
 import textStyle from '@src/theme/text';
+import { navigate } from '@src/navigation/NavigationController';
 
 
 const EditProfile = () => {
@@ -168,7 +169,7 @@ const EditProfile = () => {
                 />
                 </View>
             </View>
-            <ButtonComponent onPress={() => {}} style={{width:"60%", marginLeft: "20%", marginTop: "50%",backgroundColor: "#18C0C1",borderRadius:30}} text="Hoàn Tất" />
+            <ButtonComponent onPress={() => {navigate('Profile')}} style={{width:"50%", marginLeft: "25%", marginTop: "40%",backgroundColor: "#18C0C1",borderRadius:30}} text="Hoàn Tất" />
         </View>
     );
 };
@@ -213,7 +214,8 @@ const styles = StyleSheet.create({
         top: 30,
     },
     main: {
-        marginTop: "10%",
-        backgroundColor: "#F2F5FA"
+        paddingTop: "30%",
+        backgroundColor: "white",
+        flex:1
     }
 });

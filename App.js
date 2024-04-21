@@ -5,6 +5,7 @@ import ThemeProviderComponent from '@src/theme/context';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
+import AgentDashboard from '@src/screens/AgentScreens/Dashboard';
 const checkFirstTimeUser = async () => {
   try {
     const isFirstTime = await AsyncStorage.getItem('@first_time');

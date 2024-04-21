@@ -3,7 +3,7 @@ import {navigate} from '@src/navigation/NavigationController';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
-  const hotel = {
+  const room = {
     type: type,
     tienich: tienich,
     price: price,
@@ -13,7 +13,7 @@ const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
     detail: detail,
   };
   const navigateToDetail = () => {
-    navigate('DetailHotel', {hoteldata: hotel});
+    navigate('DetailRoom', room);
   };
   return (
     <View style={styles.container}>
