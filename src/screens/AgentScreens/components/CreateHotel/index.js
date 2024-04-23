@@ -2,7 +2,7 @@ import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
 import textStyle from '@src/theme/text';
 import { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View, Pressable, Animated } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Pressable, Animated,ScrollView } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import AgentHeader from '../Header';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -95,7 +95,7 @@ const CreateHotel = () => {
   //animation
 
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
+    <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
       <AgentHeader
         active="TẠO KHÁCH SẠN"
         detail="Chúng tôi sẽ đem về cho bạn những     - khách hàng tiềm năng -"></AgentHeader>
@@ -332,7 +332,7 @@ const CreateHotel = () => {
                   style={styles.textinput}
                   placeholderColor="black"
                 />
-                <AntDesign name='delete' size={35} color="tomato" onPress={() => handleDeleteAnUong(index)} style={styles.delete}></AntDesign>
+                <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteAnUong(index)} style={styles.delete}></AntDesign>
 
               </View>
             ))
@@ -385,7 +385,7 @@ const CreateHotel = () => {
                   style={styles.textinput}
                   placeholderColor="black"
                 />
-                <AntDesign name='delete' size={35} color="tomato" onPress={() => handleDeleteDiChuyen(index)} style={styles.delete}></AntDesign>
+                <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteDiChuyen(index)} style={styles.delete}></AntDesign>
 
               </View>
             ))
@@ -449,7 +449,7 @@ const CreateHotel = () => {
             text="Chọn Ảnh"
           />
         </View>
-        <FlatList
+        {/* <FlatList
           style={styles.flatList}
           data={imageSource}
           renderItem={renderItem}
@@ -458,7 +458,7 @@ const CreateHotel = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.imagelist}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-        />
+        /> */}
       </View>
       <ButtonComponent
         onPress={() => { }}
@@ -472,7 +472,7 @@ const CreateHotel = () => {
         }}
         text="Thêm khách sạn"
       />
-    </View>
+    </ScrollView>
   );
 };
 

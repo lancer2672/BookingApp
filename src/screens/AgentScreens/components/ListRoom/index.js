@@ -1,5 +1,5 @@
 import { navigate } from '@src/navigation/NavigationController';
-import { FlatList, StyleSheet, Text, View, Pressable, TouchableOpacity, Image } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Pressable, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RoomCard from './RoomCard';
 import { goBack } from '@src/navigation/NavigationController';
@@ -143,7 +143,7 @@ const ListRoom = () => {
     )
   }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{ padding: 12, marginTop: 12, ...rowCenter, marginBottom: 12 }}>
         <Pressable onPress={goBack}>
           <AntDesign
@@ -163,7 +163,7 @@ const ListRoom = () => {
           }}>
           Chi tiết Hotel
         </Text>
-        <Pressable onPress={navigate('ListRoom')}>
+        <Pressable onPress={()=>{navigate('CreateRoom')}}>
           <Ionicons
             name="add-circle"
             color="#18C0C1"
@@ -172,10 +172,10 @@ const ListRoom = () => {
         </Pressable>
       </View>
 
-      <View style={{ marginLeft: 20 }}>
+      <View style={{ width:"90%", marginLeft:"5%"}}>
         <Text style={{ fontSize: 25, fontWeight: "bold" }}>SNOW homestay</Text>
         <Text style={{ fontSize: 18 }}>28 Dong thi sach vung tau</Text>
-        <TouchableOpacity onPress={handlePress} style={{ marginBottom: 200 }}>
+        <TouchableOpacity onPress={handlePress} style={{ }}>
           <Text style={{ color: 'blue', fontSize: 18 }}>Hiển thị trên bản đồ</Text>
         </TouchableOpacity>
         <Swiper
@@ -204,39 +204,43 @@ const ListRoom = () => {
         </View>
         <Text style={{ fontSize: 22, fontWeight: "bold" }}>Xung quanh Hotel</Text>
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <Button style={[styles.buton, active == "thamquan" && styles.active]} onPress={()=> {setActive('thamquan')}}> <Text style={{ fontSize: 18, color:"black" }}>Tham quan</Text></Button>
-          <Button style={[styles.buton, active == "anuong" && styles.active]} onPress={()=> {setActive('anuong')}}> <Text style={{ fontSize: 18 ,color:"black"}}>An uong</Text></Button>
-          <Button style={[styles.buton, active == "dichuyen" && styles.active]} onPress={()=> {setActive('dichuyen')}}> <Text style={{ fontSize: 18,color:"black" }}>Di chuyen</Text></Button>
+          <Button style={[styles.buton, active == "thamquan" && styles.active]} onPress={()=> {setActive('thamquan')}}> <Text style={[{ fontSize: 18 ,color:"black"}, active == "thamquan" && {color:"white"}]}>Tham quan</Text></Button>
+          <Button style={[styles.buton, active == "anuong" && styles.active]} onPress={()=> {setActive('anuong')}}> <Text style={[{ fontSize: 18 ,color:"black"}, active == "anuong" && {color:"white"}]}>An uong</Text></Button>
+          <Button style={[styles.buton, active == "dichuyen" && styles.active]} onPress={()=> {setActive('dichuyen')}}> <Text style={[{ fontSize: 18 ,color:"black"}, active == "dichuyen" && {color:"white"}]}>Di chuyen</Text></Button>
         </View>
         {active == "thamquan" &&  thamquan()}
         {active == "anuong" &&  anuong()}
         {active == "dichuyen" &&  dichuyen()}
       </View>
       <View style={styles.hotelCards}>
-        <FlatList
-          style={styles.flatList}
-          data={room}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.hotelList}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-        />
+         {room.map((item) => (
+             <RoomCard
+             images={item.images}
+             type={item.type}
+             tienich={item.tienich}
+             price={item.price}
+             sales={item.sales}
+             policy={item.policy}
+             detail={item.detail}
+           />
+         ))}
 
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  
     backgroundColor: 'white',
   },
   hotelCards: {
     width: '100%',
     height:"100%",
-    marginTop:10
+    marginTop:10,
+    alignItems:"center"
   },
   separator: {
     width: 10,
@@ -244,26 +248,18 @@ const styles = StyleSheet.create({
   flatList: {
     width: '100%',
   },
-  add: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#18C0C1',
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    borderRadius: 40,
-  },
   slider: {
     width: '100%',
-    height: 200,
     resizeMode: 'cover',
+    height:200,
+    marginTop:10,
+    marginBottom:10
   },
   imageslider: {
     width: '100%',
-    height: '100%',
+    height:200,
     resizeMode: 'cover',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderRadius:10
   },
   slide: {
     justifyContent: 'center',

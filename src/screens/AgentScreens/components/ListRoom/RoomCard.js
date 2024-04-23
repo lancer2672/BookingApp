@@ -63,12 +63,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     position: 'relative',
-    paddingBottom: 20,
     backgroundColor: 'white',
     width: '90%',
-    marginLeft: '5%',
     marginBottom: 20,
     borderRadius: 20,
+    height: 100,
   },
   delete: {
     width: '40%',
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     width: '100%',
-    height: 200,
+    height:200,
     resizeMode: 'cover',
   },
   imageslider: {
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   slide: {
+    height:200,
     justifyContent: 'center',
     alignItems: 'center',
   },
