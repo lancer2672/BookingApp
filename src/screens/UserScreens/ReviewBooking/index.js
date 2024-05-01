@@ -75,7 +75,6 @@ const ReviewBooking = () => {
               </Text>
               <Text
                 style={{
-                  textTransform: 'uppercase',
                   color: generalColor.primary,
                   ...textStyle.h[4],
                   marginTop: 8,
@@ -180,7 +179,7 @@ const PolicyItem = ({}) => {
       </Text>
       <Text
         style={{
-          ...textStyle.content.medium,
+          ...textStyle.content.small,
           color: generalColor.black[100],
           textAlign: 'left',
         }}>
@@ -200,7 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   txt: {
-    ...textStyle.content.large,
+    ...textStyle.content.medium,
     color: generalColor.other.stronggray,
   },
   label: {

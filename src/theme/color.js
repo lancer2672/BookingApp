@@ -43,7 +43,7 @@ export const whiteThemeColors = {
 export const darkThemeColors = {
   ...generalColor,
   bg: {
-    primary: '#000',
+    primary: '#777',
     secondary: '#1c1c1c',
     tertiary: '#3c50c7',
   },

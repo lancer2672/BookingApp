@@ -1,17 +1,18 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GGMap from '@src/components/GGMap';
-import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
+import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
 import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
 import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
 import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
+import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
-import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
 import Profile from '@src/screens/AgentScreens/components/Profile';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import Payment from '@src/screens/UserScreens/Payment';
+import UserProfile from '@src/screens/UserScreens/Profile/Profile';
 import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
 import Review from '@src/screens/UserScreens/ReviewHotel/Review';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
@@ -41,7 +42,7 @@ const AuthenticationStack = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'ListHotel'}
+      initialRouteName={'UserProfile'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
@@ -51,6 +52,7 @@ const MainStack = () => {
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
       <Stack.Screen name={'GGMap'} component={GGMap} />
+      <Stack.Screen name={'UserProfile'} component={UserProfile} />
       <Stack.Screen name={'Review'} component={Review} />
       <Stack.Screen name={'ReviewBooking'} component={ReviewBooking} />
       <Stack.Screen
@@ -78,7 +80,7 @@ const MainStack = () => {
           component={CreateHotel}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
           options={{headerShown: false}}
@@ -93,7 +95,7 @@ const MainStack = () => {
           component={Notice}
           options={{title: 'Thông báo'}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ListRoom"
           component={ListRoom}
           options={{title: 'Danh sách phòng'}}
