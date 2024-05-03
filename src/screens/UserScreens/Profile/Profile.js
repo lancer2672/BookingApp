@@ -8,6 +8,7 @@ import styled from 'styled-components/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {goBack, navigate} from '@src/navigation/NavigationController';
+import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
 import {ThemeContext} from '@src/theme/context';
 import {Avatar} from 'react-native-paper';
@@ -17,10 +18,13 @@ const UserProfile = () => {
     avatar: 'https://picsum.photos/200',
     nickname: 'User Nickname',
   };
+  const removeUser = useUserStore(state => state.setUser);
 
   const theme = useTheme();
   const {isDarkTheme, setIsDarkTheme} = useContext(ThemeContext);
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    removeUser();
+  };
   const openDeviceSetting = () => {
     Linking.openSettings();
   };

@@ -1,4 +1,5 @@
 import ButtonComponent from '@src/components/Button';
+import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import {formatCurrency} from '@src/utils/textFormat';
@@ -64,6 +65,9 @@ const HotelItem = ({item, onPress}) => {
           </Text>
         </View>
         <ButtonComponent
+          onPress={() => {
+            navigate('ReviewBooking');
+          }}
           style={{width: 100, marginLeft: 'auto'}}
           txtStyle={textStyle.content.medium}
           text={'Đặt phòng'}></ButtonComponent>

@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Avatar} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
@@ -40,8 +41,11 @@ const CreateReviewModal = ({isVisible, onClose}) => {
       }
     });
   };
-  console.log('images', images);
   const handleCreateReview = () => {
+    showMessage({
+      message: 'Đánh giá của bạn đã được tạo',
+      type: 'success',
+    });
     onClose();
   };
   return (

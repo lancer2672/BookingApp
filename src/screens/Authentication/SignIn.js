@@ -1,6 +1,7 @@
 import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {navigate} from '@src/navigation/NavigationController';
+import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -17,7 +18,12 @@ const SignIn = () => {
     email: '',
     password: '',
   };
-  const handleFormSubmit = () => {};
+  const setUser = useUserStore(state => state.setUser);
+
+  const handleFormSubmit = values => {
+    // const { email, password } = values;
+    setUser(values);
+  };
   return (
     <View style={styles.container}>
       <Text

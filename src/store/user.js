@@ -1,7 +1,8 @@
-import {create} from 'zustand';
+import create from 'zustand';
 
 const useUserStore = create(set => ({
-  bears: 0,
-  increasePopulation: () => set(state => ({bears: state.bears + 1})),
-  removeAllBears: () => set({bears: 0}),
+  user: null,
+  setUser: user => set({user: user}),
+  removeUser: () => set({user: null}),
 }));
+export default useUserStore;

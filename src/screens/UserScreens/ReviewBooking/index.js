@@ -1,5 +1,5 @@
 import ButtonComponent from '@src/components/Button';
-import {goBack} from '@src/navigation/NavigationController';
+import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -136,22 +136,25 @@ const ReviewBooking = () => {
             </Text>
             <PolicyItem></PolicyItem>
           </View>
-          <FeeItem></FeeItem>
-          <FeeItem></FeeItem>
-          <FeeItem></FeeItem>
+          <FeeItem title="phí A"></FeeItem>
+          <FeeItem title="phí B"></FeeItem>
+          <FeeItem title="phí C"></FeeItem>
 
           <Divider style={{marginTop: 8}} bold></Divider>
-          <FeeItem></FeeItem>
+          <FeeItem title={'Tổng cộng'}></FeeItem>
           <ButtonComponent
-            style={{marginVertical: 24}}
-            text={'Thanh toán'}></ButtonComponent>
+            onPress={() => {
+              navigate('Payment');
+            }}
+            style={{marginVertical: 24, marginTop: 40}}
+            text={'Tiếp tục'}></ButtonComponent>
         </View>
       </ScrollView>
     </View>
   );
 };
 
-const FeeItem = () => {
+const FeeItem = ({title}) => {
   return (
     <View
       style={{
@@ -159,7 +162,7 @@ const FeeItem = () => {
         marginTop: 20,
         justifyContent: 'space-between',
       }}>
-      <Text style={styles.txt}> Tổng cộng</Text>
+      <Text style={styles.txt}>{title}</Text>
       <Text style={styles.txt}> {formatCurrency(100000)}</Text>
     </View>
   );

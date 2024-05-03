@@ -75,7 +75,7 @@ const GGMap = () => {
           strokeColor="hotpink"
         />
       </MapView>
-      <View style={{height: 300, width: '100%'}}>
+      <View style={{height: 48, width: '100%'}}>
         <GooglePlacesAutocomplete
           placeholder="Tìm kiếm"
           onPress={handlePress}

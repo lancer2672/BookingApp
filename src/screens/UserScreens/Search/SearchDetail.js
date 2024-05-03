@@ -1,7 +1,7 @@
 import {PinSVG} from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {goBack} from '@src/navigation/NavigationController';
+import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import {useState} from 'react';
@@ -74,7 +74,11 @@ const UserSearchDetailScreen = () => {
           value={roomCustomerText(roomCustomer)}
           onPress={() => setRoomCustomerVisbile(true)}></Item>
       </View>
-      <ButtonComponent text={'Tìm phòng'}></ButtonComponent>
+      <ButtonComponent
+        onPress={() => {
+          navigate('UserSearchResultScreen');
+        }}
+        text={'Tìm phòng'}></ButtonComponent>
       <View style={{position: 'absolute', bottom: 0}}>
         <DatePicker
           style={{width: 350, height: 45}}

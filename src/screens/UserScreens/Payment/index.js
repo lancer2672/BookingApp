@@ -12,6 +12,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -130,6 +131,12 @@ const Payment = () => {
               color={generalColor.other.gray}></AntDesign>
           </View>
           <ButtonComponent
+            onPress={() => {
+              showMessage({
+                message: 'Đặt phòng thành công',
+                type: 'success',
+              });
+            }}
             style={{marginVertical: 24}}
             text={'Đặt phòng'}></ButtonComponent>
         </View>

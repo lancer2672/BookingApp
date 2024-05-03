@@ -18,7 +18,9 @@ import Review from '@src/screens/UserScreens/ReviewHotel/Review';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
+import useUserStore from '@src/store/user';
 import {navigationRef} from './NavigationController';
+import {Tabs} from './NavigationTab';
 
 const screenOptions = {
   header: () => null,
@@ -29,7 +31,7 @@ const Stack = createNativeStackNavigator();
 const AuthenticationStack = () => {
   const username = null;
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator initialRouteName="SignIn" screenOptions={screenOptions}>
       {username == null ? (
         <Stack.Group>
           <Stack.Screen name={'SignUp'} component={SignUp} />
@@ -42,13 +44,14 @@ const AuthenticationStack = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'UserProfile'}
+      initialRouteName={'Tabs'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
         name={'UserSearchDetailScreen'}
         component={UserSearchDetailScreen}
       />
+      <Stack.Screen name={'Tabs'} component={Tabs} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
       <Stack.Screen name={'GGMap'} component={GGMap} />
@@ -104,23 +107,79 @@ const MainStack = () => {
     </Stack.Navigator>
   );
 };
+const AgentStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName={'Profile'}
+      screenOptions={{presentation: 'card', ...screenOptions}}>
+      {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
+      <Stack.Group screenOptions={screenOptions}>
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{title: 'Chỉnh sửa thông tin'}}
+        />
+        <Stack.Screen
+          name="ListHotel"
+          component={ListHotel}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CreateHotel"
+          component={CreateHotel}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CreateRoom"
+          component={CreateRoom}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DetailRoom"
+          component={DetailRoom}
+          options={{title: 'Chi tiết khách sạn'}}
+        />
+        <Stack.Screen
+          name="Notice"
+          component={Notice}
+          options={{title: 'Thông báo'}}
+        />
+        <Stack.Screen
+          name="ListRoom"
+          component={ListRoom}
+          options={{title: 'Danh sách phòng'}}
+        />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
 
 const Root = () => {
   const isLogin = false;
-
+  const user = useUserStore(state => state.user);
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator
-        screenOptions={screenOptions}
-        initialRouteName="MainStack">
-        <Stack.Screen
-          options={{
-            animationTypeForReplace: !isLogin ? 'push' : 'pop',
-          }}
-          name={'AuthenticationStack'}
-          component={AuthenticationStack}
-        />
-        <Stack.Screen name={'MainStack'} component={MainStack} />
+      <Stack.Navigator screenOptions={screenOptions}>
+        {user ? (
+          user.email == 'admin@gmail.com' ? (
+            <Stack.Screen name={'AgentStack'} component={AgentStack} />
+          ) : (
+            <Stack.Screen name={'MainStack'} component={MainStack} />
+          )
+        ) : (
+          <Stack.Screen
+            options={{
+              animationTypeForReplace: !isLogin ? 'push' : 'pop',
+            }}
+            name={'AuthenticationStack'}
+            component={AuthenticationStack}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
