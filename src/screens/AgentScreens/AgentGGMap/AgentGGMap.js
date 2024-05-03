@@ -1,8 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
 import {hotelsMock} from '@src/mock/mock';
-import textStyle from '@src/theme/text';
 import {useEffect, useRef, useState} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {API_KEY} from 'react-native-dotenv';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import MapView, {
@@ -12,17 +11,13 @@ import MapView, {
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import {Avatar} from 'react-native-paper';
-import HotelModal from '../HotelModal';
 Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
 });
 
-const GGMap = ({hotels = hotelsMock}) => {
+const AgentGGMap = ({hotels = hotelsMock}) => {
   const [region, setRegion] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [selectedHotel, setSelectedHotel] = useState(null);
-  // const [visible, setVisible] = useState(false);
   const [destination, setDestination] = useState({
     latitude: 10.87014586159959,
     longitude: 106.80295753522363,
@@ -56,7 +51,7 @@ const GGMap = ({hotels = hotelsMock}) => {
       latitude: location.lat,
       longitude: location.lng,
       latitudeDelta: 0.0922,
-      longitudeDelta: 0.0621,
+      longitudeDelta: 0.0421,
     };
     setRegion(newRegion);
     mapRef.current.animateToRegion(newRegion, 1000);
@@ -69,7 +64,7 @@ const GGMap = ({hotels = hotelsMock}) => {
   if (!region || !markerPosition) {
     return null;
   }
-  console.log('selected', selectedHotel);
+
   return (
     <View style={{flex: 1}}>
       <MapView
@@ -80,35 +75,13 @@ const GGMap = ({hotels = hotelsMock}) => {
         {hotels.map((hotel, index) => (
           <Marker
             key={index}
-            onPress={() => {
-              setSelectedHotel(selectedHotel ? null : hotel);
-            }}
             coordinate={{
               latitude: hotel.location.latitude,
               longitude: hotel.location.longitude,
-            }}>
-            <Text
-              numberOfLines={2}
-              style={{
-                ...textStyle.h[4],
-                textShadowColor: 'black',
-                textShadowOffset: {width: -1, height: 1},
-                width: 80,
-                borderRadius: 6,
-                paddingHorizontal: 4,
-                backgroundColor: 'tomato',
-                textShadowRadius: 10,
-                color: 'white',
-                textAlign: 'center',
-              }}>
-              {hotel.name}
-            </Text>
-            <Avatar.Image
-              style={{marginLeft: 12, borderWidth: 2, borderColor: 'white'}}
-              source={{
-                uri: hotel.avatar,
-              }}></Avatar.Image>
-          </Marker>
+            }}
+            title={hotel.name}
+            description={hotel.address}
+          />
         ))}
         {/* <Marker
           coordinate={markerPosition}
@@ -117,6 +90,11 @@ const GGMap = ({hotels = hotelsMock}) => {
         /> */}
         <Marker coordinate={markerPosition} />
 
+        <Circle
+          center={markerPosition}
+          radius={1000}
+          fillColor="rgba(200, 300, 300, 0.5)"
+        />
         <Geojson
           geojson={{
             type: 'FeatureCollection',
@@ -156,13 +134,8 @@ const GGMap = ({hotels = hotelsMock}) => {
           onFail={error => console.log('Find place error', error)}
         />
       </View>
-      <HotelModal
-        isVisible={selectedHotel != null}
-        onClose={() => {
-          setSelectedHotel(null);
-        }}></HotelModal>
     </View>
   );
 };
 
-export default GGMap;
+export default AgentGGMap;

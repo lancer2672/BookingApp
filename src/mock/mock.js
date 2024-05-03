@@ -26,8 +26,8 @@ export const hotelsMock = [
       },
     ],
     location: {
-      longitude: -122.0994,
-      latitude: 37.522,
+      longitude: 106.80541083069399,
+      latitude: 10.880393734396296,
     },
     provinceCode: 'PC4',
     districtCode: 'DC4',
@@ -72,8 +72,8 @@ export const hotelsMock = [
       },
     ],
     location: {
-      longitude: -122.031,
-      latitude: 37.331,
+      longitude: 106.80150553454607,
+      latitude: 10.87780187513427,
     },
     provinceCode: 'PC5',
     districtCode: 'DC5',

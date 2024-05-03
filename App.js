@@ -1,11 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Root from '@src/navigation/Root';
+import GGMap from '@src/components/GGMap';
 import OnboardingScreen from '@src/screens/UserScreens/Onboarding';
 import ThemeProviderComponent from '@src/theme/context';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
-import AgentDashboard from '@src/screens/AgentScreens/Dashboard';
 const checkFirstTimeUser = async () => {
   try {
     const isFirstTime = await AsyncStorage.getItem('@first_time');
@@ -31,8 +30,8 @@ function App() {
   return (
     <ThemeProviderComponent>
       <SafeAreaView style={{flex: 1}}>
-        <Root></Root>
-        {/* <SortByModal isVisible={true}></SortByModal> */}
+        {/* <Root></Root> */}
+        <GGMap></GGMap>
         <FlashMessage position="top" />
       </SafeAreaView>
     </ThemeProviderComponent>
