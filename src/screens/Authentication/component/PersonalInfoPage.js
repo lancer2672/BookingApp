@@ -2,15 +2,17 @@ import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
-import {center, rowCenter} from '@src/theme/style';
+import {center, row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import {
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,18 +20,20 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import {profileUserSchema} from './validateSchema';
 const PersonalInfoPage = ({onNext}) => {
-  const [value, setValue] = useState('');
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const initialValues = {
     email: '',
     firstName: '',
     lastName: '',
     phoneNumber: '',
     identityCard: '',
+    avatar: '',
     frontIdentityCard: '',
-    backIdentityCard: 'keke',
+    backIdentityCard: 'https://picsum.photos/200',
   };
+  const [field, setField] = useState('');
+  const [visible, setVisible] = useState(false);
   const handleFormSubmit = values => {
     onNext(values);
   };
@@ -49,27 +53,7 @@ const PersonalInfoPage = ({onNext}) => {
     });
   };
   return (
-    <View style={styles.container}>
-      <Text
-        style={[
-          textStyle.h[2],
-          {
-            fontFamily: 'serif',
-            color: 'white',
-            marginTop: 12,
-            marginBottom: 6,
-          },
-        ]}>
-        Đăng Ký
-      </Text>
-      <Text style={styles.content}>Điền thông tin bên dưới</Text>
-
-      <View style={[rowCenter, {marginVertical: 12}]}>
-        <View style={styles.sep}></View>
-
-        <View style={styles.sep}></View>
-      </View>
-
+    <ScrollView style={styles.container}>
       <Formik
         validationSchema={profileUserSchema}
         initialValues={initialValues}
@@ -84,49 +68,44 @@ const PersonalInfoPage = ({onNext}) => {
           handleSubmit,
         }) => (
           <>
-            <View style={rowCenter}>
-              <TextInputComponent
-                placeholder="Nhập Tên"
-                onChangeText={text => {
-                  handleChange('firstName')(text);
-                }}
-                value={values.firstName}
-                widthTextInput={'80%'}
-                label="Email"
-                labelStyle={{color: 'white'}}
-                heightTextInput={40}
-                error={!!errors.firstName && !!touched.firstName}
-                errorMessage={errors.firstName}
-                styleTextInput={[
-                  {
-                    paddingLeft: 12,
-                  },
-                  textStyle.h[5],
-                ]}
-                style={styles.textinput}
-                placeholderColor="white"
-              />
-              <TextInputComponent
-                placeholder="Nhập Họ"
-                onChangeText={text => {
-                  handleChange('lastName')(text);
-                }}
-                value={values.lastName}
-                widthTextInput={'80%'}
-                label="Email"
-                labelStyle={{color: 'white'}}
-                heightTextInput={40}
-                error={!!errors.lastName && !!touched.lastName}
-                errorMessage={errors.lastName}
-                styleTextInput={[
-                  {
-                    paddingLeft: 12,
-                  },
-                  textStyle.h[5],
-                ]}
-                style={styles.textinput}
-                placeholderColor="white"
-              />
+            <Text style={[textStyle.h[3], {color: 'white', marginVertical: 4}]}>
+              Thông tin cá nhân
+            </Text>
+            <View style={[row, {justifyContent: 'space-between'}]}>
+              <View style={{flex: 1}}>
+                <TextInputComponent
+                  placeholder="Nhập Tên"
+                  onChangeText={text => {
+                    handleChange('firstName')(text);
+                  }}
+                  value={values.firstName}
+                  widthTextInput={'80%'}
+                  labelStyle={{color: 'white'}}
+                  heightTextInput={40}
+                  error={!!errors.firstName && !!touched.firstName}
+                  errorMessage={errors.firstName}
+                  styleTextInput={[textStyle.h[5]]}
+                  style={styles.textinput}
+                  placeholderColor="white"
+                />
+              </View>
+              <View style={{flex: 1, marginLeft: 12}}>
+                <TextInputComponent
+                  placeholder="Nhập Họ"
+                  onChangeText={text => {
+                    handleChange('lastName')(text);
+                  }}
+                  value={values.lastName}
+                  widthTextInput={'90%'}
+                  labelStyle={{color: 'white'}}
+                  heightTextInput={40}
+                  error={!!errors.lastName && !!touched.lastName}
+                  errorMessage={errors.lastName}
+                  styleTextInput={[textStyle.h[5]]}
+                  style={styles.textinput}
+                  placeholderColor="white"
+                />
+              </View>
             </View>
             <TextInputComponent
               placeholder="Nhập Email"
@@ -134,9 +113,7 @@ const PersonalInfoPage = ({onNext}) => {
                 handleChange('email')(text);
               }}
               value={values.email}
-              widthTextInput={'80%'}
-              label="Email"
-              labelStyle={{color: 'white'}}
+              widthTextInput={'90%'}
               heightTextInput={40}
               leftContent={
                 <Fontisto name="email" color="white" size={20}></Fontisto>
@@ -195,13 +172,13 @@ const PersonalInfoPage = ({onNext}) => {
             <View style={rowCenter}>
               <TouchableOpacity
                 onPress={async () => {
-                  const image = await selectImages();
-                  handleChange('frontIdentityCard')(image.uri);
+                  setField(() => 'frontIdentityCard');
+                  setVisible(() => true);
                 }}
                 style={styles.identityCard}>
                 {values.frontIdentityCard ? (
                   <Image
-                    style={{flex: 1}}
+                    style={styles.img}
                     source={{uri: values.frontIdentityCard}}></Image>
                 ) : (
                   <View style={center}>
@@ -209,19 +186,20 @@ const PersonalInfoPage = ({onNext}) => {
                       name="idcard"
                       color={generalColor.primary}
                       size={20}></AntDesign>
-                    <Text style={{color: 'white'}}>Mặt trước</Text>
+                    <Text style={{color: generalColor.primary}}>Mặt trước</Text>
                   </View>
                 )}
               </TouchableOpacity>
+              <View style={{width: 12}}></View>
               <TouchableOpacity
                 onPress={async () => {
-                  const image = await selectImages();
-                  handleChange('backIdentityCard')(image.uri);
+                  setField(() => 'backIdentityCard');
+                  setVisible(() => true);
                 }}
                 style={styles.identityCard}>
                 {values.backIdentityCard ? (
                   <Image
-                    style={{flex: 1}}
+                    style={styles.img}
                     source={{uri: values.backIdentityCard}}></Image>
                 ) : (
                   <View style={center}>
@@ -229,11 +207,38 @@ const PersonalInfoPage = ({onNext}) => {
                       name="idcard"
                       color={generalColor.primary}
                       size={20}></AntDesign>
-                    <Text style={{color: 'white'}}>Mặt sau</Text>
+                    <Text style={{color: generalColor.primary}}>Mặt sau</Text>
                   </View>
                 )}
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              onPress={async () => {
+                setField(() => 'avatar');
+                setVisible(() => true);
+              }}
+              style={styles.avatar}>
+              {values.avatar ? (
+                <Image style={styles.img} source={{uri: values.avatar}}></Image>
+              ) : (
+                <View style={center}>
+                  <AntDesign
+                    name="user"
+                    color={generalColor.primary}
+                    size={20}></AntDesign>
+                  <Text style={{color: generalColor.primary}}>
+                    Ảnh đại diện
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+            <ImagePickerModal
+              onResult={images => {
+                console.log('images', images);
+                handleChange(field)(images[0]);
+              }}
+              visible={visible}
+              onClose={() => setVisible(false)}></ImagePickerModal>
             <ButtonComponent
               onPress={() => {
                 console.log('press');
@@ -271,7 +276,7 @@ const PersonalInfoPage = ({onNext}) => {
           Đăng nhập
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -280,13 +285,13 @@ export default PersonalInfoPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: generalColor.other.darkblue,
   },
   buttonItem: {
     marginVertical: 20,
     paddingVertical: 12,
   },
+  img: {width: '100%', height: '100%', resizeMode: 'contain'},
   textinput: {
     backgroundColor: undefined,
     borderColor: generalColor.white[50],
@@ -295,11 +300,20 @@ const styles = StyleSheet.create({
   },
   identityCard: {
     borderRadius: 12,
-    padding: 12,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     height: 120,
-    width: 200,
+    backgroundColor: generalColor.other.lightgray,
+  },
+  avatar: {
+    borderRadius: 12,
+    width: '50%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+    alignItems: 'center',
+    height: 120,
     backgroundColor: generalColor.other.lightgray,
   },
   sep: {

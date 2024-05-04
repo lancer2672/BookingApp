@@ -1,4 +1,3 @@
-import StepProgress from '@src/components/StepProgress';
 import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
@@ -6,7 +5,6 @@ import textStyle from '@src/theme/text';
 import {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
-import AddressInfoPage from './component/AddressInfoPage';
 import PersonalInfoPage from './component/PersonalInfoPage';
 
 const steps = [
@@ -22,19 +20,16 @@ const steps = [
 const AgentSignUp = () => {
   const [agent, setAgent] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
-  const initialValues = {
-    email: '',
-    password: '',
-  };
   const handleFinish = () => {
     let seconds = 5;
-    let interval = setInterval(() => {
+    let interval = setInterval(async () => {
       showMessage({
         message: `Đơn của bạn đã được tạo. Bạn sẽ nhận được phản hồi qua email.  ${seconds--}`,
         type: 'success',
       });
       if (seconds < 0) {
         clearInterval(interval);
+        // await agentApi
         navigate('SignIn');
       }
     }, 1000);
@@ -64,15 +59,19 @@ const AgentSignUp = () => {
 
         <View style={styles.sep}></View>
       </View>
-
-      <StepProgress selectedIndex={currentStep} steps={steps}>
+      <PersonalInfoPage
+        onNext={values => {
+          handleNext(values);
+          handleFinish();
+        }}></PersonalInfoPage>
+      {/* <StepProgress selectedIndex={currentStep} steps={steps}>
         <PersonalInfoPage onNext={handleNext}></PersonalInfoPage>
         <AddressInfoPage
           onNext={values => {
             handleNext(values);
             handleFinish();
           }}></AddressInfoPage>
-      </StepProgress>
+      </StepProgress> */}
     </View>
   );
 };

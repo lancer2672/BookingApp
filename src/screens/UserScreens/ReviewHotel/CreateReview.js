@@ -71,6 +71,7 @@ const CreateReviewModal = ({isVisible, onClose}) => {
           </Pressable>
         </View>
 
+        <View style={rowCenter}></View>
         <View style={{flex: 1}}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.row}>
