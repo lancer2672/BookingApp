@@ -8,6 +8,7 @@ import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
 import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
+import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import GGMap from '@src/screens/UserScreens/GGMap';
@@ -36,6 +37,7 @@ const AuthenticationStack = () => {
       {username == null ? (
         <Stack.Group>
           <Stack.Screen name={'SignUp'} component={SignUp} />
+          <Stack.Screen name={'AgentSignUp'} component={AgentSignUp} />
           <Stack.Screen name={'SignIn'} component={SignIn} />
         </Stack.Group>
       ) : null}

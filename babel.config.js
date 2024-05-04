@@ -17,16 +17,11 @@ module.exports = {
       },
     ],
     [
-      'react-native-reanimated/plugin',
-      {
-        globals: ['__scanCodes'],
-      },
-    ],
-    [
       'module:react-native-dotenv',
       {
         moduleName: 'react-native-dotenv',
       },
     ],
+    ['react-native-reanimated/plugin'],
   ],
 };

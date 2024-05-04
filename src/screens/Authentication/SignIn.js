@@ -167,6 +167,24 @@ const SignIn = () => {
           Đăng ký ngay
         </Text>
       </Pressable>
+      <Pressable
+        onPress={() => {
+          navigate('AgentSignUp');
+        }}
+        style={{
+          alignSelf: 'center',
+          marginBottom: 20,
+          flexDirection: 'row',
+        }}>
+        <Text
+          style={{
+            color: 'white',
+            textDecorationLine: 'underline',
+            fontWeight: '500',
+          }}>
+          Đăng ký làm agent
+        </Text>
+      </Pressable>
     </View>
   );
 };
