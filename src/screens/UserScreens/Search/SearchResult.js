@@ -1,3 +1,4 @@
+import {hotelsMock} from '@src/mock/mock';
 import {goBack} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
@@ -5,7 +6,7 @@ import textStyle from '@src/theme/text';
 import {formatDate} from '@src/utils/textFormat';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import HotelItem from '../components/HotelItem';
+import RoomItem from '../components/RoomItem';
 
 const hotels = [
   {
@@ -75,13 +76,13 @@ const UserSearchResultScreen = () => {
             }}>
             Phòng
           </Text>
-          {hotels.map(hotel => (
-            <HotelItem
-              key={hotel.id}
-              item={hotel}
-              onPress={() => console.log('Đặt phòng')}
-            />
-          ))}
+          {/* {hotels.map(hotel => (
+          ))} */}
+          <RoomItem
+            hotel={hotelsMock}
+            room={hotelsMock[0].rooms[0]}
+            onPress={() => console.log('Đặt phòng')}
+          />
         </View>
       </ScrollView>
     </View>

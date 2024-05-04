@@ -120,7 +120,6 @@ const SideMenu = ({isVisible, onClose}) => {
           }}
         />
         <SideBarItem
-          onClick={navigate('SignIn')}
           text="Đăng xuất"
           leftIcon={<AntDesign name="logout" size={24} color="white" />}
           style={styles.logout}></SideBarItem>

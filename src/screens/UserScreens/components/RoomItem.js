@@ -1,21 +1,20 @@
 import ButtonComponent from '@src/components/Button';
-import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import {formatCurrency} from '@src/utils/textFormat';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const HotelItem = ({item, onPress}) => {
+const RoomItem = ({hotel, room, onPress}) => {
   return (
     <View style={{marginTop: 12}}>
       <Image
         resizeMode="cover"
-        source={{uri: 'https://picsum.photos/200'}}
+        source={{uri: hotel.avatar}}
         style={styles.image}></Image>
       <View style={styles.itemContainer}>
         <Text style={{color: generalColor.primary, ...textStyle.h[3]}}>
-          {item.name}
+          {hotel.name}
         </Text>
         <Text style={{color: generalColor.primary, ...textStyle.content.small}}>
           A variety of connecting rooms with furnished semiprivate courtyards
@@ -65,9 +64,7 @@ const HotelItem = ({item, onPress}) => {
           </Text>
         </View>
         <ButtonComponent
-          onPress={() => {
-            navigate('ReviewBooking');
-          }}
+          onPress={onPress}
           style={{width: 100, marginLeft: 'auto'}}
           txtStyle={textStyle.content.medium}
           text={'Đặt phòng'}></ButtonComponent>
@@ -76,7 +73,7 @@ const HotelItem = ({item, onPress}) => {
   );
 };
 
-export default HotelItem;
+export default RoomItem;
 
 const styles = StyleSheet.create({
   image: {

@@ -1,8 +1,12 @@
 import Geolocation from '@react-native-community/geolocation';
 import {hotelsMock} from '@src/mock/mock';
+import ChooseRoomAndCustomer from '@src/screens/UserScreens/Search/components/ChooseRoomAndCustomer';
+import {generalColor} from '@src/theme/color';
+import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {useEffect, useRef, useState} from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import DatePicker from 'react-native-date-ranges';
 import {API_KEY} from 'react-native-dotenv';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import MapView, {
@@ -13,6 +17,11 @@ import MapView, {
 } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {Avatar} from 'react-native-paper';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import {navigate} from '@src/navigation/NavigationController';
+import {formatDate} from '@src/utils/textFormat';
 import HotelModal from '../HotelModal';
 Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
@@ -20,8 +29,27 @@ Geolocation.setRNConfiguration({
 
 const GGMap = ({hotels = hotelsMock}) => {
   const [region, setRegion] = useState(null);
+  const [roomCustomerVisible, setRoomCustomerVisbile] = useState(false);
+  const [roomCustomer, setRoomCustomer] = useState({
+    children: 0,
+    room: 1,
+    mature: 2,
+  });
+  const [date, setDate] = useState({
+    checkinDate: null,
+    checkoutDate: null,
+  });
   const [markerPosition, setMarkerPosition] = useState(null);
   const [selectedHotel, setSelectedHotel] = useState(null);
+  const [datepickerVisible, setDatepickerVisible] = useState(false);
+  const handleSelectDate = ({startDate, endDate}) => {
+    setDate(() => ({
+      checkinDate: startDate.replace(/\//g, '-'),
+      checkoutDate: endDate.replace(/\//g, '-'),
+    }));
+  };
+  console.log('Selected date range', date);
+
   // const [visible, setVisible] = useState(false);
   const [destination, setDestination] = useState({
     latitude: 10.87014586159959,
@@ -145,6 +173,46 @@ const GGMap = ({hotels = hotelsMock}) => {
           strokeColor="hotpink"
         />
       </MapView>
+      <View style={styles.timeAndPeople}>
+        <TouchableOpacity
+          onPress={() => {
+            setDatepickerVisible(true);
+          }}
+          style={{...rowCenter, flex: 1}}>
+          {!date.checkinDate || !date.checkoutDate ? (
+            <Text style={textStyle.h[4]}>Chọn ngày</Text>
+          ) : (
+            <Text style={textStyle.h[4]}>
+              {formatDate(date.checkinDate, 'dd/MM')} -{' '}
+              {formatDate(date.checkoutDate, 'dd/MM')}
+            </Text>
+          )}
+        </TouchableOpacity>
+        <View style={styles.seperator}></View>
+        <TouchableOpacity
+          onPress={() => {
+            setRoomCustomerVisbile(true);
+          }}
+          style={{...rowCenter, flex: 1}}>
+          <Text style={textStyle.h[4]}>{roomCustomer.room} </Text>
+          <Ionicons
+            name="bed"
+            color={generalColor.primary}
+            size={24}></Ionicons>
+
+          <Text style={textStyle.h[4]}> {roomCustomer.mature} </Text>
+          <Ionicons
+            name="person"
+            color={generalColor.primary}
+            size={24}></Ionicons>
+          <Text style={textStyle.h[4]}> {roomCustomer.children} </Text>
+          <FontAwesome6
+            name="children"
+            color={generalColor.primary}
+            size={24}></FontAwesome6>
+        </TouchableOpacity>
+      </View>
+
       <View style={{height: 48, width: '100%'}}>
         <GooglePlacesAutocomplete
           placeholder="Tìm kiếm"
@@ -157,12 +225,63 @@ const GGMap = ({hotels = hotelsMock}) => {
         />
       </View>
       <HotelModal
+        handleContinue={() => {
+          navigate('HotelRoomList', {hotel: selectedHotel, roomCustomer, date});
+        }}
         isVisible={selectedHotel != null}
         onClose={() => {
           setSelectedHotel(null);
         }}></HotelModal>
+      <View style={{position: 'absolute', bottom: 0}}>
+        <DatePicker
+          style={{width: 350, height: 45}}
+          isVisible={datepickerVisible}
+          markText="Chọn ngày"
+          onConfirm={handleSelectDate}
+          onChangeVisible={setDatepickerVisible}
+          customStyles={{
+            placeholderText: {fontSize: 20}, // placeHolder style
+            headerStyle: {}, // title container style
+            headerMarkTitle: {}, // title mark style
+            headerDateTitle: {}, // title Date style
+            contentInput: {}, //content text container style
+            contentText: {}, //after selected text Style
+          }} // optional
+          centerAlign // optional text will align center or not
+          allowFontScaling={false} // optional
+          placeholder={''}
+          mode={'range'}
+        />
+      </View>
+      <ChooseRoomAndCustomer
+        roomCustomer={roomCustomer}
+        onChange={setRoomCustomer}
+        onClose={() => setRoomCustomerVisbile(false)}
+        isVisible={roomCustomerVisible}></ChooseRoomAndCustomer>
     </View>
   );
 };
 
 export default GGMap;
+
+const styles = StyleSheet.create({
+  timeAndPeople: {
+    position: 'absolute',
+    top: 24,
+    padding: 8,
+    right: 24,
+    left: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: generalColor.other.lightgray,
+    borderRadius: 8,
+  },
+  seperator: {
+    width: 3,
+    borderRadius: 24,
+    height: 32,
+    marginHorizontal: 8,
+    backgroundColor: 'gray',
+  },
+});

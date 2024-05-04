@@ -18,17 +18,25 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ButtonComponent from '../Button';
-const HotelModal = ({hotel = hotelsMock[0], isVisible, onClose}) => {
+const HotelModal = ({
+  hotel = hotelsMock[0],
+  isVisible,
+  handleContinue,
+  onClose,
+}) => {
   const callAgent = (phoneNumber = '0846303261') => {
     Linking.openURL(`tel:${phoneNumber}`);
+  };
+  const onContinue = () => {
+    handleContinue();
   };
   return (
     <ReactNativeModal
       isVisible={isVisible}
-      animationIn="slideInBottom"
+      animationIn="slideInUp"
       backdropOpacity={0}
       useNativeDriver={true}
-      animationOut="slideOutTop"
+      animationOut="slideOutDown"
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
       style={{margin: 0}}>
@@ -107,9 +115,7 @@ const HotelModal = ({hotel = hotelsMock[0], isVisible, onClose}) => {
           </TouchableOpacity>
         </View>
         <ButtonComponent
-          onPress={() => {
-            // navigate('Payment');
-          }}
+          onPress={onContinue}
           style={{marginVertical: 24, marginTop: 40}}
           text={'Tiếp tục'}></ButtonComponent>
       </View>

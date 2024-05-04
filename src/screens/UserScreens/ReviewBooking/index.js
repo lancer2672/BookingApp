@@ -1,3 +1,4 @@
+import {useRoute} from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
@@ -17,6 +18,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ReviewBooking = () => {
+  const {roomCustomer, date, hotel, room} = useRoute().params;
+
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -43,17 +46,30 @@ const ReviewBooking = () => {
         <View style={[rowCenter, styles.header]}>
           <View style={{flex: 1}}>
             <Text>Check-in</Text>
-            <Text style={styles.infoText}>{formatDate(new Date())} </Text>
+            <Text style={styles.infoText}>
+              {formatDate(date.checkinDate, 'dd/MM')}{' '}
+            </Text>
           </View>
           <View style={{flex: 1}}>
             <Text>Check-out</Text>
-            <Text style={styles.infoText}>{formatDate(new Date())} </Text>
+            <Text style={styles.infoText}>
+              {formatDate(date.checkoutDate, 'dd/MM')}{' '}
+            </Text>
           </View>
           <View style={{flex: 2}}>
             <Text style={{textAlign: 'right'}}>Phòng & Khách</Text>
-            <Text style={{...styles.infoText, textAlign: 'right'}}>
-              1 phòng 2 người{' '}
+            <Text
+              numberOfLines={1}
+              style={{...styles.infoText, textAlign: 'right'}}>
+              {roomCustomer.room} phòng {roomCustomer.mature} người
             </Text>
+            {roomCustomer.children != 0 && (
+              <Text
+                numberOfLines={1}
+                style={{...styles.infoText, textAlign: 'right'}}>
+                {roomCustomer.children} trẻ em
+              </Text>
+            )}
           </View>
         </View>
         <View
@@ -71,7 +87,7 @@ const ReviewBooking = () => {
                   ...textStyle.h[2],
                   textAlign: 'left',
                 }}>
-                Beach house studio
+                {hotel.name}
               </Text>
               <Text
                 style={{
@@ -80,7 +96,7 @@ const ReviewBooking = () => {
                   marginTop: 8,
                   textAlign: 'left',
                 }}>
-                {formatCurrency(100000)}/ đêm
+                {formatCurrency(room.pricePerNight)}/ đêm
               </Text>
               <View
                 style={{
@@ -98,7 +114,7 @@ const ReviewBooking = () => {
                     ...textStyle.content.medium,
                     marginRight: 12,
                   }}>
-                  1 Giường
+                  {room.bed} Giường
                 </Text>
 
                 <Ionicons
@@ -110,7 +126,7 @@ const ReviewBooking = () => {
                     color: generalColor.black[100],
                     ...textStyle.content.medium,
                   }}>
-                  3 khách
+                  {Number(room.numOfPeople) + room.numOfChildren} khách
                 </Text>
               </View>
             </View>

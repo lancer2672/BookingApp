@@ -18,9 +18,16 @@ export const formatDate = (date, formatStr = 'MM/yyyy') => {
     // Convert timestamp to Date object
     date = new Date(date * 1000);
   } else if (typeof date === 'string') {
-    // Convert date string to Date object
+    // Convert date string to Date object`
+    console.log('date', new Date(date));
     date = new Date(date);
   }
-
-  return format(date, formatStr, {locale: vi});
+  console.log('formatDate date', date);
+  try {
+    result = format(date, formatStr, {locale: vi});
+    return result;
+  } catch (er) {
+    console.log('error', er);
+    return '';
+  }
 };

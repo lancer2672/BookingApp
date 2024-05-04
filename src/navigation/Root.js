@@ -11,6 +11,7 @@ import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
+import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
 import Payment from '@src/screens/UserScreens/Payment';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
 import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
@@ -44,7 +45,7 @@ const AuthenticationStack = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'Tabs'}
+      initialRouteName={'GGMap'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
@@ -63,11 +64,8 @@ const MainStack = () => {
         component={UserSearchResultScreen}
       />
       <Stack.Group screenOptions={screenOptions}>
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{headerShown: false}}
-        />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="HotelRoomList" component={HotelRoomList} />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
