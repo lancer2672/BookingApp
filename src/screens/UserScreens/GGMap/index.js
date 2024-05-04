@@ -9,12 +9,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import {API_KEY} from 'react-native-dotenv';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView, {
-  Circle,
-  Geojson,
-  Marker,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {Avatar} from 'react-native-paper';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
@@ -22,7 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {navigate} from '@src/navigation/NavigationController';
 import {formatDate} from '@src/utils/textFormat';
-import HotelModal from '../HotelModal';
+import HotelModal from '../../../components/HotelModal';
 Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
 });
@@ -144,34 +139,15 @@ const GGMap = ({hotels = hotelsMock}) => {
           onDragEnd={handleDragEnd}
         /> */}
         <Marker coordinate={markerPosition} />
-
-        <Geojson
-          geojson={{
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Point',
-                  coordinates: [
-                    markerPosition.longitude,
-                    markerPosition.latitude,
-                  ],
-                },
-              },
-            ],
-          }}
-        />
-
-        <Circle center={markerPosition} radius={1000} />
-        <MapViewDirections
-          origin={region}
-          destination={destination}
-          apikey={API_KEY}
-          strokeWidth={3}
-          strokeColor="hotpink"
-        />
+        {selectedHotel && (
+          <MapViewDirections
+            origin={region}
+            destination={selectedHotel.location}
+            apikey={API_KEY}
+            strokeWidth={3}
+            strokeColor="hotpink"
+          />
+        )}
       </MapView>
       <View style={styles.timeAndPeople}>
         <TouchableOpacity

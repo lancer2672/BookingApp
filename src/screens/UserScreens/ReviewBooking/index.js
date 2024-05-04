@@ -1,5 +1,6 @@
 import {useRoute} from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
+import {reviewBookingMock} from '@src/mock/mock';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
@@ -16,10 +17,14 @@ import {
 import {Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ListReview from '../ReviewHotel/components/ListReview';
 
 const ReviewBooking = () => {
   const {roomCustomer, date, hotel, room} = useRoute().params;
 
+  const handleNavigateReviewAll = () => {
+    navigate('Review', {hotel});
+  };
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -136,20 +141,31 @@ const ReviewBooking = () => {
           </View>
           <View
             style={{
-              borderBottomWidth: 1,
+              borderTopWidth: 1,
               borderColor: '#DDDDDD',
-              backgroundColor: 'tomato',
-            }}></View>
-          <View>
-            <Text
-              style={{
-                marginTop: 12,
-                ...textStyle.h[3],
-                color: generalColor.primary,
-                textAlign: 'left',
-              }}>
-              Chính sách
-            </Text>
+              marginTop: 20,
+            }}>
+            <View>
+              <View style={rowCenter}>
+                <Text style={styles.policy}>Đánh giá</Text>
+                <Pressable
+                  onPress={handleNavigateReviewAll}
+                  style={{marginLeft: 'auto'}}>
+                  <Text style={{textDecorationLine: 'underline'}}>
+                    {' '}
+                    Xem tất cả
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+            <View style={{}}>
+              <ListReview
+                reviews={[reviewBookingMock[0]]}
+                hotel={hotel}></ListReview>
+            </View>
+          </View>
+          <View style={{marginTop: 12}}>
+            <Text style={styles.policy}>Chính sách</Text>
             <PolicyItem></PolicyItem>
           </View>
           <FeeItem title="phí A"></FeeItem>
@@ -216,6 +232,11 @@ const styles = StyleSheet.create({
     borderColor: '#DDDDDD',
     paddingBottom: 18,
     justifyContent: 'space-between',
+  },
+  policy: {
+    ...textStyle.h[3],
+    color: generalColor.primary,
+    textAlign: 'left',
   },
   txt: {
     ...textStyle.content.medium,

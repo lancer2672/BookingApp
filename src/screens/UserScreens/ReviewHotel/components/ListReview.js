@@ -1,3 +1,4 @@
+import {reviewBookingMock} from '@src/mock/mock';
 import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -5,7 +6,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const ListReview = ({style = {}}) => {
+const ListReview = ({hotel, reviews = reviewBookingMock, style = {}}) => {
   const renderItem = ({item}) => {
     return (
       <View
@@ -37,15 +38,7 @@ const ListReview = ({style = {}}) => {
               year: 'numeric',
             })}
           </Text>
-          <Text style={styles.content}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containin
-          </Text>
+          <Text style={styles.content}>{item.description}</Text>
           <View style={rowCenter}>
             <AntDesign
               name="like2"
@@ -64,7 +57,7 @@ const ListReview = ({style = {}}) => {
     <View style={{flex: 1}}>
       <FlatList
         style={styles.flatList}
-        data={[1, 2]}
+        data={reviews}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}

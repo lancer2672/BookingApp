@@ -30,6 +30,15 @@ const BookingHistoryItem = ({}) => {
           <Text style={{...textStyle.content.medium, fontWeight: '500'}}>
             Check in 20-02-2020
           </Text>
+          <Text
+            style={{
+              ...textStyle.content.medium,
+              textDecorationLine: 'underline',
+              fontWeight: '500',
+              color: generalColor.primary,
+            }}>
+            Xem đánh giá của bạn
+          </Text>
         </View>
       </View>
       <CreateReviewModal

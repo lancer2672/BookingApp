@@ -44,14 +44,22 @@ const HotelModal = ({
         <View style={row}>
           <View>
             <Image source={{uri: hotel.avatar}} style={styles.img}></Image>
-            <StarRating
-              fullStarColor={generalColor.other.yellow}
-              disabled={true}
-              maxStars={5}
-              containerStyle={{marginTop: 8}}
-              rating={3.4}
-              starSize={16}
-            />
+            <View style={row}>
+              <StarRating
+                fullStarColor={generalColor.other.yellow}
+                disabled={true}
+                maxStars={5}
+                containerStyle={{marginTop: 8}}
+                rating={hotel.rating}
+                starSize={16}
+              />
+              <Text style={{lineHeight: 32, color: 'black'}}>
+                ({hotel.rating})
+              </Text>
+            </View>
+            <Text style={{lineHeight: 18, color: 'black'}}>
+              (xxx lượt đánh giá)
+            </Text>
           </View>
           <View
             style={{

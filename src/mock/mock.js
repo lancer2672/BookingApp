@@ -101,3 +101,34 @@ export const hotelsMock = [
     ],
   },
 ];
+
+export const reviewBookingMock = [
+  {
+    id: 101,
+    userId: 201,
+    createdAt: '2024-05-12T08:00:00.000Z',
+    react: [201, 202, 203],
+    hotelId: 4,
+    parentId: null,
+    description: 'Great experience, friendly staff and clean rooms.',
+    images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
+  },
+  {
+    id: 102,
+    userId: 202,
+    createdAt: '2024-05-13T09:30:00.000Z',
+    react: [204, 205],
+    hotelId: 5,
+    parentId: 101,
+    description: 'The food was not up to the mark, expected better quality.',
+    images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
+  },
+];
+
+export const reviewRatingMock = [
+  {
+    userId: 201,
+    hotelId: 5,
+    rating: 3.0,
+  },
+];

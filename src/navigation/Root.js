@@ -1,6 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import GGMap from '@src/components/GGMap';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
 import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
@@ -11,6 +10,7 @@ import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
+import GGMap from '@src/screens/UserScreens/GGMap';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
 import Payment from '@src/screens/UserScreens/Payment';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
@@ -45,7 +45,7 @@ const AuthenticationStack = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'GGMap'}
+      initialRouteName={'Tabs'}
       screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
