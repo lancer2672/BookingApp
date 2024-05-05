@@ -22,11 +22,11 @@ const AgentSignUp = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const handleFinish = () => {
     let seconds = 5;
+    showMessage({
+      message: `Đơn của bạn đã được tạo. Bạn sẽ nhận được phản hồi qua email`,
+      type: 'success',
+    });
     let interval = setInterval(async () => {
-      showMessage({
-        message: `Đơn của bạn đã được tạo. Bạn sẽ nhận được phản hồi qua email.  ${seconds--}`,
-        type: 'success',
-      });
       if (seconds < 0) {
         clearInterval(interval);
         // await agentApi

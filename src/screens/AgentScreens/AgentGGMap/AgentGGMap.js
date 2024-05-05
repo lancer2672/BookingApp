@@ -1,16 +1,11 @@
 import Geolocation from '@react-native-community/geolocation';
+import ButtonComponent from '@src/components/Button';
 import {hotelsMock} from '@src/mock/mock';
 import {useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {API_KEY} from 'react-native-dotenv';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView, {
-  Circle,
-  Geojson,
-  Marker,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
+import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
 });
@@ -18,10 +13,6 @@ Geolocation.setRNConfiguration({
 const AgentGGMap = ({hotels = hotelsMock}) => {
   const [region, setRegion] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [destination, setDestination] = useState({
-    latitude: 10.87014586159959,
-    longitude: 106.80295753522363,
-  });
   const mapRef = useRef(null);
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -46,6 +37,7 @@ const AgentGGMap = ({hotels = hotelsMock}) => {
   }, []);
 
   const handlePress = (data, details = null) => {
+    console.log('DATA', {data, details});
     const {location} = details.geometry;
     const newRegion = {
       latitude: location.lat,
@@ -59,6 +51,7 @@ const AgentGGMap = ({hotels = hotelsMock}) => {
 
   const handleDragEnd = e => {
     setMarkerPosition(e.nativeEvent.coordinate);
+    console.log('markerPosition', e.nativeEvent.coordinate);
   };
 
   if (!region || !markerPosition) {
@@ -72,58 +65,28 @@ const AgentGGMap = ({hotels = hotelsMock}) => {
         ref={mapRef}
         style={{flex: 1, width: '100%'}}
         region={region}>
-        {hotels.map((hotel, index) => (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: hotel.location.latitude,
-              longitude: hotel.location.longitude,
-            }}
-            title={hotel.name}
-            description={hotel.address}
-          />
-        ))}
-        {/* <Marker
+        <Marker
           coordinate={markerPosition}
           draggable
           onDragEnd={handleDragEnd}
-        /> */}
-        <Marker coordinate={markerPosition} />
-
+        />
         <Circle
-          center={markerPosition}
+          center={{
+            latitude: 10.878307605540192,
+            longitude: 106.80622622219741,
+          }}
           radius={1000}
           fillColor="rgba(200, 300, 300, 0.5)"
         />
-        <Geojson
-          geojson={{
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Point',
-                  coordinates: [
-                    markerPosition.longitude,
-                    markerPosition.latitude,
-                  ],
-                },
-              },
-            ],
-          }}
-        />
-
-        <Circle center={markerPosition} radius={1000} />
-        <MapViewDirections
-          origin={region}
-          destination={destination}
-          apikey={API_KEY}
-          strokeWidth={3}
-          strokeColor="hotpink"
-        />
       </MapView>
-      <View style={{height: 48, width: '100%'}}>
+      <View
+        style={{
+          height: 48,
+          top: 24,
+          left: 24,
+          right: 24,
+          position: 'absolute',
+        }}>
         <GooglePlacesAutocomplete
           placeholder="Tìm kiếm"
           onPress={handlePress}
@@ -134,6 +97,13 @@ const AgentGGMap = ({hotels = hotelsMock}) => {
           onFail={error => console.log('Find place error', error)}
         />
       </View>
+      <ButtonComponent
+        onPress={() => {
+          console.log('press');
+        }}
+        style={{position: 'absolute', bottom: 24, left: 24, right: 24}}
+        text="Chọn"
+      />
     </View>
   );
 };

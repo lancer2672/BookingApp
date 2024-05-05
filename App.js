@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Root from '@src/navigation/Root';
+import AgentGGMap from '@src/screens/AgentScreens/AgentGGMap/AgentGGMap';
 import OnboardingScreen from '@src/screens/UserScreens/Onboarding';
 import ThemeProviderComponent from '@src/theme/context';
 import React from 'react';
@@ -30,7 +30,7 @@ function App() {
   return (
     <ThemeProviderComponent>
       <SafeAreaView style={{flex: 1}}>
-        <Root></Root>
+        <AgentGGMap></AgentGGMap>
         <FlashMessage position="top" />
       </SafeAreaView>
     </ThemeProviderComponent>

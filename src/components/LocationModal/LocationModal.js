@@ -1,15 +1,25 @@
 import locationApi from '@src/api/province';
 import textStyle from '@src/theme/text';
 import {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 
 const ProvinceModal = ({isVisible, onSelect, onClose}) => {
   const [locations, setLocations] = useState([]);
+  const [searchKey, setSearchKey] = useState('');
+
   const renderItem = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
         onSelect(item);
+        onClose();
       }}>
       <Text
         style={[textStyle.content.large, {color: 'black', paddingVertical: 4}]}>
@@ -17,32 +27,41 @@ const ProvinceModal = ({isVisible, onSelect, onClose}) => {
       </Text>
     </TouchableOpacity>
   );
+
   useEffect(() => {
-    if (isVisible) {
-      locationApi
-        .getProvinces()
-        .then(response => {
-          setLocations(response.data);
-        })
-        .catch(er => console.log('error', er));
-    }
-  }, [isVisible]);
+    locationApi
+      .getProvinces()
+      .then(response => {
+        setLocations(response);
+      })
+      .catch(er => console.log('error', er));
+  }, []);
+
+  const filteredLocations = locations.filter(location =>
+    location.provinceName.toLowerCase().includes(searchKey.toLowerCase()),
+  );
+
   return (
     <ReactNativeModal
       isVisible={isVisible}
       animationIn="slideInUp"
-      backdropOpacity={0}
+      backdropOpacity={0.2}
       useNativeDriver={true}
       animationOut="slideOutDown"
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
       style={{margin: 0}}>
       <View style={styles.container}>
+        <TextInput
+          style={styles.search}
+          onChangeText={text => setSearchKey(text)}
+          value={searchKey}
+          placeholder="Tìm kiếm"
+        />
         <FlatList
           renderItem={renderItem}
-          data={locations}
+          data={filteredLocations}
           keyExtractor={(item, index) => index.toString()}
-          showVertical={false}
           ItemSeparatorComponent={() => <View style={{marginVertical: 8}} />}
         />
       </View>
@@ -55,6 +74,7 @@ const DistrictModal = ({isVisible, provinceId, onSelect, onClose}) => {
     <TouchableOpacity
       onPress={() => {
         onSelect(item);
+        onClose();
       }}>
       <Text
         style={[textStyle.content.large, {color: 'black', paddingVertical: 4}]}>
@@ -67,7 +87,7 @@ const DistrictModal = ({isVisible, provinceId, onSelect, onClose}) => {
       locationApi
         .getProvince(provinceId)
         .then(response => {
-          setLocations(response.data.districts);
+          setLocations(response.districts);
         })
         .catch(er => console.log('error', er));
     }
@@ -76,7 +96,7 @@ const DistrictModal = ({isVisible, provinceId, onSelect, onClose}) => {
     <ReactNativeModal
       isVisible={isVisible}
       animationIn="slideInUp"
-      backdropOpacity={0}
+      backdropOpacity={0.2}
       useNativeDriver={true}
       animationOut="slideOutDown"
       onBackButtonPress={onClose}
@@ -112,7 +132,7 @@ const WardModal = ({isVisible, districtId, onSelect, onClose}) => {
       locationApi
         .getDistrict(districtId)
         .then(response => {
-          setLocations(response.data.wards);
+          setLocations(response.wards);
         })
         .catch(er => console.log('error', er));
     }
@@ -121,7 +141,7 @@ const WardModal = ({isVisible, districtId, onSelect, onClose}) => {
     <ReactNativeModal
       isVisible={isVisible}
       animationIn="slideInUp"
-      backdropOpacity={0}
+      backdropOpacity={0.2}
       useNativeDriver={true}
       animationOut="slideOutDown"
       onBackButtonPress={onClose}
@@ -146,9 +166,18 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 'auto',
     height: 300,
+    elevation: 2,
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
+  },
+  search: {
+    height: 40,
+    paddingHorizontal: 4,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 3,
+    marginBottom: 12,
   },
 });

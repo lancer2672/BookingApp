@@ -6,7 +6,7 @@ const locationApi = {
   getWards: async () => {
     try {
       const response = await axiosClient.get(`${locationRoute}/wards`);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw error;
     }
@@ -16,7 +16,7 @@ const locationApi = {
       const response = await axiosClient.get(
         `${locationRoute}/wards/${wardId}`,
       );
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw error;
     }
@@ -24,7 +24,7 @@ const locationApi = {
   getProvinces: async () => {
     try {
       const response = await axiosClient.get(`${locationRoute}/provinces`);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw error;
     }
@@ -34,7 +34,7 @@ const locationApi = {
       const response = await axiosClient.get(
         `${locationRoute}/provinces/${provinceId}`,
       );
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw error;
     }
@@ -42,7 +42,7 @@ const locationApi = {
   getDistricts: async () => {
     try {
       const response = await axiosClient.get(`${locationRoute}/districts`);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw error;
     }
@@ -52,7 +52,7 @@ const locationApi = {
       const response = await axiosClient.get(
         `${locationRoute}/districts/${districtId}`,
       );
-      return response.data.data;
+      return response.data;
     } catch (error) {
       throw error;
     }
