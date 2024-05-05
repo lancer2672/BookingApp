@@ -12,6 +12,7 @@ import {Avatar, Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'styled-components/native';
+import { generalColor } from '@src/theme/color';
 const user = {
   nickname: 'John Doe',
   email: 'john.doe@example.com',
@@ -19,6 +20,11 @@ const user = {
 const menu = [
   {
     text: 'Trang chủ',
+    onClick: 'Dashboard',
+    leftIcon: <AntDesign name="home" size={24} color="white" />,
+  },
+  {
+    text: 'Danh sách khách sạn',
     onClick: 'ListHotel',
     leftIcon: <AntDesign name="home" size={24} color="white" />,
   },
@@ -135,7 +141,7 @@ const SideBarItem = ({text, onClick, leftIcon, onclose}) => {
   };
   return (
     <Pressable onPress={handlePress} rippleColor="rgba(0, 0, 0, .32)">
-      <View style={[itemStyles.container, {backgroundColor: '#18C0C1'}]}>
+      <View style={[itemStyles.container, {backgroundColor: generalColor.primary}]}>
         {leftIcon}
         <Text style={[itemStyles.text, {color: 'white'}]}>{text}</Text>
       </View>

@@ -2,6 +2,7 @@ import ButtonComponent from '@src/components/Button';
 import {navigate} from '@src/navigation/NavigationController';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
+import { generalColor } from '@src/theme/color';
 const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
   const room = {
     type: type,
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 5,
     right: 20,
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
     borderRadius: 15,
   },
   slider: {

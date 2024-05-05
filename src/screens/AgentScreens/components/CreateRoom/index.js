@@ -11,7 +11,7 @@ import ButtonComponent from '@src/components/Button';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { generalColor } from '@src/theme/color';
 const CreateRoom = () => {
     const [value, setValue] = useState('');
     // useEffect(() => {
@@ -152,14 +152,14 @@ const CreateRoom = () => {
                         }}>
                         <AntDesign
                             name="caretright"
-                            color="#18C0C1"
+                            
                             size={15}
                         ></AntDesign> Thêm nội thất
                     </Text>
                     <Pressable onPress={() => { setDichuyen([...dichuyen, "Nội thất ... ?"]) }}>
                         <Ionicons
                             name="add"
-                            color="#18C0C1"
+                            
                             size={32}
                         ></Ionicons>
                     </Pressable>
@@ -217,7 +217,7 @@ const CreateRoom = () => {
                     ItemSeparatorComponent={() => <View style={styles.separator} />}
                 /> */}
             </View>
-            <ButtonComponent onPress={() => { }} style={{ width: "70%", marginLeft: "15%", backgroundColor: "#18C0C1", marginTop: "20%", height: 50, borderRadius: 20 }} text="Thêm khách sạn" />
+            <ButtonComponent onPress={() => { }} style={{ width: "70%", marginLeft: "15%", backgroundColor: generalColor.primary, marginTop: "20%", height: 50, borderRadius: 20 }} text="Thêm phòng" />
         </View>
     );
 };
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
         height: 50,
         zIndex: 99,
         borderRadius: 10,
-        backgroundColor: "#18C0C1"
+        backgroundColor: generalColor.primary
     },
     imageChose: {
         width: "90%",
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     buttonItem: {
-        backgroundColor: "#18C0C1",
+        backgroundColor: generalColor.primary,
         width: 140,
         marginRight: 10,
         marginLeft: 10,
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     },
     textinput: {
         backgroundColor: '#F2F5FA',
-        borderColor: '#18C0C1',
+        borderColor: generalColor.primary,
         borderWidth: 1,
         borderRadius: 0
     },

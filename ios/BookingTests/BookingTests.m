@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-
+#import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTLog.h>
 #import <React/RCTRootView.h>
 

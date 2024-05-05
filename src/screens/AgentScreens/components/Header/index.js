@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import SideMenu from '../SideMenu';
-
+import { generalColor } from '@src/theme/color';
 const AgentHeader = ({active, detail}) => {
   const [visible, setVisible] = useState(false);
   const handleOpenSideMenu = () => {
@@ -30,7 +30,7 @@ const AgentHeader = ({active, detail}) => {
           }}>
           {active}
         </Text>
-        <Text
+        {/* <Text
           style={{
             fontSize: 13,
             textAlign: 'center',
@@ -39,7 +39,7 @@ const AgentHeader = ({active, detail}) => {
             color: 'white',
           }}>
           {detail}
-        </Text>
+        </Text> */}
       </View>
       <IconButton
         icon="bell"
@@ -56,13 +56,13 @@ const AgentHeader = ({active, detail}) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    height: 160,
-    borderEndEndRadius: 50,
-    borderEndStartRadius: 50,
+    alignItems:'center',
+    height: 70,
+   
   },
   center: {
     flexDirection: 'column',

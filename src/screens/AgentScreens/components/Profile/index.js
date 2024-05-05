@@ -5,7 +5,7 @@ import { Avatar } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AgentHeader from '../Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { generalColor } from '@src/theme/color';
 const Profile = () => {
   // useEffect(() => {
   //     handleShowMessage();
@@ -31,7 +31,7 @@ const Profile = () => {
             borderRadius: 75,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: -60,
+            marginTop: 20,
           }}>
           <Avatar.Image
             size={130}
@@ -98,8 +98,8 @@ const Profile = () => {
           width: '60%',
           height: 50,
           marginLeft: '20%',
-          marginTop: '25%',
-          backgroundColor: '#18C0C1',
+          marginTop: '20%',
+          backgroundColor: generalColor.primary,
           borderRadius: 30,
         }}
         text="Sửa Thông Tin Cá Nhân"
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     height: 30,
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
     marginTop: 2.5,
     marginBottom: 2.5,
   },

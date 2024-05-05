@@ -169,7 +169,7 @@ const EditProfile = () => {
                 />
                 </View>
             </View>
-            <ButtonComponent onPress={() => {navigate('Profile')}} style={{width:"50%", marginLeft: "25%", marginTop: "40%",backgroundColor: "#18C0C1",borderRadius:30}} text="Hoàn Tất" />
+            <ButtonComponent onPress={() => {navigate('Profile')}} style={{width:"50%", marginLeft: "25%", marginTop: "40%",backgroundColor: generalColor.primary,borderRadius:30}} text="Hoàn Tất" />
         </View>
     );
 };
@@ -179,7 +179,7 @@ export default EditProfile;
 const styles = StyleSheet.create({
     textinput: {
        backgroundColor: "white",
-       borderColor: "#18C0C1",
+       borderColor: generalColor.primary,
        borderWidth:1
     },
     container: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
         marginTop:5,
     },
     buttonItem: {
-        backgroundColor: "#18C0C1",
+        backgroundColor: generalColor.primary,
         width:140,
         marginRight:10,
         marginLeft:10,

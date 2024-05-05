@@ -50,7 +50,7 @@ const ListHotel = () => {
 
   return (
     <View style={styles.container}>
-      <AgentHeader active="Xin chào" detail="* Tên người dùng *"></AgentHeader>
+      <AgentHeader active="Danh sách Hotel" detail="* Tên người dùng *"></AgentHeader>
 
 
       <Text></Text>

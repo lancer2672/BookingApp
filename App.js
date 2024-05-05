@@ -3,8 +3,10 @@ import AgentGGMap from '@src/screens/AgentScreens/AgentGGMap/AgentGGMap';
 import OnboardingScreen from '@src/screens/UserScreens/Onboarding';
 import ThemeProviderComponent from '@src/theme/context';
 import React from 'react';
+import Root from '@src/navigation/Root';
 import {SafeAreaView} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
+import PersonalInfoPage from '@src/screens/Authentication/component/PersonalInfoPage';
 const checkFirstTimeUser = async () => {
   try {
     const isFirstTime = await AsyncStorage.getItem('@first_time');
@@ -30,7 +32,7 @@ function App() {
   return (
     <ThemeProviderComponent>
       <SafeAreaView style={{flex: 1}}>
-        <AgentGGMap></AgentGGMap>
+        <Root></Root>
         <FlashMessage position="top" />
       </SafeAreaView>
     </ThemeProviderComponent>

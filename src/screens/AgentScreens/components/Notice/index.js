@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         width: "90%",
         marginLeft: "5%",
         borderRadius: 20,
-        borderColor: "#18C0C1",
+        borderColor: generalColor.primary,
         borderWidth: 1,
     }
 });

@@ -6,7 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { generalColor } from '@src/theme/color';
 const DetailHotel = () => {
   // useEffect(() => {
   //     handleShowMessage();
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     height: 30,
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
     marginTop: 2.5,
     marginBottom: 2.5,
   },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     width: '60%',
     marginLeft: '20%',
     marginTop: '50%',
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
     borderRadius: 20,
   },
 });

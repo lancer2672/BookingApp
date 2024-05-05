@@ -1,15 +1,17 @@
 import ButtonComponent from '@src/components/Button';
-import {ProvinceModal} from '@src/components/LocationModal/LocationModal';
+import { ProvinceModal } from '@src/components/LocationModal/LocationModal';
 import TextInputComponent from '@src/components/TextInputComponent';
 import textStyle from '@src/theme/text';
-import {useState} from 'react';
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Checkbox} from 'react-native-paper';
+import { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Checkbox } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgentHeader from '../Header';
+import { generalColor } from '@src/theme/color';
+import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 
 const CreateHotel = () => {
   const [value, setValue] = useState('');
@@ -22,35 +24,25 @@ const CreateHotel = () => {
   //         type: 'danger',
   //     });
   // };
-  const imageSourceList = [];
-  const [imageSource, setImageSource] = useState(null);
-  const [provinceVisible, setProvinceVisible] = useState(false);
-  const selectImageFromCamera = () => {
+  const [field, setField] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [images, setImages] = useState([]);
+
+  const selectImages = () => {
     const options = {
       noData: true,
+      mediaType: 'photo',
+      multiple: false,
     };
 
-    launchCamera(options, response => {
-      if (response.uri) {
-        setImageSource(response.uri);
-        imageSourceList.push(response.uri);
+    return launchImageLibrary(options, response => {
+      if (response.assets) {
+        return response.assets[0];
       }
+      return null;
     });
   };
-  const [imageSource1, setImageSource1] = useState(null);
-  const selectImage = () => {
-    const options = {
-      noData: true,
-    };
-
-    launchImageLibrary(options, response => {
-      if (response.uri) {
-        setImageSource1(response.uri);
-        imageSourceList.push(response.uri);
-      }
-    });
-  };
-  const renderItem = ({item}) => <Image source={imageSourceList[item]}></Image>;
+  const renderItem = ({ item }) => <Image source={images[item]}></Image>;
 
   //checkbox
   const [checkboxes, setCheckboxes] = useState({
@@ -59,7 +51,7 @@ const CreateHotel = () => {
     option3: false,
   });
   const handleCheckboxChange = (name, value) => {
-    setCheckboxes({...checkboxes, [name]: value});
+    setCheckboxes({ ...checkboxes, [name]: value });
   };
 
   //tham quan
@@ -92,7 +84,7 @@ const CreateHotel = () => {
   //animation
 
   return (
-    <ScrollView style={{backgroundColor: 'white', flex: 1}}>
+    <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
       <AgentHeader
         active="TẠO KHÁCH SẠN"
         detail="Chúng tôi sẽ đem về cho bạn những     - khách hàng tiềm năng -"></AgentHeader>
@@ -199,7 +191,7 @@ const CreateHotel = () => {
           }}>
           * CÁC TIỆN NGHI KHÁCH SẠN
         </Text>
-        <View style={{width: '50%'}}>
+        <View style={{ width: '50%' }}>
           <View
             style={{
               display: 'flex',
@@ -210,7 +202,7 @@ const CreateHotel = () => {
             <FontAwesome5
               name="water"
               size={20}
-              style={{textAlign: 'center', width: 30}}></FontAwesome5>
+              style={{ textAlign: 'center', width: 30 }}></FontAwesome5>
             <Text
               style={{
                 fontSize: 18,
@@ -226,9 +218,9 @@ const CreateHotel = () => {
               onPress={() =>
                 handleCheckboxChange('option1', !checkboxes.option1)
               }
-              color="#18C0C1"
+              color={generalColor.primary}
               style={styles.checkbox}
-              borderColor="#18C0C1"
+              borderColor={generalColor.primary}
               borderWidth={1}
               height={35}
               width={35}
@@ -244,7 +236,7 @@ const CreateHotel = () => {
             <FontAwesome5
               name="wifi"
               size={20}
-              style={{textAlign: 'center', width: 30}}></FontAwesome5>
+              style={{ textAlign: 'center', width: 30 }}></FontAwesome5>
             <Text
               style={{
                 fontSize: 18,
@@ -260,9 +252,9 @@ const CreateHotel = () => {
               onPress={() =>
                 handleCheckboxChange('option2', !checkboxes.option2)
               }
-              color="#18C0C1"
+              color={generalColor.primary}
               style={styles.checkbox}
-              borderColor="#18C0C1"
+              borderColor={generalColor.primary}
               borderWidth={1}
               height={35}
               width={35}
@@ -278,7 +270,7 @@ const CreateHotel = () => {
             <FontAwesome5
               name="car"
               size={20}
-              style={{textAlign: 'center', width: 30}}></FontAwesome5>
+              style={{ textAlign: 'center', width: 30 }}></FontAwesome5>
             <Text
               style={{
                 fontSize: 18,
@@ -294,9 +286,9 @@ const CreateHotel = () => {
               onPress={() =>
                 handleCheckboxChange('option3', !checkboxes.option3)
               }
-              color="#18C0C1"
+              color={generalColor.primary}
               style={styles.checkbox}
-              borderColor="#18C0C1"
+              borderColor={generalColor.primary}
               borderWidth={1}
               height={35}
               width={35}
@@ -331,7 +323,7 @@ const CreateHotel = () => {
               }}>
               <AntDesign
                 name="caretright"
-                color="#18C0C1"
+                color={generalColor.primary}
                 size={15}></AntDesign>{' '}
               Tham quan
             </Text>
@@ -339,11 +331,11 @@ const CreateHotel = () => {
               onPress={() => {
                 setThamquan([...thamquan, 'New']);
               }}>
-              <Ionicons name="add" color="#18C0C1" size={32}></Ionicons>
+              <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
             </Pressable>
           </View>
           <View
-            style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             {thamquan.map((item, index) => (
               <View style={styles.location}>
                 <TextInputComponent
@@ -392,7 +384,7 @@ const CreateHotel = () => {
               }}>
               <AntDesign
                 name="caretright"
-                color="#18C0C1"
+                color={generalColor.primary}
                 size={15}></AntDesign>{' '}
               Ăn uống
             </Text>
@@ -400,11 +392,11 @@ const CreateHotel = () => {
               onPress={() => {
                 setAnuong([...anuong, 'New']);
               }}>
-              <Ionicons name="add" color="#18C0C1" size={32}></Ionicons>
+              <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
             </Pressable>
           </View>
           <View
-            style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             {anuong.map((item, index) => (
               <View style={styles.location}>
                 <TextInputComponent
@@ -453,7 +445,7 @@ const CreateHotel = () => {
               }}>
               <AntDesign
                 name="caretright"
-                color="#18C0C1"
+                color={generalColor.primary}
                 size={15}></AntDesign>{' '}
               Di chuyển
             </Text>
@@ -461,11 +453,11 @@ const CreateHotel = () => {
               onPress={() => {
                 setDichuyen([...dichuyen, 'New']);
               }}>
-              <Ionicons name="add" color="#18C0C1" size={32}></Ionicons>
+              <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
             </Pressable>
           </View>
           <View
-            style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             {dichuyen.map((item, index) => (
               <View style={styles.location}>
                 <TextInputComponent
@@ -537,41 +529,32 @@ const CreateHotel = () => {
           }}>
           * THÊM HÌNH ẢNH MÌNH HOẠ{' '}
         </Text>
-        <View style={styles.buttonImage}>
-          <ButtonComponent
-            title="Chụp ảnh"
-            onPress={selectImageFromCamera}
-            style={styles.buttonItem}
-            text="Chụp Ảnh"
-          />
-          <ButtonComponent
-            title="Chọn ảnh"
-            onPress={selectImage}
-            style={styles.buttonItem}
-            text="Chọn Ảnh"
-          />
+        <View>
+          <TouchableOpacity
+            onPress={async () => {
+              setField(() => 'avatar');
+              setVisible(() => true);
+            }}
+            style={styles.avatar}>
+          </TouchableOpacity>
+          {images.map((item) => <Image source={{uri: item}}></Image>)}
         </View>
-        {/* <FlatList
-          style={styles.flatList}
-          data={imageSource}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.imagelist}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-        /> */}
+
+        <ImagePickerModal
+          onResult={images => {
+
+            setImages(images)
+          }}
+          visible={visible}
+          onClose={() => setVisible(false)}></ImagePickerModal>
       </View>
-      <ProvinceModal
-        isVisible={provinceVisible}
-        onClose={() => setProvinceVisible(false)}
-        onSelect={() => {}}></ProvinceModal>
+
       <ButtonComponent
-        onPress={() => {}}
+        onPress={() => { }}
         style={{
           width: '70%',
           marginLeft: '15%',
-          backgroundColor: '#18C0C1',
+          backgroundColor: generalColor.primary,
           marginTop: '20%',
           height: 50,
           borderRadius: 20,
@@ -600,7 +583,7 @@ const styles = StyleSheet.create({
     height: 50,
     zIndex: 99,
     borderRadius: 10,
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
   },
   imageChose: {
     width: '90%',
@@ -622,7 +605,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonItem: {
-    backgroundColor: '#18C0C1',
+    backgroundColor: generalColor.primary,
     width: 140,
     marginRight: 10,
     marginLeft: 10,
@@ -631,7 +614,7 @@ const styles = StyleSheet.create({
   },
   textinput: {
     backgroundColor: '#F2F5FA',
-    borderColor: '#18C0C1',
+    borderColor: generalColor.primary,
     borderWidth: 1,
     borderRadius: 0,
   },
@@ -641,5 +624,15 @@ const styles = StyleSheet.create({
     bottom: 8,
     right: -30,
     zIndex: 99,
+  },
+  avatar: {
+    borderRadius: 12,
+    width: '50%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+    alignItems: 'center',
+    height: 120,
+    backgroundColor: generalColor.other.lightgray,
   },
 });

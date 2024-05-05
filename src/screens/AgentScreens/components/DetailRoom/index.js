@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         height: 30,
-        backgroundColor: "#18C0C1",
+        backgroundColor: generalColor.primary,
         marginTop: 2.5,
         marginBottom: 2.5,
     },
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         width: "60%",
         marginLeft: "20%",
         marginTop: "45%",
-        backgroundColor: "#18C0C1",
+        backgroundColor: generalColor.primary,
         borderRadius: 20,
     }
 });

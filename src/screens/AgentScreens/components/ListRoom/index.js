@@ -166,7 +166,7 @@ const ListRoom = () => {
         <Pressable onPress={()=>{navigate('CreateRoom')}}>
           <Ionicons
             name="add-circle"
-            color="#18C0C1"
+            color={generalColor.primary}
             size={42}
           ></Ionicons>
         </Pressable>
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height:"100%",
     marginTop:10,
-    alignItems:"center"
+    alignItems:"center",
   },
   separator: {
     width: 10,
@@ -272,9 +272,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "black",
     borderRadius: 0,  
+    marginRight:5
   },
   active:{
-    backgroundColor: "#18C0C1"
+    backgroundColor: generalColor.primary,
+    borderRadius:5
   }
 });
 
