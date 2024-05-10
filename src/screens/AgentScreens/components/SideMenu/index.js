@@ -10,6 +10,7 @@ import {
 import Modal from 'react-native-modal';
 import {Avatar, Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'styled-components/native';
 import { generalColor } from '@src/theme/color';
@@ -26,7 +27,7 @@ const menu = [
   {
     text: 'Danh sách khách sạn',
     onClick: 'ListHotel',
-    leftIcon: <AntDesign name="home" size={24} color="white" />,
+    leftIcon: <FontAwesome6 name="hotel" size={24} color="white" />,
   },
   {
     text: 'Tạo khách sạn',

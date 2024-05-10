@@ -3,7 +3,7 @@ import { ProvinceModal } from '@src/components/LocationModal/LocationModal';
 import TextInputComponent from '@src/components/TextInputComponent';
 import textStyle from '@src/theme/text';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity,Image } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, Modal } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Checkbox } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,16 +14,24 @@ import { generalColor } from '@src/theme/color';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 
 const CreateHotel = () => {
+  const initialValues = {
+    name: '',
+    addres: {
+      province: null,
+      district: null,
+      ward: null,
+    },
+    detail: '',
+    amenniteis: [],
+    around: {
+      visit: [],
+      food: [],
+      transport: [],
+    },
+    policy: '',
+    images: ''
+  };
   const [value, setValue] = useState('');
-  // useEffect(() => {
-  //     handleShowMessage();
-  // }, []);
-  // const handleShowMessage = () => {
-  //     showMessage({
-  //         message: 'Cập nhật thất bại',
-  //         type: 'danger',
-  //     });
-  // };
   const [field, setField] = useState('');
   const [visible, setVisible] = useState(false);
   const [images, setImages] = useState([]);
@@ -42,24 +50,13 @@ const CreateHotel = () => {
       return null;
     });
   };
-  const renderItem = ({ item }) => <Image source={images[item]}></Image>;
-
-  //checkbox
-  const [checkboxes, setCheckboxes] = useState({
-    option1: false,
-    option2: false,
-    option3: false,
-  });
-  const handleCheckboxChange = (name, value) => {
-    setCheckboxes({ ...checkboxes, [name]: value });
-  };
 
   //tham quan
   const [thamquan, setThamquan] = useState([]);
   const handleDeleteThamQuan = index => {
     setThamquan(prevItems => {
-      const updatedItems = [...prevItems]; // Create a copy
-      updatedItems.splice(index, 1); // Remove the item
+      const updatedItems = [...prevItems];
+      updatedItems.splice(index, 1);
       return updatedItems;
     });
   };
@@ -67,8 +64,8 @@ const CreateHotel = () => {
   const [anuong, setAnuong] = useState([]);
   const handleDeleteAnUong = index => {
     setAnuong(prevItems => {
-      const updatedItems = [...prevItems]; // Create a copy
-      updatedItems.splice(index, 1); // Remove the item
+      const updatedItems = [...prevItems];
+      updatedItems.splice(index, 1);
       return updatedItems;
     });
   };
@@ -76,18 +73,36 @@ const CreateHotel = () => {
   const [dichuyen, setDichuyen] = useState([]);
   const handleDeleteDiChuyen = index => {
     setDichuyen(prevItems => {
+      const updatedItems = [...prevItems];
+      updatedItems.splice(index, 1);
+      return updatedItems;
+    });
+  };
+  //tiennghi
+  const [tiennghi, setTiennghi] = useState([])
+  const handleDeleteTienNghi = (index) => {
+    setTiennghi((prevItems) => {
       const updatedItems = [...prevItems]; // Create a copy
       updatedItems.splice(index, 1); // Remove the item
       return updatedItems;
     });
-  };
-  //animation
+  }
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inx, setInx] = useState(0)
+  const options = ['Bãi đỗ xe riêng', 'Wifi free', 'Bữa sáng tốt', 'Lễ tân 24/24', 'Nhà hàng', 'Gym'];
 
+  const handleSelect = (value, index) => {
+    setTiennghi((prevItems) => {
+      const updatedItems = [...prevItems]; // Create a copy
+      updatedItems[index] = value // Remove the item
+      return updatedItems;
+    });
+    setModalVisible(false);
+  };
   return (
     <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
       <AgentHeader
-        active="TẠO KHÁCH SẠN"
-        detail="Chúng tôi sẽ đem về cho bạn những     - khách hàng tiềm năng -"></AgentHeader>
+        active="TẠO KHÁCH SẠN"></AgentHeader>
       <Text
         style={{
           fontSize: 18,
@@ -112,6 +127,7 @@ const CreateHotel = () => {
           styleTextInput={[
             {
               maxWidth: '100%',
+              color: 'black'
             },
             textStyle.h[5],
           ]}
@@ -131,6 +147,7 @@ const CreateHotel = () => {
             styleTextInput={[
               {
                 maxWidth: '100%',
+                color: 'black'
               },
               textStyle.h[5],
             ]}
@@ -141,28 +158,6 @@ const CreateHotel = () => {
             style={styles.buttonLocation}
             text="MAP"></ButtonComponent>
         </View>
-        <TextInputComponent
-          placeholder="Chọn tỉnh"
-          value={value}
-          editable={false}
-          onPress={() => {
-            setProvinceVisible(true);
-          }}
-          widthTextInput={'80%'}
-          heightTextInput={40}
-          onChangeText={text => {
-            setValue(text);
-          }}
-          marginBottom={0}
-          styleTextInput={[
-            {
-              maxWidth: '100%',
-            },
-            textStyle.h[5],
-          ]}
-          style={styles.textinput}
-          placeholderColor="black"
-        />
         <TextInputComponent
           placeholder="Mô tả ..."
           value={value}
@@ -175,6 +170,7 @@ const CreateHotel = () => {
           styleTextInput={[
             {
               maxWidth: '100%',
+              color: 'black'
             },
             textStyle.h[5],
           ]}
@@ -191,108 +187,68 @@ const CreateHotel = () => {
           }}>
           * CÁC TIỆN NGHI KHÁCH SẠN
         </Text>
-        <View style={{ width: '50%' }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 10,
-            }}>
-            <FontAwesome5
-              name="water"
-              size={20}
-              style={{ textAlign: 'center', width: 30 }}></FontAwesome5>
+        <View style={{ width: "100%", marginLeft: "" }}>
+          <View style={{ marginTop: 12, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text
               style={{
+                color: "black",
                 fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                width: '70%',
+                textAlign: 'center',
+
               }}>
-              Hồ bơi
+              <AntDesign
+                name="caretright"
+
+                size={15}
+              ></AntDesign> Thêm tiện nghi
             </Text>
-            <Checkbox
-              status={checkboxes.option1 ? 'checked' : 'unchecked'}
-              label="Option 1"
-              onPress={() =>
-                handleCheckboxChange('option1', !checkboxes.option1)
-              }
-              color={generalColor.primary}
-              style={styles.checkbox}
-              borderColor={generalColor.primary}
-              borderWidth={1}
-              height={35}
-              width={35}
-            />
+            <Pressable onPress={() => { setTiennghi([...tiennghi, "Tiện nghi ..."]) }}>
+              <Ionicons
+                name="add"
+
+                size={32}
+              ></Ionicons>
+            </Pressable>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 10,
-            }}>
-            <FontAwesome5
-              name="wifi"
-              size={20}
-              style={{ textAlign: 'center', width: 30 }}></FontAwesome5>
-            <Text
-              style={{
-                fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                width: '70%',
-              }}>
-              Wifi miễn phí
-            </Text>
-            <Checkbox
-              status={checkboxes.option2 ? 'checked' : 'unchecked'}
-              label="Option 2"
-              onPress={() =>
-                handleCheckboxChange('option2', !checkboxes.option2)
-              }
-              color={generalColor.primary}
-              style={styles.checkbox}
-              borderColor={generalColor.primary}
-              borderWidth={1}
-              height={35}
-              width={35}
-            />
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 10,
-            }}>
-            <FontAwesome5
-              name="car"
-              size={20}
-              style={{ textAlign: 'center', width: 30 }}></FontAwesome5>
-            <Text
-              style={{
-                fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                width: '70%',
-              }}>
-              Chỗ để xe riêng
-            </Text>
-            <Checkbox
-              status={checkboxes.option3 ? 'checked' : 'unchecked'}
-              label="Option 3"
-              onPress={() =>
-                handleCheckboxChange('option3', !checkboxes.option3)
-              }
-              color={generalColor.primary}
-              style={styles.checkbox}
-              borderColor={generalColor.primary}
-              borderWidth={1}
-              height={35}
-              width={35}
-            />
+          <View style={{ display: "flex", flexDirection: "column" }}>
+            {tiennghi.map((item, index) => (
+              <View style={styles.location}>
+                <TouchableOpacity onPress={() => { setModalVisible(true), setInx(index) }} style={styles.selectButton}>
+                  <Text style={styles.selectButtonText}>{item}</Text>
+                </TouchableOpacity>
+                <Modal
+                  key={index}
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => setModalVisible(false)}
+                >
+                  <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                      <TouchableOpacity
+                        style={styles.closebutton}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <AntDesign name='close' size={20}></AntDesign>
+                      </TouchableOpacity>
+                      {options.map((option, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          style={styles.optionButton}
+                          onPress={() => handleSelect(option, inx)}
+                        >
+                          <Text style={{ fontSize: 16 }}>{option}</Text>
+                        </TouchableOpacity>
+                      ))}
+
+                    </View>
+                  </View>
+                </Modal>
+                <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteTienNghi(index)} style={styles.delete}></AntDesign>
+
+              </View>
+            ))
+            }
           </View>
         </View>
         <Text
@@ -350,6 +306,7 @@ const CreateHotel = () => {
                   styleTextInput={[
                     {
                       maxWidth: '100%',
+                      color: 'black'
                     },
                     textStyle.h[5],
                   ]}
@@ -511,6 +468,7 @@ const CreateHotel = () => {
           styleTextInput={[
             {
               maxWidth: '100%',
+              color: 'black'
             },
             textStyle.h[5],
           ]}
@@ -529,21 +487,22 @@ const CreateHotel = () => {
           }}>
           * THÊM HÌNH ẢNH MÌNH HOẠ{' '}
         </Text>
-        <View>
+        <View style={{display:'flex', flexDirection:'row',flexWrap:'wrap', justifyContent:'space-between'}}>
           <TouchableOpacity
             onPress={async () => {
               setField(() => 'avatar');
               setVisible(() => true);
             }}
             style={styles.avatar}>
+              <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
           </TouchableOpacity>
-          {images.map((item) => <Image source={{uri: item}}></Image>)}
+          {images.map((item) => <Image source={{ uri: item }} style={styles.imagepick}></Image>)}
         </View>
 
         <ImagePickerModal
-          onResult={images => {
-
-            setImages(images)
+          onResult={image => {
+            setImages([...images, image])
+            console.log('image', images)
           }}
           visible={visible}
           onClose={() => setVisible(false)}></ImagePickerModal>
@@ -613,10 +572,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textinput: {
-    backgroundColor: '#F2F5FA',
-    borderColor: generalColor.primary,
+    backgroundColor: 'white',
+    borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 0,
+    borderRadius: 5,
+    marginTop: 5,
+    color: 'black'
   },
   delete: {
     position: 'absolute',
@@ -627,12 +588,57 @@ const styles = StyleSheet.create({
   },
   avatar: {
     borderRadius: 12,
-    width: '50%',
-    alignSelf: 'center',
+    width: '30%',
+    alignSelf: 'left',
     justifyContent: 'center',
     marginTop: 12,
     alignItems: 'center',
     height: 120,
     backgroundColor: generalColor.other.lightgray,
   },
+  selectButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginTop: 10
+  },
+  selectButtonText: {
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    position: "relative",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 99
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 30,
+    borderRadius: 10,
+    elevation: 5,
+    paddingTop: 40
+  },
+  optionButton: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  closebutton: {
+    position: 'absolute',
+    top: 10,
+    right: 10
+  },
+  imagepick: {
+    borderRadius: 12,
+    width: '30%',
+    alignSelf: 'flex-start',
+    justifyContent: 'center',
+    marginTop: 12,
+    alignItems: 'center',
+    height: 120,
+    backgroundColor:'red'
+  }
 });
