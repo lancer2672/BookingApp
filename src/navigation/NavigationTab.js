@@ -1,6 +1,6 @@
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -44,7 +44,7 @@ export const Tabs = () => {
               iconName = 'home';
             } else if (route.name === 'UserProfile') {
               return (
-                <AntDesign
+                <FontAwesome
                   name="user"
                   size={24}
                   color={focused ? 'white' : 'gray'}
@@ -52,8 +52,8 @@ export const Tabs = () => {
               );
             } else if (route.name === 'Search') {
               return (
-                <AntDesign
-                  name="search1"
+                <FontAwesome
+                  name="search"
                   size={24}
                   color={focused ? 'white' : 'gray'}
                 />
