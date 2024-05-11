@@ -11,32 +11,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Dashboard = () => {
-    const [totalRooms, setTotalRooms] = useState(0);
-    const [occupiedRooms, setOccupiedRooms] = useState(0);
-    const [availableRooms, setAvailableRooms] = useState(0);
-    useEffect(() => {
-        const fetchData = async () => {
-
-            const data = {
-                totalRooms: 20,
-                occupiedRooms: 15,
-                availableRooms: 2,
-            };
-            setTotalRooms(data.totalRooms);
-            setOccupiedRooms(data.occupiedRooms);
-            setAvailableRooms(data.availableRooms);
-        };
-        fetchData();
-    }, []);
-
-    const data = {
-        labels: ['Total Rooms', 'Occupied Rooms', 'Available Rooms'],
-        datasets: [
-            {
-                data: [totalRooms, occupiedRooms, availableRooms],
-            },
-        ],
-    };
     const datas = {
         labels: [""], // optional
         data: [0.67],
