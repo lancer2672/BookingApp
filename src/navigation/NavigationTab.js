@@ -47,7 +47,7 @@ export const Tabs = () => {
                 <AntDesign
                   name="user"
                   size={24}
-                  color={focused ? 'white' : 'black'}
+                  color={focused ? 'white' : 'gray'}
                 />
               );
             } else if (route.name === 'Search') {
@@ -55,7 +55,7 @@ export const Tabs = () => {
                 <AntDesign
                   name="search1"
                   size={24}
-                  color={focused ? 'white' : 'black'}
+                  color={focused ? 'white' : 'gray'}
                 />
               );
             } else if (route.name === 'BookingHistory') {
@@ -63,7 +63,7 @@ export const Tabs = () => {
                 <Fontisto
                   name="history"
                   size={24}
-                  color={focused ? 'white' : 'black'}
+                  color={focused ? 'white' : 'gray'}
                 />
               );
             } else if (route.name === 'Chat') {
@@ -71,7 +71,7 @@ export const Tabs = () => {
                 <Entypo
                   name="chat"
                   size={24}
-                  color={focused ? 'white' : 'black'}
+                  color={focused ? 'white' : 'gray'}
                 />
               );
             }
@@ -79,7 +79,7 @@ export const Tabs = () => {
               <Feather
                 name={iconName}
                 size={size}
-                color={focused ? 'white' : 'black'}
+                color={focused ? 'white' : 'gray'}
               />
             );
           },

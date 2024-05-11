@@ -50,8 +50,8 @@ const Item = ({count, onPress, content, isSelected}) => {
             );
           })}
         </View>
-        <Text style={styles.content}>{content}</Text>
-        {true && <Entypo name="check" color={'white'} size={32}></Entypo>}
+        <Text style={styles.content}></Text>
+        {true && <Entypo name="check" color={'white'} size={24}></Entypo>}
       </View>
     </TouchableOpacity>
   );

@@ -30,17 +30,17 @@ const SortModal = ({isVisible, onPress, onClose}) => {
         <Item
           content="Đánh giá mới nhất"
           icon={
-            <AntDesign name="star" color={'white'} size={32}></AntDesign>
+            <AntDesign name="star" color={'white'} size={28}></AntDesign>
           }></Item>
         <Item
           content="Đánh giá cũ nhất"
           icon={
-            <FontAwesome name="dollar" color={'white'} size={32}></FontAwesome>
+            <FontAwesome name="dollar" color={'white'} size={28}></FontAwesome>
           }></Item>
         <Item
           content="Nhiều lượt vote nhất"
           icon={
-            <FontAwesome name="dollar" color={'white'} size={32}></FontAwesome>
+            <FontAwesome name="dollar" color={'white'} size={28}></FontAwesome>
           }></Item>
       </View>
     </ReactNativeModal>
@@ -52,7 +52,7 @@ const Item = ({icon, content, isSelected}) => {
       <View style={{...rowCenter, marginVertical: 8}}>
         {/* <View style={{minWidth: 30}}>{icon}</View> */}
         <Text style={styles.content}>{content}</Text>
-        {true && <Entypo name="check" color={'white'} size={32}></Entypo>}
+        {true && <Entypo name="check" color={'white'} size={24}></Entypo>}
       </View>
     </TouchableOpacity>
   );

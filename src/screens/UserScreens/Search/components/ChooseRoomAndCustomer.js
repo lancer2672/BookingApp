@@ -31,10 +31,12 @@ const ChooseRoomAndCustomer = ({
         <Item
           value={roomCustomer.room}
           onChange={value => {
-            onChange({
-              ...roomCustomer,
-              room: value,
-            });
+            if (value >= 1) {
+              onChange({
+                ...roomCustomer,
+                room: value,
+              });
+            }
           }}
           content="Phòng"
           icon={
@@ -43,10 +45,12 @@ const ChooseRoomAndCustomer = ({
         <Item
           value={roomCustomer.mature}
           onChange={value => {
-            onChange(prev => ({
-              ...prev,
-              mature: value,
-            }));
+            if (value >= 1) {
+              onChange(prev => ({
+                ...prev,
+                mature: value,
+              }));
+            }
           }}
           content="Người lớn"
           icon={

@@ -1,7 +1,6 @@
 import ButtonComponent from '@src/components/Button';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import {formatCurrency} from '@src/utils/textFormat';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -17,8 +16,7 @@ const RoomItem = ({hotel, room, onPress}) => {
           {hotel.name}
         </Text>
         <Text style={{color: generalColor.primary, ...textStyle.content.small}}>
-          A variety of connecting rooms with furnished semiprivate courtyards
-          and terraces (520-685 sq. ft.)
+          {hotel.description}
         </Text>
         <Text
           style={{
@@ -28,7 +26,7 @@ const RoomItem = ({hotel, room, onPress}) => {
             ...textStyle.content.large,
             marginRight: 12,
           }}>
-          {formatCurrency(100000)}/ 1 đêm
+          {room.pricePerNight}/ 1 đêm
         </Text>
       </View>
       <View
@@ -48,7 +46,7 @@ const RoomItem = ({hotel, room, onPress}) => {
               ...textStyle.content.medium,
               marginRight: 12,
             }}>
-            1 Giường
+            {room.bed} Giường
           </Text>
 
           <Ionicons
@@ -60,7 +58,7 @@ const RoomItem = ({hotel, room, onPress}) => {
               color: generalColor.black[100],
               ...textStyle.content.medium,
             }}>
-            3 khách
+            {room.numOfMature} khách
           </Text>
         </View>
         <ButtonComponent

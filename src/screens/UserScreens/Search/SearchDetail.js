@@ -4,13 +4,16 @@ import TextInputComponent from '@src/components/TextInputComponent';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
+import {formatDate} from '@src/utils/textFormat';
 import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChooseRoomAndCustomer from './components/ChooseRoomAndCustomer';
 const roomCustomerText = ({room, mature, children}) => {
-  return `${room} phòng - ${mature} người lớn - ${children} trẻ em`;
+  return `${room} phòng - ${mature} người lớn ${
+    children > 0 ? '- ' + children + ' trẻ em' : ''
+  }`;
 };
 const UserSearchDetailScreen = () => {
   const [datepickerVisible, setDatepickerVisible] = useState(false);
@@ -27,8 +30,11 @@ const UserSearchDetailScreen = () => {
 
   console.log('datepickerVisible', datepickerVisible);
   const handleSelectDate = ({startDate, endDate}) => {
-    console.log('Selected', {startDate, endDate});
-    setDate({checkinDate: startDate, checkoutDate: endDate});
+    console.log('Selected', {startDate: new Date(startDate), endDate});
+    setDate({
+      checkinDate: new Date(startDate),
+      checkoutDate: new Date(endDate),
+    });
   };
   return (
     <View style={{flex: 1, padding: 20, backgroundColor: 'white'}}>
@@ -37,7 +43,7 @@ const UserSearchDetailScreen = () => {
           <AntDesign
             name="left"
             size={24}
-            color={generalColor.other.gray}></AntDesign>
+            color={generalColor.primary}></AntDesign>
         </Pressable>
       </View>
       <View
@@ -61,7 +67,10 @@ const UserSearchDetailScreen = () => {
           label={'Ngày'}
           value={
             date.checkinDate
-              ? `${date.checkinDate} - ${date.checkoutDate}`
+              ? `${formatDate(date.checkinDate, 'dd')} - ${formatDate(
+                  date.checkoutDate,
+                  'dd',
+                )} tháng ${formatDate(date.checkoutDate, 'MM')}`
               : 'Chọn ngày'
           }
           onPress={() => {
@@ -76,7 +85,10 @@ const UserSearchDetailScreen = () => {
       </View>
       <ButtonComponent
         onPress={() => {
-          navigate('UserSearchResultScreen');
+          navigate('UserSearchResultScreen', {
+            roomCustomer,
+            date,
+          });
         }}
         text={'Tìm phòng'}></ButtonComponent>
       <View style={{position: 'absolute', bottom: 0}}>
@@ -128,12 +140,12 @@ const Item = ({icon, label, placerholder, value, onPress}) => {
         rightContent={
           <AntDesign
             name="right"
-            size={24}
+            size={20}
             color={generalColor.other.gray}></AntDesign>
         }
         styleTextInput={{
-          ...textStyle.h[4],
-          color: generalColor.other.gray,
+          ...textStyle.h[5],
+          color: generalColor.black[100],
           fontWeight: '400',
         }}
         style={{
@@ -151,5 +163,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     ...textStyle.h[4],
     fontWeight: '400',
+    color: generalColor.primary,
   },
 });

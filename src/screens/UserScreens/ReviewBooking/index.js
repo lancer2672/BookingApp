@@ -1,4 +1,5 @@
 import {useRoute} from '@react-navigation/native';
+import {expandAnimation} from '@src/animation';
 import ButtonComponent from '@src/components/Button';
 import {reviewBookingMock} from '@src/mock/mock';
 import {goBack, navigate} from '@src/navigation/NavigationController';
@@ -6,8 +7,10 @@ import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {formatCurrency, formatDate} from '@src/utils/textFormat';
+import {useState} from 'react';
 import {
   Image,
+  LayoutAnimation,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -21,7 +24,7 @@ import ListReview from '../ReviewHotel/components/ListReview';
 
 const ReviewBooking = () => {
   const {roomCustomer, date, hotel, room} = useRoute().params;
-
+  const [reviewVisible, setRiewVisible] = useState(false);
   const handleNavigateReviewAll = () => {
     navigate('Review', {hotel});
   };
@@ -131,7 +134,7 @@ const ReviewBooking = () => {
                     color: generalColor.black[100],
                     ...textStyle.content.medium,
                   }}>
-                  {Number(room.numOfPeople) + room.numOfChildren} khách
+                  {Number(room.numOfMature) + room.numOfChildren} khách
                 </Text>
               </View>
             </View>
@@ -143,26 +146,45 @@ const ReviewBooking = () => {
             style={{
               borderTopWidth: 1,
               borderColor: '#DDDDDD',
-              marginTop: 20,
+              paddingTop: 10,
+              marginTop: 10,
             }}>
             <View>
               <View style={rowCenter}>
                 <Text style={styles.policy}>Đánh giá</Text>
-                <Pressable
-                  onPress={handleNavigateReviewAll}
-                  style={{marginLeft: 'auto'}}>
-                  <Text style={{textDecorationLine: 'underline'}}>
-                    {' '}
-                    Xem tất cả
-                  </Text>
-                </Pressable>
+
+                {reviewVisible ? (
+                  <Pressable
+                    onPress={handleNavigateReviewAll}
+                    style={{marginLeft: 'auto'}}>
+                    <Text style={{textDecorationLine: 'underline'}}>
+                      {' '}
+                      Xem tất cả
+                    </Text>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    onPress={() => {
+                      setRiewVisible(!reviewVisible);
+                      LayoutAnimation.configureNext(expandAnimation);
+                    }}
+                    style={{marginLeft: 'auto'}}>
+                    <AntDesign
+                      name="down"
+                      size={24}
+                      color={generalColor.other.gray}></AntDesign>
+                  </Pressable>
+                )}
               </View>
             </View>
-            <View style={{}}>
-              <ListReview
-                reviews={[reviewBookingMock[0]]}
-                hotel={hotel}></ListReview>
-            </View>
+
+            {reviewVisible && (
+              <View style={{}}>
+                <ListReview
+                  reviews={[reviewBookingMock[0]]}
+                  hotel={hotel}></ListReview>
+              </View>
+            )}
           </View>
           <View style={{marginTop: 12}}>
             <Text style={styles.policy}>Chính sách</Text>

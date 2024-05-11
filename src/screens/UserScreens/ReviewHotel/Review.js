@@ -1,3 +1,4 @@
+import {useRoute} from '@react-navigation/native';
 import {goBack} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
@@ -93,7 +94,7 @@ const Review = () => {
           }}></FilterButton>
       </View>
 
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, paddingHorizontal: 8}}>
         <ListReview></ListReview>
       </View>
       <SortModal

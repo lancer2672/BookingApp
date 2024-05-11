@@ -43,7 +43,7 @@ const ListReview = ({hotel, reviews = reviewBookingMock, style = {}}) => {
             <AntDesign
               name="like2"
               color={generalColor.primary}
-              size={24}></AntDesign>
+              size={18}></AntDesign>
             <Text style={{fontSize: 15, color: generalColor.primary}}>
               {' '}
               Hữu ích (12)
@@ -71,8 +71,6 @@ export default ListReview;
 
 const styles = StyleSheet.create({
   flatList: {
-    width: '90%',
-    marginLeft: '5%',
     height: '20%',
   },
   content: {
