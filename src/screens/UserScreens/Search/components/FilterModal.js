@@ -11,8 +11,12 @@ export const PRICE_CODE = {
   DOWN: 'PRICE_ASC',
   UP: 'PRICE_UP',
 };
+export const REVIEW_CODE = {
+  DOWN: 'REVIEW_DOWN',
+  UP: 'REVIEW_UP',
+};
 
-const ReviewModal = ({isVisible, onSelect, selectedItem, onClose}) => {
+const FilterModal = ({isVisible, onSelect, selectedItem, onClose}) => {
   const handleItemClick = item => {
     // onPress()
     onSelect(item);
@@ -49,6 +53,10 @@ const ReviewModal = ({isVisible, onSelect, selectedItem, onClose}) => {
           }
           isSelected={selectedItem === PRICE_CODE.DOWN}
           content={'Giá tiền giảm dần'}></Item>
+        <Item
+          onPress={() => handleItemClick(REVIEW_CODE.UP)}
+          isSelected={selectedItem === REVIEW_CODE.UP}
+          content={'Số lượng đánh giá tích cực'}></Item>
       </View>
     </ReactNativeModal>
   );
@@ -71,7 +79,7 @@ const Item = ({onPress, content, icon, isSelected}) => {
     </TouchableOpacity>
   );
 };
-export default ReviewModal;
+export default FilterModal;
 
 const styles = StyleSheet.create({
   container: {
@@ -80,7 +88,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 20,
-    height: (SCREEN_HEIGHT * 1) / 5,
+    height: (SCREEN_HEIGHT * 2) / 7,
   },
   content: {
     marginLeft: 12,

@@ -142,6 +142,13 @@ const ReviewBooking = () => {
               style={styles.img}
               source={{uri: 'https://picsum.photos/200'}}></Image>
           </View>
+          <Text style={{fontSize: 14}}>
+            {' '}
+            {room.description}
+            {room.description}
+            {room.description}
+            {room.description}
+          </Text>
           <View
             style={{
               borderTopWidth: 1,
@@ -171,7 +178,7 @@ const ReviewBooking = () => {
                     style={{marginLeft: 'auto'}}>
                     <AntDesign
                       name="down"
-                      size={24}
+                      size={18}
                       color={generalColor.other.gray}></AntDesign>
                   </Pressable>
                 )}

@@ -6,7 +6,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 const SettingItem = ({
   name,
   icon,
-  iconColor,
   backgroundIconColor,
   onClick,
   selectionName = '',
@@ -23,7 +22,7 @@ const SettingItem = ({
           borderRadius: 25,
           marginRight: 12,
         }}>
-        <Entypo name={icon} size={20} color={iconColor} />
+        {icon}
       </View>
       <View style={{flex: 1}}>
         <Text style={{color: generalColor.primary}}>{name}</Text>
@@ -45,7 +44,7 @@ const SettingItem = ({
           onPress={onClick}
           style={{
             borderRadius: 8,
-            backgroundColor: 'gray',
+            backgroundColor: generalColor.primary,
             padding: 8,
             marginLeft: 12,
           }}>

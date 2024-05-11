@@ -3,6 +3,7 @@ import {FlatList, Linking, Text, TouchableOpacity, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useTheme} from 'styled-components';
 import styled from 'styled-components/native';
 
@@ -11,7 +12,7 @@ import {goBack, navigate} from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
 import {ThemeContext} from '@src/theme/context';
-import {Avatar} from 'react-native-paper';
+import {Avatar, Divider} from 'react-native-paper';
 import SettingItem from './components/SettingItem';
 const UserProfile = () => {
   const user = {
@@ -33,15 +34,13 @@ const UserProfile = () => {
   const settingOptions = [
     {
       name: 'Thông báo',
-      icon: 'bell',
-      iconColor: '#3da9fc',
+      icon: <Entypo name={'bell'} size={20} color={'#3da9fc'} />,
       backgroundIconColor: '#a3d3f7',
       onClick: openDeviceSetting,
     },
     {
       name: 'Đặt lại mật khẩu',
-      icon: 'lock',
-      iconColor: '#356e2a',
+      icon: <Entypo name={'lock'} size={20} color={'#356e2a'} />,
       backgroundIconColor: '#60bf4d',
       onClick: () => {
         navigate('ResetPassword');
@@ -49,8 +48,7 @@ const UserProfile = () => {
     },
     {
       name: 'Chế độ tối',
-      icon: 'moon',
-      iconColor: '#8024c7',
+      icon: <Entypo name={'moon'} size={20} color={'#8024c7'} />,
       backgroundIconColor: '#ae9bbd',
       isToggleMode: true,
       defaultSwitchValue: isDarkTheme,
@@ -58,6 +56,16 @@ const UserProfile = () => {
         setIsDarkTheme(prev => !prev);
         viewRef.current.animate({0: {opacity: 0.65}, 1: {opacity: 1}});
         await AsyncStorage.setItem('AppTheme', !isDarkTheme ? 'dark' : 'light');
+      },
+    },
+  ];
+  const settingOptions2 = [
+    {
+      name: 'Lịch sử đặt phòng & thanh toán',
+      icon: <FontAwesome5 name={'history'} size={20} color={'white'} />,
+      backgroundIconColor: generalColor.primary,
+      onClick: () => {
+        navigate('BookingHistory');
       },
     },
   ];
@@ -104,6 +112,14 @@ const UserProfile = () => {
             renderItem={({item}) => <SettingItem {...item} />}
             keyExtractor={item => item.name}
           />
+          <Divider
+            style={{marginTop: 8, backgroundColor: generalColor.primary}}
+            bold></Divider>
+          <FlatList
+            data={settingOptions2}
+            renderItem={({item}) => <SettingItem {...item} />}
+            keyExtractor={item => item.name}
+          />
         </Body>
         <LogoutButton onPress={handleLogout}>
           <LogoutText>Đăng xuất</LogoutText>
@@ -113,7 +129,7 @@ const UserProfile = () => {
   );
 };
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   padding: 20px;
   background-color: ${props => props.theme.bg.primary};
   flex: 1;
@@ -129,12 +145,13 @@ const SettingCategory = styled.Text`
 `;
 const LogoutButton = styled.TouchableOpacity`
   border-radius: 4px;
+  margin-top: 28px;
   padding-vertical: 4px;
   background-color: ${generalColor.primary};
 `;
 const IconContainer = styled.View`
   border-radius: 8px;
-  background-color: gray;
+  background-color: #091e3d;
   padding: 8px;
   margin-left: 12px;
 `;
@@ -143,7 +160,7 @@ const LogoutText = styled.Text`
   padding-vertical: 4px;
   font-weight: 500;
   color: white;
-  font-size: 28px;
+  font-size: 22px;
 `;
 const Header = styled.View`
   flex-direction: row;

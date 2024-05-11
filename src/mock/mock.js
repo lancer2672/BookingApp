@@ -38,12 +38,16 @@ export const hotelsMock = [
         pricePerNight: 120,
         numOfMature: 2,
         numOfChildren: 0,
+        description: 'This is a description of room',
+
         bed: 1,
         amenities: ['Air Conditioning'],
       },
       {
         id: 8,
         hotelId: 4,
+        description: 'This is a description of room',
+
         pricePerNight: 200,
         numOfMature: 4,
         numOfChildren: 2,
@@ -84,6 +88,8 @@ export const hotelsMock = [
         id: 9,
         hotelId: 5,
         pricePerNight: 150,
+        description: 'This is a description of room',
+
         numOfMature: 2,
         numOfChildren: 1,
         bed: 1,
@@ -93,6 +99,8 @@ export const hotelsMock = [
         id: 10,
         hotelId: 5,
         pricePerNight: 250,
+        description: 'This is a description of room',
+
         numOfMature: 3,
         numOfChildren: 1,
         bed: 2,

@@ -21,6 +21,7 @@ const BookingHistoryItem = ({}) => {
               ...textStyle.content.medium,
               fontWeight: '500',
               marginBottom: 8,
+              color: generalColor.primary,
             }}>
             Studio J Hotel
           </Text>

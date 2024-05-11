@@ -6,7 +6,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useTheme} from 'styled-components';
 
-import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import Home from '@src/screens/UserScreens/Home/Home';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
@@ -89,7 +88,7 @@ export const Tabs = () => {
       }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={UserSearchScreen} />
-      <Tab.Screen name="BookingHistory" component={BookingHistory} />
+      {/* <Tab.Screen name="BookingHistory" component={BookingHistory} /> */}
       <Tab.Screen name="UserProfile" component={UserProfile} />
       {/* <Tab.Screen
         name="UserSearch"
