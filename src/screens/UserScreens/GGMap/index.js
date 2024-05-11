@@ -5,7 +5,7 @@ import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {useEffect, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import {API_KEY} from 'react-native-dotenv';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -69,7 +69,7 @@ const GGMap = ({hotels = hotelsMock}) => {
         console.log('position', position.coords);
       },
       error => console.log('getCurrentPosition failed', error),
-      {enableHighAccuracy: true, timeout: 20000},
+      {enableHighAccuracy: false, timeout: 20000},
     );
   }, []);
 
@@ -90,11 +90,13 @@ const GGMap = ({hotels = hotelsMock}) => {
   };
 
   if (!region || !markerPosition) {
+    Alert.alert('Lỗi. Lấy vị trí không thành công');
     return null;
   }
   console.log('selected', selectedHotel);
+  // return <View style={{flex: 1, backgroundColor: 'red'}}></View>;
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'gray'}}>
       <MapView
         provider={PROVIDER_GOOGLE}
         ref={mapRef}
@@ -110,27 +112,30 @@ const GGMap = ({hotels = hotelsMock}) => {
               latitude: hotel.location.latitude,
               longitude: hotel.location.longitude,
             }}>
-            <Text
-              numberOfLines={2}
-              style={{
-                ...textStyle.h[4],
-                textShadowColor: 'black',
-                textShadowOffset: {width: -1, height: 1},
-                width: 80,
-                borderRadius: 6,
-                paddingHorizontal: 4,
-                backgroundColor: 'tomato',
-                textShadowRadius: 10,
-                color: 'white',
-                textAlign: 'center',
-              }}>
-              {hotel.name}
-            </Text>
-            <Avatar.Image
-              style={{marginLeft: 12, borderWidth: 2, borderColor: 'white'}}
-              source={{
-                uri: hotel.avatar,
-              }}></Avatar.Image>
+            <View style={{alignItems: 'center'}}>
+              <Text
+                numberOfLines={2}
+                style={{
+                  ...textStyle.h[5],
+                  textShadowColor: 'black',
+                  textShadowOffset: {width: -1, height: 1},
+                  width: 80,
+                  borderRadius: 6,
+                  paddingHorizontal: 4,
+                  backgroundColor: 'tomato',
+                  textShadowRadius: 10,
+                  color: 'white',
+                  textAlign: 'center',
+                }}>
+                {hotel.name}
+              </Text>
+              <Avatar.Image
+                size={28}
+                style={{borderWidth: 2, borderColor: 'white'}}
+                source={{
+                  uri: hotel.avatar,
+                }}></Avatar.Image>
+            </View>
           </Marker>
         ))}
         {/* <Marker

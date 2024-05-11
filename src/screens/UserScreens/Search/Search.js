@@ -53,7 +53,11 @@ const UserSearchScreen = () => {
         </Pressable>
       </View>
       <View style={{flex: 1, padding: 20}}>
-        <Pressable onPress={() => navigate('GGMap')}>
+        <Pressable
+          onPress={() => {
+            navigate('GGMap');
+            console.log('GGMAP');
+          }}>
           <View style={styles.item}>
             <TargetSVG></TargetSVG>
             <Text
@@ -62,7 +66,7 @@ const UserSearchScreen = () => {
                 ...textStyle.content.medium,
                 marginLeft: 6,
               }}>
-              Khách sạn và khu nghỉ dưỡng xung quanh bạn
+              Khách sạn xung quanh bạn
             </Text>
           </View>
         </Pressable>

@@ -1,5 +1,6 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
 import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
@@ -7,13 +8,13 @@ import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
 import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
 import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
-import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import Profile from '@src/screens/AgentScreens/components/Profile';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import GGMap from '@src/screens/UserScreens/GGMap';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
+import Notification from '@src/screens/UserScreens/Notification/Notification';
 import Payment from '@src/screens/UserScreens/Payment';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
 import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
@@ -22,8 +23,8 @@ import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
 import useUserStore from '@src/store/user';
-import { navigationRef } from './NavigationController';
-import { Tabs } from './NavigationTab';
+import {navigationRef} from './NavigationController';
+import {Tabs} from './NavigationTab';
 
 const screenOptions = {
   header: () => null,
@@ -49,13 +50,14 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Tabs'}
-      screenOptions={{ presentation: 'card', ...screenOptions }}>
+      screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
         name={'UserSearchDetailScreen'}
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
+      <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
       <Stack.Screen name={'GGMap'} component={GGMap} />
@@ -67,47 +69,43 @@ const MainStack = () => {
         component={UserSearchResultScreen}
       />
       <Stack.Group screenOptions={screenOptions}>
-        <Stack.Screen
-          name="Profile"
-          component={Profile} />
-        <Stack.Screen
-          name="HotelRoomList"
-          component={HotelRoomList} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="HotelRoomList" component={HotelRoomList} />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{ title: 'Chỉnh sửa thông tin' }}
+          options={{title: 'Chỉnh sửa thông tin'}}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{ title: 'Chi tiết khách sạn' }}
+          options={{title: 'Chi tiết khách sạn'}}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{ title: 'Thông báo' }}
+          options={{title: 'Thông báo'}}
         />
-       
+
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{ title: 'Danh sách phòng' }}
+          options={{title: 'Danh sách phòng'}}
         />
       </Stack.Group>
     </Stack.Navigator>
@@ -117,53 +115,53 @@ const AgentStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Dashboard'}
-      screenOptions={{ presentation: 'card', ...screenOptions }}>
+      screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{ title: 'Chỉnh sửa thông tin' }}
+          options={{title: 'Chỉnh sửa thông tin'}}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{ title: 'Chi tiết khách sạn' }}
+          options={{title: 'Chi tiết khách sạn'}}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{ title: 'Thông báo' }}
+          options={{title: 'Thông báo'}}
         />
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{ title: 'Danh sách phòng' }}
+          options={{title: 'Danh sách phòng'}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Dashboard"
           component={Dashboard}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
       </Stack.Group>
     </Stack.Navigator>
