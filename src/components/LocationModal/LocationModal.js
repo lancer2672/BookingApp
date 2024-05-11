@@ -1,5 +1,6 @@
 import locationApi from '@src/api/province';
 import textStyle from '@src/theme/text';
+import {SCREEN_HEIGHT} from '@src/utils/constant';
 import {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -22,7 +23,10 @@ const ProvinceModal = ({isVisible, onSelect, onClose}) => {
         onClose();
       }}>
       <Text
-        style={[textStyle.content.large, {color: 'black', paddingVertical: 4}]}>
+        style={[
+          textStyle.content.medium,
+          {color: 'black', paddingVertical: 4},
+        ]}>
         {item.provinceName}
       </Text>
     </TouchableOpacity>
@@ -69,6 +73,7 @@ const ProvinceModal = ({isVisible, onSelect, onClose}) => {
   );
 };
 const DistrictModal = ({isVisible, provinceId, onSelect, onClose}) => {
+  console.log('province Id', provinceId);
   const [locations, setLocations] = useState([]);
   const renderItem = ({item, index}) => (
     <TouchableOpacity
@@ -77,7 +82,10 @@ const DistrictModal = ({isVisible, provinceId, onSelect, onClose}) => {
         onClose();
       }}>
       <Text
-        style={[textStyle.content.large, {color: 'black', paddingVertical: 4}]}>
+        style={[
+          textStyle.content.medium,
+          {color: 'black', paddingVertical: 4},
+        ]}>
         {item.districtName}
       </Text>
     </TouchableOpacity>
@@ -119,10 +127,14 @@ const WardModal = ({isVisible, districtId, onSelect, onClose}) => {
   const renderItem = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
-        onPress(item);
+        onSelect(item);
+        onClose();
       }}>
       <Text
-        style={[textStyle.content.large, {color: 'black', paddingVertical: 4}]}>
+        style={[
+          textStyle.content.medium,
+          {color: 'black', paddingVertical: 4},
+        ]}>
         {item.wardName}
       </Text>
     </TouchableOpacity>
@@ -165,7 +177,7 @@ export {DistrictModal, ProvinceModal, WardModal};
 const styles = StyleSheet.create({
   container: {
     marginTop: 'auto',
-    height: 300,
+    height: SCREEN_HEIGHT * 0.5,
     elevation: 2,
     backgroundColor: 'white',
     borderTopLeftRadius: 20,

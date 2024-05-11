@@ -1,22 +1,41 @@
 import {PinSVG} from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
+import {
+  DistrictModal,
+  ProvinceModal,
+  WardModal,
+} from '@src/components/LocationModal/LocationModal';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import {formatDate} from '@src/utils/textFormat';
 import {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChooseRoomAndCustomer from './components/ChooseRoomAndCustomer';
+0;
 const roomCustomerText = ({room, mature, children}) => {
   return `${room} phòng - ${mature} người lớn ${
     children > 0 ? '- ' + children + ' trẻ em' : ''
   }`;
 };
+const locationText = location => {
+  return ` ${location.ward?.wardName || ''}  ${
+    location.district?.districtName || ''
+  }`;
+};
 const UserSearchDetailScreen = () => {
   const [datepickerVisible, setDatepickerVisible] = useState(false);
+  const [provinceVisible, setProvinceVisble] = useState(false);
+  const [districtVisible, setDistrictVisble] = useState(false);
+  const [wardVisbile, setWardVisible] = useState(false);
+  const [location, setLocation] = useState({
+    province: null,
+    district: null,
+    ward: null,
+  });
   const [roomCustomerVisible, setRoomCustomerVisbile] = useState(false);
   const [roomCustomer, setRoomCustomer] = useState({
     children: 0,
@@ -37,14 +56,16 @@ const UserSearchDetailScreen = () => {
     });
   };
   return (
-    <View style={{flex: 1, padding: 20, backgroundColor: 'white'}}>
-      <View style={{paddingTop: 12}}>
+    <ScrollView style={{flex: 1, padding: 20, backgroundColor: 'white'}}>
+      <View
+        style={{paddingTop: 12, flexDirection: 'row', alignItems: 'center'}}>
         <Pressable onPress={goBack}>
           <AntDesign
             name="left"
             size={24}
             color={generalColor.primary}></AntDesign>
         </Pressable>
+        <Text style={styles.title}>Tìm kiếm</Text>
       </View>
       <View
         style={{
@@ -54,9 +75,36 @@ const UserSearchDetailScreen = () => {
         }}>
         <Item
           icon={<PinSVG color={generalColor.black[25]}></PinSVG>}
-          label={'Địa điểm'}
-          value={'Chọn địa điểm'}
-          onPress={() => {}}></Item>
+          label={'Tỉnh'}
+          placerholder={'Chọn địa điểm'}
+          value={location.province?.provinceName || ''}
+          onPress={() => {
+            setProvinceVisble(true);
+          }}></Item>
+        <Item
+          icon={<PinSVG color={generalColor.black[25]}></PinSVG>}
+          label={'Huyện'}
+          placerholder={'Chọn địa điểm'}
+          value={location.district?.districtName || ''}
+          onPress={() => {
+            if (location.province) {
+              setDistrictVisble(true);
+            } else {
+              setProvinceVisble(true);
+            }
+          }}></Item>
+        <Item
+          icon={<PinSVG color={generalColor.black[25]}></PinSVG>}
+          label={'Phường - Thị trấn'}
+          placerholder={'Chọn địa điểm'}
+          value={location.district?.wardName || ''}
+          onPress={() => {
+            if (location.district) {
+              setWardVisible(true);
+            } else {
+              setProvinceVisble(true);
+            }
+          }}></Item>
         <Item
           icon={
             <AntDesign
@@ -84,6 +132,7 @@ const UserSearchDetailScreen = () => {
           onPress={() => setRoomCustomerVisbile(true)}></Item>
       </View>
       <ButtonComponent
+        style={{marginTop: 20}}
         onPress={() => {
           navigate('UserSearchResultScreen', {
             roomCustomer,
@@ -117,7 +166,37 @@ const UserSearchDetailScreen = () => {
         onChange={setRoomCustomer}
         onClose={() => setRoomCustomerVisbile(false)}
         isVisible={roomCustomerVisible}></ChooseRoomAndCustomer>
-    </View>
+      <ProvinceModal
+        onSelect={p => {
+          setLocation(() => ({...location, province: p}));
+          setDistrictVisble(true);
+        }}
+        isVisible={provinceVisible}
+        onClose={() => {
+          setProvinceVisble(false);
+        }}></ProvinceModal>
+      <DistrictModal
+        provinceId={location.province?.id}
+        onSelect={p => {
+          setLocation({...location, district: p});
+          setWardVisible(true);
+        }}
+        isVisible={districtVisible}
+        onClose={() => {
+          setDistrictVisble(false);
+        }}></DistrictModal>
+
+      <WardModal
+        districtId={location.district?.id}
+        onSelect={p => {
+          setLocation({...location, ward: p});
+          setWardVisible(false);
+        }}
+        isVisible={wardVisbile}
+        onClose={() => {
+          setWardVisible(false);
+        }}></WardModal>
+    </ScrollView>
   );
 };
 
@@ -129,7 +208,7 @@ const Item = ({icon, label, placerholder, value, onPress}) => {
         <Text style={styles.label}>{label}</Text>
       </View>
       <TextInputComponent
-        heightTextInput={60}
+        heightTextInput={48}
         colorText={'white'}
         editable={false}
         onPress={onPress}
@@ -164,5 +243,14 @@ const styles = StyleSheet.create({
     ...textStyle.h[4],
     fontWeight: '400',
     color: generalColor.primary,
+  },
+  title: {
+    textTransform: 'uppercase',
+    color: generalColor.primary,
+    ...textStyle.h[2],
+    flex: 1,
+    textAlign: 'center',
+    marginRight: 24,
+    fontFamily: 'serif',
   },
 });

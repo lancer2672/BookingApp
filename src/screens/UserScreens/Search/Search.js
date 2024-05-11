@@ -30,6 +30,7 @@ const UserSearchScreen = () => {
               alignItems: 'center',
             }}>
             <PinSVG color={generalColor.white[100]}></PinSVG>
+
             <Text
               style={{
                 textTransform: 'uppercase',
@@ -40,12 +41,6 @@ const UserSearchScreen = () => {
               Địa điểm
             </Text>
           </View>
-          {/* <View>
-            <AntDesign
-              name="close"
-              size={24}
-              color={generalColor.white[100]}></AntDesign>
-          </View> */}
         </View>
         <Pressable onPress={() => navigate('UserSearchDetailScreen')}>
           <Searchbar
