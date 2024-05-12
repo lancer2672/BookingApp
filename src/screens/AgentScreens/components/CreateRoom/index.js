@@ -2,62 +2,43 @@ import TextInputComponent from '@src/components/TextInputComponent';
 import textStyle from '@src/theme/text';
 import { MASK_FORMAT } from '@src/utils/textFormat';
 import { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, FlatList, Pressable, TouchableOpacity, Modal } from 'react-native';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { showMessage } from 'react-native-flash-message';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Button, StyleSheet, Text, View, Pressable, TouchableOpacity, Modal, Image } from 'react-native';
+import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import AgentHeader from '../Header';
 import ButtonComponent from '@src/components/Button';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {IconButton} from 'react-native-paper';
 import { generalColor } from '@src/theme/color';
+import { ro } from 'date-fns/locale';
+import { rowCenter } from '@src/theme/style';
+import { goBack } from '@src/navigation/NavigationController';
+import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const CreateRoom = () => {
-    const [value, setValue] = useState('');
-    // useEffect(() => {
-    //     handleShowMessage();
-    // }, []);
-    // const handleShowMessage = () => {
-    //     showMessage({
-    //         message: 'Cập nhật thất bại',
-    //         type: 'danger',
-    //     });
-    // };
-    const imageSourceList = []
-    const [imageSource, setImageSource] = useState(null);
-    const selectImageFromCamera = () => {
-        const options = {
-            noData: true,
-        };
-
-        launchCamera(options, response => {
-            if (response.uri) {
-                setImageSource(response.uri);
-                imageSourceList.push(response.uri)
-            }
-        });
-    };
-    const [imageSource1, setImageSource1] = useState(null);
-    const selectImage = () => {
-        const options = {
-            noData: true,
-        };
-
-        launchImageLibrary(options, response => {
-            if (response.uri) {
-                setImageSource1(response.uri);
-                imageSourceList.push(response.uri)
-            }
-        });
-    };
-
-    const renderItem = ({ item }) => (
-        <Image source={imageSourceList[item]} ></Image>
-    );
-
-    const [dichuyen, setDichuyen] = useState([])
-    const handleDeleteDiChuyen = (index) => {
-        setDichuyen((prevItems) => {
+    const [room, setRoom] = useState({
+        name: '',
+        pricePerNight: 0,
+        numOfPeople: 0,
+        numOfChildren: 0,
+        bed: 0,
+        images: [],
+        amenities: [],
+        policy: '',
+    })
+    const handlesSetValue = (index, value) => {
+        setRoom({ ...room, [index]: value })
+    }
+    const [people,setPeople] = useState(0)
+    const [child, setChild] = useState(0)
+    const [bed, setBed] = useState(0)
+    const [images, setImages] = useState([]);
+    const [visible, setVisible] = useState(false);
+    //noithat
+    const [tienich, setTienich] = useState([])
+    const handleDeleteTienIch = (index) => {
+        setTienich((prevItems) => {
             const updatedItems = [...prevItems]; // Create a copy
             updatedItems.splice(index, 1); // Remove the item
             return updatedItems;
@@ -69,31 +50,61 @@ const CreateRoom = () => {
     const options = ['Điều hoà', 'Giường thường', 'Giường King', 'Ban công', 'Bồn tắm', 'Cửa sổ lớn'];
 
     const handleSelect = (value, index) => {
-        setDichuyen((prevItems) => {
+        setTienich((prevItems) => {
             const updatedItems = [...prevItems]; // Create a copy
             updatedItems[index] = value // Remove the item
             return updatedItems;
         });
         setModalVisible(false);
     };
-
+    const handleCreateRoom = () => {
+        const newroom = { ...room, amenities: tienich, numOfChildren: child, numOfPeople: people, bed: bed }
+        setRoom(newroom)
+    }
     return (
-        <View style={{ backgroundColor: "#F2F5FA" }}>
-            <AgentHeader active="TẠO PHÒNG" detail="- Thêm phòng cho hotel của bạn - "></AgentHeader>
-            <Text style={{ fontSize: 15, width: "90%", marginLeft: "5%", marginTop: 10, marginBottom: -5, fontWeight: "bold" }}>* THÔNG TIN CHUNG</Text>
+        <View style={{ backgroundColor: "white", flex: 1 }}>
+            <View style={{ padding: 12, marginTop: 12, ...rowCenter, marginBottom: 12, backgroundColor:generalColor.primary }}>
+                <Pressable onPress={goBack}>
+                    <AntDesign
+                        name="left"
+                        size={24}
+                        color='white'></AntDesign>
+                </Pressable>
+                <Text
+                    style={{
+                        textTransform: 'uppercase',
+                        color: "white",
+                        ...textStyle.h[2],
+                        flex: 1,
+                        textAlign: 'center',
+                        marginRight: -30,
+                        fontFamily: 'serif',
+                    }}>
+                    Tạo Phòng
+                </Text>
+                <Pressable>
+                    <IconButton
+                        icon="bell"
+                        size={24}
+                        iconColor='white'
+                    />
+                </Pressable>
+            </View>
+            <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", marginTop: 10, marginBottom: -5, fontWeight: "bold" }}>* THÔNG TIN CHUNG</Text>
             <View style={styles.container}>
                 <TextInputComponent
-                    placeholder="Loại phòng ..."
-                    value={value}
+                    placeholder="Tên phòng ..."
+                    value={room.name}
                     widthTextInput={"80%"}
                     heightTextInput={40}
                     onChangeText={text => {
-                        setValue(text);
+                        handlesSetValue('name', text);
                     }}
 
                     marginBottom={0}
                     styleTextInput={[
                         {
+                            color: 'black',
                             maxWidth: '100%',
                         },
                         textStyle.h[5],
@@ -103,16 +114,17 @@ const CreateRoom = () => {
                 />
                 <TextInputComponent
                     placeholder="Giá phòng ..."
-                    value={value}
+                    value={room.pricePerNight}
                     widthTextInput={"80%"}
                     heightTextInput={40}
                     onChangeText={text => {
-                        setValue(text);
+                        handlesSetValue('pricePerNight', text);
                     }}
 
                     marginBottom={0}
                     styleTextInput={[
                         {
+                            color: 'black',
                             maxWidth: '100%',
                         },
                         textStyle.h[5],
@@ -121,17 +133,18 @@ const CreateRoom = () => {
                     placeholderColor="black"
                 />
                 <TextInputComponent
-                    placeholder="Mô tả ..."
-                    value={value}
+                    placeholder="Chính sách và quy định ..."
+                    value={room.policy}
                     widthTextInput={"80%"}
                     heightTextInput={40}
                     onChangeText={text => {
-                        setValue(text);
+                        handlesSetValue('policy', text);
                     }}
 
                     marginBottom={0}
                     styleTextInput={[
                         {
+                            color: 'black',
                             maxWidth: '100%',
                         },
                         textStyle.h[5],
@@ -140,7 +153,48 @@ const CreateRoom = () => {
                     placeholderColor="black"
                 />
             </View>
-            <Text style={{ fontSize: 15, width: "90%", marginLeft: "5%", marginTop: 10, marginBottom: -5, fontWeight: "bold" }}>* CHI TIẾT NỘI THẤT</Text>
+            <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", marginTop: 10, marginBottom: -5, fontWeight: "bold" }}>* SỐ LƯỢNG KHÁCH VÀ GIƯỜNG</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '70%', marginLeft: '15%', marginTop: 15 }}>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <AntDesign name='minuscircleo' size={28} style={{ marginRight: 10 }} onPress={() => {
+                        if(people <= 0)
+                            setPeople(0)
+                        else 
+                            setPeople(people - 1)
+                    }}></AntDesign>
+                    <MaterialIcons name='people' size={28}></MaterialIcons>
+                    <Text style={{ fontSize: 20 }}> {people}</Text>
+                    <AntDesign name='pluscircleo' size={28} style={{ marginLeft: 10 }} onPress={() => {
+                        setPeople(people + 1)
+                    }}></AntDesign>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <AntDesign name='minuscircleo' size={28} style={{ marginRight: 10 }} onPress={() => {
+                        if(child <= 0)
+                            setChild(0)
+                        else 
+                            setChild(child - 1)
+                    }}></AntDesign>
+                    <FontAwesome name='child' size={28}></FontAwesome>
+                    <Text style={{ fontSize: 20 }}>{child}</Text>
+                    <AntDesign name='pluscircleo' size={28} style={{ marginLeft: 10 }} onPress={() => {
+                        setChild(child + 1)
+                    }}></AntDesign>
+                </View>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'center', marginTop:20 }}>
+                    <AntDesign name='minuscircleo' size={28} style={{ marginRight: 10 }} onPress={() => {
+                        if(bed <= 0)
+                            setBed(0)
+                        else 
+                            setBed(bed - 1)
+                    }}></AntDesign>
+                    <Ionicons name='bed' size={28}></Ionicons>
+                    <Text style={{ fontSize: 20 }}>{bed}</Text>
+                    <AntDesign name='pluscircleo' size={28} style={{ marginLeft: 10 }} onPress={() => {
+                        setBed(bed + 1)
+                    }}></AntDesign>
+                </View>
             <View style={{ width: "90%", marginLeft: "5%" }}>
                 <View style={{ marginTop: 12, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <Text
@@ -148,24 +202,24 @@ const CreateRoom = () => {
                             color: "black",
                             fontSize: 18,
                             textAlign: 'center',
-
+                            fontWeight:'bold'
                         }}>
                         <AntDesign
                             name="caretright"
-                            
-                            size={15}
-                        ></AntDesign> Thêm nội thất
+
+                            size={18}
+                        ></AntDesign> THÊM TIỆN ÍCH
                     </Text>
-                    <Pressable onPress={() => { setDichuyen([...dichuyen, "Nội thất ... ?"]) }}>
+                    <Pressable onPress={() => { setTienich([...tienich, "Tiện ích ..."]) }}>
                         <Ionicons
                             name="add"
-                            
+
                             size={32}
                         ></Ionicons>
                     </Pressable>
                 </View>
                 <View style={{ display: "flex", flexDirection: "column" }}>
-                    {dichuyen.map((item, index) => (
+                    {tienich.map((item, index) => (
                         <View style={styles.location}>
                             <TouchableOpacity onPress={() => { setModalVisible(true), setInx(index) }} style={styles.selectButton}>
                                 <Text style={styles.selectButtonText}>{item}</Text>
@@ -193,7 +247,7 @@ const CreateRoom = () => {
                                     </View>
                                 </View>
                             </Modal>
-                            <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteDiChuyen(index)} style={styles.delete}></AntDesign>
+                            <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteTienIch(index)} style={styles.delete}></AntDesign>
 
                         </View>
                     ))
@@ -201,23 +255,27 @@ const CreateRoom = () => {
                 </View>
             </View>
             <View style={styles.imageChose}>
-                <Text style={{ fontSize: 15, width: "100%", marginTop: 10, marginBottom: 10, fontWeight: "bold" }}>* THÊM HÌNH ẢNH MÌNH HOẠ </Text>
-                <View style={styles.buttonImage}>
-                    <ButtonComponent title="Chụp ảnh" onPress={selectImageFromCamera} style={styles.buttonItem} text="Chụp Ảnh" />
-                    <ButtonComponent title="Chọn ảnh" onPress={selectImage} style={styles.buttonItem} text="Chọn Ảnh" />
+                <Text style={{ fontSize: 18, width: "100%", marginTop: 10, marginBottom: 10, fontWeight: "bold" }}>* THÊM HÌNH ẢNH MÌNH HOẠ </Text>
+                <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                    <TouchableOpacity
+                        onPress={async () => {
+
+                            setVisible(() => true);
+                        }}
+                        style={styles.avatar}>
+                        <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
+                    </TouchableOpacity>
+                    {images.map((item) => <Image source={{ uri: item }} style={styles.imagepick}></Image>)}
                 </View>
-                {/* <FlatList
-                    style={styles.flatList}
-                    data={imageSource}
-                    renderItem={renderItem}
-                    keyExtractor={(item, index) => index.toString()}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.imagelist}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                /> */}
+                <ImagePickerModal
+                    onResult={image => {
+                        setImages([...images, image])
+                        console.log('image', images)
+                    }}
+                    visible={visible}
+                    onClose={() => setVisible(false)}></ImagePickerModal>
             </View>
-            <ButtonComponent onPress={() => { }} style={{ width: "70%", marginLeft: "15%", backgroundColor: generalColor.primary, marginTop: "20%", height: 50, borderRadius: 20 }} text="Thêm phòng" />
+            <ButtonComponent onPress={handleCreateRoom} style={{ width: "70%", marginLeft: "18%", backgroundColor: generalColor.primary, marginTop: "15%", height: 50, borderRadius: 20 }} text="Thêm phòng" />
         </View>
     );
 };
@@ -312,5 +370,15 @@ const styles = StyleSheet.create({
         padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
+    },
+    avatar: {
+        borderRadius: 12,
+        width: '30%',
+        alignSelf: 'left',
+        justifyContent: 'center',
+        marginTop: 12,
+        alignItems: 'center',
+        height: 120,
+        backgroundColor: generalColor.other.lightgray,
     },
 });

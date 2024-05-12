@@ -2,9 +2,6 @@ import React from 'react';
 import { View, StyleSheet, FlatList, TextInput, Text, Image ,ScrollView} from 'react-native';
 import AgentHeader from '../Header';
 import HotelCard from './HotelCard';
-import Swiper from 'react-native-swiper';
-import TextInputComponent from '@src/components/TextInputComponent';
-import { rowCenter } from '@src/theme/style';
 import { hotelsMock } from '@src/mock/mock';
 
 
