@@ -1,88 +1,25 @@
 import { navigate } from '@src/navigation/NavigationController';
-import { FlatList, StyleSheet, Text, View, Pressable, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {  StyleSheet, Text, View, Pressable, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RoomCard from './RoomCard';
 import { goBack } from '@src/navigation/NavigationController';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { generalColor } from '@src/theme/color';
-import { rowCenter } from '@src/theme/style';
+import { center, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import ButtonComponent from '@src/components/Button';
 import Swiper from 'react-native-swiper';
 import { Button } from 'react-native-paper';
 import { useState } from 'react';
-import { autoScroll } from '@shopify/flash-list';
+import { hotelsMock } from '@src/mock/mock';
+import { useRoute } from '@react-navigation/native';
 const ListRoom = () => {
-  const room = [
-    {
-      type: 'Phòng đơn',
-      tienich: 'Dieu hoa, ghe sofa, tu quan ao',
-      price: '$300',
-      images: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
-        'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-      ],
-      detail: '2 người lớn',
-      policy: 'Cam hut thuoc duoi moi hinh thuc',
-      sales: 'Mien phi bua an sang di kem',
-    },
-    {
-      type: 'Phòng đôi',
-      tienich: 'Dieu hoa, ghe sofa, tu quan ao',
-      price: '$300',
-      images: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
-        'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-      ],
-      detail: '4 người lớn + 2 trẻ em',
-      policy: 'Cam hut thuoc duoi moi hinh thuc',
-      sales: 'Mien phi bua an sang di kem',
-    },
-    {
-      type: 'Phòng King',
-      tienich: 'Dieu hoa, ghe sofa, tu quan ao, guong King 2m, kinh 360 do',
-      price: '$300',
-      images: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
-        'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-      ],
-      detail: '2 người lớn + 1 trẻ em',
-      policy: 'Cam hut thuoc duoi moi hinh thuc',
-      sales: 'Mien phi bua an sang di kem',
-    },
-  ];
-  const renderItem = ({ item }) => (
-    <RoomCard
-      images={item.images}
-      type={item.type}
-      tienich={item.tienich}
-      price={item.price}
-      sales={item.sales}
-      policy={item.policy}
-      detail={item.detail}
-    />
-  );
-  const image = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
-    'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
-    'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-  ]
-  const tienichHotel = [
-    {
-      name: "Ho boi",
-      icon: "water"
-    },
-    {
-      name: "Wifi free",
-      icon: "wifi"
-    },
-    {
-      name: "Cho dau xe rieng",
-      icon: "car"
-    }
-  ]
+  const route = useRoute();
+  const hotel = route.params
+  const rooms = hotel.rooms
+  const image = hotel.images
+  const tienichHotel = hotel.amenities
   const handlePress = () => {
     // This is where you specify the URL you want to link to
     Linking.openURL('https://example.com');
@@ -173,8 +110,8 @@ const ListRoom = () => {
       </View>
 
       <View style={{ width:"90%", marginLeft:"5%"}}>
-        <Text style={{ fontSize: 25, fontWeight: "bold" }}>SNOW homestay</Text>
-        <Text style={{ fontSize: 18 }}>28 Dong thi sach vung tau</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold" }}>{hotel.name}</Text>
+        <Text style={{ fontSize: 18 }}>{hotel.address}</Text>
         <TouchableOpacity onPress={handlePress} style={{ }}>
           <Text style={{ color: 'blue', fontSize: 18 }}>Hiển thị trên bản đồ</Text>
         </TouchableOpacity>
@@ -190,15 +127,13 @@ const ListRoom = () => {
           ))}
         </Swiper>
         <Text style={{ fontSize: 22, fontWeight: "bold" }}>Mo ta hotel</Text>
-        <Text style={{ fontSize: 18 }}>SNOW homestay là chỗ nghỉ có sân hiên nằm ở Vũng Tàu, cách Bãi Sau 19 phút đi bộ, Bãi Trước 2.2 km và Bãi Dứa 2.5 km. Wi-Fi miễn phí có sẵn ở toàn bộ chỗ nghỉ và chỗ đậu xe riêng có sẵn trong khuôn viên.
-
-          Căn hộ cách Tượng Chúa Ki-tô 1.6...</Text>
+        <Text style={{ fontSize: 18 }}>{hotel.description}</Text>
         <Text style={{ fontSize: 22, fontWeight: "bold" }}>Cac tien nghi</Text>
         <View style={{ marginTop: 10 }}>
           {tienichHotel.map((item) => (
             <View style={{ display: "flex", flexDirection: "row", marginBottom: 10, alignItems: "center" }}>
-              <FontAwesome5 name={item.icon} size={24} style={{ width: 34, height: 24, textAlign: "center" }} ></FontAwesome5>
-              <Text style={{ fontSize: 15, marginLeft: 10 }}>{item.name}</Text>
+              <AntDesign name='check' size={20}  ></AntDesign>
+              <Text style={{ fontSize: 18, marginLeft: 5 , }}>{item.name}</Text>
             </View>
           ))}
         </View>
@@ -213,15 +148,9 @@ const ListRoom = () => {
         {active == "dichuyen" &&  dichuyen()}
       </View>
       <View style={styles.hotelCards}>
-         {room.map((item) => (
+         {rooms.map((item) => (
              <RoomCard
-             images={item.images}
-             type={item.type}
-             tienich={item.tienich}
-             price={item.price}
-             sales={item.sales}
-             policy={item.policy}
-             detail={item.detail}
+                room = {item}
            />
          ))}
 

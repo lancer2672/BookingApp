@@ -8,7 +8,7 @@ import { LineChart, ProgressChart } from 'react-native-chart-kit';
 import { useState, useEffect } from 'react';
 import { generalColor } from '@src/theme/color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import LinearGradient from 'react-native-linear-gradient';
+
 
 const Dashboard = () => {
     const datas = {
