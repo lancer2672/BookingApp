@@ -1,3 +1,4 @@
+import {bookingHistoryMock} from '@src/mock/mock';
 import {goBack} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
@@ -7,7 +8,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import BookingHistoryItem from './components/BookingHistoryItem';
 
 const BookingHistory = () => {
-  const renderItem = ({item, index}) => <BookingHistoryItem />;
+  // const {bookingHistory = bookingHistoryMock} = useRoute().params;
+  const bookingHistory = bookingHistoryMock;
+  const renderItem = ({item, index}) => <BookingHistoryItem item={item} />;
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <View style={{padding: 12, marginTop: 12, ...rowCenter}}>
@@ -23,7 +26,7 @@ const BookingHistory = () => {
       <View style={{flex: 1}}>
         <FlatList
           renderItem={renderItem}
-          data={[1, 2]}
+          data={bookingHistory}
           keyExtractor={(item, index) => index.toString()}
           showVertical={false}
           ItemSeparatorComponent={() => <View style={{marginVertical: 8}} />}

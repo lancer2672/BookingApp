@@ -1,5 +1,6 @@
 import {Dimensions} from 'react-native';
 
+export const URL_API = 'localhost:8080';
 export const REVIEW_TEXT = [
   '',
   'Trải nghiệm tệ',

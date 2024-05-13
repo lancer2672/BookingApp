@@ -3,16 +3,24 @@ export const agentMock = {
   id: 1,
   name: 'Agent Name',
 };
+export const userMock = {
+  id: 111,
+  name: 'User Name',
+  email: 'User Name@gmail.com',
+  name: 'User Name',
+};
 export const hotelsMock = [
   {
     id: 4,
     agentId: agentMock.id,
     name: 'Hotel 4',
+
     address: '1600 Amphitheatre Parkway, Mountain View, CA ',
     description: 'This is a description of Hotel 4.',
     policy: 'This is a policy of Hotel 4',
     province: 'Province 4',
     district: 'District 4',
+    ward: 'Ward 4',
     rating: 4.2,
     avatar: 'https://picsum.photos/200',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
@@ -63,10 +71,10 @@ export const hotelsMock = [
           },
           duration: 3,
           startDay: '20/10/2024',
-          endDay:'23/10/2024',
+          endDay: '23/10/2024',
           status: 'Đã thanh toán online',
-          note:'(Không có)'
-        }
+          note: '(Không có)',
+        },
       },
       {
         id: 8,
@@ -93,10 +101,10 @@ export const hotelsMock = [
           },
           duration: 0,
           startDay: '',
-          endDay:'',
+          endDay: '',
           status: '',
-          note:''
-        }
+          note: '',
+        },
       },
     ],
   },
@@ -109,6 +117,7 @@ export const hotelsMock = [
     policy: 'This is a policy of Hotel 5',
     province: 'Province 5',
     district: 'District 5',
+    ward: 'Ward 5',
     rating: 4.7,
     avatar: 'https://picsum.photos/200',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
@@ -159,10 +168,10 @@ export const hotelsMock = [
           },
           duration: 3,
           startDay: '20/10/2024',
-          endDay:'23/10/2024',
+          endDay: '23/10/2024',
           status: 'Đã thanh toán online',
-          note:'(Không có)'
-        }
+          note: '(Không có)',
+        },
       },
       {
         id: 8,
@@ -189,10 +198,10 @@ export const hotelsMock = [
           },
           duration: 0,
           startDay: '',
-          endDay:'',
+          endDay: '',
           status: '',
-          note:''
-        }
+          note: '',
+        },
       },
     ],
   },
@@ -223,8 +232,27 @@ export const reviewBookingMock = [
 
 export const reviewRatingMock = [
   {
-    userId: 201,
+    userId: 301,
     hotelId: 5,
+    room: 7,
     rating: 3.0,
+    createdAt: new Date(),
+  },
+];
+export const bookingHistoryMock = [
+  {
+    id: 301,
+    userId: 111,
+    hotel: hotelsMock.find(hotel => hotel.id === 4), // Tìm và trả về thông tin chi tiết của Hotel 4
+    checkInDate: '2024-06-15T12:00:00.000Z',
+    checkOutDate: '2024-06-20T11:00:00.000Z',
+    roomId: 7,
+    totalPrice: 120 * 5 + 200 * 5, // Tổng giá dựa trên số đêm và giá mỗi đêm
+    paymentMethod: 'Credit Card',
+    createdAt: '2024-05-20T10:00:00.000Z',
+    updatedAt: '2024-05-22T15:00:00.000Z',
+    payment: {
+      amount: 200000,
+    },
   },
 ];
