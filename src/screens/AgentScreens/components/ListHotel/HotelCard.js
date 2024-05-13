@@ -1,20 +1,20 @@
 import ButtonComponent from '@src/components/Button';
-import {navigate} from '@src/navigation/NavigationController';
+import { navigate } from '@src/navigation/NavigationController';
 import { generalColor } from '@src/theme/color';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-const HotelCard = ({name, location, price, sales, images, policy, detail}) => {
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
+const HotelCard = ({hotels}) => {
   const navigateToDetail = () => {
-    navigate('ListRoom');
+    navigate('ListRoom', hotels);
   };
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
         <Swiper style={styles.wrapper}>
-          {images.map((image, index) => (
+          {hotels.images.map((image, index) => (
             <View key={index} style={styles.slide}>
-              <Image source={{uri: image}} style={styles.imageslider} />
+              <Image source={{ uri: image }} style={styles.imageslider} />
             </View>
           ))}
         </Swiper>
@@ -26,23 +26,28 @@ const HotelCard = ({name, location, price, sales, images, policy, detail}) => {
           marginLeft: 20,
           marginTop: 20,
         }}>
-        {name}
+        {hotels.name}
       </Text>
-      <Text style={{fontSize: 15, marginLeft: 20, marginTop: 10}}>
-        {location}
+      <Text style={{ fontSize: 15, marginLeft: 20, marginTop: 10 }}>
+        {hotels.address}
       </Text>
       <Text
         style={{
           fontSize: 20,
           marginLeft: 20,
           fontWeight: 'bold',
-          marginTop: 10,
+          marginTop: 5,
+          marginBottom:5
         }}>
-        {price}
+        {hotels.rating} *
       </Text>
-      <Text style={{fontSize: 12, marginLeft: 20, marginTop: 5, width: '30%'}}>
-        {sales}
-      </Text>
+      {hotels.amenities.map(item => (
+        <View style={{display:'flex', flexDirection:'row',marginTop: 3,marginLeft:20}}>
+          <AntDesign name='plus' size={16}></AntDesign>
+          <Text style={{ fontSize: 14, marginLeft: 5, marginTop: 0, width: '30%', fontStyle:'italic' }}>{item.name}</Text>
+        </View>
+
+      ))}
       <ButtonComponent
         style={styles.delete}
         text="Chi tiết"

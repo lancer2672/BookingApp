@@ -13,43 +13,28 @@ import AgentHeader from '../Header';
 import { generalColor } from '@src/theme/color';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 
+
 const CreateHotel = () => {
-  const initialValues = {
-    name: '',
-    addres: {
-      province: null,
-      district: null,
-      ward: null,
-    },
-    detail: '',
-    amenniteis: [],
-    around: {
-      visit: [],
-      food: [],
-      transport: [],
-    },
-    policy: '',
-    images: ''
-  };
-  const [value, setValue] = useState('');
-  const [field, setField] = useState('');
+  const [hotel, setHotel] = useState(
+    {
+      name: '',
+      address: '',
+      description: '',
+      ameniteis: [],
+      around: {
+        visit: [],
+        food: [],
+        transport: [],
+      },
+      policy: '',
+      images: []
+    }
+  );
+  const handlesSetValue = (index, value) => {
+    setHotel({ ...hotel, [index]: value })
+  }
   const [visible, setVisible] = useState(false);
   const [images, setImages] = useState([]);
-
-  const selectImages = () => {
-    const options = {
-      noData: true,
-      mediaType: 'photo',
-      multiple: false,
-    };
-
-    return launchImageLibrary(options, response => {
-      if (response.assets) {
-        return response.assets[0];
-      }
-      return null;
-    });
-  };
 
   //tham quan
   const [thamquan, setThamquan] = useState([]);
@@ -99,6 +84,11 @@ const CreateHotel = () => {
     });
     setModalVisible(false);
   };
+  const handleAddHotel = () => {
+    const newHotel = {...hotel, around: {visit: thamquan, food: anuong, transport:dichuyen}, ameniteis: tiennghi}
+    setHotel(newHotel)
+    console.log(hotel)
+  }
   return (
     <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
       <AgentHeader
@@ -117,11 +107,11 @@ const CreateHotel = () => {
       <View style={styles.container}>
         <TextInputComponent
           placeholder="Tên Hotel ..."
-          value={value}
+          value={hotel.name}
           widthTextInput={'80%'}
           heightTextInput={40}
           onChangeText={text => {
-            setValue(text);
+            handlesSetValue('name', text);
           }}
           marginBottom={0}
           styleTextInput={[
@@ -137,11 +127,11 @@ const CreateHotel = () => {
         <View style={styles.location}>
           <TextInputComponent
             placeholder="Vị trí ..."
-            value={value}
+            value={hotel.address}
             widthTextInput={'80%'}
             heightTextInput={40}
             onChangeText={text => {
-              setValue(text);
+              handlesSetValue('address', text);
             }}
             marginBottom={0}
             styleTextInput={[
@@ -160,11 +150,11 @@ const CreateHotel = () => {
         </View>
         <TextInputComponent
           placeholder="Mô tả ..."
-          value={value}
+          value={hotel.description}
           widthTextInput={'80%'}
           heightTextInput={40}
           onChangeText={text => {
-            setValue(text);
+            handlesSetValue('description', text);
           }}
           marginBottom={0}
           styleTextInput={[
@@ -221,6 +211,7 @@ const CreateHotel = () => {
                   animationType="slide"
                   transparent={true}
                   visible={modalVisible}
+                  useNativeDriver={true}
                   onRequestClose={() => setModalVisible(false)}
                 >
                   <View style={styles.modalContainer}>
@@ -285,7 +276,7 @@ const CreateHotel = () => {
             </Text>
             <Pressable
               onPress={() => {
-                setThamquan([...thamquan, 'New']);
+                setThamquan([...thamquan, '']);
               }}>
               <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
             </Pressable>
@@ -296,11 +287,13 @@ const CreateHotel = () => {
               <View style={styles.location}>
                 <TextInputComponent
                   placeholder="Địa chỉ tham quan ..."
-                  value={value}
+                  value={item}
                   widthTextInput={'80%'}
                   heightTextInput={20}
                   onChangeText={text => {
-                    setValue(text);
+                    const update = [...thamquan]
+                    update[index] = text
+                    setThamquan(update)
                   }}
                   marginBottom={0}
                   styleTextInput={[
@@ -347,7 +340,7 @@ const CreateHotel = () => {
             </Text>
             <Pressable
               onPress={() => {
-                setAnuong([...anuong, 'New']);
+                setAnuong([...anuong, '']);
               }}>
               <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
             </Pressable>
@@ -358,15 +351,18 @@ const CreateHotel = () => {
               <View style={styles.location}>
                 <TextInputComponent
                   placeholder="Địa chỉ ăn uống ..."
-                  value={value}
+                  value={item}
                   widthTextInput={'80%'}
                   heightTextInput={20}
                   onChangeText={text => {
-                    setValue(text);
+                    const update = [...anuong]
+                    update[index] = text
+                    setAnuong(update)
                   }}
                   marginBottom={0}
                   styleTextInput={[
                     {
+                      color:'black',
                       maxWidth: '100%',
                     },
                     textStyle.h[5],
@@ -408,7 +404,7 @@ const CreateHotel = () => {
             </Text>
             <Pressable
               onPress={() => {
-                setDichuyen([...dichuyen, 'New']);
+                setDichuyen([...dichuyen, '']);
               }}>
               <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
             </Pressable>
@@ -419,15 +415,18 @@ const CreateHotel = () => {
               <View style={styles.location}>
                 <TextInputComponent
                   placeholder="Bến xe, sân bay ..."
-                  value={value}
+                  value={item}
                   widthTextInput={'80%'}
                   heightTextInput={20}
                   onChangeText={text => {
-                    setValue(text);
+                    const update = [...dichuyen]
+                    update[index] = text
+                    setDichuyen(update)
                   }}
                   marginBottom={0}
                   styleTextInput={[
                     {
+                      color:'black',
                       maxWidth: '100%',
                     },
                     textStyle.h[5],
@@ -458,11 +457,11 @@ const CreateHotel = () => {
         </Text>
         <TextInputComponent
           placeholder="........"
-          value={value}
+          value={hotel.policy}
           widthTextInput={'80%'}
           heightTextInput={40}
           onChangeText={text => {
-            setValue(text);
+            handlesSetValue('policy', text);
           }}
           marginBottom={0}
           styleTextInput={[
@@ -487,14 +486,14 @@ const CreateHotel = () => {
           }}>
           * THÊM HÌNH ẢNH MÌNH HOẠ{' '}
         </Text>
-        <View style={{display:'flex', flexDirection:'row',flexWrap:'wrap', justifyContent:'space-between'}}>
+        <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={async () => {
-              setField(() => 'avatar');
+
               setVisible(() => true);
             }}
             style={styles.avatar}>
-              <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
+            <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
           </TouchableOpacity>
           {images.map((item) => <Image source={{ uri: item }} style={styles.imagepick}></Image>)}
         </View>
@@ -509,7 +508,7 @@ const CreateHotel = () => {
       </View>
 
       <ButtonComponent
-        onPress={() => { }}
+        onPress={handleAddHotel}
         style={{
           width: '70%',
           marginLeft: '15%',
@@ -639,6 +638,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     alignItems: 'center',
     height: 120,
-    backgroundColor:'red'
+    backgroundColor: 'red'
   }
 });

@@ -3,16 +3,9 @@ import {navigate} from '@src/navigation/NavigationController';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import { generalColor } from '@src/theme/color';
-const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
-  const room = {
-    type: type,
-    tienich: tienich,
-    price: price,
-    sales: sales,
-    images: images,
-    policy: policy,
-    detail: detail,
-  };
+import { hotelsMock } from '@src/mock/mock';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+const RoomCard = ({room}) => {
   const navigateToDetail = () => {
     navigate('DetailRoom', room);
   };
@@ -20,7 +13,7 @@ const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
     <View style={styles.container}>
       <View style={styles.slider}>
         <Swiper style={styles.wrapper}>
-          {images.map((image, index) => (
+          {room.images.map((image, index) => (
             <View key={index} style={styles.slide}>
               <Image source={{uri: image}} style={styles.imageslider} />
             </View>
@@ -34,10 +27,10 @@ const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
           marginLeft: 20,
           marginTop: 20,
         }}>
-        {type}
+        {room.name}
       </Text>
-      <Text style={{fontSize: 15, marginLeft: 20, marginTop: 10}}>
-        {detail}
+      <Text style={{fontSize: 16, marginLeft: 20, marginTop: 10}}>
+        {room.bed} giường , tối đa {room.numOfPeople} người và {room.numOfChildren} trẻ em
       </Text>
       <Text
         style={{
@@ -45,12 +38,19 @@ const RoomCard = ({type, tienich, price, sales, images, policy, detail}) => {
           marginLeft: 20,
           fontWeight: 'bold',
           marginTop: 10,
+          marginBottom:10
         }}>
-        {price}
+        Giá : {room.pricePerNight}/1d $
       </Text>
-      <Text style={{fontSize: 12, marginLeft: 20, marginTop: 5, width: '30%'}}>
-        {sales}
-      </Text>
+      <View style={{fontSize: 16, marginLeft: 20, backgroundColor:'black',height:1,width:"35%" }}></View>
+      {/* {room.amenities.map(item => (
+        <View style={{display:'flex', flexDirection:'row',marginTop: 3,marginLeft:20}}>
+          <AntDesign name='plus' size={16}></AntDesign>
+          <Text style={{ fontSize: 14, marginLeft: 5, marginTop: 0, width: '30%', fontStyle:'italic' }}>{item}</Text>
+        </View>
+
+      ))} */}
+      <Text style={{fontSize: 16, marginLeft: 20, marginTop: 10,}}>( {room.status} )</Text>
       <ButtonComponent
         style={styles.delete}
         text="Xem Phòng"
@@ -62,18 +62,17 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1,
     position: 'relative',
-    backgroundColor: 'white',
-    width: '90%',
+    paddingBottom: 20,
+    backgroundColor: '#F2F5FA',
+    width: '100%',
     marginBottom: 20,
     borderRadius: 20,
-    height: 100,
   },
   delete: {
     width: '40%',
     position: 'absolute',
-    bottom: 5,
+    bottom: 0,
     right: 20,
     backgroundColor: generalColor.primary,
     borderRadius: 15,

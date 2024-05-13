@@ -8,15 +8,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { generalColor } from '@src/theme/color';
 const DetailHotel = () => {
-  // useEffect(() => {
-  //     handleShowMessage();
-  // }, []);
-  // const handleShowMessage = () => {
-  //     showMessage({
-  //         message: 'Cập nhật thất bại',
-  //         type: 'danger',
-  //     });
-  // };
   const route = useRoute();
   const {hoteldata} = route.params;
   return (
