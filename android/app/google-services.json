@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "903642346325",
+    "project_id": "dandelion-586cb",
+    "storage_bucket": "dandelion-586cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903642346325:android:b0678b5e41d471fb8275dc",
+        "android_client_info": {
+          "package_name": "com.booking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903642346325-k3r8d38o4fvbbj4s55q5753ig874lsk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXtM8dk5U6PgzYx5Du5RdAZIZ-z1egDj0"
+        },
+        {
+          "current_key": "AIzaSyBcjImTiyBZIV2X3wzehH2m81E7Gvov11g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903642346325-k3r8d38o4fvbbj4s55q5753ig874lsk7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903642346325:android:b9707bc0749a547b8275dc",
+        "android_client_info": {
+          "package_name": "com.khanha.Dandelion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903642346325-0r3cl8km3g9uufkeuqok4mgl2jhkimao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khanha.Dandelion",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "903642346325-k3r8d38o4fvbbj4s55q5753ig874lsk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXtM8dk5U6PgzYx5Du5RdAZIZ-z1egDj0"
+        },
+        {
+          "current_key": "AIzaSyBcjImTiyBZIV2X3wzehH2m81E7Gvov11g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903642346325-k3r8d38o4fvbbj4s55q5753ig874lsk7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903642346325:android:90d44bb6bfb4ef768275dc",
+        "android_client_info": {
+          "package_name": "com.khanha.dandelion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903642346325-mj5mrhqp5qm6qbh8lgeapshdm7akufe0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khanha.dandelion",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "903642346325-k3r8d38o4fvbbj4s55q5753ig874lsk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXtM8dk5U6PgzYx5Du5RdAZIZ-z1egDj0"
+        },
+        {
+          "current_key": "AIzaSyBcjImTiyBZIV2X3wzehH2m81E7Gvov11g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903642346325-k3r8d38o4fvbbj4s55q5753ig874lsk7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

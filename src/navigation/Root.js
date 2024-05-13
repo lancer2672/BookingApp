@@ -12,6 +12,7 @@ import Profile from '@src/screens/AgentScreens/components/Profile';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
+import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import GGMap from '@src/screens/UserScreens/GGMap';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
 import Notification from '@src/screens/UserScreens/Notification/Notification';
@@ -60,6 +61,7 @@ const MainStack = () => {
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
+      <Stack.Screen name={'BookingHistory'} component={BookingHistory} />
       <Stack.Screen name={'GGMap'} component={GGMap} />
       <Stack.Screen name={'UserProfile'} component={UserProfile} />
       <Stack.Screen name={'Review'} component={Review} />
