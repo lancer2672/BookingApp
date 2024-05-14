@@ -22,6 +22,12 @@ export const generalColor = {
     lightgray: '#F0F0F1CC',
     stronggray: '#4C4C4C',
   },
+  status: {
+    canceled: '#FF6347',
+    notCheckedIn: '#FFD700',
+    notCheckedOut: '#1E90FF',
+    checkedOut: '#32CD32',
+  },
   error: 'tomato',
 };
 

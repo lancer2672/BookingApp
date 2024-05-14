@@ -1,3 +1,5 @@
+import {History_Status} from '@src/utils/constant';
+
 // Mock data for Agent
 export const agentMock = {
   id: 1,
@@ -239,20 +241,64 @@ export const reviewRatingMock = [
     createdAt: new Date(),
   },
 ];
+// Mock data for booking history
 export const bookingHistoryMock = [
   {
     id: 301,
     userId: 111,
-    hotel: hotelsMock.find(hotel => hotel.id === 4), // Tìm và trả về thông tin chi tiết của Hotel 4
+    hotel: hotelsMock.find(hotel => hotel.id === 4),
     checkInDate: '2024-06-15T12:00:00.000Z',
     checkOutDate: '2024-06-20T11:00:00.000Z',
     roomId: 7,
-    totalPrice: 120 * 5 + 200 * 5, // Tổng giá dựa trên số đêm và giá mỗi đêm
+    totalPrice: 120 * 5 + 200 * 5,
+    paymentMethod: 'Credit Card',
+    createdAt: '2024-05-20T10:00:00.000Z',
+    updatedAt: '2024-05-22T15:00:00.000Z',
+    payment: null,
+    status: History_Status.CANCELED,
+  },
+  {
+    id: 302,
+    userId: 111,
+    hotel: hotelsMock.find(hotel => hotel.id === 4),
+    checkInDate: '2024-06-15T12:00:00.000Z',
+    checkOutDate: '2024-06-20T11:00:00.000Z',
+    roomId: 7,
+    totalPrice: 120 * 5 + 200 * 5,
+    paymentMethod: 'Credit Card',
+    createdAt: '2024-05-20T10:00:00.000Z',
+    updatedAt: '2024-05-22T15:00:00.000Z',
+    payment: null,
+    status: History_Status.NOT_CHECKED_IN,
+  },
+  {
+    id: 304,
+    userId: 111,
+    hotel: hotelsMock.find(hotel => hotel.id === 4),
+    checkInDate: '2024-06-15T12:00:00.000Z',
+    checkOutDate: '2024-06-20T11:00:00.000Z',
+    roomId: 7,
+    totalPrice: 120 * 5 + 200 * 5,
+    paymentMethod: 'Credit Card',
+    createdAt: '2024-05-20T10:00:00.000Z',
+    updatedAt: '2024-05-22T15:00:00.000Z',
+    payment: null,
+    status: History_Status.NOT_CHECKED_OUT,
+  },
+  {
+    id: 305,
+    userId: 111,
+    hotel: hotelsMock.find(hotel => hotel.id === 4),
+    checkInDate: '2024-06-15T12:00:00.000Z',
+    checkOutDate: '2024-06-20T11:00:00.000Z',
+    roomId: 7,
+    totalPrice: 120 * 5 + 200 * 5,
     paymentMethod: 'Credit Card',
     createdAt: '2024-05-20T10:00:00.000Z',
     updatedAt: '2024-05-22T15:00:00.000Z',
     payment: {
       amount: 200000,
     },
+    status: History_Status.CHECKED_OUT,
   },
 ];
