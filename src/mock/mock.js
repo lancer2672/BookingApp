@@ -255,6 +255,11 @@ export const bookingHistoryMock = [
     createdAt: '2024-05-20T10:00:00.000Z',
     updatedAt: '2024-05-22T15:00:00.000Z',
     payment: null,
+    roomCustomer: {
+      children: 0,
+      room: 1,
+      mature: 2,
+    },
     status: History_Status.CANCELED,
   },
   {
@@ -264,6 +269,11 @@ export const bookingHistoryMock = [
     checkInDate: '2024-06-15T12:00:00.000Z',
     checkOutDate: '2024-06-20T11:00:00.000Z',
     roomId: 7,
+    roomCustomer: {
+      children: 0,
+      room: 1,
+      mature: 2,
+    },
     totalPrice: 120 * 5 + 200 * 5,
     paymentMethod: 'Credit Card',
     createdAt: '2024-05-20T10:00:00.000Z',
@@ -283,6 +293,11 @@ export const bookingHistoryMock = [
     createdAt: '2024-05-20T10:00:00.000Z',
     updatedAt: '2024-05-22T15:00:00.000Z',
     payment: null,
+    roomCustomer: {
+      children: 0,
+      room: 1,
+      mature: 2,
+    },
     status: History_Status.NOT_CHECKED_OUT,
   },
   {
@@ -292,6 +307,11 @@ export const bookingHistoryMock = [
     checkInDate: '2024-06-15T12:00:00.000Z',
     checkOutDate: '2024-06-20T11:00:00.000Z',
     roomId: 7,
+    roomCustomer: {
+      children: 0,
+      room: 1,
+      mature: 2,
+    },
     totalPrice: 120 * 5 + 200 * 5,
     paymentMethod: 'Credit Card',
     createdAt: '2024-05-20T10:00:00.000Z',

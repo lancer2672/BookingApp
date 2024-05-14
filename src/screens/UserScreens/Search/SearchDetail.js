@@ -97,7 +97,7 @@ const UserSearchDetailScreen = () => {
           icon={<PinSVG color={generalColor.black[25]}></PinSVG>}
           label={'Phường - Thị trấn'}
           placerholder={'Chọn địa điểm'}
-          value={location.district?.wardName || ''}
+          value={location.ward?.wardName || ''}
           onPress={() => {
             if (location.district) {
               setWardVisible(true);

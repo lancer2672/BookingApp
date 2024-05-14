@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {Divider} from 'react-native-paper';
+import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const Payment = () => {
@@ -130,6 +131,7 @@ const Payment = () => {
               size={24}
               color={generalColor.other.gray}></AntDesign>
           </View>
+          <QRCode value="http://awesome.link.qr" />
           <ButtonComponent
             onPress={() => {
               showMessage({
