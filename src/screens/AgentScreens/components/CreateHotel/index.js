@@ -12,7 +12,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgentHeader from '../Header';
 import { generalColor } from '@src/theme/color';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
-
+import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
+import { center } from '@src/theme/style';
 
 const CreateHotel = () => {
   const [hotel, setHotel] = useState(
@@ -85,441 +86,454 @@ const CreateHotel = () => {
     setModalVisible(false);
   };
   const handleAddHotel = () => {
-    const newHotel = {...hotel, around: {visit: thamquan, food: anuong, transport:dichuyen}, ameniteis: tiennghi}
+    const newHotel = { ...hotel, around: { visit: thamquan, food: anuong, transport: dichuyen }, ameniteis: tiennghi }
     setHotel(newHotel)
     console.log(hotel)
   }
+  const buttonTextStyle = {
+    backgroundColor: generalColor.primary,
+    height:35,
+    width:90,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+    textAlign: 'center',
+    padding:7,
+};
   return (
-    <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
+    <View style={{ backgroundColor: 'white', flex: 1 }}>
       <AgentHeader
         active="TẠO KHÁCH SẠN"></AgentHeader>
-      <Text
-        style={{
-          fontSize: 18,
-          width: '90%',
-          marginLeft: '5%',
-          marginTop: 10,
-          marginBottom: -5,
-          fontWeight: 'bold',
-        }}>
-        * THÔNG TIN CHUNG KHÁCH SẠN
-      </Text>
-      <View style={styles.container}>
-        <TextInputComponent
-          placeholder="Tên Hotel ..."
-          value={hotel.name}
-          widthTextInput={'80%'}
-          heightTextInput={40}
-          onChangeText={text => {
-            handlesSetValue('name', text);
-          }}
-          marginBottom={0}
-          styleTextInput={[
-            {
-              maxWidth: '100%',
-              color: 'black'
-            },
-            textStyle.h[5],
-          ]}
-          style={styles.textinput}
-          placeholderColor="black"
-        />
-        <View style={styles.location}>
-          <TextInputComponent
-            placeholder="Vị trí ..."
-            value={hotel.address}
-            widthTextInput={'80%'}
-            heightTextInput={40}
-            onChangeText={text => {
-              handlesSetValue('address', text);
-            }}
-            marginBottom={0}
-            styleTextInput={[
-              {
-                maxWidth: '100%',
-                color: 'black'
-              },
-              textStyle.h[5],
-            ]}
-            style={styles.textinput}
-            placeholderColor="black"
-          />
-          <ButtonComponent
-            style={styles.buttonLocation}
-            text="MAP"></ButtonComponent>
-        </View>
-        <TextInputComponent
-          placeholder="Mô tả ..."
-          value={hotel.description}
-          widthTextInput={'80%'}
-          heightTextInput={40}
-          onChangeText={text => {
-            handlesSetValue('description', text);
-          }}
-          marginBottom={0}
-          styleTextInput={[
-            {
-              maxWidth: '100%',
-              color: 'black'
-            },
-            textStyle.h[5],
-          ]}
-          style={styles.textinput}
-          placeholderColor="black"
-        />
-        <Text
-          style={{
-            fontSize: 18,
-            width: '90%',
-            marginTop: 10,
-            marginBottom: -5,
-            fontWeight: 'bold',
-          }}>
-          * CÁC TIỆN NGHI KHÁCH SẠN
-        </Text>
-        <View style={{ width: "100%", marginLeft: "" }}>
-          <View style={{ marginTop: 12, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text
-              style={{
-                color: "black",
-                fontSize: 18,
-                textAlign: 'center',
-
-              }}>
-              <AntDesign
-                name="caretright"
-
-                size={15}
-              ></AntDesign> Thêm tiện nghi
-            </Text>
-            <Pressable onPress={() => { setTiennghi([...tiennghi, "Tiện nghi ..."]) }}>
-              <Ionicons
-                name="add"
-
-                size={32}
-              ></Ionicons>
-            </Pressable>
+      <ProgressSteps completedStepIconColor={generalColor.primary} completedProgressBarColor={generalColor.primary} activeStepIconBorderColor={generalColor.primary} activeLabelColor={generalColor.primary}>
+        <ProgressStep label="First Step" nextBtnTextStyle={buttonTextStyle}>
+          <Text
+            style={{
+              fontSize: 18,
+              width: '100%',
+              marginTop: 10,
+              marginBottom: -5,
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+            * THÔNG TIN CHUNG KHÁCH SẠN *
+          </Text>
+          <View style={styles.container}>
+            <TextInputComponent
+              placeholder="Tên Hotel ..."
+              value={hotel.name}
+              widthTextInput={'80%'}
+              heightTextInput={40}
+              onChangeText={text => {
+                handlesSetValue('name', text);
+              }}
+              marginBottom={0}
+              styleTextInput={[
+                {
+                  maxWidth: '100%',
+                  color: 'black'
+                },
+                textStyle.h[5],
+              ]}
+              style={styles.textinput}
+              placeholderColor="black"
+            />
+            <View style={styles.location}>
+              <TextInputComponent
+                placeholder="Vị trí ..."
+                value={hotel.address}
+                widthTextInput={'80%'}
+                heightTextInput={40}
+                onChangeText={text => {
+                  handlesSetValue('address', text);
+                }}
+                marginBottom={0}
+                styleTextInput={[
+                  {
+                    maxWidth: '100%',
+                    color: 'black'
+                  },
+                  textStyle.h[5],
+                ]}
+                style={styles.textinput}
+                placeholderColor="black"
+              />
+              <ButtonComponent
+                style={styles.buttonLocation}
+                text="MAP"></ButtonComponent>
+            </View>
+            <TextInputComponent
+              placeholder="Mô tả ..."
+              value={hotel.description}
+              widthTextInput={'80%'}
+              heightTextInput={40}
+              onChangeText={text => {
+                handlesSetValue('description', text);
+              }}
+              marginBottom={0}
+              styleTextInput={[
+                {
+                  maxWidth: '100%',
+                  color: 'black'
+                },
+                textStyle.h[5],
+              ]}
+              style={styles.textinput}
+              placeholderColor="black"
+            />
           </View>
-          <View style={{ display: "flex", flexDirection: "column" }}>
-            {tiennghi.map((item, index) => (
-              <View style={styles.location}>
-                <TouchableOpacity onPress={() => { setModalVisible(true), setInx(index) }} style={styles.selectButton}>
-                  <Text style={styles.selectButtonText}>{item}</Text>
-                </TouchableOpacity>
-                <Modal
-                  key={index}
-                  animationType="slide"
-                  transparent={true}
-                  visible={modalVisible}
-                  useNativeDriver={true}
-                  onRequestClose={() => setModalVisible(false)}
-                >
-                  <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                      <TouchableOpacity
-                        style={styles.closebutton}
-                        onPress={() => setModalVisible(false)}
-                      >
-                        <AntDesign name='close' size={20}></AntDesign>
-                      </TouchableOpacity>
-                      {options.map((option, index) => (
+        </ProgressStep>
+        <ProgressStep label="Second Step" nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
+          <Text
+            style={{
+              fontSize: 18,
+              width: '100%',
+              marginTop: 10,
+              marginBottom: -5,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}>
+            * CÁC TIỆN NGHI KHÁCH SẠN *
+          </Text>
+          <View style={{ width: "90%", marginLeft: "5%" }}>
+            <View style={{ marginTop: 12, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 18,
+                  textAlign: 'center',
+
+                }}>
+                <AntDesign
+                  name="caretright"
+
+                  size={15}
+                ></AntDesign> Thêm tiện nghi
+              </Text>
+              <Pressable onPress={() => { setTiennghi([...tiennghi, "Tiện nghi ..."]) }}>
+                <Ionicons
+                  name="add"
+
+                  size={32}
+                ></Ionicons>
+              </Pressable>
+            </View>
+            <View style={{ display: "flex", flexDirection: "column" }}>
+              {tiennghi.map((item, index) => (
+                <View style={styles.location}>
+                  <TouchableOpacity onPress={() => { setModalVisible(true), setInx(index) }} style={styles.selectButton}>
+                    <Text style={styles.selectButtonText}>{item}</Text>
+                  </TouchableOpacity>
+                  <Modal
+                    key={index}
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    useNativeDriver={true}
+                    onRequestClose={() => setModalVisible(false)}
+                  >
+                    <View style={styles.modalContainer}>
+                      <View style={styles.modalContent}>
                         <TouchableOpacity
-                          key={index}
-                          style={styles.optionButton}
-                          onPress={() => handleSelect(option, inx)}
+                          style={styles.closebutton}
+                          onPress={() => setModalVisible(false)}
                         >
-                          <Text style={{ fontSize: 16 }}>{option}</Text>
+                          <AntDesign name='close' size={20}></AntDesign>
                         </TouchableOpacity>
-                      ))}
+                        {options.map((option, index) => (
+                          <TouchableOpacity
+                            key={index}
+                            style={styles.optionButton}
+                            onPress={() => handleSelect(option, inx)}
+                          >
+                            <Text style={{ fontSize: 16 }}>{option}</Text>
+                          </TouchableOpacity>
+                        ))}
 
+                      </View>
                     </View>
+                  </Modal>
+                  <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteTienNghi(index)} style={styles.delete}></AntDesign>
+
+                </View>
+              ))
+              }
+            </View>
+          </View>
+          <Text
+            style={{
+              fontSize: 18,
+              width: '100%',
+              marginTop: 20,
+              marginBottom: 0,
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+            * XUNG QUANH KHÁCH SẠN *
+          </Text>
+          <View style={{ width: '90%', marginLeft: '5%', marginBottom:20 }}>
+            <View>
+              <View
+                style={{
+                  marginTop: 12,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 18,
+                    textAlign: 'center',
+                  }}>
+                  <AntDesign
+                    name="caretright"
+                    color={generalColor.primary}
+                    size={15}></AntDesign>{' '}
+                  Tham quan
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    setThamquan([...thamquan, '']);
+                  }}>
+                  <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
+                </Pressable>
+              </View>
+              <View
+                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                {thamquan.map((item, index) => (
+                  <View style={styles.location}>
+                    <TextInputComponent
+                      placeholder="Địa chỉ tham quan ..."
+                      value={item}
+                      widthTextInput={'80%'}
+                      heightTextInput={20}
+                      onChangeText={text => {
+                        const update = [...thamquan]
+                        update[index] = text
+                        setThamquan(update)
+                      }}
+                      marginBottom={0}
+                      styleTextInput={[
+                        {
+                          maxWidth: '100%',
+                          color: 'black'
+                        },
+                        textStyle.h[5],
+                      ]}
+                      style={styles.textinput}
+                      placeholderColor="black"
+                    />
+                    <AntDesign
+                      name="delete"
+                      size={30}
+                      color="tomato"
+                      onPress={() => handleDeleteThamQuan(index)}
+                      style={styles.delete}></AntDesign>
                   </View>
-                </Modal>
-                <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteTienNghi(index)} style={styles.delete}></AntDesign>
-
+                ))}
               </View>
-            ))
-            }
-          </View>
-        </View>
-        <Text
-          style={{
-            fontSize: 18,
-            width: '90%',
-            marginTop: 10,
-            marginBottom: -5,
-            fontWeight: 'bold',
-          }}>
-          * XUNG QUANH KHÁCH SẠN
-        </Text>
+            </View>
 
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            <View>
+              <View
+                style={{
+                  marginTop: 12,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 18,
+                    textAlign: 'center',
+                  }}>
+                  <AntDesign
+                    name="caretright"
+                    color={generalColor.primary}
+                    size={15}></AntDesign>{' '}
+                  Ăn uống
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    setAnuong([...anuong, '']);
+                  }}>
+                  <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
+                </Pressable>
+              </View>
+              <View
+                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                {anuong.map((item, index) => (
+                  <View style={styles.location}>
+                    <TextInputComponent
+                      placeholder="Địa chỉ ăn uống ..."
+                      value={item}
+                      widthTextInput={'80%'}
+                      heightTextInput={20}
+                      onChangeText={text => {
+                        const update = [...anuong]
+                        update[index] = text
+                        setAnuong(update)
+                      }}
+                      marginBottom={0}
+                      styleTextInput={[
+                        {
+                          color: 'black',
+                          maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                      ]}
+                      style={styles.textinput}
+                      placeholderColor="black"
+                    />
+                    <AntDesign
+                      name="delete"
+                      size={30}
+                      color="tomato"
+                      onPress={() => handleDeleteAnUong(index)}
+                      style={styles.delete}></AntDesign>
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            <View>
+              <View
+                style={{
+                  marginTop: 12,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 18,
+                    textAlign: 'center',
+                  }}>
+                  <AntDesign
+                    name="caretright"
+                    color={generalColor.primary}
+                    size={15}></AntDesign>{' '}
+                  Di chuyển
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    setDichuyen([...dichuyen, '']);
+                  }}>
+                  <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
+                </Pressable>
+              </View>
+              <View
+                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                {dichuyen.map((item, index) => (
+                  <View style={styles.location}>
+                    <TextInputComponent
+                      placeholder="Bến xe, sân bay ..."
+                      value={item}
+                      widthTextInput={'80%'}
+                      heightTextInput={20}
+                      onChangeText={text => {
+                        const update = [...dichuyen]
+                        update[index] = text
+                        setDichuyen(update)
+                      }}
+                      marginBottom={0}
+                      styleTextInput={[
+                        {
+                          color: 'black',
+                          maxWidth: '100%',
+                        },
+                        textStyle.h[5],
+                      ]}
+                      style={styles.textinput}
+                      placeholderColor="black"
+                    />
+                    <AntDesign
+                      name="delete"
+                      size={30}
+                      color="tomato"
+                      onPress={() => handleDeleteDiChuyen(index)}
+                      style={styles.delete}></AntDesign>
+                  </View>
+                ))}
+              </View>
+            </View>
+          </View>
+        </ProgressStep>
+        <ProgressStep label="Third Step" onSubmit={handleAddHotel} nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
+          <View style={{ width: '90%', marginLeft: '5%', marginBottom:20 }}>
             <Text
               style={{
-                color: 'black',
                 fontSize: 18,
-                textAlign: 'center',
+                width: '100%',
+                marginTop: 10,
+                marginBottom: -5,
+                fontWeight: 'bold',
+                textAlign: 'center'
               }}>
-              <AntDesign
-                name="caretright"
-                color={generalColor.primary}
-                size={15}></AntDesign>{' '}
-              Tham quan
+              * QUY ĐỊNH VÀ CHÍNH SÁCH *
             </Text>
-            <Pressable
-              onPress={() => {
-                setThamquan([...thamquan, '']);
-              }}>
-              <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
-            </Pressable>
-          </View>
-          <View
-            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            {thamquan.map((item, index) => (
-              <View style={styles.location}>
-                <TextInputComponent
-                  placeholder="Địa chỉ tham quan ..."
-                  value={item}
-                  widthTextInput={'80%'}
-                  heightTextInput={20}
-                  onChangeText={text => {
-                    const update = [...thamquan]
-                    update[index] = text
-                    setThamquan(update)
+            <TextInputComponent
+              placeholder="........"
+              value={hotel.policy}
+              widthTextInput={'80%'}
+              heightTextInput={30}
+              onChangeText={text => {
+                handlesSetValue('policy', text);
+              }}
+              marginBottom={0}
+              styleTextInput={[
+                {
+                  maxWidth: '100%',
+                  color: 'black'
+                },
+                textStyle.h[5],
+              ]}
+              style={styles.textinput}
+              placeholderColor="black"
+            />
+            <View style={styles.imageChose}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  width: '100%',
+                  marginTop: 10,
+                  marginBottom: 10,
+                  fontWeight: 'bold',
+                  textAlign:'center'
+                }}>
+                * THÊM HÌNH ẢNH MÌNH HOẠ *
+              </Text>
+              <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                <TouchableOpacity
+                  onPress={async () => {
+
+                    setVisible(() => true);
                   }}
-                  marginBottom={0}
-                  styleTextInput={[
-                    {
-                      maxWidth: '100%',
-                      color: 'black'
-                    },
-                    textStyle.h[5],
-                  ]}
-                  style={styles.textinput}
-                  placeholderColor="black"
-                />
-                <AntDesign
-                  name="delete"
-                  size={30}
-                  color="tomato"
-                  onPress={() => handleDeleteThamQuan(index)}
-                  style={styles.delete}></AntDesign>
+                  style={styles.avatar}>
+                  <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
+                </TouchableOpacity>
+                {images.map((item) => <Image source={{ uri: item }} style={styles.imagepick}></Image>)}
               </View>
-            ))}
+
+              <ImagePickerModal
+                onResult={image => {
+                  setImages([...images, image])
+                  console.log('image', images)
+                }}
+                visible={visible}
+                onClose={() => setVisible(false)}></ImagePickerModal>
+            </View>
           </View>
-        </View>
+        </ProgressStep>
+      </ProgressSteps>
 
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                textAlign: 'center',
-              }}>
-              <AntDesign
-                name="caretright"
-                color={generalColor.primary}
-                size={15}></AntDesign>{' '}
-              Ăn uống
-            </Text>
-            <Pressable
-              onPress={() => {
-                setAnuong([...anuong, '']);
-              }}>
-              <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
-            </Pressable>
-          </View>
-          <View
-            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            {anuong.map((item, index) => (
-              <View style={styles.location}>
-                <TextInputComponent
-                  placeholder="Địa chỉ ăn uống ..."
-                  value={item}
-                  widthTextInput={'80%'}
-                  heightTextInput={20}
-                  onChangeText={text => {
-                    const update = [...anuong]
-                    update[index] = text
-                    setAnuong(update)
-                  }}
-                  marginBottom={0}
-                  styleTextInput={[
-                    {
-                      color:'black',
-                      maxWidth: '100%',
-                    },
-                    textStyle.h[5],
-                  ]}
-                  style={styles.textinput}
-                  placeholderColor="black"
-                />
-                <AntDesign
-                  name="delete"
-                  size={30}
-                  color="tomato"
-                  onPress={() => handleDeleteAnUong(index)}
-                  style={styles.delete}></AntDesign>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                textAlign: 'center',
-              }}>
-              <AntDesign
-                name="caretright"
-                color={generalColor.primary}
-                size={15}></AntDesign>{' '}
-              Di chuyển
-            </Text>
-            <Pressable
-              onPress={() => {
-                setDichuyen([...dichuyen, '']);
-              }}>
-              <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
-            </Pressable>
-          </View>
-          <View
-            style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            {dichuyen.map((item, index) => (
-              <View style={styles.location}>
-                <TextInputComponent
-                  placeholder="Bến xe, sân bay ..."
-                  value={item}
-                  widthTextInput={'80%'}
-                  heightTextInput={20}
-                  onChangeText={text => {
-                    const update = [...dichuyen]
-                    update[index] = text
-                    setDichuyen(update)
-                  }}
-                  marginBottom={0}
-                  styleTextInput={[
-                    {
-                      color:'black',
-                      maxWidth: '100%',
-                    },
-                    textStyle.h[5],
-                  ]}
-                  style={styles.textinput}
-                  placeholderColor="black"
-                />
-                <AntDesign
-                  name="delete"
-                  size={30}
-                  color="tomato"
-                  onPress={() => handleDeleteDiChuyen(index)}
-                  style={styles.delete}></AntDesign>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        <Text
-          style={{
-            fontSize: 18,
-            width: '90%',
-            marginTop: 10,
-            marginBottom: -5,
-            fontWeight: 'bold',
-          }}>
-          * QUY ĐỊNH VÀ CHÍNH SÁCH
-        </Text>
-        <TextInputComponent
-          placeholder="........"
-          value={hotel.policy}
-          widthTextInput={'80%'}
-          heightTextInput={40}
-          onChangeText={text => {
-            handlesSetValue('policy', text);
-          }}
-          marginBottom={0}
-          styleTextInput={[
-            {
-              maxWidth: '100%',
-              color: 'black'
-            },
-            textStyle.h[5],
-          ]}
-          style={styles.textinput}
-          placeholderColor="black"
-        />
-      </View>
-      <View style={styles.imageChose}>
-        <Text
-          style={{
-            fontSize: 15,
-            width: '100%',
-            marginTop: 10,
-            marginBottom: 10,
-            fontWeight: 'bold',
-          }}>
-          * THÊM HÌNH ẢNH MÌNH HOẠ{' '}
-        </Text>
-        <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-          <TouchableOpacity
-            onPress={async () => {
-
-              setVisible(() => true);
-            }}
-            style={styles.avatar}>
-            <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
-          </TouchableOpacity>
-          {images.map((item) => <Image source={{ uri: item }} style={styles.imagepick}></Image>)}
-        </View>
-
-        <ImagePickerModal
-          onResult={image => {
-            setImages([...images, image])
-            console.log('image', images)
-          }}
-          visible={visible}
-          onClose={() => setVisible(false)}></ImagePickerModal>
-      </View>
-
-      <ButtonComponent
-        onPress={handleAddHotel}
-        style={{
-          width: '70%',
-          marginLeft: '15%',
-          backgroundColor: generalColor.primary,
-          marginTop: '20%',
-          height: 50,
-          borderRadius: 20,
-        }}
-        text="Thêm khách sạn"
-      />
-    </ScrollView>
+    </View>
   );
 };
 
@@ -529,6 +543,7 @@ const styles = StyleSheet.create({
   container: {
     width: '90%',
     marginLeft: '5%',
+    marginBottom:20
   },
   location: {
     position: 'relative',
