@@ -24,6 +24,7 @@ import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
 import useUserStore from '@src/store/user';
+import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBookingHistory';
 import {navigationRef} from './NavigationController';
 import {Tabs} from './NavigationTab';
 
@@ -62,6 +63,10 @@ const MainStack = () => {
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
       <Stack.Screen name={'BookingHistory'} component={BookingHistory} />
+      <Stack.Screen
+        name={'DetailBookingHitory'}
+        component={DetailBookingHitory}
+      />
       <Stack.Screen name={'GGMap'} component={GGMap} />
       <Stack.Screen name={'UserProfile'} component={UserProfile} />
       <Stack.Screen name={'Review'} component={Review} />

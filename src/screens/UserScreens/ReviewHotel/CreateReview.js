@@ -23,7 +23,7 @@ import {Avatar} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const CreateReviewModal = ({isVisible, onClose}) => {
+const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [rating, setRating] = useState(0);
@@ -82,11 +82,13 @@ const CreateReviewModal = ({isVisible, onClose}) => {
             </View>
             <View style={styles.row}>
               <Text style={[textStyle.h[2], {color: generalColor.primary}]}>
-                Tên
+                {bookingHistory.hotel.name}
               </Text>
             </View>
             <View style={styles.row}>
-              <Text style={textStyle.content.medium}>Địa chỉ</Text>
+              <Text style={[textStyle.content.medium, {textAlign: 'center'}]}>
+                {bookingHistory.hotel.address}
+              </Text>
             </View>
             <View style={styles.row}>
               <StarRating

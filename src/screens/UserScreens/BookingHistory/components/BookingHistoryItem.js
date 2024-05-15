@@ -1,4 +1,5 @@
 import {PinSVG} from '@src/assets/icons';
+import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -18,11 +19,24 @@ import {
   View,
 } from 'react-native';
 import CreateReviewModal from '../../ReviewHotel/CreateReview';
-
+const isReviewed = (userId, bookingHistory) => {
+  return userId == null;
+};
 const BookingHistoryItem = ({item}) => {
   const [visible, setVisible] = useState(false);
+  const reviewClick = () => {
+    if (isReviewed(1)) {
+    } else {
+      setVisible(true);
+    }
+  };
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigate('DetailBookingHitory', {
+          historyItem: item,
+        });
+      }}>
       <View
         style={[
           styles.container,
@@ -118,10 +132,7 @@ const BookingHistoryItem = ({item}) => {
             </View>
 
             {item.status == History_Status.CHECKED_OUT && (
-              <Pressable
-                onPress={() => {
-                  setVisible(true);
-                }}>
+              <Pressable onPress={reviewClick}>
                 <Text
                   style={{
                     marginVertical: 4,
@@ -130,7 +141,7 @@ const BookingHistoryItem = ({item}) => {
                     fontWeight: '500',
                     color: generalColor.primary,
                   }}>
-                  Xem đánh giá của bạn
+                  {isReviewed(1) ? 'Xem đánh giá của bạn' : 'Thêm đánh giá '}
                 </Text>
               </Pressable>
             )}
@@ -139,6 +150,7 @@ const BookingHistoryItem = ({item}) => {
       </View>
 
       <CreateReviewModal
+        bookingHistory={item}
         isVisible={visible}
         onClose={() => {
           setVisible(false);

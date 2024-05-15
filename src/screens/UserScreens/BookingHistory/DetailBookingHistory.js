@@ -1,8 +1,10 @@
+import {useRoute} from '@react-navigation/native';
 import {expandAnimation} from '@src/animation';
+import ButtonComponent from '@src/components/Button';
 import {reviewBookingMock} from '@src/mock/mock';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import {center, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {History_Status} from '@src/utils/constant';
 import {formatCurrency, formatDate} from '@src/utils/textFormat';
@@ -17,11 +19,14 @@ import {
   View,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
+import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ListReview from '../ReviewHotel/components/ListReview';
 
-const DetailBookingHitory = ({historyItem}) => {
+const isReviewed = (userId, bookingHistory) => {};
+const DetailBookingHitory = ({}) => {
+  const {historyItem} = useRoute().params;
   const hotel = historyItem.hotel;
   const room = historyItem.hotel.rooms.find(t => (t.id = historyItem.roomId));
   const date = {
@@ -37,7 +42,7 @@ const DetailBookingHitory = ({historyItem}) => {
     switch (status) {
       case History_Status.NOT_CHECKED_IN:
         return 'Mã QR nhận phòng';
-      case History_Status.NOT_CHECKED_IN:
+      case History_Status.NOT_CHECKED_OUT:
         return 'Mã QR trả phòng';
       default:
         return '';
@@ -63,18 +68,18 @@ const DetailBookingHitory = ({historyItem}) => {
               marginRight: 24,
               fontFamily: 'serif',
             }}>
-            Lịch sử
+            pHÒNG
           </Text>
         </View>
         <View style={[rowCenter, styles.header]}>
           <View style={{flex: 1}}>
-            <Text>Check-in</Text>
+            <Text>Nhận phòng</Text>
             <Text style={styles.infoText}>
               {formatDate(date.checkinDate, 'dd/MM')}{' '}
             </Text>
           </View>
           <View style={{flex: 1}}>
-            <Text>Check-out</Text>
+            <Text>Trả phòng</Text>
             <Text style={styles.infoText}>
               {formatDate(date.checkoutDate, 'dd/MM')}{' '}
             </Text>
@@ -213,8 +218,23 @@ const DetailBookingHitory = ({historyItem}) => {
           <Divider style={{marginTop: 8}} bold></Divider>
           <FeeItem title={'Tổng cộng'}></FeeItem>
           <Divider style={{marginVertical: 8}} bold></Divider>
-
-          <Text>{getQRTEXT(historyItem.status)}</Text>
+          <View style={center}>
+            {(historyItem.status === History_Status.NOT_CHECKED_IN ||
+              historyItem.status === History_Status.NOT_CHECKED_OUT) && (
+              <QRCode value="http://awesome.link.qr" />
+            )}
+            <Text style={{marginTop: 4}}>{getQRTEXT(historyItem.status)}</Text>
+          </View>
+          {historyItem.status === History_Status.NOT_CHECKED_IN && (
+            <ButtonComponent
+              onPress={() => {}}
+              style={{
+                marginVertical: 24,
+                marginTop: 40,
+                backgroundColor: 'tomato',
+              }}
+              text={'Huỷ phòng'}></ButtonComponent>
+          )}
         </View>
       </ScrollView>
     </View>

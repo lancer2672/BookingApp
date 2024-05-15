@@ -53,13 +53,13 @@ const ReviewBooking = () => {
         </View>
         <View style={[rowCenter, styles.header]}>
           <View style={{flex: 1}}>
-            <Text>Check-in</Text>
+            <Text>Nhận phòng</Text>
             <Text style={styles.infoText}>
               {formatDate(date.checkinDate, 'dd/MM')}{' '}
             </Text>
           </View>
           <View style={{flex: 1}}>
-            <Text>Check-out</Text>
+            <Text>Trả phòng</Text>
             <Text style={styles.infoText}>
               {formatDate(date.checkoutDate, 'dd/MM')}{' '}
             </Text>
