@@ -6,18 +6,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import AgentHeader from '../Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { generalColor } from '@src/theme/color';
+import { agentMock } from '@src/mock/mock';
 const Profile = () => {
-  // useEffect(() => {
-  //     handleShowMessage();
-  // }, []);
-  // const handleShowMessage = () => {
-  //     showMessage({
-  //         message: 'Cập nhật thất bại',
-  //         type: 'danger',
-  //     });
-  // };
   const navigateToProfile = () => {
-    navigate('EditProfile');
+    navigate('EditProfile', agentMock);
   };
   return (
     <View style={{ backgroundColor: 'white', flex:1 }}>
@@ -46,44 +38,44 @@ const Profile = () => {
           textAlign: 'center',
           marginTop: 10,
         }}>
-        Tên Người Dùng
+        {agentMock.name}
       </Text>
       <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 20 }}>
-        20520383@gm.uit.edu.vn
+        {agentMock.gmail}
       </Text>
       <View style={styles.title}>
         <Text style={styles.text}>Thông tin cá nhân</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="user" size={20}></AntDesign>
-        <Text style={styles.textmain}>Tên người dùng</Text>
+        <Text style={styles.textmain}>{agentMock.name}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="mail" size={20}></AntDesign>
-        <Text style={styles.textmain}>Gmail người dùng</Text>
+        <Text style={styles.textmain}>{agentMock.gmail}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="phone" size={20}></AntDesign>
-        <Text style={styles.textmain}>Số điện thoại người dùng</Text>
+        <Text style={styles.textmain}>{agentMock.phone}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="phone" size={20}></AntDesign>
-        <Text style={styles.textmain}>CMND</Text>
+        <Text style={styles.textmain}>{agentMock.identityCard}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="check" size={20}></AntDesign>
-        <Text style={styles.textmain}>Đã xác minh</Text>
+        <Text style={styles.textmain}>{agentMock.status}</Text>
       </View>
       <View style={styles.title}>
         <Text style={styles.text}>Thông tin khách sạn</Text>
       </View>
       <View style={styles.main}>
         <FontAwesome5 name='hotel' size={20}></FontAwesome5>
-        <Text style={styles.textmain}>Số lượng khách sạn đang quản lý</Text>
+        <Text style={styles.textmain}>{agentMock.countHotelManager}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="right" size={20} ></AntDesign>
-        <Text style={styles.textmain}>Đánh giá của khách hàng</Text>
+        <Text style={styles.textmain}>{agentMock.countBooking}</Text>
       </View>
       <View style={styles.title}>
         <Text style={styles.text}>Giao diện</Text>

@@ -4,6 +4,13 @@ import {History_Status} from '@src/utils/constant';
 export const agentMock = {
   id: 1,
   name: 'Agent Name',
+  gmail: "agent@gmail.com",
+  phone:'099999999',
+  identityCard: '123456789',
+  status: 'Đã xác minh',
+  countHotelManager: hotelsMock?.filter(item=> item.agentId === agentMock.id).length,
+  countBooking: 5,
+  password: '123456789'
 };
 export const userMock = {
   id: 111,

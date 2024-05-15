@@ -13,6 +13,8 @@ import Swiper from 'react-native-swiper';
 import { Button } from 'react-native-paper';
 import { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
+import { reviewBookingMock } from '@src/mock/mock';
+import ReviewHotel from './ReviewHotel';
 const ListRoom = () => {
   const route = useRoute();
   const hotel = route.params
@@ -152,11 +154,14 @@ const ListRoom = () => {
               room={item}
             />
           ))}
-
+          <Text style={{ fontSize: 22, fontWeight: "bold" }}>Đánh giá khách hàng</Text>
+          <View>
+              <ReviewHotel review={reviewBookingMock} hotel={hotel.id}></ReviewHotel>
+          </View>
         </View>
-        
+
       </View>
-    
+
     </ScrollView>
   );
 };
@@ -170,7 +175,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: "100%",
     marginTop: 10,
-    alignItems: "center",
   },
   separator: {
     width: 10,

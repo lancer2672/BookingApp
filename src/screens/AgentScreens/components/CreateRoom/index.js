@@ -34,6 +34,7 @@ const CreateRoom = () => {
     const [people, setPeople] = useState(0)
     const [child, setChild] = useState(0)
     const [bed, setBed] = useState(0)
+    
     const [images, setImages] = useState([]);
     const [visible, setVisible] = useState(false);
     //noithat
