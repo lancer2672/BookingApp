@@ -1,7 +1,6 @@
 import ButtonComponent from '@src/components/Button';
-import TextInputComponent from '@src/components/TextInputComponent';
 import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {REVIEW_TEXT} from '@src/utils/constant';
 import {useState} from 'react';
@@ -22,10 +21,12 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {Avatar} from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Foundation from 'react-native-vector-icons/Foundation';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
+const UserReviewModal = ({bookingHistory, isVisible, onClose}) => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [adjusted, setAdjusted] = useState(false);
   const [rating, setRating] = useState(0);
   const selectImages = () => {
     const options = {
@@ -43,7 +44,7 @@ const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
   };
   const handleCreateReview = () => {
     showMessage({
-      message: 'Đánh giá của bạn đã được tạo',
+      message: 'Cập nhật thành công',
       type: 'success',
     });
     onClose();
@@ -60,9 +61,7 @@ const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
               flex: 1,
               textAlign: 'center',
               margiLeft: 24,
-            }}>
-            Đánh giá
-          </Text>
+            }}></Text>
           <Pressable onPress={onClose}>
             <AntDesign
               name="close"
@@ -95,7 +94,10 @@ const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
                 disabled={false}
                 maxStars={5}
                 rating={rating}
-                selectedStar={value => setRating(value)}
+                selectedStar={value => {
+                  setRating(value);
+                  setAdjusted(true);
+                }}
                 starSize={30}
               />
             </View>
@@ -107,12 +109,6 @@ const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
               </View>
             )}
 
-            <TextInputComponent
-              placeholder="Viết đánh giá"
-              placeholderColor="black"
-              multiline
-              styleTextInput={{color: 'black'}}
-            />
             {images.length != 0 && (
               <View style={{height: 120, paddingVertical: 12, width: '100%'}}>
                 <FlatList
@@ -141,30 +137,75 @@ const CreateReviewModal = ({bookingHistory, isVisible, onClose}) => {
                 </Modal>
               </View>
             )}
-            <ButtonComponent
-              text="Thêm ảnh"
-              onPress={selectImages}
+            <View
               style={{
-                backgroundColor: undefined,
-                borderColor: generalColor.primary,
-                borderWidth: 2,
-                marginBottom: 12,
-              }}
-              txtStyle={{color: generalColor.primary}}
-            />
+                borderBottomWidth: 1,
+                borderBottomColor: 'gray',
+                paddingVertical: 8,
+                flexDirection: 'row',
+              }}>
+              <Avatar.Image
+                size={40}
+                source={{uri: 'https://picsum.photos/200'}}
+              />
+              <View style={{flex: 1, paddingLeft: 12}}>
+                <View style={row}>
+                  <Text
+                    style={{
+                      ...textStyle.h[4],
+                      flex: 1,
+                      color: generalColor.primary,
+                    }}>
+                    Savanah Nguyen
+                  </Text>
+                  <Pressable
+                    onPress={() => {
+                      setAdjusted(true);
+                    }}>
+                    <Foundation
+                      name="pencil"
+                      color={generalColor.other.gray}
+                      size={20}
+                    />
+                  </Pressable>
+                </View>
+
+                <Text style={{marginBottom: 4}}>
+                  {new Date().toLocaleDateString('vi-VN', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </Text>
+                <Text style={styles.content}>Chi tiết bình luận</Text>
+                <View style={rowCenter}>
+                  <AntDesign
+                    name="like2"
+                    color={generalColor.primary}
+                    size={18}
+                  />
+                  <Text style={{fontSize: 15, color: generalColor.primary}}>
+                    {' '}
+                    Hữu ích (12)
+                  </Text>
+                </View>
+              </View>
+            </View>
           </ScrollView>
-          <ButtonComponent
-            style={{marginTop: 12}}
-            text="Gửi"
-            onPress={handleCreateReview}
-          />
+          {adjusted && (
+            <ButtonComponent
+              style={{marginTop: 12}}
+              text="Lưu"
+              onPress={handleCreateReview}
+            />
+          )}
         </View>
       </View>
     </Modal>
   );
 };
 
-export default CreateReviewModal;
+export default UserReviewModal;
 
 const styles = StyleSheet.create({
   container: {
@@ -176,6 +217,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     padding: 20,
+  },
+  content: {
+    color: 'black',
+    fontSize: 15,
+    marginBottom: 8,
   },
   fullImage: {
     width: '100%',

@@ -19,15 +19,18 @@ import {
   View,
 } from 'react-native';
 import CreateReviewModal from '../../ReviewHotel/CreateReview';
+import UserReviewModal from './UserReviewModal';
 const isReviewed = (userId, bookingHistory) => {
   return userId == null;
 };
 const BookingHistoryItem = ({item}) => {
   const [visible, setVisible] = useState(false);
+  const [visibleReview, setVisibleReview] = useState(false);
   const reviewClick = () => {
     if (isReviewed(1)) {
-    } else {
       setVisible(true);
+    } else {
+      setVisibleReview(true);
     }
   };
   return (
@@ -155,6 +158,12 @@ const BookingHistoryItem = ({item}) => {
         onClose={() => {
           setVisible(false);
         }}></CreateReviewModal>
+      <UserReviewModal
+        bookingHistory={item}
+        isVisible={visibleReview}
+        onClose={() => {
+          setVisibleReview(false);
+        }}></UserReviewModal>
     </TouchableOpacity>
   );
 };
