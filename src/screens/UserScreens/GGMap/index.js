@@ -68,7 +68,7 @@ const GGMap = ({hotels = hotelsMock}) => {
         setMarkerPosition({latitude, longitude});
         console.log('position', position.coords);
       },
-      error => console.log('getCurrentPosition failed', error),
+      error => Alert.alert('Lỗi. Lấy vị trí không thành công'),
       {enableHighAccuracy: false, timeout: 20000},
     );
   }, []);
@@ -90,7 +90,6 @@ const GGMap = ({hotels = hotelsMock}) => {
   };
 
   if (!region || !markerPosition) {
-    Alert.alert('Lỗi. Lấy vị trí không thành công');
     return null;
   }
   console.log('selected', selectedHotel);

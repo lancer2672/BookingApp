@@ -4,13 +4,14 @@ import {History_Status} from '@src/utils/constant';
 export const agentMock = {
   id: 1,
   name: 'Agent Name',
-  gmail: "agent@gmail.com",
-  phone:'099999999',
+  gmail: 'agent@gmail.com',
+  phone: '099999999',
   identityCard: '123456789',
   status: 'Đã xác minh',
-  countHotelManager: hotelsMock?.filter(item=> item.agentId === agentMock.id).length,
+  countHotelManager: hotelsMock?.filter(item => item.agentId === agentMock.id)
+    .length,
   countBooking: 5,
-  password: '123456789'
+  password: '123456789',
 };
 export const userMock = {
   id: 111,
@@ -215,27 +216,58 @@ export const hotelsMock = [
     ],
   },
 ];
-
 export const reviewBookingMock = [
   {
     id: 101,
     userId: 201,
     createdAt: '2024-05-12T08:00:00.000Z',
+    checkInDate: '2024-05-10',
+    roomId: 7,
     react: [201, 202, 203],
     hotelId: 4,
     parentId: null,
     description: 'Great experience, friendly staff and clean rooms.',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
+    children: [
+      {
+        id: 103,
+        userId: 203,
+        createdAt: '2024-05-14T10:00:00.000Z',
+        checkInDate: '2024-05-12',
+        roomId: 7,
+        react: [206, 207],
+        hotelId: 4,
+        parentId: 101,
+        description: 'I had a wonderful stay, will definitely come back!',
+        images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
+      },
+      {
+        id: 104,
+        userId: 204,
+        createdAt: '2024-05-15T11:30:00.000Z',
+        checkInDate: '2024-05-13',
+        roomId: 8,
+        react: [208, 209],
+        hotelId: 5,
+        parentId: 101,
+        description:
+          'The room was spacious and clean, but the breakfast could be improved.',
+        images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
+      },
+    ],
   },
   {
     id: 102,
     userId: 202,
     createdAt: '2024-05-13T09:30:00.000Z',
+    checkInDate: '2024-05-11',
+    roomId: 8,
     react: [204, 205],
     hotelId: 5,
     parentId: 101,
     description: 'The food was not up to the mark, expected better quality.',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
+    children: [],
   },
 ];
 

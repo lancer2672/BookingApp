@@ -1,9 +1,10 @@
 import ButtonComponent from '@src/components/Button';
+import TextInputComponent from '@src/components/TextInputComponent';
 import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {REVIEW_TEXT} from '@src/utils/constant';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -26,6 +27,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const UserReviewModal = ({bookingHistory, isVisible, onClose}) => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [review, setReview] = useState('');
   const [adjusted, setAdjusted] = useState(false);
   const [rating, setRating] = useState(0);
   const selectImages = () => {
@@ -42,6 +44,9 @@ const UserReviewModal = ({bookingHistory, isVisible, onClose}) => {
       }
     });
   };
+  useEffect(() => {
+    setAdjusted(false);
+  }, [isVisible]);
   const handleCreateReview = () => {
     showMessage({
       message: 'Cập nhật thành công',
@@ -177,7 +182,21 @@ const UserReviewModal = ({bookingHistory, isVisible, onClose}) => {
                     year: 'numeric',
                   })}
                 </Text>
-                <Text style={styles.content}>Chi tiết bình luận</Text>
+                {adjusted ? (
+                  <TextInputComponent
+                    placeholder="Viết đánh giá"
+                    placeholderColor="white"
+                    onChangeText={text => {
+                      setReview(text);
+                    }}
+                    multiline
+                    value={review}
+                    styleTextInput={{color: generalColor.white[50]}}
+                  />
+                ) : (
+                  <Text style={styles.content}>{review}</Text>
+                )}
+
                 <View style={rowCenter}>
                   <AntDesign
                     name="like2"

@@ -48,7 +48,7 @@ const ReviewBooking = () => {
               marginRight: 24,
               fontFamily: 'serif',
             }}>
-            Review
+            Thông tin
           </Text>
         </View>
         <View style={[rowCenter, styles.header]}>
