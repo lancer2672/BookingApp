@@ -86,7 +86,9 @@ const UserProfile = () => {
         <Body>
           <SettingCategory>Tài khoản</SettingCategory>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              navigate('EditProfileUser');
+            }}
             style={{
               marginTop: 12,
               flexDirection: 'row',

@@ -13,7 +13,7 @@ import CustomEditText from './components/EditText';
 
 const dayjs = require('dayjs');
 
-const EditProfile = ({navigation}) => {
+const EditProfileUser = ({navigation}) => {
   const user = {
     name: 'keke',
     email: 'keke@gmail.com',
@@ -81,19 +81,12 @@ const EditProfile = ({navigation}) => {
           style={{width: '100%'}}
           value={nickname}
           onChangeText={newText => setNickname(newText)}></CustomEditText>
-        <View style={{flexDirection: 'row'}}>
-          <CustomEditText
-            label={'Họ'}
-            style={{width: '100%'}}
-            value={nickname}
-            onChangeText={newText => setNickname(newText)}></CustomEditText>
-          <CustomEditText
-            label={'Ngày sinh'}
-            style={{flex: 1}}
-            editable={false}
-            value={new Date()}
-            onPress={onDateOfBirthFieldClick}></CustomEditText>
-        </View>
+        <View style={{flexDirection: 'row'}}></View>
+        <CustomEditText
+          label={'Họ'}
+          style={{width: '100%'}}
+          value={nickname}
+          onChangeText={newText => setNickname(newText)}></CustomEditText>
         <CustomEditText
           label={'Email'}
           style={{width: '100%'}}
@@ -106,7 +99,9 @@ const EditProfile = ({navigation}) => {
           onChangeText={newText => setPhoneNumber(newText)}></CustomEditText>
       </Body>
 
-      <SaveBtn onPress={handleUpdateUserInfo}>
+      <SaveBtn
+        onPress={handleUpdateUserInfo}
+        style={{backgroundColor: generalColor.primary}}>
         <SaveBtnText>Lưu</SaveBtnText>
       </SaveBtn>
 
@@ -159,4 +154,4 @@ const Heading = styled.Text`
   font-size: 28;
   color: black;
 `;
-export default EditProfile;
+export default EditProfileUser;

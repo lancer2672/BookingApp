@@ -1,5 +1,6 @@
 import {useRoute} from '@react-navigation/native';
 import {expandAnimation} from '@src/animation';
+import AskingModel from '@src/components/AskingModal/AskingModal';
 import ButtonComponent from '@src/components/Button';
 import {reviewBookingMock} from '@src/mock/mock';
 import {goBack, navigate} from '@src/navigation/NavigationController';
@@ -27,6 +28,7 @@ import ListReview from '../ReviewHotel/components/ListReview';
 const isReviewed = (userId, bookingHistory) => {};
 const DetailBookingHitory = ({}) => {
   const {historyItem} = useRoute().params;
+
   const hotel = historyItem.hotel;
   const room = historyItem.hotel.rooms.find(t => (t.id = historyItem.roomId));
   const date = {
@@ -35,6 +37,7 @@ const DetailBookingHitory = ({}) => {
   };
   const roomCustomer = historyItem.roomCustomer;
   const [reviewVisible, setRiewVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const handleNavigateReviewAll = () => {
     navigate('Review', {hotel});
   };
@@ -48,6 +51,7 @@ const DetailBookingHitory = ({}) => {
         return '';
     }
   };
+  const handleCancelBooking = () => {};
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -227,7 +231,9 @@ const DetailBookingHitory = ({}) => {
           </View>
           {historyItem.status === History_Status.NOT_CHECKED_IN && (
             <ButtonComponent
-              onPress={() => {}}
+              onPress={() => {
+                setVisible(true);
+              }}
               style={{
                 marginVertical: 24,
                 marginTop: 40,
@@ -236,6 +242,18 @@ const DetailBookingHitory = ({}) => {
               text={'Huỷ phòng'}></ButtonComponent>
           )}
         </View>
+        <AskingModel
+          heading="Bạn có chắc muốn huỷ?"
+          onYesClick={handleCancelBooking}
+          onNoClick={() => {
+            setVisible(false);
+          }}
+          noText={'Không'}
+          yesText={'Có'}
+          visible={visible}
+          onClose={() => {
+            setVisible(false);
+          }}></AskingModel>
       </ScrollView>
     </View>
   );
