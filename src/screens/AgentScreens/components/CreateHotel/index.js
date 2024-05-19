@@ -16,6 +16,17 @@ import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { center } from '@src/theme/style';
 
 const CreateHotel = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch('http://54.255.249.131:8080/api/hotel-services')
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   const [hotel, setHotel] = useState(
     {
       name: '',
@@ -75,7 +86,7 @@ const CreateHotel = () => {
   }
   const [modalVisible, setModalVisible] = useState(false);
   const [inx, setInx] = useState(0)
-  const options = ['Bãi đỗ xe riêng', 'Wifi free', 'Bữa sáng tốt', 'Lễ tân 24/24', 'Nhà hàng', 'Gym'];
+  const options = data;
 
   const handleSelect = (value, index) => {
     setTiennghi((prevItems) => {
@@ -244,9 +255,9 @@ const CreateHotel = () => {
                           <TouchableOpacity
                             key={index}
                             style={styles.optionButton}
-                            onPress={() => handleSelect(option, inx)}
+                            onPress={() => handleSelect(option.name, inx)}
                           >
-                            <Text style={{ fontSize: 16 }}>{option}</Text>
+                            <Text style={{ fontSize: 16 }}>{option.name}</Text>
                           </TouchableOpacity>
                         ))}
 

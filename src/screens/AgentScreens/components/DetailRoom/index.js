@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
-import { Image, StyleSheet, Text, View, Pressable, Modal, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, ScrollView } from 'react-native';
 import Swiper from 'react-native-swiper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -14,12 +14,13 @@ import { goBack } from '@src/navigation/NavigationController';
 import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import { useState } from 'react';
+import { bookingHistoryMock } from '@src/mock/mock';
 const DetailRoom = () => {
     const route = useRoute();
     const room = route.params;
     const [modalVisible, setModalVisible] = useState(false);
     return (
-        <View style={{ backgroundColor: "white", flex: 1 }}>
+        <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
             <View style={{ padding: 12, marginTop: 12, ...rowCenter, marginBottom: 12 }}>
                 <Pressable onPress={goBack}>
                     <AntDesign
@@ -93,11 +94,10 @@ const DetailRoom = () => {
                 <Text style={styles.textmain}>{room.status}</Text>
                 {room.status == 'Đã đặt' &&
                     <TouchableOpacity onPress={() => setModalVisible(true)} style={{}}>
-                        <Text style={{ color: 'blue', fontSize: 18, marginLeft:10 }}>Bill</Text>
+                        <Text style={{ color: 'blue', fontSize: 18, marginLeft: 10 }}>Bill</Text>
                     </TouchableOpacity>
                 }
             </View>
-
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -165,14 +165,47 @@ const DetailRoom = () => {
                         </View>
                         <View style={[styles.title, { borderRadius: 5, alignItems: 'center' }]}><Text style={styles.text}>Ghi chú</Text></View>
                         <View style={styles.main}>
-                           
+
                             <Text style={styles.textmain}>{room.bill.note}</Text>
                         </View>
                     </View>
                 </View>
             </Modal>
+            <View style={styles.title}><Text style={styles.text}>Lịch sử đặt phòng</Text></View>
+            {bookingHistoryMock.map(item => (
+                <View style={{display:'flex', flexDirection:'column', width:'90%', marginLeft:'5%', alignItems:'center', justifyContent:'center', borderRadius:20, borderColor:'black', borderWidth:1}}>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày tạo: </Text>
+                        <Text style={styles.textmain}>{item.createdAt}</Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày checkin: </Text>
+                        <Text style={styles.textmain}>{item.checkInDate}</Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày checkout: </Text>
+                        <Text style={styles.textmain}>{item.checkOutDate}</Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Số lượng khách: </Text>
+                        <Text style={styles.textmain}>{item.roomCustomer.mature} người lớn và {bookingHistoryMock.roomCustomer.children} trẻ em</Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Tổng chi phí: </Text>
+                        <Text style={styles.textmain}>{item.totalPrice}</Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Thanh toán bằng: </Text>
+                        <Text style={styles.textmain}>{item.paymentMethod}</Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Trạng thái: </Text>
+                        <Text style={styles.textmain}>{item.status}</Text>
+                    </View>
+                </View>
+            ))}
             <ButtonComponent style={styles.delete} text="XOÁ"></ButtonComponent>
-        </View>
+        </ScrollView>
     );
 };
 
