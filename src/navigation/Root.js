@@ -14,6 +14,7 @@ import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import GGMap from '@src/screens/UserScreens/GGMap';
+import HomeListRoom from '@src/screens/UserScreens/Home/ListRoom';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
 import Notification from '@src/screens/UserScreens/Notification/Notification';
 import Payment from '@src/screens/UserScreens/Payment';
@@ -25,9 +26,11 @@ import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
 import useUserStore from '@src/store/user';
+import {ROLE} from '@src/utils/constant';
 import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBookingHistory';
 import {navigationRef} from './NavigationController';
 import {Tabs} from './NavigationTab';
+import {StaffNavTabs} from './StaffNavTab';
 
 const screenOptions = {
   header: () => null,
@@ -61,6 +64,7 @@ const MainStack = () => {
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
       <Stack.Screen name={'Notification'} component={Notification} />
+      <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
       <Stack.Screen name={'EditProfileUser'} component={EditProfileUser} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'Payment'} component={Payment} />
@@ -177,18 +181,46 @@ const AgentStack = () => {
   );
 };
 
+const StaffStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName={'StaffNavTabs'}
+      screenOptions={{presentation: 'card', ...screenOptions}}>
+      {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
+      <Stack.Group screenOptions={screenOptions}>
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="StaffNavTabs"
+          component={StaffNavTabs}
+          options={{headerShown: false}}
+        />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
 const Root = () => {
   const isLogin = false;
   const user = useUserStore(state => state.user);
+  const getStackByRole = role => {
+    switch (role) {
+      case ROLE.AGENT:
+        return <Stack.Screen name={'AgentStack'} component={AgentStack} />;
+      case ROLE.USER:
+        return <Stack.Screen name={'MainStack'} component={MainStack} />;
+      case ROLE.STAFF:
+        return <Stack.Screen name={'StaffStack'} component={StaffStack} />;
+    }
+  };
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={screenOptions}>
         {user ? (
-          user.email == 'admin@gmail.com' ? (
-            <Stack.Screen name={'AgentStack'} component={AgentStack} />
-          ) : (
-            <Stack.Screen name={'MainStack'} component={MainStack} />
-          )
+          getStackByRole(user.role)
         ) : (
           <Stack.Screen
             options={{

@@ -2,7 +2,7 @@ import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {goBack} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import {center, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {
   Image,
@@ -131,7 +131,9 @@ const Payment = () => {
               size={24}
               color={generalColor.other.gray}></AntDesign>
           </View>
-          <QRCode value="http://awesome.link.qr" />
+          <View style={[center, {marginTop: 12}]}>
+            <QRCode value="http://awesome.link.qr" />
+          </View>
           <ButtonComponent
             onPress={() => {
               showMessage({

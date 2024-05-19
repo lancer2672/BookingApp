@@ -27,7 +27,6 @@ const Home = () => {
       style={{margin: 4, width: 220}}
       onPress={() => {
         // onSelect(item);
-        onClose();
       }}>
       <View></View>
       <Image
@@ -278,7 +277,7 @@ const RecommendList = () => {
         }}
         onPress={() => {
           // onSelect(item);
-          onClose();
+          navigate('HomeListRoom', {hotel: item});
         }}>
         <Image
           resizeMode="cover"

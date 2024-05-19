@@ -4,7 +4,7 @@ import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FilterButton from './components/FilterButton';
 import ListReview from './components/ListReview';
@@ -26,21 +26,39 @@ const Review = () => {
         </Pressable>
         <Text style={styles.title}>Đánh giá</Text>
       </View>
+      <View style={rowCenter}>
+        <Image
+          source={{uri: hotel.avatar}}
+          style={{width: 80, height: 80, margin: 12, borderRadius: 12}}></Image>
 
-      <View style={{...row, padding: 12}}>
-        <Text style={styles.rating}>{hotel.rating}</Text>
-        <View>
-          <View style={rowCenter}>
-            <AntDesign
-              name="star"
-              color={generalColor.other.star}
-              size={32}></AntDesign>
-            <AntDesign
-              name="star"
-              color={generalColor.other.star}
-              size={32}></AntDesign>
+        <View
+          style={{
+            ...row,
+            padding: 12,
+            paddingLeft: 4,
+            paddingRight: 4,
+            alignItems: 'flex-end',
+          }}>
+          <View>
+            <Text style={styles.txt}>{hotel.name}</Text>
+            <View style={rowCenter}>
+              <Text style={styles.rating}>{hotel.rating}</Text>
+              <Text>120 lượt đánh giá</Text>
+            </View>
           </View>
-          <Text>120 lượt đánh giá</Text>
+          {/* <View>
+            <View style={rowCenter}>
+              <AntDesign
+                name="star"
+                color={generalColor.other.star}
+                size={32}></AntDesign>
+              <AntDesign
+                name="star"
+                color={generalColor.other.star}
+                size={32}></AntDesign>
+            </View>
+            <Text>120 lượt đánh giá</Text>
+          </View> */}
         </View>
       </View>
 
@@ -126,9 +144,16 @@ const styles = StyleSheet.create({
   filter: {color: generalColor.primary, fontSize: 16, marginRight: 4},
   rating: {
     color: generalColor.primary,
-    ...textStyle.h[3],
+    ...textStyle.h[4],
     marginRight: 8,
     textAlign: 'center',
+    fontFamily: 'serif',
+  },
+  txt: {
+    color: generalColor.primary,
+    ...textStyle.h[3],
+    marginRight: 8,
+    textAlign: 'left',
     fontFamily: 'serif',
   },
 });

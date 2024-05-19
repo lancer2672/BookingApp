@@ -61,7 +61,7 @@ const SignIn = () => {
 
           handleSubmit,
         }) => (
-          <>
+          <View style={{flex: 1}}>
             <TextInputComponent
               placeholder="Nhập Email"
               onChangeText={text => {
@@ -138,53 +138,55 @@ const SignIn = () => {
               style={styles.buttonItem}
               text="Đăng nhập"
             />
-          </>
+          </View>
         )}
       </Formik>
 
-      <Pressable
-        onPress={() => {
-          navigate('SignUp');
-        }}
-        style={{
-          marginTop: 'auto',
-          alignSelf: 'center',
-          marginBottom: 20,
-          flexDirection: 'row',
-        }}>
-        <Text
+      <View style={{}}>
+        <Pressable
+          onPress={() => {
+            navigate('SignUp');
+          }}
           style={{
-            color: 'white',
+            marginTop: 'auto',
+            alignSelf: 'center',
+            marginBottom: 20,
+            flexDirection: 'row',
           }}>
-          Chưa có tải khoản?{' '}
-        </Text>
-        <Text
+          <Text
+            style={{
+              color: 'white',
+            }}>
+            Chưa có tải khoản?{' '}
+          </Text>
+          <Text
+            style={{
+              color: 'white',
+              textDecorationLine: 'underline',
+              fontWeight: '500',
+            }}>
+            Đăng ký ngay
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            navigate('AgentSignUp');
+          }}
           style={{
-            color: 'white',
-            textDecorationLine: 'underline',
-            fontWeight: '500',
+            alignSelf: 'center',
+            marginBottom: 20,
+            flexDirection: 'row',
           }}>
-          Đăng ký ngay
-        </Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigate('AgentSignUp');
-        }}
-        style={{
-          alignSelf: 'center',
-          marginBottom: 20,
-          flexDirection: 'row',
-        }}>
-        <Text
-          style={{
-            color: 'white',
-            textDecorationLine: 'underline',
-            fontWeight: '500',
-          }}>
-          Đăng ký làm agent
-        </Text>
-      </Pressable>
+          <Text
+            style={{
+              color: 'white',
+              textDecorationLine: 'underline',
+              fontWeight: '500',
+            }}>
+            Đăng ký làm agent
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 };

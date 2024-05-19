@@ -7,7 +7,11 @@ import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {center, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {History_Status} from '@src/utils/constant';
+import {
+  History_Status,
+  getStatusColor,
+  getStatusText,
+} from '@src/utils/constant';
 import {formatCurrency, formatDate} from '@src/utils/textFormat';
 import {useState} from 'react';
 import {
@@ -104,9 +108,30 @@ const DetailBookingHitory = ({}) => {
             )}
           </View>
         </View>
+        <View style={[rowCenter, {marginLeft: 12, marginTop: 4}]}>
+          <Text
+            style={{
+              ...textStyle.content.medium,
+              color: generalColor.primary,
+              fontWeight: '400',
+              marginBottom: 12,
+            }}>
+            Trạng thái:{' '}
+          </Text>
+          <Text
+            style={{
+              ...textStyle.content.medium,
+              color: getStatusColor(historyItem.status),
+              fontWeight: '500',
+              marginBottom: 12,
+            }}>
+            {getStatusText(historyItem.status)}
+          </Text>
+        </View>
         <View
           style={{
             padding: 12,
+            paddingTop: 4,
             flex: 1,
             minHeight: 140,
           }}>
