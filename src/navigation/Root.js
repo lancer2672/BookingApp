@@ -13,6 +13,8 @@ import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
+import BookingResult from '@src/screens/UserScreens/BookingResult/BookingResult';
+import ViewOnMap from '@src/screens/UserScreens/BookingResult/ViewOnMap';
 import GGMap from '@src/screens/UserScreens/GGMap';
 import HomeListRoom from '@src/screens/UserScreens/Home/ListRoom';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
@@ -67,6 +69,8 @@ const MainStack = () => {
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
       <Stack.Screen name={'EditProfileUser'} component={EditProfileUser} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
+      <Stack.Screen name={'BookingResult'} component={BookingResult} />
+      <Stack.Screen name={'ViewOnMap'} component={ViewOnMap} />
       <Stack.Screen name={'Payment'} component={Payment} />
       <Stack.Screen name={'BookingHistory'} component={BookingHistory} />
       <Stack.Screen

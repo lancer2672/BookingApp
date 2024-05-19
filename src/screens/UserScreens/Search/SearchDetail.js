@@ -49,7 +49,10 @@ const UserSearchDetailScreen = () => {
 
   console.log('datepickerVisible', datepickerVisible);
   const handleSelectDate = ({startDate, endDate}) => {
-    console.log('Selected', {startDate: new Date(startDate), endDate});
+    console.log('Selected', startDate, new Date('2024-3-15'), {
+      startDate: new Date(startDate),
+      endDate,
+    });
     setDate({
       checkinDate: new Date(startDate),
       checkoutDate: new Date(endDate),
@@ -115,10 +118,13 @@ const UserSearchDetailScreen = () => {
           label={'Ngày'}
           value={
             date.checkinDate
-              ? `${formatDate(date.checkinDate, 'dd')} - ${formatDate(
+              ? `${formatDate(date.checkinDate, 'dd')} tháng ${formatDate(
                   date.checkoutDate,
-                  'dd',
-                )} tháng ${formatDate(date.checkoutDate, 'MM')}`
+                  'MM',
+                )} - ${formatDate(date.checkoutDate, 'dd')} tháng ${formatDate(
+                  date.checkoutDate,
+                  'MM',
+                )}`
               : 'Chọn ngày'
           }
           onPress={() => {

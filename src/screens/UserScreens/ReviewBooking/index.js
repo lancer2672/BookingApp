@@ -82,11 +82,10 @@ const ReviewBooking = () => {
         </View>
         <View
           style={{
-            padding: 12,
             flex: 1,
             minHeight: 140,
           }}>
-          <View style={{flexDirection: 'row', paddingBottom: 12}}>
+          <View style={{flexDirection: 'row', padding: 12}}>
             <View style={{flex: 1.4}}>
               <Text
                 style={{
@@ -142,16 +141,18 @@ const ReviewBooking = () => {
               style={styles.img}
               source={{uri: 'https://picsum.photos/200'}}></Image>
           </View>
-          <Text style={{fontSize: 14}}>
+          <Text style={{fontSize: 14, paddingHorizontal: 12}}>
             {' '}
             {room.description}
             {room.description}
             {room.description}
             {room.description}
           </Text>
+
           <View
             style={{
               borderTopWidth: 1,
+              paddingHorizontal: 12,
               borderColor: '#DDDDDD',
               paddingTop: 10,
               marginTop: 10,
@@ -193,22 +194,33 @@ const ReviewBooking = () => {
               </View>
             )}
           </View>
-          <View style={{marginTop: 12}}>
+
+          <View style={{marginTop: 12, paddingHorizontal: 12}}>
             <Text style={styles.policy}>Chính sách</Text>
             <PolicyItem></PolicyItem>
           </View>
-          <FeeItem title="phí A"></FeeItem>
-          <FeeItem title="phí B"></FeeItem>
-          <FeeItem title="phí C"></FeeItem>
+          {/* SEPERATOR */}
+          <View
+            style={{
+              marginVertical: 8,
+              height: 5,
+              borderRadius: 15,
+              backgroundColor: generalColor.other.lightgray,
+            }}></View>
+          <View style={{paddingHorizontal: 12}}>
+            <FeeItem title="phí A"></FeeItem>
+            <FeeItem title="phí B"></FeeItem>
+            <FeeItem title="phí C"></FeeItem>
 
-          <Divider style={{marginTop: 8}} bold></Divider>
-          <FeeItem title={'Tổng cộng'}></FeeItem>
-          <ButtonComponent
-            onPress={() => {
-              navigate('Payment');
-            }}
-            style={{marginVertical: 24, marginTop: 40}}
-            text={'Tiếp tục'}></ButtonComponent>
+            <Divider style={{marginTop: 8}} bold></Divider>
+            <FeeItem title={'Tổng cộng'}></FeeItem>
+            <ButtonComponent
+              onPress={() => {
+                navigate('Payment', {roomCustomer, date, hotel, room});
+              }}
+              style={{marginVertical: 24, marginTop: 40}}
+              text={'Tiếp tục'}></ButtonComponent>
+          </View>
         </View>
       </ScrollView>
     </View>

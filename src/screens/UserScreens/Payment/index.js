@@ -1,23 +1,43 @@
+import {useRoute} from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {goBack} from '@src/navigation/NavigationController';
+import {goBack, navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
-import {center, rowCenter} from '@src/theme/style';
+import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {Divider} from 'react-native-paper';
-import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+export const PaymentMethod = {
+  ATM: 'ATM',
+  CASH: 'CASH',
+};
 const Payment = () => {
+  const {date, roomCustomer, room, hotel} = useRoute().params;
+  const handleBooking = () => {
+    showMessage({
+      message: 'Đặt phòng thành công',
+      type: 'success',
+    });
+    navigate('BookingResult', {
+      date,
+      roomCustomer,
+      room,
+      hotel,
+    });
+  };
+  const [selectedMethod, setSelectedMethod] = useState(PaymentMethod.CASH);
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -96,51 +116,25 @@ const Payment = () => {
             }}>
             Thanh toán
           </Text>
-          <View
-            style={{
-              ...rowCenter,
-              paddingVertical: 8,
-              borderBottomWidth: 1,
-              borderBottomColor: generalColor.other.gray,
-            }}>
-            <Image source={require('../../../assets/icons/atm.png')}></Image>
-            <View
-              style={{
-                flex: 1,
-                marginLeft: 12,
-              }}>
-              <Text
-                style={{
-                  marginTop: 2,
-                  ...textStyle.content.large,
-                  color: generalColor.black[100],
-                }}>
-                Credit card
-              </Text>
-              <Text
-                style={{
-                  marginTop: 2,
-                  ...textStyle.content.medium,
-                  color: generalColor.other.gray,
-                }}>
-                Thanh toán sử dụng credit card
-              </Text>
-            </View>
-            <AntDesign
-              name="right"
-              size={24}
-              color={generalColor.other.gray}></AntDesign>
-          </View>
-          <View style={[center, {marginTop: 12}]}>
-            <QRCode value="http://awesome.link.qr" />
-          </View>
-          <ButtonComponent
-            onPress={() => {
-              showMessage({
-                message: 'Đặt phòng thành công',
-                type: 'success',
-              });
+          <Item
+            methodName={'Thẻ tín dụng'}
+            src={require('../../../assets/icons/atm.png')}
+            onClick={() => {
+              setSelectedMethod(PaymentMethod.ATM);
             }}
+            isSelected={selectedMethod == PaymentMethod.ATM}
+            methodDes={'Thanh toán sử dụng thẻ tín dụng'}></Item>
+          <Item
+            methodName={'Tiền mặt'}
+            isSelected={selectedMethod == PaymentMethod.CASH}
+            src={require('../../../assets/icons/atm.png')}
+            onClick={() => {
+              setSelectedMethod(PaymentMethod.CASH);
+            }}
+            methodDes={'Thanh toán bằng tiền mặt'}></Item>
+
+          <ButtonComponent
+            onPress={handleBooking}
             style={{marginVertical: 24}}
             text={'Đặt phòng'}></ButtonComponent>
         </View>
@@ -151,7 +145,50 @@ const Payment = () => {
 };
 
 export default Payment;
+const Item = ({methodName, src, methodDes, onClick, isSelected}) => {
+  return (
+    <TouchableOpacity
+      onPress={onClick}
+      style={{
+        ...rowCenter,
+        paddingVertical: 8,
+        borderBottomWidth: 1,
+        marginTop: 8,
+        paddingHorizontal: 4,
+        backgroundColor: isSelected ? generalColor.primary : null,
+        borderBottomColor: generalColor.other.gray,
+      }}>
+      <Image source={src}></Image>
+      <View
+        style={{
+          flex: 1,
+          marginLeft: 12,
+        }}>
+        <Text
+          style={{
+            marginTop: 2,
+            ...textStyle.content.large,
 
+            color: isSelected ? 'white' : generalColor.black[100],
+          }}>
+          {methodName}
+        </Text>
+        <Text
+          style={{
+            marginTop: 2,
+            ...textStyle.content.medium,
+            color: isSelected ? 'white' : generalColor.other.gray,
+          }}>
+          {methodDes}
+        </Text>
+      </View>
+      <AntDesign
+        name="right"
+        size={24}
+        color={isSelected ? 'white' : generalColor.other.gray}></AntDesign>
+    </TouchableOpacity>
+  );
+};
 const styles = StyleSheet.create({
   header: {
     marginHorizontal: 18,

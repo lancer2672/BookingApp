@@ -107,6 +107,7 @@ const UserSearchResultScreen = () => {
               textTransform: 'uppercase',
               color: generalColor.primary,
               ...textStyle.h[2],
+              fontFamily: 'serif',
               textAlign: 'center',
             }}>
             Phòng

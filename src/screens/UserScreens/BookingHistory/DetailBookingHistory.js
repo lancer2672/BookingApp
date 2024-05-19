@@ -192,6 +192,8 @@ const DetailBookingHitory = ({}) => {
               source={{uri: 'https://picsum.photos/200'}}></Image>
           </View>
           <Text style={{fontSize: 14}}>HIỂN THỊ ẢNH Ở ĐÂY</Text>
+          {/* SEPERATOR */}
+
           <View
             style={{
               borderTopWidth: 1,
@@ -236,10 +238,24 @@ const DetailBookingHitory = ({}) => {
               </View>
             )}
           </View>
+          <View
+            style={{
+              marginVertical: 8,
+              height: 7,
+              borderRadius: 15,
+              backgroundColor: generalColor.other.lightgray,
+            }}></View>
           <View style={{marginTop: 12}}>
             <Text style={styles.policy}>Chính sách</Text>
             <PolicyItem></PolicyItem>
           </View>
+          <View
+            style={{
+              marginVertical: 8,
+              height: 7,
+              borderRadius: 15,
+              backgroundColor: generalColor.other.lightgray,
+            }}></View>
           <FeeItem title="phí A"></FeeItem>
           <FeeItem title="phí B"></FeeItem>
           <FeeItem title="phí C"></FeeItem>

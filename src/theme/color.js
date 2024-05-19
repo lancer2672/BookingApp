@@ -14,8 +14,8 @@ export const generalColor = {
     10: '#bdbbbb',
   },
   other: {
-    yellow: '#e1fa25',
-    star: '#f7d73bd1',
+    yellow: '#FFD700',
+    star: '#FFD700',
     bluepurple: '#514eb6',
     darkblue: '#0b0c15',
     gray: '#747268',
