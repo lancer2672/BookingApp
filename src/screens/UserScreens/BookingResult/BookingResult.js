@@ -105,11 +105,11 @@ const BookingResult = () => {
             </View>
           </View>
 
-          <Item label="Mã phòng" content={room.id}></Item>
-          <Item label="Tên phòng" content={room.name}></Item>
-          <Item label="Tên khách hàng" content={'012312312'}></Item>
-          <Item label="Email" content={'012312312'}></Item>
-          <Item label="Số điện thoại" content={'012312312'}></Item>
+          <ResultItem label="Mã phòng" content={room.id}></ResultItem>
+          <ResultItem label="Tên phòng" content={room.name}></ResultItem>
+          <ResultItem label="Tên khách hàng" content={'012312312'}></ResultItem>
+          <ResultItem label="Email" content={'012312312'}></ResultItem>
+          <ResultItem label="Số điện thoại" content={'012312312'}></ResultItem>
           <Text
             style={{
               marginTop: 12,
@@ -144,7 +144,7 @@ const BookingResult = () => {
 };
 
 export default BookingResult;
-const Item = ({label, content}) => {
+export const ResultItem = ({label, content}) => {
   return (
     <View style={[rowCenter, {alignItems: 'center', marginVertical: 8}]}>
       <Text

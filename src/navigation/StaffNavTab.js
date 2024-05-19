@@ -7,9 +7,9 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useTheme} from 'styled-components';
 
+import ScanQR from '@src/screens/StaffScreens/ScanQr/ScanQR';
 import Home from '@src/screens/UserScreens/Home/Home';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
-import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import {generalColor} from '@src/theme/color';
 import {StyleSheet} from 'react-native';
 
@@ -41,7 +41,7 @@ export const StaffNavTabs = () => {
                   color={focused ? 'white' : 'gray'}
                 />
               );
-            } else if (route.name === 'Search') {
+            } else if (route.name === 'ScanQR') {
               return (
                 <AntDesign
                   name="qrcode"
@@ -79,7 +79,7 @@ export const StaffNavTabs = () => {
         };
       }}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={UserSearchScreen} />
+      <Tab.Screen name="ScanQR" component={ScanQR} />
       <Tab.Screen name="UserProfile" component={UserProfile} />
     </Tab.Navigator>
   );
