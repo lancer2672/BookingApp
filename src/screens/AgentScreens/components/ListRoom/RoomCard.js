@@ -1,10 +1,8 @@
 import ButtonComponent from '@src/components/Button';
 import {navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
-import { generalColor } from '@src/theme/color';
-import { hotelsMock } from '@src/mock/mock';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 const RoomCard = ({room}) => {
   const navigateToDetail = () => {
     navigate('DetailRoom', room);
@@ -25,24 +23,42 @@ const RoomCard = ({room}) => {
           fontSize: 20,
           fontWeight: 'bold',
           marginLeft: 20,
+          color: generalColor.primary,
+
           marginTop: 20,
         }}>
         {room.name}
       </Text>
-      <Text style={{fontSize: 16, marginLeft: 20, marginTop: 10}}>
-        {room.bed} giường , tối đa {room.numOfPeople} người và {room.numOfChildren} trẻ em
+      <Text
+        style={{
+          fontSize: 16,
+
+          marginLeft: 20,
+          marginTop: 10,
+        }}>
+        {room.bed} giường , tối đa {room.numOfPeople} người và{' '}
+        {room.numOfChildren} trẻ em
       </Text>
       <Text
         style={{
           fontSize: 20,
           marginLeft: 20,
           fontWeight: 'bold',
+          color: generalColor.primary,
+
           marginTop: 10,
-          marginBottom:10
+          marginBottom: 10,
         }}>
         Giá : {room.pricePerNight}/1d $
       </Text>
-      <View style={{fontSize: 16, marginLeft: 20, backgroundColor:'black',height:1,width:"35%" }}></View>
+      <View
+        style={{
+          fontSize: 16,
+          marginLeft: 20,
+          backgroundColor: 'black',
+          height: 1,
+          width: '35%',
+        }}></View>
       {/* {room.amenities.map(item => (
         <View style={{display:'flex', flexDirection:'row',marginTop: 3,marginLeft:20}}>
           <AntDesign name='plus' size={16}></AntDesign>
@@ -50,7 +66,9 @@ const RoomCard = ({room}) => {
         </View>
 
       ))} */}
-      <Text style={{fontSize: 16, marginLeft: 20, marginTop: 10,}}>( {room.status} )</Text>
+      <Text style={{fontSize: 16, marginLeft: 20, marginTop: 10}}>
+        ( {room.status} )
+      </Text>
       <ButtonComponent
         style={styles.delete}
         text="Xem Phòng"
@@ -79,7 +97,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     width: '100%',
-    height:200,
+    height: 200,
     resizeMode: 'cover',
   },
   imageslider: {
@@ -90,7 +108,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   slide: {
-    height:200,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -67,46 +67,7 @@ const Home = () => {
         onPress={() => {}}></ButtonComponent>
     </TouchableOpacity>
   );
-  const renderItemRcm = ({item, index}) => (
-    <TouchableOpacity
-      style={{margin: 4, width: 220}}
-      onPress={() => {
-        // onSelect(item);
-        onClose();
-      }}>
-      <View></View>
-      <Image
-        resizeMode="cover"
-        source={{uri: 'https://picsum.photos/200'}}
-        style={{
-          width: 220,
-          height: 130,
-        }}></Image>
-      <Text style={[textStyle.h[4], {color: 'black', paddingTop: 8}]}>
-        ROSEWOOD LITTLE DIX BAY
-      </Text>
-      <View style={[rowCenter, {marginBottom: 4, marginLeft: 4}]}>
-        <AntDesign
-          name="star"
-          color={generalColor.other.star}
-          size={18}></AntDesign>
-        <Text> ( 3,3)</Text>
-      </View>
-      <View></View>
 
-      <View style={[rowCenter]}>
-        <PinSVG height={18} color={generalColor.primary}></PinSVG>
-        <Text>Quận 5 TpHCM</Text>
-      </View>
-      <Text
-        style={[
-          textStyle.h[5],
-          {color: 'black', fontWeight: 'bold', paddingVertical: 8},
-        ]}>
-        {formatCurrency(10000)}/ đêm
-      </Text>
-    </TouchableOpacity>
-  );
   return (
     <ScrollView style={{flex: 1}}>
       <ImageBackground

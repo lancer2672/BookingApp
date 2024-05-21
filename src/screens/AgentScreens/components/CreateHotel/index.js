@@ -1,50 +1,51 @@
 import ButtonComponent from '@src/components/Button';
-import { ProvinceModal } from '@src/components/LocationModal/LocationModal';
+import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import TextInputComponent from '@src/components/TextInputComponent';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, Modal } from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { Checkbox } from 'react-native-paper';
+import {useEffect, useState} from 'react';
+import {
+  Image,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {ProgressStep, ProgressSteps} from 'react-native-progress-steps';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgentHeader from '../Header';
-import { generalColor } from '@src/theme/color';
-import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
-import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
-import { center } from '@src/theme/style';
 
 const CreateHotel = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch('http://54.255.249.131:8080/api/hotel-services')
-      .then((response) => response.json())
-      .then((json) => {
+      .then(response => response.json())
+      .then(json => {
         setData(json);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
       });
   }, []);
-  const [hotel, setHotel] = useState(
-    {
-      name: '',
-      address: '',
-      description: '',
-      ameniteis: [],
-      around: {
-        visit: [],
-        food: [],
-        transport: [],
-      },
-      policy: '',
-      images: []
-    }
-  );
+  const [hotel, setHotel] = useState({
+    name: '',
+    address: '',
+    description: '',
+    ameniteis: [],
+    around: {
+      visit: [],
+      food: [],
+      transport: [],
+    },
+    policy: '',
+    images: [],
+  });
   const handlesSetValue = (index, value) => {
-    setHotel({ ...hotel, [index]: value })
-  }
+    setHotel({...hotel, [index]: value});
+  };
   const [visible, setVisible] = useState(false);
   const [images, setImages] = useState([]);
 
@@ -76,47 +77,54 @@ const CreateHotel = () => {
     });
   };
   //tiennghi
-  const [tiennghi, setTiennghi] = useState([])
-  const handleDeleteTienNghi = (index) => {
-    setTiennghi((prevItems) => {
+  const [tiennghi, setTiennghi] = useState([]);
+  const handleDeleteTienNghi = index => {
+    setTiennghi(prevItems => {
       const updatedItems = [...prevItems]; // Create a copy
       updatedItems.splice(index, 1); // Remove the item
       return updatedItems;
     });
-  }
+  };
   const [modalVisible, setModalVisible] = useState(false);
-  const [inx, setInx] = useState(0)
+  const [inx, setInx] = useState(0);
   const options = data;
 
   const handleSelect = (value, index) => {
-    setTiennghi((prevItems) => {
+    setTiennghi(prevItems => {
       const updatedItems = [...prevItems]; // Create a copy
-      updatedItems[index] = value // Remove the item
+      updatedItems[index] = value; // Remove the item
       return updatedItems;
     });
     setModalVisible(false);
   };
   const handleAddHotel = () => {
-    const newHotel = { ...hotel, around: { visit: thamquan, food: anuong, transport: dichuyen }, ameniteis: tiennghi }
-    setHotel(newHotel)
-    console.log(hotel)
-  }
+    const newHotel = {
+      ...hotel,
+      around: {visit: thamquan, food: anuong, transport: dichuyen},
+      ameniteis: tiennghi,
+    };
+    setHotel(newHotel);
+    console.log(hotel);
+  };
   const buttonTextStyle = {
     backgroundColor: generalColor.primary,
-    height:35,
-    width:90,
+    height: 35,
+    width: 90,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
     textAlign: 'center',
-    padding:7,
-};
+    padding: 7,
+  };
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <AgentHeader
-        active="TẠO KHÁCH SẠN"></AgentHeader>
-      <ProgressSteps completedStepIconColor={generalColor.primary} completedProgressBarColor={generalColor.primary} activeStepIconBorderColor={generalColor.primary} activeLabelColor={generalColor.primary}>
+    <View style={{backgroundColor: 'white', flex: 1}}>
+      <AgentHeader active="TẠO KHÁCH SẠN"></AgentHeader>
+      <ProgressSteps
+        completedStepIconColor={generalColor.primary}
+        completedProgressBarColor={generalColor.primary}
+        activeStepIconBorderColor={generalColor.primary}
+        activeLabelColor={generalColor.primary}>
         <ProgressStep label="First Step" nextBtnTextStyle={buttonTextStyle}>
           <Text
             style={{
@@ -125,7 +133,8 @@ const CreateHotel = () => {
               marginTop: 10,
               marginBottom: -5,
               fontWeight: 'bold',
-              textAlign: 'center'
+              textAlign: 'center',
+              color: generalColor.primary,
             }}>
             * THÔNG TIN CHUNG KHÁCH SẠN *
           </Text>
@@ -142,36 +151,43 @@ const CreateHotel = () => {
               styleTextInput={[
                 {
                   maxWidth: '100%',
-                  color: 'black'
+                  color: 'black',
                 },
                 textStyle.h[5],
               ]}
               style={styles.textinput}
               placeholderColor="black"
             />
-            <View style={styles.location}>
-              <TextInputComponent
-                placeholder="Vị trí ..."
-                value={hotel.address}
-                widthTextInput={'80%'}
-                heightTextInput={40}
-                onChangeText={text => {
-                  handlesSetValue('address', text);
-                }}
-                marginBottom={0}
-                styleTextInput={[
-                  {
-                    maxWidth: '100%',
-                    color: 'black'
-                  },
-                  textStyle.h[5],
-                ]}
-                style={styles.textinput}
-                placeholderColor="black"
-              />
-              <ButtonComponent
-                style={styles.buttonLocation}
-                text="MAP"></ButtonComponent>
+            <View
+              style={[
+                styles.location,
+                {alignItems: 'center', flexDirection: 'row'},
+              ]}>
+              <View style={{flex: 1}}>
+                <TextInputComponent
+                  placeholder="Vị trí ..."
+                  value={hotel.address}
+                  heightTextInput={40}
+                  onChangeText={text => {
+                    handlesSetValue('address', text);
+                  }}
+                  marginBottom={0}
+                  styleTextInput={[
+                    {
+                      maxWidth: '60%',
+                      color: 'black',
+                    },
+                    textStyle.h[5],
+                  ]}
+                  style={[styles.textinput, {width: '60%', flex: 1}]}
+                  placeholderColor="black"
+                />
+              </View>
+              <View style={{marginTop: 12}}>
+                <ButtonComponent
+                  // style={styles.buttonLocation}
+                  text="MAP"></ButtonComponent>
+              </View>
             </View>
             <TextInputComponent
               placeholder="Mô tả ..."
@@ -185,7 +201,7 @@ const CreateHotel = () => {
               styleTextInput={[
                 {
                   maxWidth: '100%',
-                  color: 'black'
+                  color: 'black',
                 },
                 textStyle.h[5],
               ]}
@@ -194,7 +210,10 @@ const CreateHotel = () => {
             />
           </View>
         </ProgressStep>
-        <ProgressStep label="Second Step" nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
+        <ProgressStep
+          label="Second Step"
+          nextBtnTextStyle={buttonTextStyle}
+          previousBtnTextStyle={buttonTextStyle}>
           <Text
             style={{
               fontSize: 18,
@@ -206,33 +225,39 @@ const CreateHotel = () => {
             }}>
             * CÁC TIỆN NGHI KHÁCH SẠN *
           </Text>
-          <View style={{ width: "90%", marginLeft: "5%" }}>
-            <View style={{ marginTop: 12, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View style={{width: '90%', marginLeft: '5%'}}>
+            <View
+              style={{
+                marginTop: 12,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
               <Text
                 style={{
-                  color: "black",
+                  color: 'black',
                   fontSize: 18,
                   textAlign: 'center',
-
                 }}>
-                <AntDesign
-                  name="caretright"
-
-                  size={15}
-                ></AntDesign> Thêm tiện nghi
+                <AntDesign name="caretright" size={15}></AntDesign> Thêm tiện
+                nghi
               </Text>
-              <Pressable onPress={() => { setTiennghi([...tiennghi, "Tiện nghi ..."]) }}>
-                <Ionicons
-                  name="add"
-
-                  size={32}
-                ></Ionicons>
+              <Pressable
+                onPress={() => {
+                  setTiennghi([...tiennghi, 'Tiện nghi ...']);
+                }}>
+                <Ionicons name="add" size={32}></Ionicons>
               </Pressable>
             </View>
-            <View style={{ display: "flex", flexDirection: "column" }}>
+            <View style={{display: 'flex', flexDirection: 'column'}}>
               {tiennghi.map((item, index) => (
                 <View style={styles.location}>
-                  <TouchableOpacity onPress={() => { setModalVisible(true), setInx(index) }} style={styles.selectButton}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalVisible(true), setInx(index);
+                    }}
+                    style={styles.selectButton}>
                     <Text style={styles.selectButtonText}>{item}</Text>
                   </TouchableOpacity>
                   <Modal
@@ -241,34 +266,33 @@ const CreateHotel = () => {
                     transparent={true}
                     visible={modalVisible}
                     useNativeDriver={true}
-                    onRequestClose={() => setModalVisible(false)}
-                  >
+                    onRequestClose={() => setModalVisible(false)}>
                     <View style={styles.modalContainer}>
                       <View style={styles.modalContent}>
                         <TouchableOpacity
                           style={styles.closebutton}
-                          onPress={() => setModalVisible(false)}
-                        >
-                          <AntDesign name='close' size={20}></AntDesign>
+                          onPress={() => setModalVisible(false)}>
+                          <AntDesign name="close" size={20}></AntDesign>
                         </TouchableOpacity>
                         {options.map((option, index) => (
                           <TouchableOpacity
                             key={index}
                             style={styles.optionButton}
-                            onPress={() => handleSelect(option.name, inx)}
-                          >
-                            <Text style={{ fontSize: 16 }}>{option.name}</Text>
+                            onPress={() => handleSelect(option.name, inx)}>
+                            <Text style={{fontSize: 16}}>{option.name}</Text>
                           </TouchableOpacity>
                         ))}
-
                       </View>
                     </View>
                   </Modal>
-                  <AntDesign name='delete' size={30} color="tomato" onPress={() => handleDeleteTienNghi(index)} style={styles.delete}></AntDesign>
-
+                  <AntDesign
+                    name="delete"
+                    size={30}
+                    color="tomato"
+                    onPress={() => handleDeleteTienNghi(index)}
+                    style={styles.delete}></AntDesign>
                 </View>
-              ))
-              }
+              ))}
             </View>
           </View>
           <Text
@@ -278,11 +302,11 @@ const CreateHotel = () => {
               marginTop: 20,
               marginBottom: 0,
               fontWeight: 'bold',
-              textAlign: 'center'
+              textAlign: 'center',
             }}>
             * XUNG QUANH KHÁCH SẠN *
           </Text>
-          <View style={{ width: '90%', marginLeft: '5%', marginBottom:20 }}>
+          <View style={{width: '90%', marginLeft: '5%', marginBottom: 20}}>
             <View>
               <View
                 style={{
@@ -308,11 +332,18 @@ const CreateHotel = () => {
                   onPress={() => {
                     setThamquan([...thamquan, '']);
                   }}>
-                  <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
+                  <Ionicons
+                    name="add"
+                    color={generalColor.primary}
+                    size={32}></Ionicons>
                 </Pressable>
               </View>
               <View
-                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                }}>
                 {thamquan.map((item, index) => (
                   <View style={styles.location}>
                     <TextInputComponent
@@ -321,15 +352,15 @@ const CreateHotel = () => {
                       widthTextInput={'80%'}
                       heightTextInput={20}
                       onChangeText={text => {
-                        const update = [...thamquan]
-                        update[index] = text
-                        setThamquan(update)
+                        const update = [...thamquan];
+                        update[index] = text;
+                        setThamquan(update);
                       }}
                       marginBottom={0}
                       styleTextInput={[
                         {
                           maxWidth: '100%',
-                          color: 'black'
+                          color: 'black',
                         },
                         textStyle.h[5],
                       ]}
@@ -372,11 +403,18 @@ const CreateHotel = () => {
                   onPress={() => {
                     setAnuong([...anuong, '']);
                   }}>
-                  <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
+                  <Ionicons
+                    name="add"
+                    color={generalColor.primary}
+                    size={32}></Ionicons>
                 </Pressable>
               </View>
               <View
-                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                }}>
                 {anuong.map((item, index) => (
                   <View style={styles.location}>
                     <TextInputComponent
@@ -385,9 +423,9 @@ const CreateHotel = () => {
                       widthTextInput={'80%'}
                       heightTextInput={20}
                       onChangeText={text => {
-                        const update = [...anuong]
-                        update[index] = text
-                        setAnuong(update)
+                        const update = [...anuong];
+                        update[index] = text;
+                        setAnuong(update);
                       }}
                       marginBottom={0}
                       styleTextInput={[
@@ -436,11 +474,18 @@ const CreateHotel = () => {
                   onPress={() => {
                     setDichuyen([...dichuyen, '']);
                   }}>
-                  <Ionicons name="add" color={generalColor.primary} size={32}></Ionicons>
+                  <Ionicons
+                    name="add"
+                    color={generalColor.primary}
+                    size={32}></Ionicons>
                 </Pressable>
               </View>
               <View
-                style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                }}>
                 {dichuyen.map((item, index) => (
                   <View style={styles.location}>
                     <TextInputComponent
@@ -449,9 +494,9 @@ const CreateHotel = () => {
                       widthTextInput={'80%'}
                       heightTextInput={20}
                       onChangeText={text => {
-                        const update = [...dichuyen]
-                        update[index] = text
-                        setDichuyen(update)
+                        const update = [...dichuyen];
+                        update[index] = text;
+                        setDichuyen(update);
                       }}
                       marginBottom={0}
                       styleTextInput={[
@@ -476,8 +521,12 @@ const CreateHotel = () => {
             </View>
           </View>
         </ProgressStep>
-        <ProgressStep label="Third Step" onSubmit={handleAddHotel} nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
-          <View style={{ width: '90%', marginLeft: '5%', marginBottom:20 }}>
+        <ProgressStep
+          label="Third Step"
+          onSubmit={handleAddHotel}
+          nextBtnTextStyle={buttonTextStyle}
+          previousBtnTextStyle={buttonTextStyle}>
+          <View style={{width: '90%', marginLeft: '5%', marginBottom: 20}}>
             <Text
               style={{
                 fontSize: 18,
@@ -485,7 +534,7 @@ const CreateHotel = () => {
                 marginTop: 10,
                 marginBottom: -5,
                 fontWeight: 'bold',
-                textAlign: 'center'
+                textAlign: 'center',
               }}>
               * QUY ĐỊNH VÀ CHÍNH SÁCH *
             </Text>
@@ -501,7 +550,7 @@ const CreateHotel = () => {
               styleTextInput={[
                 {
                   maxWidth: '100%',
-                  color: 'black'
+                  color: 'black',
                 },
                 textStyle.h[5],
               ]}
@@ -516,26 +565,36 @@ const CreateHotel = () => {
                   marginTop: 10,
                   marginBottom: 10,
                   fontWeight: 'bold',
-                  textAlign:'center'
+                  textAlign: 'center',
                 }}>
                 * THÊM HÌNH ẢNH MÌNH HOẠ *
               </Text>
-              <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                }}>
                 <TouchableOpacity
                   onPress={async () => {
-
                     setVisible(() => true);
                   }}
                   style={styles.avatar}>
-                  <Ionicons name='add' size={34} color={generalColor.primary}></Ionicons>
+                  <Ionicons
+                    name="add"
+                    size={34}
+                    color={generalColor.primary}></Ionicons>
                 </TouchableOpacity>
-                {images.map((item) => <Image source={{ uri: item }} style={styles.imagepick}></Image>)}
+                {images.map(item => (
+                  <Image source={{uri: item}} style={styles.imagepick}></Image>
+                ))}
               </View>
 
               <ImagePickerModal
                 onResult={image => {
-                  setImages([...images, image])
-                  console.log('image', images)
+                  setImages([...images, image]);
+                  console.log('image', images);
                 }}
                 visible={visible}
                 onClose={() => setVisible(false)}></ImagePickerModal>
@@ -543,7 +602,6 @@ const CreateHotel = () => {
           </View>
         </ProgressStep>
       </ProgressSteps>
-
     </View>
   );
 };
@@ -554,14 +612,12 @@ const styles = StyleSheet.create({
   container: {
     width: '90%',
     marginLeft: '5%',
-    marginBottom:20
+    marginBottom: 20,
   },
   location: {
     position: 'relative',
   },
   buttonLocation: {
-    position: 'absolute',
-    width: '20%',
     bottom: 8,
     right: 10,
     height: 50,
@@ -601,8 +657,9 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
+
     marginTop: 5,
-    color: 'black'
+    color: 'black',
   },
   delete: {
     position: 'absolute',
@@ -626,25 +683,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    marginTop: 10
+    marginTop: 10,
   },
   selectButtonText: {
     fontSize: 16,
   },
   modalContainer: {
     flex: 1,
-    position: "relative",
+    position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 99
+    zIndex: 99,
   },
   modalContent: {
     backgroundColor: '#fff',
     padding: 30,
     borderRadius: 10,
     elevation: 5,
-    paddingTop: 40
+    paddingTop: 40,
   },
   optionButton: {
     padding: 10,
@@ -654,7 +711,7 @@ const styles = StyleSheet.create({
   closebutton: {
     position: 'absolute',
     top: 10,
-    right: 10
+    right: 10,
   },
   imagepick: {
     borderRadius: 12,
@@ -664,6 +721,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     alignItems: 'center',
     height: 120,
-    backgroundColor: 'red'
-  }
+    backgroundColor: 'red',
+  },
 });

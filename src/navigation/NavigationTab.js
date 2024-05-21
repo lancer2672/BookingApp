@@ -88,37 +88,7 @@ export const Tabs = () => {
       }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={UserSearchScreen} />
-      {/* <Tab.Screen name="BookingHistory" component={BookingHistory} /> */}
       <Tab.Screen name="UserProfile" component={UserProfile} />
-      {/* <Tab.Screen
-        name="UserSearch"
-        component={UserSearchScreen}
-        options={{
-          tabBarIcon: ({focused}) => {
-            return (
-              <AntDesign
-                name="search1"
-                size={24}
-                color={focused ? 'white' : 'black'}
-              />
-            );
-          },
-          tabBarButton: props => {
-            return (
-              <>
-                <View style={{zIndex: 1}}>
-                  <SearchButton {...props}></SearchButton>
-                </View>
-                <View
-                  style={[
-                    styles.pseudo,
-                    {backgroundColor: generalColor.primary},
-                  ]}></View>
-              </>
-            );
-          },
-        }}
-      /> */}
     </Tab.Navigator>
   );
 };

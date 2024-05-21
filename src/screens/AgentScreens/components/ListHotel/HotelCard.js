@@ -1,7 +1,8 @@
 import ButtonComponent from '@src/components/Button';
-import { navigate } from '@src/navigation/NavigationController';
-import { generalColor } from '@src/theme/color';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import {navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
+import {rowCenter} from '@src/theme/style';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const HotelCard = ({hotels}) => {
@@ -14,39 +15,63 @@ const HotelCard = ({hotels}) => {
         <Swiper style={styles.wrapper}>
           {hotels.images.map((image, index) => (
             <View key={index} style={styles.slide}>
-              <Image source={{ uri: image }} style={styles.imageslider} />
+              <Image source={{uri: image}} style={styles.imageslider} />
             </View>
           ))}
         </Swiper>
       </View>
       <Text
         style={{
-          fontSize: 20,
+          fontSize: 26,
           fontWeight: 'bold',
           marginLeft: 20,
+          color: generalColor.primary,
+
           marginTop: 20,
         }}>
         {hotels.name}
       </Text>
-      <Text style={{ fontSize: 15, marginLeft: 20, marginTop: 10 }}>
+      <Text style={{fontSize: 15, marginLeft: 20, marginTop: 10}}>
         {hotels.address}
       </Text>
-      <Text
-        style={{
-          fontSize: 20,
-          marginLeft: 20,
-          fontWeight: 'bold',
-          marginTop: 5,
-          marginBottom:5
-        }}>
-        {hotels.rating} *
-      </Text>
+      <View style={rowCenter}>
+        <Text
+          style={{
+            fontSize: 20,
+            marginLeft: 20,
+            fontWeight: 'bold',
+            marginTop: 5,
+            color: generalColor.primary,
+            marginRight: 4,
+            marginBottom: 5,
+          }}>
+          {hotels.rating}
+        </Text>
+        <AntDesign
+          name="star"
+          color={generalColor.other.star}
+          size={18}></AntDesign>
+      </View>
       {hotels.amenities.map(item => (
-        <View style={{display:'flex', flexDirection:'row',marginTop: 3,marginLeft:20}}>
-          <AntDesign name='plus' size={16}></AntDesign>
-          <Text style={{ fontSize: 14, marginLeft: 5, marginTop: 0, width: '30%', fontStyle:'italic' }}>{item.name}</Text>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 3,
+            marginLeft: 20,
+          }}>
+          <AntDesign name="plus" size={16}></AntDesign>
+          <Text
+            style={{
+              fontSize: 14,
+              marginLeft: 5,
+              marginTop: 0,
+              width: '30%',
+              fontStyle: 'italic',
+            }}>
+            {item.name}
+          </Text>
         </View>
-
       ))}
       <ButtonComponent
         style={styles.delete}

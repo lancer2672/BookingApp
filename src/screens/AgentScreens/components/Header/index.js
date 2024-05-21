@@ -1,9 +1,9 @@
 import {navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
 import {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import SideMenu from '../SideMenu';
-import { generalColor } from '@src/theme/color';
 const AgentHeader = ({active, detail}) => {
   const [visible, setVisible] = useState(false);
   const handleOpenSideMenu = () => {
@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     height: 70,
-   
+    paddingHorizontal: 12,
   },
   center: {
     flexDirection: 'column',
