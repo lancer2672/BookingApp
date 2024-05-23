@@ -15,6 +15,7 @@ import SignUp from '@src/screens/Authentication/SignUp';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import BookingResult from '@src/screens/UserScreens/BookingResult/BookingResult';
 import ViewOnMap from '@src/screens/UserScreens/BookingResult/ViewOnMap';
+import FavouriteRooms from '@src/screens/UserScreens/FavouriteRooms/FavouriteRooms';
 import GGMap from '@src/screens/UserScreens/GGMap';
 import HomeListRoom from '@src/screens/UserScreens/Home/ListRoom';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
@@ -27,8 +28,11 @@ import Review from '@src/screens/UserScreens/ReviewHotel/Review';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
+import {getAllValuesMatchingPattern} from '@src/store/as/as';
+import useRoomStore from '@src/store/fav_room';
 import useUserStore from '@src/store/user';
 import {ROLE} from '@src/utils/constant';
+import {useEffect} from 'react';
 import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBookingHistory';
 import {navigationRef} from './NavigationController';
 import {Tabs} from './NavigationTab';
@@ -55,6 +59,12 @@ const AuthenticationStack = () => {
   );
 };
 const MainStack = () => {
+  const {rooms, setRoom, removeRoom} = useRoomStore();
+  useEffect(() => {
+    getAllValuesMatchingPattern('room').then(data => {
+      setRoom(data);
+    });
+  }, []);
   return (
     <Stack.Navigator
       initialRouteName={'Tabs'}
@@ -65,6 +75,7 @@ const MainStack = () => {
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
+      <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
       <Stack.Screen name={'EditProfileUser'} component={EditProfileUser} />

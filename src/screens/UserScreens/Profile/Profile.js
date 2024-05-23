@@ -74,6 +74,14 @@ const UserProfile = () => {
         navigate('BookingHistory');
       },
     },
+    {
+      name: 'Danh sách yêu thích',
+      icon: <AntDesign name={'heart'} size={20} color={'white'} />,
+      backgroundIconColor: generalColor.primary,
+      onClick: () => {
+        navigate('FavouriteRooms');
+      },
+    },
   ];
   return (
     <Container>

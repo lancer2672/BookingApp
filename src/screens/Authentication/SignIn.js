@@ -8,6 +8,7 @@ import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
+import {ROLE} from '@src/utils/constant';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
@@ -31,7 +32,7 @@ const SignIn = () => {
       const res = await authApi.loginUser(values);
       await AsyncStorage.setItem('@first_time', res.accessToken);
 
-      setUser(values);
+      setUser({...values, role: ROLE.AGENT});
     } catch (er) {
       console.log('er', er);
     } finally {
