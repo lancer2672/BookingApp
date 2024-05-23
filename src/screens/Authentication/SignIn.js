@@ -1,4 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import authApi from '@src/api/auth';
 import ButtonComponent from '@src/components/Button';
+import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {navigate} from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
@@ -19,10 +22,21 @@ const SignIn = () => {
     password: '',
   };
   const setUser = useUserStore(state => state.setUser);
+  const [isLoading, setIsloading] = useState(false);
 
-  const handleFormSubmit = values => {
-    // const { email, password } = values;
-    setUser(values);
+  const handleFormSubmit = async values => {
+    console.log('DATA', values);
+    try {
+      setIsloading(true);
+      const res = await authApi.loginUser(values);
+      await AsyncStorage.setItem('@first_time', res.accessToken);
+
+      setUser(values);
+    } catch (er) {
+      console.log('er', er);
+    } finally {
+      setIsloading(false);
+    }
   };
   return (
     <View style={styles.container}>
@@ -47,6 +61,11 @@ const SignIn = () => {
         </Text>
         <View style={styles.sep}></View>
       </View>
+      <LoadingModal
+        onClose={() => {
+          setIsloading(false);
+        }}
+        visible={isLoading}></LoadingModal>
 
       <Formik
         validationSchema={accountSchema}

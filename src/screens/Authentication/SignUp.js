@@ -1,23 +1,38 @@
+import authApi from '@src/api/auth';
 import ButtonComponent from '@src/components/Button';
+import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import {accountSchema} from './component/validateSchema';
+import {signUpSchema} from './component/validateSchema';
 const SignUp = () => {
-  const [value, setValue] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [isLoading, setIsloading] = useState(false);
   const initialValues = {
     email: '',
     password: '',
+    firstName: '',
+    phoneNumber: '',
+    lastName: '',
   };
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async data => {
+    console.log('DATA', data);
+    try {
+      setIsloading(true);
+      await authApi.registerUser(data);
+    } catch {
+    } finally {
+      setIsloading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text
@@ -41,7 +56,7 @@ const SignUp = () => {
       </View>
 
       <Formik
-        validationSchema={accountSchema}
+        validationSchema={signUpSchema}
         initialValues={initialValues}
         onSubmit={handleFormSubmit}>
         {({
@@ -54,6 +69,63 @@ const SignUp = () => {
           handleSubmit,
         }) => (
           <>
+            <View style={[row, {justifyContent: 'space-between'}]}>
+              <View style={{flex: 1}}>
+                <TextInputComponent
+                  placeholder="Nhập Tên"
+                  onChangeText={text => {
+                    handleChange('firstName')(text);
+                  }}
+                  value={values.firstName}
+                  widthTextInput={'80%'}
+                  labelStyle={{color: 'white'}}
+                  heightTextInput={40}
+                  error={!!errors.firstName && !!touched.firstName}
+                  errorMessage={errors.firstName}
+                  styleTextInput={[textStyle.h[5]]}
+                  style={styles.textinput}
+                  placeholderColor="white"
+                />
+              </View>
+              <View style={{flex: 1, marginLeft: 12}}>
+                <TextInputComponent
+                  placeholder="Nhập Họ"
+                  onChangeText={text => {
+                    handleChange('lastName')(text);
+                  }}
+                  value={values.lastName}
+                  widthTextInput={'90%'}
+                  labelStyle={{color: 'white'}}
+                  heightTextInput={40}
+                  error={!!errors.lastName && !!touched.lastName}
+                  errorMessage={errors.lastName}
+                  styleTextInput={[textStyle.h[5]]}
+                  style={styles.textinput}
+                  placeholderColor="white"
+                />
+              </View>
+            </View>
+            <TextInputComponent
+              placeholder="Nhập số điện thoại"
+              widthTextInput={'80%'}
+              heightTextInput={40}
+              keyboardType="numeric"
+              labelStyle={{color: 'white'}}
+              onChangeText={text => {
+                handleChange('phoneNumber')(text);
+              }}
+              value={values.phoneNumber}
+              error={!!errors.c && !!touched.phoneNumber}
+              errorMessage={errors.phoneNumber}
+              styleTextInput={[
+                {
+                  paddingLeft: 12,
+                },
+                textStyle.h[5],
+              ]}
+              style={styles.textinput}
+              placeholderColor="white"
+            />
             <TextInputComponent
               placeholder="Nhập Email"
               onChangeText={text => {
@@ -78,13 +150,14 @@ const SignUp = () => {
               style={styles.textinput}
               placeholderColor="white"
             />
+
             <TextInputComponent
               placeholder="Nhập mật khẩu"
               widthTextInput={'80%'}
               heightTextInput={40}
               label="Mật khẩu"
               labelStyle={{color: 'white'}}
-              secureTextEntry={true}
+              secureTextEntry={secureTextEntry}
               leftContent={
                 <Entypo name="lock" color="white" size={20}></Entypo>
               }
@@ -127,14 +200,19 @@ const SignUp = () => {
           </>
         )}
       </Formik>
-
       <Pressable
         onPress={() => {
           navigate('SignIn');
         }}
         style={{
-          marginTop: 'auto',
           alignSelf: 'center',
+          position: 'absolute',
+          bottom: 24,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+
+          justifyContent: 'center',
           marginBottom: 12,
           flexDirection: 'row',
         }}>
@@ -153,6 +231,11 @@ const SignUp = () => {
           Đăng nhập
         </Text>
       </Pressable>
+      <LoadingModal
+        onClose={() => {
+          setIsloading(false);
+        }}
+        visible={isLoading}></LoadingModal>
     </View>
   );
 };

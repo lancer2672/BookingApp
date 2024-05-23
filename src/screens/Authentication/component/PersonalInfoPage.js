@@ -21,21 +21,33 @@ import {
 import {launchImageLibrary} from 'react-native-image-picker';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {profileUserSchema} from './validateSchema';
-const PersonalInfoPage = ({onNext}) => {
+const PersonalInfoPage = ({onNext, handleFinish}) => {
   const initialValues = {
     email: '',
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    identityCard: '',
+    identityNumber: '',
     avatar: '',
     frontIdentityCard: '',
     backIdentityCard: 'https://picsum.photos/200',
   };
   const [field, setField] = useState('');
   const [visible, setVisible] = useState(false);
-  const handleFormSubmit = values => {
-    onNext(values);
+  const handleFormSubmit = async values => {
+    console.log('values', values);
+    await onNext({
+      frontIdentityCard: values.frontIdentityCard,
+      backIdentityCard: values.backIdentityCard,
+      selfieImg: values.avatar,
+      anotherData: {
+        email: values.email,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        phoneNumber: values.phoneNumber,
+        identityNumber: values.identityNumber,
+      },
+    });
   };
   const [images, setImages] = useState([]);
   const selectImages = () => {
@@ -133,12 +145,13 @@ const PersonalInfoPage = ({onNext}) => {
               placeholder="Nhập số điện thoại"
               widthTextInput={'80%'}
               heightTextInput={40}
+              keyboardType="numeric"
               labelStyle={{color: 'white'}}
               onChangeText={text => {
                 handleChange('phoneNumber')(text);
               }}
               value={values.phoneNumber}
-              error={!!errors.c && !!touched.phoneNumber}
+              error={!!errors.phoneNumber && !!touched.phoneNumber}
               errorMessage={errors.phoneNumber}
               styleTextInput={[
                 {
@@ -153,13 +166,14 @@ const PersonalInfoPage = ({onNext}) => {
               placeholder="Nhập CCCD/CMND"
               widthTextInput={'80%'}
               heightTextInput={40}
+              keyboardType="numeric"
               labelStyle={{color: 'white'}}
               onChangeText={text => {
-                handleChange('identityCard')(text);
+                handleChange('identityNumber')(text);
               }}
-              value={values.c}
-              error={!!errors.identityCard && !!touched.identityCard}
-              errorMessage={errors.identityCard}
+              value={values.identityNumber}
+              error={!!errors.identityNumber && !!touched.identityNumber}
+              errorMessage={errors.identityNumber}
               styleTextInput={[
                 {
                   paddingLeft: 12,
@@ -241,7 +255,6 @@ const PersonalInfoPage = ({onNext}) => {
               onClose={() => setVisible(false)}></ImagePickerModal>
             <ButtonComponent
               onPress={() => {
-                console.log('press');
                 handleSubmit();
               }}
               style={styles.buttonItem}

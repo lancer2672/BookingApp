@@ -8,6 +8,7 @@ import {useTheme} from 'styled-components';
 import styled from 'styled-components/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import authApi from '@src/api/auth';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
@@ -23,8 +24,13 @@ const UserProfile = () => {
 
   const theme = useTheme();
   const {isDarkTheme, setIsDarkTheme} = useContext(ThemeContext);
-  const handleLogout = () => {
-    removeUser();
+  const handleLogout = async () => {
+    try {
+      authApi.logoutUser();
+      removeUser();
+    } catch (er) {
+      console.log('err', er);
+    }
   };
   const openDeviceSetting = () => {
     Linking.openSettings();
