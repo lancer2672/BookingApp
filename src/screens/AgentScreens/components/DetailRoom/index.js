@@ -188,7 +188,7 @@ const DetailRoom = () => {
                     </View>
                     <View style={styles.main}>
                         <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Số lượng khách: </Text>
-                        <Text style={styles.textmain}>{item.roomCustomer.mature} người lớn và {bookingHistoryMock.roomCustomer.children} trẻ em</Text>
+                        <Text style={styles.textmain}>{item.roomCustomer.mature} người lớn và {item.roomCustomer.children} trẻ em</Text>
                     </View>
                     <View style={styles.main}>
                         <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Tổng chi phí: </Text>
