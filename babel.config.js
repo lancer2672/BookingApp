@@ -16,12 +16,12 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.json'],
       },
     ],
-    'react-native-reanimated/plugin',
     [
       'module:react-native-dotenv',
       {
         moduleName: 'react-native-dotenv',
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 };

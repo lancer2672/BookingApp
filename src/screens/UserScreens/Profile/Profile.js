@@ -4,6 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'styled-components';
 import styled from 'styled-components/native';
 
@@ -80,6 +81,20 @@ const UserProfile = () => {
       backgroundIconColor: generalColor.primary,
       onClick: () => {
         navigate('FavouriteRooms');
+      },
+    },
+    {
+      name: 'Đoạn chat',
+      icon: (
+        <Ionicons
+          name={'chatbubble-ellipses-outline'}
+          size={20}
+          color={'white'}
+        />
+      ),
+      backgroundIconColor: generalColor.primary,
+      onClick: () => {
+        navigate('ListChannel');
       },
     },
   ];

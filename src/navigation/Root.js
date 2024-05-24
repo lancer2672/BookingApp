@@ -1,5 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useChatClient} from '@src/hooks/useChatClient';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
@@ -12,6 +13,8 @@ import Profile from '@src/screens/AgentScreens/components/Profile';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
+import ChannelScreen from '@src/screens/Chat/Channel';
+import ListChannel from '@src/screens/Chat/ListChannel';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import BookingResult from '@src/screens/UserScreens/BookingResult/BookingResult';
 import ViewOnMap from '@src/screens/UserScreens/BookingResult/ViewOnMap';
@@ -75,6 +78,7 @@ const MainStack = () => {
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
+
       <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
@@ -156,6 +160,7 @@ const AgentStack = () => {
           component={EditProfile}
           options={{title: 'Chỉnh sửa thông tin'}}
         />
+
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
@@ -231,6 +236,8 @@ const Root = () => {
         return <Stack.Screen name={'StaffStack'} component={StaffStack} />;
     }
   };
+  const {clientIsReady} = useChatClient();
+  console.log('User', user);
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={screenOptions}>
@@ -245,6 +252,8 @@ const Root = () => {
             component={AuthenticationStack}
           />
         )}
+        <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
+        <Stack.Screen name="ListChannel" component={ListChannel} />
       </Stack.Navigator>
     </NavigationContainer>
   );
