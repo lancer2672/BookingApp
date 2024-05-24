@@ -17,8 +17,33 @@ const ViewOnMap = ({}) => {
   const {hotel} = useRoute().params;
   const [region, setRegion] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [selectedHotel, setSelectedHotel] = useState(null);
 
+  useEffect(() => {
+    const watchId = Geolocation.watchPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+        setMarkerPosition({latitude, longitude});
+        console.log('position', position.coords);
+      },
+      error => Alert.alert('Error', 'Unable to get location'),
+      {
+        enableHighAccuracy: true,
+        distanceFilter: 10,
+        interval: 10000,
+        fastestInterval: 5000,
+      },
+    );
+
+    return () => {
+      Geolocation.clearWatch(watchId);
+    };
+  }, []);
   const [result, setResult] = useState({
     distance: 0,
     duration: 0,
@@ -28,9 +53,9 @@ const ViewOnMap = ({}) => {
   useEffect(() => {
     Geolocation.getCurrentPosition(
       position => {
-        // const {latitude, longitude} = position.coords;
-        const latitude = 10.878307605540192,
-          longitude = 106.80622622219741;
+        const {latitude, longitude} = position.coords;
+        // const latitude = 10.878307605540192,
+        //   longitude = 106.80622622219741;
         setRegion({
           // latitude,
           // longitude,
@@ -65,7 +90,6 @@ const ViewOnMap = ({}) => {
   const callAgent = (phoneNumber = '0846303261') => {
     Linking.openURL(`tel:${phoneNumber}`);
   };
-  console.log('selected', selectedHotel);
   // return <View style={{flex: 1, backgroundColor: 'red'}}></View>;
   return (
     <View style={{flex: 1, backgroundColor: 'gray'}}>
