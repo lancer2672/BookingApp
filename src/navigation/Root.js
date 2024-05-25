@@ -10,6 +10,7 @@ import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
+import ForgotPassword from '@src/screens/Authentication/ForgotPassword';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
@@ -247,6 +248,7 @@ const Root = () => {
           />
         )}
         <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
+        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

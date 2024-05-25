@@ -22,10 +22,23 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCodeScanner,
 } from 'react-native-vision-camera';
+
 const ScanQR = () => {
   const device = useCameraDevice('back');
   const [show, setShow] = useState(false);
+  const codeScanner = useCodeScanner({
+    codeTypes: ['qr', 'ean-13'],
+    onCodeScanned: codes => {
+      console.log(`Scanned ${codes.length} codes!`, codes);
+      if (codes.length > 0) {
+        setShow(() => true);
+      } else {
+        setShow(() => false);
+      }
+    },
+  });
   const {hasPermission, requestPermission} = useCameraPermission();
   const [data, setData] = useState({
     room: hotelsMock[0].rooms[0],
@@ -40,7 +53,9 @@ const ScanQR = () => {
       checkoutDate: new Date(),
     },
   });
-
+  useEffect(() => {
+    LayoutAnimation.configureNext(expandAnimation);
+  }, [show]);
   useEffect(() => {
     if (!hasPermission) {
       requestPermission().then(() => {
@@ -48,10 +63,6 @@ const ScanQR = () => {
         navigate('HomeStaff');
       });
     }
-    let t = setTimeout(() => {
-      setShow(true);
-      LayoutAnimation.configureNext(expandAnimation);
-    }, 3000);
     return () => {
       clearTimeout(t);
     };
@@ -73,7 +84,15 @@ const ScanQR = () => {
           Quét mã
         </Text>
       </View>
-      {!show && <Camera style={{flex: 1}} device={device} isActive={true} />}
+      {!show && (
+        <Camera
+          style={{flex: 1}}
+          device={device}
+          codeScanner={codeScanner}
+          isActive={true}
+        />
+      )}
+
       {show && (
         <View style={{flex: 1}}>
           <View style={[rowCenter, styles.header]}>

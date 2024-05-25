@@ -63,7 +63,7 @@ const ForgotPassword = ({navigation}) => {
             fontWeight: '600',
             color: generalColor.primary,
           }}>
-          Tiếp tục
+          Gửi
         </Text>
       </TouchableOpacity>
       <View style={{flex: 1.6}}></View>
