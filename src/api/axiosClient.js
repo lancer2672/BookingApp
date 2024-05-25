@@ -4,21 +4,17 @@ const baseURL = 'http://54.255.249.131:8080';
 const axiosClient = axios.create({
   baseURL,
 });
-axiosClient.interceptors.request.use(
-  async config => {
-    // config.headers["x-api-key"] = SERVER_API_KEY;
-    // const token = await AsyncStorage.getItem("token");
-    // if (token) {
-    //   config.headers["Authorization"] = `${JSON.parse(token)}`;
-    // }
-    // const userId = await AsyncStorage.getItem("userId");
-    // if (userId) {
-    //   config.headers["x-client-id"] = JSON.parse(userId);
-    // }
-
-    return config;
+axios.interceptors.response.use(
+  function (response) {
+    // Xử lý phản hồi thành công (nếu cần)
+    return response;
   },
-  async error => {},
+  function (error) {
+    // Xử lý lỗi ở đây
+    console.log('Lỗi:', error.message);
+    // Hoặc bạn có thể ném lỗi để xử lý ở nơi gọi hàm
+    return Promise.reject(error);
+  },
 );
 
 axiosClient.interceptors.response.use(

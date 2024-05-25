@@ -108,7 +108,7 @@ const SignIn = () => {
               placeholder="Nhập mật khẩu"
               widthTextInput={'80%'}
               heightTextInput={40}
-              secureTextEntry={true}
+              secureTextEntry={secureTextEntry}
               leftContent={
                 <Entypo name="lock" color="white" size={20}></Entypo>
               }

@@ -4,7 +4,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Modal from 'react-native-modal';
 
-const ImagePickerModal = ({visible, onClose, onResult}) => {
+const ImagePickerModal = ({visible, onClose, onResult, onResultOrigin}) => {
   const handleLaunchLibrary = () => {
     const options = {
       noData: true,
@@ -15,6 +15,10 @@ const ImagePickerModal = ({visible, onClose, onResult}) => {
     launchImageLibrary(options, response => {
       if (response.assets) {
         onResult(response.assets.map(asset => asset.uri));
+        onClose();
+        if (onResultOrigin) {
+          onResultOrigin(response.assets);
+        }
       }
     });
   };

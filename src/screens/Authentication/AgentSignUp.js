@@ -19,17 +19,27 @@ const steps = [
     code: 'CODE_2',
   },
 ];
+const random = () => {
+  return Math.floor(Math.random() * 1000);
+};
 const AgentSignUp = () => {
   const [agent, setAgent] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsloading] = useState(false);
 
   const handleFinish = async values => {
-    console.log('click');
+    let seconds = 5;
     try {
       setIsloading(true);
-      await authApi.registerAgent(values);
-      let seconds = 5;
+      const payload = new FormData();
+
+      payload.append('anotherData', values.anotherData);
+      payload.append('selfieImg', values.selfieImg);
+      payload.append('frontIdentityCard', values.frontIdentityCard);
+      payload.append('backIdentityCard', values.backIdentityCard);
+      console.log('payload', payload);
+      await authApi.registerAgent(payload);
+
       showMessage({
         message: `Đơn của bạn đã được tạo. Bạn sẽ nhận được phản hồi qua email`,
         type: 'success',
@@ -55,7 +65,7 @@ const AgentSignUp = () => {
       }, 1000);
     } finally {
       setIsloading(false);
-      navigate('SignIn');
+      // navigate('SignIn');
     }
   };
   const handleNext = async values => {
@@ -89,8 +99,7 @@ const AgentSignUp = () => {
       </View>
       <PersonalInfoPage
         onNext={async values => {
-          handleNext(values);
-          await handleFinish();
+          await handleNext(values);
         }}></PersonalInfoPage>
       {/* <StepProgress selectedIndex={currentStep} steps={steps}>
         <PersonalInfoPage onNext={handleNext}></PersonalInfoPage>

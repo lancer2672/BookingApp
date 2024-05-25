@@ -28,18 +28,20 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
     lastName: '',
     phoneNumber: '',
     identityNumber: '',
-    avatar: '',
-    frontIdentityCard: '',
-    backIdentityCard: 'https://picsum.photos/200',
   };
+  const [imagesData, setImagesData] = useState({
+    avatar: null,
+    frontIdentityCard: null,
+    backIdentityCard: null,
+  });
   const [field, setField] = useState('');
   const [visible, setVisible] = useState(false);
   const handleFormSubmit = async values => {
     console.log('values', values);
     await onNext({
-      frontIdentityCard: values.frontIdentityCard,
-      backIdentityCard: values.backIdentityCard,
-      selfieImg: values.avatar,
+      frontIdentityCard: imagesData.frontIdentityCard,
+      backIdentityCard: imagesData.backIdentityCard,
+      selfieImg: imagesData.avatar,
       anotherData: {
         email: values.email,
         firstName: values.firstName,
@@ -190,10 +192,10 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
                   setVisible(() => true);
                 }}
                 style={styles.identityCard}>
-                {values.frontIdentityCard ? (
+                {imagesData.frontIdentityCard ? (
                   <Image
                     style={styles.img}
-                    source={{uri: values.frontIdentityCard}}></Image>
+                    source={{uri: imagesData.frontIdentityCard.uri}}></Image>
                 ) : (
                   <View style={center}>
                     <AntDesign
@@ -211,10 +213,12 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
                   setVisible(() => true);
                 }}
                 style={styles.identityCard}>
-                {values.backIdentityCard ? (
+                {imagesData.backIdentityCard ? (
                   <Image
                     style={styles.img}
-                    source={{uri: values.backIdentityCard}}></Image>
+                    source={{
+                      uri: imagesData.backIdentityCard.uri,
+                    }}></Image>
                 ) : (
                   <View style={center}>
                     <AntDesign
@@ -232,8 +236,10 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
                 setVisible(() => true);
               }}
               style={styles.avatar}>
-              {values.avatar ? (
-                <Image style={styles.img} source={{uri: values.avatar}}></Image>
+              {imagesData.avatar ? (
+                <Image
+                  style={styles.img}
+                  source={{uri: imagesData.avatar.uri}}></Image>
               ) : (
                 <View style={center}>
                   <AntDesign
@@ -247,9 +253,10 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
               )}
             </TouchableOpacity>
             <ImagePickerModal
-              onResult={images => {
-                console.log('images', images);
-                handleChange(field)(images[0]);
+              onResult={images => {}}
+              onResultOrigin={images => {
+                console.log('images', images[0], field);
+                setImagesData(() => ({...imagesData, [field]: images[0]}));
               }}
               visible={visible}
               onClose={() => setVisible(false)}></ImagePickerModal>
