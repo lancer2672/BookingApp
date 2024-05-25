@@ -140,7 +140,11 @@ const SignIn = () => {
               placeholderColor="white"
             />
 
-            <Pressable style={{marginVertical: 12, alignSelf: 'flex-end'}}>
+            <Pressable
+              onPress={() => {
+                navigate('ForgotPassword');
+              }}
+              style={{marginVertical: 12, alignSelf: 'flex-end'}}>
               <Text
                 style={{
                   color: 'white',
