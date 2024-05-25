@@ -256,3 +256,57 @@ export const bookingHistoryMock = [
     },
   },
 ];
+
+
+export const billAgent = [
+  {
+    title: "Tháng 1",
+    detail: "Detail 1",
+    price: '300 $',
+    countRoom: 12,
+    countBooking: 132,
+    revenue: '1230000 $',
+    dayPay: '2022-05-01',
+    status: true
+  },
+  {
+    title: "Tháng 2",
+    detail: "Detail 1",
+    price: '300 $',
+    countRoom: 12,
+    countBooking: 132,
+    revenue: '1230000 $',
+    dayPay: '2022-05-01',
+    status: true
+  },
+  {
+    title: "Tháng 3",
+    detail: "Detail 1",
+    price: '300 $',
+    countRoom: 12,
+    countBooking: 132,
+    revenue: '1230000 $',
+    dayPay: '2022-05-01',
+    status: true
+  },
+  {
+    title: "Tháng 4",
+    detail: "Detail 1",
+    price: '300 $',
+    countRoom: 12,
+    countBooking: 132,
+    revenue: '1230000 $',
+    dayPay: '2022-05-01',
+    status: true
+  },
+  {
+    title: "Tháng 5",
+    detail: "Detail 1",
+    price: '300 $',
+    countRoom: 12,
+    countBooking: 132,
+    revenue: '1230000 $',
+    dayPay: '2024-05-01',
+    status: false
+  },
+]
