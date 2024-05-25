@@ -23,6 +23,7 @@ import Notification from '@src/screens/UserScreens/Notification/Notification';
 import Payment from '@src/screens/UserScreens/Payment';
 import EditProfileUser from '@src/screens/UserScreens/Profile/EditProfile';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
+import ResetPassword from '@src/screens/UserScreens/Profile/ResetPassword';
 import ReviewBooking from '@src/screens/UserScreens/ReviewBooking';
 import Review from '@src/screens/UserScreens/ReviewHotel/Review';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
@@ -245,6 +246,7 @@ const Root = () => {
             component={AuthenticationStack}
           />
         )}
+        <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );
