@@ -3,6 +3,15 @@ import axiosClient from './axiosClient';
 const authRoute = '/api';
 
 const authApi = {
+  getProfileUser: async () => {
+    try {
+      const response = await axiosClient.post(`${authRoute}/login`, data);
+      return response.data;
+    } catch (error) {
+      console.log('Login error', error);
+      throw error;
+    }
+  },
   loginUser: async data => {
     try {
       const response = await axiosClient.post(`${authRoute}/login`, data);

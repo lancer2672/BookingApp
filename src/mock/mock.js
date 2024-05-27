@@ -1,4 +1,4 @@
-import {History_Status} from '@src/utils/constant';
+import {History_Status, Room_Status} from '@src/utils/constant';
 
 // Mock data for Agent
 export const agentMock = {
@@ -12,6 +12,14 @@ export const agentMock = {
     .length,
   countBooking: 5,
   password: '123456789',
+};
+export const staffMockData = {
+  id: 1,
+  name: 'staff Name',
+  email: 'staff@email.com',
+  phone: '099999999',
+  identityCard: '123456789',
+  hotelId: 5,
 };
 export const userMock = {
   id: 111,
@@ -68,6 +76,7 @@ export const hotelsMock = [
         amenities: ['Air Conditioning', 'Tivi'],
         policy: ['No Smoking, Pay after checkin'],
         status: 'Đã đặt',
+        status_code: Room_Status.BOOKED,
         bill: {
           inforCustomer: {
             email: 'cutomer1@gmail.com',
@@ -97,7 +106,9 @@ export const hotelsMock = [
         images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
         amenities: ['Air Conditioning', 'Tivi'],
         policy: 'Allow to Smoking, Pay before checkin',
+        status_code: Room_Status.NOT_BOOKED,
         status: 'Còn trống',
+
         bill: {
           inforCustomer: {
             email: '',
@@ -155,7 +166,7 @@ export const hotelsMock = [
     rooms: [
       {
         id: 7,
-        name: 'Phòng đơn',
+        name: 'Phòng đơn 101',
         hotelId: 4,
         pricePerNight: 120,
         numOfPeople: 2,
@@ -165,6 +176,8 @@ export const hotelsMock = [
         amenities: ['Air Conditioning', 'Tivi'],
         policy: ['No Smoking', 'Pay after checkin'],
         status: 'Đã đặt',
+        status_code: Room_Status.BOOKED,
+
         bill: {
           inforCustomer: {
             email: 'cutomer1@gmail.com',
@@ -185,7 +198,7 @@ export const hotelsMock = [
       },
       {
         id: 8,
-        name: 'Phòng đôi',
+        name: 'Phòng đôi 202',
         hotelId: 4,
         pricePerNight: 200,
         numOfPeople: 4,
@@ -195,6 +208,8 @@ export const hotelsMock = [
         amenities: ['Air Conditioning', 'Tivi'],
         policy: ['Allow to Smoking', 'Pay before checkin'],
         status: 'Còn trống',
+        status_code: Room_Status.NOT_BOOKED,
+
         bill: {
           inforCustomer: {
             email: '',

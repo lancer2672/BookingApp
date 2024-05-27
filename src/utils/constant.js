@@ -22,6 +22,10 @@ export const History_Status = {
   NOT_CHECKED_OUT: 1,
   CHECKED_OUT: 2,
 };
+export const Room_Status = {
+  NOT_BOOKED: 0,
+  BOOKED: 1,
+};
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const getStatusText = status => {

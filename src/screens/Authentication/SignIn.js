@@ -30,7 +30,7 @@ const SignIn = () => {
     try {
       setIsloading(true);
       const res = await authApi.loginUser(values);
-      await AsyncStorage.setItem('@first_time', res.accessToken);
+      await AsyncStorage.setItem('accessToken', res.accessToken);
 
       setUser({...values, role: ROLE.AGENT});
     } catch (er) {
