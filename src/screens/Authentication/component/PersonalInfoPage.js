@@ -7,6 +7,7 @@ import textStyle from '@src/theme/text';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import {
@@ -22,9 +23,11 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {profileUserSchema} from './validateSchema';
 const PersonalInfoPage = ({onNext, handleFinish}) => {
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const initialValues = {
     email: '',
     firstName: '',
+    password: '',
     lastName: '',
     phoneNumber: '',
     identityNumber: '',
@@ -48,6 +51,7 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
         lastName: values.lastName,
         phoneNumber: values.phoneNumber,
         identityNumber: values.identityNumber,
+        password: values.password,
       },
     });
   };
@@ -134,6 +138,41 @@ const PersonalInfoPage = ({onNext, handleFinish}) => {
               }
               error={!!errors.email && !!touched.email}
               errorMessage={errors.email}
+              styleTextInput={[
+                {
+                  paddingLeft: 12,
+                },
+                textStyle.h[5],
+              ]}
+              style={styles.textinput}
+              placeholderColor="white"
+            />
+            <TextInputComponent
+              placeholder="Nhập mật khẩu"
+              widthTextInput={'80%'}
+              heightTextInput={40}
+              secureTextEntry={secureTextEntry}
+              leftContent={
+                <Entypo name="lock" color="white" size={20}></Entypo>
+              }
+              rightContent={
+                <Pressable
+                  onPress={() => {
+                    setSecureTextEntry(!secureTextEntry);
+                  }}>
+                  {/* <Entypo name="eye" color="white" size={20}></Entypo> */}
+                  <Entypo
+                    name={secureTextEntry ? 'eye-with-line' : 'eye'}
+                    color="white"
+                    size={20}></Entypo>
+                </Pressable>
+              }
+              onChangeText={text => {
+                handleChange('password')(text);
+              }}
+              value={values.password}
+              error={!!errors.password && !!touched.password}
+              errorMessage={errors.password}
               styleTextInput={[
                 {
                   paddingLeft: 12,

@@ -13,14 +13,12 @@ import {goBack, navigate} from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
 import {ThemeContext} from '@src/theme/context';
+import {ROLE} from '@src/utils/constant';
 import {Avatar, Divider} from 'react-native-paper';
 import SettingItem from './components/SettingItem';
 const UserProfile = () => {
-  const user = {
-    avatar: 'https://picsum.photos/200',
-    nickname: 'User Nickname',
-  };
   const removeUser = useUserStore(state => state.setUser);
+  const user = useUserStore(state => state.user);
 
   const theme = useTheme();
   const {isDarkTheme, setIsDarkTheme} = useContext(ThemeContext);
@@ -65,24 +63,27 @@ const UserProfile = () => {
       },
     },
   ];
-  const settingOptions2 = [
-    {
-      name: 'Lịch sử đặt phòng & thanh toán',
-      icon: <FontAwesome5 name={'history'} size={20} color={'white'} />,
-      backgroundIconColor: generalColor.primary,
-      onClick: () => {
-        navigate('BookingHistory');
-      },
-    },
-    {
-      name: 'Danh sách yêu thích',
-      icon: <AntDesign name={'heart'} size={20} color={'white'} />,
-      backgroundIconColor: generalColor.primary,
-      onClick: () => {
-        navigate('FavouriteRooms');
-      },
-    },
-  ];
+  const settingOptions2 =
+    user.role !== ROLE.USER
+      ? []
+      : [
+          {
+            name: 'Lịch sử đặt phòng & thanh toán',
+            icon: <FontAwesome5 name={'history'} size={20} color={'white'} />,
+            backgroundIconColor: generalColor.primary,
+            onClick: () => {
+              navigate('BookingHistory');
+            },
+          },
+          {
+            name: 'Danh sách yêu thích',
+            icon: <AntDesign name={'heart'} size={20} color={'white'} />,
+            backgroundIconColor: generalColor.primary,
+            onClick: () => {
+              navigate('FavouriteRooms');
+            },
+          },
+        ];
   return (
     <Container>
       <Animatable.View
@@ -108,10 +109,15 @@ const UserProfile = () => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Avatar.Image source={{uri: user.avatar}}></Avatar.Image>
+            <Avatar.Image
+              source={
+                user.avatar
+                  ? {uri: user.avatar}
+                  : require('../../../assets/imgs/DefaultAvatar.png')
+              }></Avatar.Image>
             <View style={{marginLeft: 12, flex: 1}}>
               <Text style={{color: generalColor.primary, fontSize: 18}}>
-                {user.nickname}
+                {user.email}
               </Text>
               <Text style={{color: generalColor.primary}}>
                 Thông tin cá nhân

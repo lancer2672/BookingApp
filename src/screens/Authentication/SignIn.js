@@ -30,8 +30,10 @@ const SignIn = () => {
     try {
       setIsloading(true);
       const res = await authApi.loginUser(values);
+      console.log('res logi', res);
       await AsyncStorage.setItem('accessToken', res.accessToken);
-
+      const resProfile = await authApi.getProfileUser();
+      console.log('resProfile', resProfile);
       setUser({...values, role: ROLE.AGENT});
     } catch (er) {
       console.log('er', er);

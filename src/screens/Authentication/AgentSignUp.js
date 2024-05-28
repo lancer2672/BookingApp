@@ -33,7 +33,12 @@ const AgentSignUp = () => {
       setIsloading(true);
       const payload = new FormData();
 
-      payload.append('anotherData', values.anotherData);
+      payload.append('firstName', values.anotherData.firstName);
+      payload.append('lastName', values.anotherData.lastName);
+      payload.append('phoneNumber', values.anotherData.phoneNumber);
+      payload.append('email', values.anotherData.email);
+      payload.append('identityNumber', values.anotherData.identityNumber);
+      payload.append('password', values.anotherData.password);
       payload.append('selfieImg', values.selfieImg);
       payload.append('frontIdentityCard', values.frontIdentityCard);
       payload.append('backIdentityCard', values.backIdentityCard);
