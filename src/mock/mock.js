@@ -8,8 +8,7 @@ export const agentMock = {
   phone: '099999999',
   identityCard: '123456789',
   status: 'Đã xác minh',
-  countHotelManager: hotelsMock?.filter(item => item.agentId === agentMock.id)
-    .length,
+  countHotelManager: hotelsMock?.filter(item => item.agentId === agentMock.id).length,
   countBooking: 5,
   password: '123456789',
 };
@@ -32,7 +31,6 @@ export const hotelsMock = [
     id: 4,
     agentId: agentMock.id,
     name: 'Hotel 4',
-
     address: '1600 Amphitheatre Parkway, Mountain View, CA ',
     description: 'This is a description of Hotel 4.',
     policy: 'This is a policy of Hotel 4',
@@ -74,7 +72,7 @@ export const hotelsMock = [
         bed: 1,
         images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
         amenities: ['Air Conditioning', 'Tivi'],
-        policy: ['No Smoking, Pay after checkin'],
+        policy: 'Allow to Smoking, Pay before checkin',
         status: 'Đã đặt',
         status_code: Room_Status.BOOKED,
         bill: {
@@ -263,7 +261,7 @@ export const reviewBookingMock = [
         checkInDate: '2024-05-13',
         roomId: 8,
         react: [208, 209],
-        hotelId: 5,
+        hotelId: 4,
         parentId: 101,
         description:
           'The room was spacious and clean, but the breakfast could be improved.',

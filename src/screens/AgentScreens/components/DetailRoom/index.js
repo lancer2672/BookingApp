@@ -15,10 +15,13 @@ import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import { useState } from 'react';
 import { bookingHistoryMock } from '@src/mock/mock';
+import { getStatusText } from '@src/utils/constant';
+import EditRoom from '../EditRoom';
 const DetailRoom = () => {
     const route = useRoute();
     const room = route.params;
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalEditRoomVisible, setModalEditRoomVisible] = useState(false);
     return (
         <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
             <View style={{ padding: 12, marginTop: 12, ...rowCenter, marginBottom: 12 }}>
@@ -173,7 +176,7 @@ const DetailRoom = () => {
             </Modal>
             <View style={styles.title}><Text style={styles.text}>Lịch sử đặt phòng</Text></View>
             {bookingHistoryMock.map(item => (
-                <View style={{display:'flex', flexDirection:'column', width:'90%', marginLeft:'5%', alignItems:'center', justifyContent:'center', borderRadius:20, borderColor:'black', borderWidth:1}}>
+                <View style={{ display: 'flex', flexDirection: 'column', width: '90%', marginLeft: '5%', alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderColor: 'black', borderWidth: 1, marginTop: 15 }}>
                     <View style={styles.main}>
                         <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày tạo: </Text>
                         <Text style={styles.textmain}>{item.createdAt}</Text>
@@ -200,11 +203,29 @@ const DetailRoom = () => {
                     </View>
                     <View style={styles.main}>
                         <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Trạng thái: </Text>
-                        <Text style={styles.textmain}>{item.status}</Text>
+                        <Text style={styles.textmain}>{getStatusText(item.status)}</Text>
                     </View>
                 </View>
             ))}
-            <ButtonComponent style={styles.delete} text="XOÁ"></ButtonComponent>
+            <ButtonComponent style={styles.delete} text="Edit" onPress={() => setModalEditRoomVisible(true)}></ButtonComponent>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalEditRoomVisible}
+                onRequestClose={() => setModalEditRoomVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity
+                            style={styles.closebutton}
+                            onPress={() => setModalEditRoomVisible(false)}
+                        >
+                            <AntDesign name='close' size={20}></AntDesign>
+                        </TouchableOpacity>
+                        <EditRoom roomDefaut={room}></EditRoom>
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     );
 };
@@ -244,7 +265,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     slider: {
-        height: "30%"
+        height: 200,
     },
     imageslider: {
         width: '100%',
@@ -252,14 +273,14 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     slide: {
-        flex: 1,
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     delete: {
         width: "60%",
         marginLeft: "20%",
-        marginTop: "35%",
+        marginTop: 20,
         backgroundColor: generalColor.primary,
         borderRadius: 20,
     },
