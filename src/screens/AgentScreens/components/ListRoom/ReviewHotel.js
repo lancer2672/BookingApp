@@ -8,6 +8,7 @@ import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 
 const ReviewHotel = ({ review, hotel }) => {
+   
     const reviewHotel = review.filter(item => item.hotelId == hotel);
     return (
         <View style={styles.container}>
@@ -22,13 +23,13 @@ const ReviewHotel = ({ review, hotel }) => {
                                 <Text style={{ fontSize: 18 }}>{item.description}</Text>
                                 <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
                                     {item.images.map(item => (
-                                        <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
+                                        <Image source={{ uri: item }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
                                     ))}
                                 </View>
                             </View>
 
                         </View>
-                        {reviewHotel.children.map((item, index) => {
+                        {item.children.map((item, index) => {
                             return (
                                 <View style={styles.children}>
                                     <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 50, width: 50, borderRadius: 25 }}></Image>
@@ -38,7 +39,7 @@ const ReviewHotel = ({ review, hotel }) => {
                                         <Text style={{ fontSize: 18 }}>{item.description}</Text>
                                         <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
                                             {item.images.map(item => (
-                                                <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
+                                                <Image source={{ uri: item }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
                                             ))}
                                         </View>
                                     </View>
@@ -80,11 +81,12 @@ const styles = StyleSheet.create({
     children: {
         display: "flex",
         flexDirection: "row",
-        backgroundColor: "#F2F5FA",
+        borderBottomColor: 'black',
+        borderBottomWidth:1,
         marginTop: 10,
         height: 'auto',
         width: "90%",
-        marginLeft: "5%",
+        marginLeft: "10%",
         padding: 20
     }
 });
