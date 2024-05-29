@@ -19,7 +19,6 @@ import SettingItem from './components/SettingItem';
 const UserProfile = () => {
   const removeUser = useUserStore(state => state.setUser);
   const user = useUserStore(state => state.user);
-
   const theme = useTheme();
   const {isDarkTheme, setIsDarkTheme} = useContext(ThemeContext);
   const handleLogout = async () => {

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import authApi from '@src/api/auth';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
@@ -32,16 +32,17 @@ import Review from '@src/screens/UserScreens/ReviewHotel/Review';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
-import {getAllValuesMatchingPattern} from '@src/store/as/as';
+import { getAllValuesMatchingPattern } from '@src/store/as/as';
 import useRoomStore from '@src/store/fav_room';
 import useUserStore from '@src/store/user';
-import {ROLE} from '@src/utils/constant';
-import {useEffect} from 'react';
+import { ROLE } from '@src/utils/constant';
+import { useEffect } from 'react';
 import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBookingHistory';
-import {navigationRef} from './NavigationController';
-import {Tabs} from './NavigationTab';
-import {StaffNavTabs} from './StaffNavTab';
-
+import { navigationRef } from './NavigationController';
+import { Tabs } from './NavigationTab';
+import { StaffNavTabs } from './StaffNavTab';
+import Staff from '@src/screens/AgentScreens/components/Staff';
+import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
 const screenOptions = {
   header: () => null,
   cardOverlayEnabled: true,
@@ -63,7 +64,7 @@ const AuthenticationStack = () => {
   );
 };
 const MainStack = () => {
-  const {rooms, setRoom, removeRoom} = useRoomStore();
+  const { rooms, setRoom, removeRoom } = useRoomStore();
   useEffect(() => {
     getAllValuesMatchingPattern('room').then(data => {
       setRoom(data);
@@ -72,7 +73,7 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Tabs'}
-      screenOptions={{presentation: 'card', ...screenOptions}}>
+      screenOptions={{ presentation: 'card', ...screenOptions }}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
         name={'UserSearchDetailScreen'}
@@ -106,39 +107,40 @@ const MainStack = () => {
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{title: 'Chỉnh sửa thông tin'}}
+          options={{ title: 'Chỉnh sửa thông tin' }}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{title: 'Chi tiết khách sạn'}}
+          options={{ title: 'Chi tiết khách sạn' }}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{title: 'Thông báo'}}
+          options={{ title: 'Thông báo' }}
         />
 
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{title: 'Danh sách phòng'}}
+          options={{ title: 'Danh sách phòng' }}
         />
+
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -147,53 +149,61 @@ const AgentStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Dashboard'}
-      screenOptions={{presentation: 'card', ...screenOptions}}>
+      screenOptions={{ presentation: 'card', ...screenOptions }}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{title: 'Chỉnh sửa thông tin'}}
+          options={{ title: 'Chỉnh sửa thông tin' }}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{title: 'Chi tiết khách sạn'}}
+          options={{ title: 'Chi tiết khách sạn' }}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{title: 'Thông báo'}}
+          options={{ title: 'Thông báo' }}
         />
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{title: 'Danh sách phòng'}}
+          options={{ title: 'Danh sách phòng' }}
         />
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Staff"
+          component={Staff}
+        />
+        <Stack.Screen
+          name="DetailHotel"
+          component={DetailHotel}
         />
       </Stack.Group>
     </Stack.Navigator>
@@ -204,19 +214,19 @@ const StaffStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'StaffNavTabs'}
-      screenOptions={{presentation: 'card', ...screenOptions}}>
+      screenOptions={{ presentation: 'card', ...screenOptions }}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="StaffNavTabs"
           component={StaffNavTabs}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       </Stack.Group>
     </Stack.Navigator>

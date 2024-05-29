@@ -19,139 +19,11 @@ import Swiper from 'react-native-swiper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ReviewHotel from './ReviewHotel';
 import RoomCard from './RoomCard';
 const ListRoom = () => {
   const route = useRoute();
   const hotel = route.params;
-  const handlePress = () => {
-    // This is where you specify the URL you want to link to
-    Linking.openURL('https://example.com');
-  };
-  const [active, setActive] = useState('thamquan');
-  const thamquan = () => {
-    return (
-      <View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
-          <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
-          <Text style={{marginLeft: 10, fontWeight: 'bold', fontSize: 18}}>
-            Địa điểm tham quan hàng đầu
-          </Text>
-        </View>
-        {hotel.around.visit.map(item => (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: 30,
-              marginTop: 5,
-              marginLeft: 30,
-            }}>
-            <AntDesign name="pushpino" size={18}></AntDesign>
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 18,
-                width: '60%',
-                flexWrap: 'wrap',
-              }}>
-              {item}
-            </Text>
-            {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
-          </View>
-        ))}
-      </View>
-    );
-  };
-  const anuong = () => {
-    return (
-      <View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
-          <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
-          <Text style={{marginLeft: 10, fontWeight: 'bold', fontSize: 18}}>
-            Nhà hàng và Coffee House
-          </Text>
-        </View>
-        {hotel.around.food.map(item => (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: 30,
-              marginTop: 5,
-              marginLeft: 30,
-            }}>
-            <AntDesign name="pushpino" size={18}></AntDesign>
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 18,
-                width: '60%',
-                flexWrap: 'wrap',
-              }}>
-              {item}
-            </Text>
-            {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
-          </View>
-        ))}
-      </View>
-    );
-  };
-  const dichuyen = () => {
-    return (
-      <View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
-          <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
-          <Text style={{marginLeft: 10, fontWeight: 'bold', fontSize: 18}}>
-            Phương tiện di chuyển
-          </Text>
-        </View>
-        {hotel.around.transport.map(item => (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: 30,
-              marginTop: 5,
-              marginLeft: 30,
-            }}>
-            <AntDesign name="pushpino" size={18}></AntDesign>
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 18,
-                width: '60%',
-                flexWrap: 'wrap',
-              }}>
-              {item}
-            </Text>
-            {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
-          </View>
-        ))}
-      </View>
-    );
-  };
+
   return (
     <ScrollView style={styles.container}>
       <View
@@ -172,7 +44,7 @@ const ListRoom = () => {
             marginRight: -12,
             fontFamily: 'serif',
           }}>
-          Chi tiết Hotel
+          Quản Lý Phòng
         </Text>
         <Pressable
           onPress={() => {
@@ -186,148 +58,19 @@ const ListRoom = () => {
       </View>
 
       <View style={{width: '90%', marginLeft: '5%'}}>
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: 'bold',
-            color: generalColor.primary,
-          }}>
-          {hotel.name}
-        </Text>
-        <Text style={{fontSize: 18}}>{hotel.address}</Text>
-        <TouchableOpacity onPress={handlePress} style={{}}>
-          <Text style={{color: 'blue', fontSize: 18}}>
-            Hiển thị trên bản đồ
-          </Text>
-        </TouchableOpacity>
-        <Swiper style={styles.slider} autoplay={true} autoplayTimeout={3}>
-          {hotel.images.map((image, index) => (
-            <View key={index} style={styles.slide}>
-              <Image source={{uri: image}} style={styles.imageslider} />
-            </View>
-          ))}
-        </Swiper>
+   
         <Text
           style={{
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
           }}>
-          Mô tả hotel
-        </Text>
-        <Text style={{fontSize: 18}}>{hotel.description}</Text>
-        <Text
-          style={{
-            fontSize: 22,
-            fontWeight: 'bold',
-            color: generalColor.primary,
-          }}>
-          Các tiện ích
-        </Text>
-        <View style={{marginTop: 10}}>
-          {hotel.amenities.map(item => (
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginBottom: 10,
-                alignItems: 'center',
-              }}>
-              <AntDesign name="check" size={20}></AntDesign>
-              <Text style={{fontSize: 18, marginLeft: 5}}>{item.name}</Text>
-            </View>
-          ))}
-        </View>
-        <Text
-          style={{
-            fontSize: 22,
-            color: generalColor.primary,
-            fontWeight: 'bold',
-          }}>
-          Chính sách và quy định
-        </Text>
-        <Text style={{fontSize: 18}}>{hotel.policy}</Text>
-        <Text
-          style={{
-            fontSize: 22,
-            color: generalColor.primary,
-            fontWeight: 'bold',
-          }}>
-          Xung quanh Hotel
-        </Text>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
-          <Button
-            style={[styles.buton, active == 'thamquan' && styles.active]}
-            onPress={() => {
-              setActive('thamquan');
-            }}>
-            {' '}
-            <Text
-              style={[
-                {fontSize: 18, color: 'black'},
-                active == 'thamquan' && {color: 'white'},
-              ]}>
-              Tham quan
-            </Text>
-          </Button>
-          <Button
-            style={[styles.buton, active == 'anuong' && styles.active]}
-            onPress={() => {
-              setActive('anuong');
-            }}>
-            {' '}
-            <Text
-              style={[
-                {fontSize: 18, color: 'black'},
-                active == 'anuong' && {color: 'white'},
-              ]}>
-              Ăn uống
-            </Text>
-          </Button>
-          <Button
-            style={[styles.buton, active == 'dichuyen' && styles.active]}
-            onPress={() => {
-              setActive('dichuyen');
-            }}>
-            {' '}
-            <Text
-              style={[
-                {fontSize: 18, color: 'black'},
-                active == 'dichuyen' && {color: 'white'},
-              ]}>
-              Di chuyển
-            </Text>
-          </Button>
-        </View>
-        {active == 'thamquan' && thamquan()}
-        {active == 'anuong' && anuong()}
-        {active == 'dichuyen' && dichuyen()}
-        <Text
-          style={{
-            fontSize: 22,
-            color: generalColor.primary,
-            fontWeight: 'bold',
-          }}>
-          Danh sách các phòng
         </Text>
         <View style={styles.hotelCards}>
           {hotel.rooms.map(item => (
             <RoomCard room={item} />
           ))}
-          <Text
-            style={{
-              fontSize: 22,
-              color: generalColor.primary,
 
-              fontWeight: 'bold',
-            }}>
-            Đánh giá khách hàng
-          </Text>
-          <View>
-            <ReviewHotel
-              review={reviewBookingMock}
-              hotel={hotel.id}></ReviewHotel>
-          </View>
         </View>
       </View>
     </ScrollView>
