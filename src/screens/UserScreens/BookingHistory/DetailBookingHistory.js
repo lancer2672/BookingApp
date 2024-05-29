@@ -183,7 +183,7 @@ const DetailBookingHitory = ({}) => {
                     color: generalColor.black[100],
                     ...textStyle.content.medium,
                   }}>
-                  {Number(room.numOfMature) + room.numOfChildren} khách
+                  {Number(room.numOfPeople) + room.numOfChildren} khách
                 </Text>
               </View>
             </View>

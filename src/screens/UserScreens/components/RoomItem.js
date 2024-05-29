@@ -114,7 +114,7 @@ const RoomItem = ({hotel, room, onPress}) => {
               color: generalColor.black[100],
               ...textStyle.content.medium,
             }}>
-            {room.numOfMature} khách
+            {room.numOfPeople} khách
           </Text>
         </View>
         <ButtonComponent

@@ -40,7 +40,7 @@ const UserSearchResultScreen = () => {
   const [priceVisible, setPriceVisible] = useState(false);
   const [filter, setFilter] = useState(PRICE_CODE.DOWN);
   const [hight, setHigh] = useState(0);
-
+  console.log('roomCustomer', roomCustomer);
   const renderThumb = useCallback(
     () => (
       <View

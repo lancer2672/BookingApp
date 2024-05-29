@@ -42,7 +42,7 @@ const AgentSignUp = () => {
       payload.append('selfieImg', values.selfieImg);
       payload.append('frontIdentityCard', values.frontIdentityCard);
       payload.append('backIdentityCard', values.backIdentityCard);
-      console.log('payload', payload);
+      console.log('payload', JSON.stringify(payload));
       await authApi.registerAgent(payload);
 
       showMessage({

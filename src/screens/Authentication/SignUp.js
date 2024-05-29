@@ -2,7 +2,6 @@ import authApi from '@src/api/auth';
 import ButtonComponent from '@src/components/Button';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -197,40 +196,38 @@ const SignUp = () => {
               style={styles.buttonItem}
               text="Tạo tài khoản"
             />
+            <Pressable
+              onPress={() => {
+                navigate('SignIn');
+              }}
+              style={{
+                alignSelf: 'center',
+                marginTop: 30,
+                alignItems: 'center',
+
+                justifyContent: 'center',
+                marginBottom: 12,
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                Đã có tài khoản{' '}
+              </Text>
+              <Text
+                style={{
+                  color: 'white',
+                  textDecorationLine: 'underline',
+                  fontWeight: '500',
+                }}>
+                Đăng nhập
+              </Text>
+            </Pressable>
           </>
         )}
       </Formik>
-      <Pressable
-        onPress={() => {
-          navigate('SignIn');
-        }}
-        style={{
-          alignSelf: 'center',
-          position: 'absolute',
-          bottom: 24,
-          left: 0,
-          right: 0,
-          alignItems: 'center',
 
-          justifyContent: 'center',
-          marginBottom: 12,
-          flexDirection: 'row',
-        }}>
-        <Text
-          style={{
-            color: 'white',
-          }}>
-          Đã có tài khoản{' '}
-        </Text>
-        <Text
-          style={{
-            color: 'white',
-            textDecorationLine: 'underline',
-            fontWeight: '500',
-          }}>
-          Đăng nhập
-        </Text>
-      </Pressable>
       <LoadingModal
         onClose={() => {
           setIsloading(false);
