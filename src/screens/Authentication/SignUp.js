@@ -2,12 +2,14 @@ import authApi from '@src/api/auth';
 import ButtonComponent from '@src/components/Button';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import TextInputComponent from '@src/components/TextInputComponent';
+import {navigate} from '@src/navigation/NavigationController';
 import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {signUpSchema} from './component/validateSchema';
@@ -26,7 +28,16 @@ const SignUp = () => {
     try {
       setIsloading(true);
       await authApi.registerUser(data);
+      showMessage({
+        message: `Đăng ký thành công`,
+        type: 'success',
+      });
+      navigate('SignIn');
     } catch {
+      showMessage({
+        message: `Đăng ký thất bại`,
+        type: 'danger',
+      });
     } finally {
       setIsloading(false);
     }

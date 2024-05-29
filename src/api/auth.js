@@ -5,10 +5,10 @@ const authRoute = '/api';
 const authApi = {
   getProfileUser: async () => {
     try {
-      const response = await axiosClient.post(`${authRoute}/login`, data);
+      const response = await axiosClient.get(`${authRoute}/profile`);
       return response.data;
     } catch (error) {
-      console.log('Login error', error);
+      console.log('profile error', error);
       throw error;
     }
   },

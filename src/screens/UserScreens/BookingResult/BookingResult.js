@@ -14,7 +14,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import {showMessage} from 'react-native-flash-message';
 import {Divider} from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -23,10 +22,7 @@ const BookingResult = () => {
   const {date, roomCustomer, room, hotel} = useRoute().params;
 
   const handleBooking = () => {
-    showMessage({
-      message: 'Đặt phòng thành công',
-      type: 'success',
-    });
+    navigate('Home');
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>

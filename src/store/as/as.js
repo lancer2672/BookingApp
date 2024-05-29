@@ -4,6 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const getKey = (hotelId, roomId) => {
   return `room/${hotelId}/${roomId}`;
 };
+export const getNotiKey = notiId => {
+  return `noti/${notiId}`;
+};
 export const addItem = async (key, value) => {
   try {
     console.log('KeyV', key, value);
@@ -13,7 +16,14 @@ export const addItem = async (key, value) => {
     console.error('Error adding item to AsyncStorage', e);
   }
 };
-
+export const updateItem = async (key, newValue) => {
+  try {
+    const jsonValue = JSON.stringify(newValue);
+    await AsyncStorage.mergeItem(key, jsonValue);
+  } catch (e) {
+    console.error('Error updating item in AsyncStorage', e);
+  }
+};
 export const getAllValuesMatchingPattern = async pattern => {
   try {
     const allKeys = await AsyncStorage.getAllKeys();

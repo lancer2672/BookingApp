@@ -67,7 +67,17 @@ const Home = () => {
         onPress={() => {}}></ButtonComponent>
     </TouchableOpacity>
   );
-
+  const [newNoti, setNewNoti] = useState(false);
+  useEffect(() => {
+    getAllValuesMatchingPattern('noti').then(data => {
+      const isFind = data.find(t => t.isSeen == false);
+      if (isFind) {
+        setNewNoti(true);
+      } else {
+        setNewNoti(false);
+      }
+    });
+  }, []);
   return (
     <ScrollView style={{flex: 1}}>
       <ImageBackground
@@ -110,14 +120,28 @@ const Home = () => {
                 Chuyến Đi Hoàn Hảo, Đặt Phòng Dễ Dàng!
               </Text>
             </View>
-            <IconButton
-              icon="bell"
-              size={24}
-              onPress={() => {
-                navigate('Notification');
-              }}
-              iconColor="white"
-            />
+            <View>
+              <IconButton
+                icon="bell"
+                size={24}
+                onPress={() => {
+                  navigate('Notification');
+                }}
+                iconColor="white"
+              />
+              {newNoti && (
+                <View
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: 8,
+                    backgroundColor: 'tomato',
+                    position: 'absolute',
+                    top: 12,
+                    right: 12,
+                  }}></View>
+              )}
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -218,8 +242,9 @@ const styles = StyleSheet.create({
   },
 });
 
+import {getAllValuesMatchingPattern} from '@src/store/as/as';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@src/utils/constant';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
 const RecommendList = () => {

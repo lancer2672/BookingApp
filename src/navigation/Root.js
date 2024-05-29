@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import authApi from '@src/api/auth';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
@@ -221,8 +223,16 @@ const StaffStack = () => {
   );
 };
 const Root = () => {
-  const isLogin = false;
   const user = useUserStore(state => state.user);
+  const setUser = useUserStore(state => state.setUser);
+  useEffect(() => {
+    (async () => {
+      await AsyncStorage.setItem('accessToken', res.accessToken);
+      const resProfile = await authApi.getProfileUser();
+      console.log('resProfile', resProfile);
+      setUser(resProfile);
+    })();
+  }, []);
   const getStackByRole = role => {
     switch (role) {
       case ROLE.AGENT:
@@ -241,7 +251,7 @@ const Root = () => {
         ) : (
           <Stack.Screen
             options={{
-              animationTypeForReplace: !isLogin ? 'push' : 'pop',
+              animationTypeForReplace: !user ? 'push' : 'pop',
             }}
             name={'AuthenticationStack'}
             component={AuthenticationStack}

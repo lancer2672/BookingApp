@@ -4,6 +4,7 @@ import AskingModel from '@src/components/AskingModal/AskingModal';
 import ButtonComponent from '@src/components/Button';
 import {reviewBookingMock} from '@src/mock/mock';
 import {goBack, navigate} from '@src/navigation/NavigationController';
+import {addItem, getNotiKey} from '@src/store/as/as';
 import {generalColor} from '@src/theme/color';
 import {center, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -23,6 +24,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {Divider} from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -55,7 +57,18 @@ const DetailBookingHitory = ({}) => {
         return '';
     }
   };
-  const handleCancelBooking = () => {};
+  const handleCancelBooking = async () => {
+    await addItem(getNotiKey(Date.now()), {
+      title: 'Đặt phòng',
+      description: 'Bạn đã huỷ phòng thành công',
+      createdAt: Date.now(),
+      isSeen: false,
+    });
+    showMessage({
+      message: `Huỷ phòng thành công`,
+      type: 'success',
+    });
+  };
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>

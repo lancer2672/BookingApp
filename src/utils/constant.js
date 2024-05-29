@@ -11,10 +11,10 @@ export const REVIEW_TEXT = [
   'Trải nghiệm tuyệt vời',
 ];
 export const ROLE = {
-  ADMIN: 'admin',
-  AGENT: 'agent',
-  STAFF: 'staff',
-  USER: 'user',
+  ADMIN: 'ADMIN',
+  AGENT: 'AGENT',
+  STAFF: 'STAFF',
+  USER: 'USER',
 };
 export const History_Status = {
   CANCELED: -1,

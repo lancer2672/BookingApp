@@ -2,6 +2,7 @@ import {useRoute} from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {goBack, navigate} from '@src/navigation/NavigationController';
+import {addItem, getNotiKey} from '@src/store/as/as';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -15,7 +16,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {showMessage} from 'react-native-flash-message';
 import {Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -25,10 +25,12 @@ export const PaymentMethod = {
 };
 const Payment = () => {
   const {date, roomCustomer, room, hotel} = useRoute().params;
-  const handleBooking = () => {
-    showMessage({
-      message: 'Đặt phòng thành công',
-      type: 'success',
+  const handleBooking = async () => {
+    await addItem(getNotiKey(Date.now()), {
+      title: 'Đặt phòng',
+      description: 'Bạn đã đặt phòng thành công',
+      createdAt: Date.now(),
+      isSeen: false,
     });
     navigate('BookingResult', {
       date,
