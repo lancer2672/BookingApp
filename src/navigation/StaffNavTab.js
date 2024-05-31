@@ -10,7 +10,6 @@ import {useTheme} from 'styled-components';
 import StaffHome from '@src/screens/StaffScreens/Home/StaffHome';
 import ScanQR from '@src/screens/StaffScreens/ScanQr/ScanQR';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
-import {generalColor} from '@src/theme/color';
 import {StyleSheet} from 'react-native';
 
 const Tab = createBottomTabNavigator();
@@ -26,7 +25,7 @@ export const StaffNavTabs = () => {
           tabBarStyle: {
             height: 50,
             borderTopWidth: 0,
-            backgroundColor: generalColor.primary,
+            backgroundColor: '#040f1f',
           },
 
           tabBarIcon: ({focused, color, size}) => {

@@ -9,7 +9,6 @@ import {useTheme} from 'styled-components';
 import Home from '@src/screens/UserScreens/Home/Home';
 import UserProfile from '@src/screens/UserScreens/Profile/Profile';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
-import {generalColor} from '@src/theme/color';
 import {Pressable, StyleSheet, View} from 'react-native';
 const SearchButton = ({children, onPress}) => {
   return (
@@ -34,7 +33,7 @@ export const Tabs = () => {
           tabBarStyle: {
             height: 50,
             borderTopWidth: 0,
-            backgroundColor: generalColor.primary,
+            backgroundColor: '#040f1f',
           },
 
           tabBarIcon: ({focused, color, size}) => {

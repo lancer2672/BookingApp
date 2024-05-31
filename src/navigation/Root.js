@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import authApi from '@src/api/auth';
@@ -227,10 +226,13 @@ const Root = () => {
   const setUser = useUserStore(state => state.setUser);
   useEffect(() => {
     (async () => {
-      await AsyncStorage.setItem('accessToken', res.accessToken);
-      const resProfile = await authApi.getProfileUser();
-      console.log('resProfile', resProfile);
-      setUser(resProfile);
+      try {
+        const resProfile = await authApi.getProfileUser();
+        if (resProfile) {
+          console.log('resProfile', resProfile);
+          setUser(resProfile);
+        }
+      } catch {}
     })();
   }, []);
   const getStackByRole = role => {

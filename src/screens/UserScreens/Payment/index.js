@@ -6,6 +6,7 @@ import {addItem, getNotiKey} from '@src/store/as/as';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
+import {useFormik} from 'formik';
 import {useState} from 'react';
 import {
   Image,
@@ -18,6 +19,7 @@ import {
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {paymentSchema} from './components/validateSchema';
 
 export const PaymentMethod = {
   ATM: 'ATM',
@@ -40,15 +42,36 @@ const Payment = () => {
     });
   };
   const [selectedMethod, setSelectedMethod] = useState(PaymentMethod.CASH);
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+    },
+    validationSchema: paymentSchema,
+    onSubmit: async values => {
+      await addItem(getNotiKey(Date.now()), {
+        title: 'Đặt phòng',
+        description: 'Bạn đã đặt phòng thành công',
+        createdAt: Date.now(),
+        isSeen: false,
+      });
+      navigate('BookingResult', {
+        date,
+        roomCustomer,
+        room,
+        hotel,
+      });
+    },
+  });
+  console.log('formik.errors', formik.errors);
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{padding: 12, marginTop: 12, ...rowCenter}}>
           <Pressable onPress={goBack}>
-            <AntDesign
-              name="left"
-              size={24}
-              color={generalColor.other.gray}></AntDesign>
+            <AntDesign name="left" size={24} color={generalColor.other.gray} />
           </Pressable>
           <Text
             style={{
@@ -63,12 +86,8 @@ const Payment = () => {
             Thanh toán
           </Text>
         </View>
-        <View
-          style={{
-            padding: 12,
-            flex: 1,
-          }}>
-          <Divider style={{marginVertical: 12}} bold></Divider>
+        <View style={{padding: 12, flex: 1}}>
+          <Divider style={{marginVertical: 12}} bold />
           <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}}>
               <TextInputComponent
@@ -78,36 +97,59 @@ const Payment = () => {
                 labelStyle={{color: generalColor.primary}}
                 style={{...styles.input}}
                 styleTextInput={{color: 'black'}}
+                value={formik.values.firstName}
+                onChangeText={formik.handleChange('firstName')}
+                onBlur={formik.handleBlur('firstName')}
+                error={formik.touched.firstName || formik.errors.firstName}
+                errorMessage={
+                  formik.touched.firstName && formik.errors.firstName
+                }
               />
             </View>
             <View style={{flex: 1, marginLeft: 20}}>
               <TextInputComponent
                 label="Họ"
-                style={{...styles.input}}
                 placeholder="Nhập Họ"
-                labelStyle={{color: generalColor.primary}}
                 placeholderColor="black"
+                labelStyle={{color: generalColor.primary}}
+                style={{...styles.input}}
                 styleTextInput={{color: 'black'}}
+                value={formik.values.lastName}
+                error={formik.touched.lastName || formik.errors.lastName}
+                onChangeText={formik.handleChange('lastName')}
+                onBlur={formik.handleBlur('lastName')}
+                errorMessage={formik.touched.lastName && formik.errors.lastName}
               />
             </View>
           </View>
           <TextInputComponent
             label="Email"
-            style={styles.input}
-            labelStyle={{color: generalColor.primary}}
             placeholder="Nhập địa chỉ email"
             placeholderColor="black"
+            labelStyle={{color: generalColor.primary}}
+            style={styles.input}
             styleTextInput={{color: 'black'}}
+            value={formik.values.email}
+            error={formik.touched.email || formik.errors.email}
+            onChangeText={formik.handleChange('email')}
+            onBlur={formik.handleBlur('email')}
+            errorMessage={formik.touched.email && formik.errors.email}
           />
           <TextInputComponent
             label="Số điện thoại"
-            style={styles.input}
-            labelStyle={{color: generalColor.primary}}
-            text
-            keyboardType="numeric"
             placeholder="Nhập số điện thoại"
             placeholderColor="black"
+            labelStyle={{color: generalColor.primary}}
+            style={styles.input}
             styleTextInput={{color: 'black'}}
+            keyboardType="numeric"
+            value={formik.values.phoneNumber}
+            error={formik.touched.phoneNumber || formik.errors.phoneNumber}
+            onChangeText={formik.handleChange('phoneNumber')}
+            onBlur={formik.handleBlur('phoneNumber')}
+            errorMessage={
+              formik.touched.phoneNumber && formik.errors.phoneNumber
+            }
           />
           <Text
             style={{
@@ -119,28 +161,25 @@ const Payment = () => {
             Thanh toán
           </Text>
           <Item
-            methodName={'Thẻ tín dụng'}
+            methodName="Thẻ tín dụng"
             src={require('../../../assets/icons/atm.png')}
-            onClick={() => {
-              setSelectedMethod(PaymentMethod.ATM);
-            }}
-            isSelected={selectedMethod == PaymentMethod.ATM}
-            methodDes={'Thanh toán sử dụng thẻ tín dụng'}></Item>
+            onClick={() => setSelectedMethod(PaymentMethod.ATM)}
+            isSelected={selectedMethod === PaymentMethod.ATM}
+            methodDes="Thanh toán sử dụng thẻ tín dụng"
+          />
           <Item
-            methodName={'Tiền mặt'}
-            isSelected={selectedMethod == PaymentMethod.CASH}
+            methodName="Tiền mặt"
             src={require('../../../assets/icons/atm.png')}
-            onClick={() => {
-              setSelectedMethod(PaymentMethod.CASH);
-            }}
-            methodDes={'Thanh toán bằng tiền mặt'}></Item>
-
+            onClick={() => setSelectedMethod(PaymentMethod.CASH)}
+            isSelected={selectedMethod === PaymentMethod.CASH}
+            methodDes="Thanh toán bằng tiền mặt"
+          />
           <ButtonComponent
-            onPress={handleBooking}
+            onPress={formik.handleSubmit}
             style={{marginVertical: 24}}
-            text={'Đặt phòng'}></ButtonComponent>
+            text="Đặt phòng"
+          />
         </View>
-        <View></View>
       </ScrollView>
     </View>
   );

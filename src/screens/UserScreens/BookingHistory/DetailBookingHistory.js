@@ -60,6 +60,7 @@ const DetailBookingHitory = ({}) => {
   const handleCancelBooking = async () => {
     await addItem(getNotiKey(Date.now()), {
       title: 'Đặt phòng',
+
       description: 'Bạn đã huỷ phòng thành công',
       createdAt: Date.now(),
       isSeen: false,
@@ -68,6 +69,7 @@ const DetailBookingHitory = ({}) => {
       message: `Huỷ phòng thành công`,
       type: 'success',
     });
+    setVisible(false);
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
