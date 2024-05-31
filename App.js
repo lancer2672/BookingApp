@@ -52,7 +52,14 @@ function App() {
     };
   }, []);
   if (isFirstTime) {
-    return <OnboardingScreen />;
+    return (
+      <OnboardingScreen
+        onDone={async () => {
+          setIsFirstTime(false);
+          await AsyncStorage.removeItem('@first_time');
+        }}
+      />
+    );
   }
   return (
     <GestureHandlerRootView style={{flex: 1}}>

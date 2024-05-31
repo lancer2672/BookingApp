@@ -37,7 +37,35 @@ export const useChatClient = () => {
       setupClient();
     }
   }, []);
+  const createOrJoinChannel = async (channelId, members) => {
+    if (!clientIsReady) {
+      console.error('Client is not ready yet');
+      return null;
+    }
+
+    try {
+      const members = Object.values(channel.state.members);
+      const otherMember = members.find(member => member.user.id !== userId);
+
+      const channel = chatClient.channel('messaging', channelId, {
+        name: otherMember.user.name ? otherMember.user.name : 'Chat',
+        members: members,
+      });
+
+      await channel.watch();
+      console.log(`Joined or created channel ${channelId} successfully`);
+      return channel;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(
+          `An error occurred while creating or joining the channel: ${error.message}`,
+        );
+      }
+      return null;
+    }
+  };
   return {
     clientIsReady,
+    createOrJoinChannel,
   };
 };

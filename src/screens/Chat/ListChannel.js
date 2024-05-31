@@ -22,25 +22,25 @@ const ListChannel = () => {
 
   const EmptyStateIndicator = () => (
     <View style={styles.emptyStateContainer}>
-      <Text style={styles.emptyStateText}>
-        Không có kênh nào được tìm thấy.
-      </Text>
+      <Text style={styles.emptyStateText}>Bạn chưa có tin nhắn nào.</Text>
     </View>
   );
 
   return (
     <View style={{flex: 1}}>
-      <View style={{padding: 12, marginTop: 12, ...styles.rowCenter}}>
-        <AntDesign
-          name="left"
-          size={24}
-          color={generalColor.other.gray}
-          onPress={goBack}
-        />
+      <View
+        style={{
+          padding: 12,
+          paddingTop: 24,
+          backgroundColor: generalColor.primary,
+          ...styles.rowCenter,
+        }}>
+        <AntDesign name="left" size={24} color={'white'} onPress={goBack} />
         <Text style={styles.title}>Đoạn Chat</Text>
       </View>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
         <ChannelList
+          style={{backgroundColor: 'white'}}
           filters={filters}
           sort={sort}
           onSelect={channel => {
@@ -59,7 +59,7 @@ export default ListChannel;
 const styles = StyleSheet.create({
   title: {
     textTransform: 'uppercase',
-    color: generalColor.primary,
+    color: 'white',
     ...textStyle.h[2],
     flex: 1,
     textAlign: 'center',
