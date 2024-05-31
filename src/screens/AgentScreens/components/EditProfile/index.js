@@ -1,15 +1,19 @@
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {navigate} from '@src/navigation/NavigationController';
-import {generalColor} from '@src/theme/color';
+import { navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Avatar} from 'react-native-paper';
+import { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Avatar } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { rowCenter } from '@src/theme/style';
+import { Pressable, Text } from 'react-native';
+import { goBack } from '@src/navigation/NavigationController';
+import IconButton from 'react-native-paper';
 const EditProfile = () => {
   const route = useRoute();
   const agent = route.params;
@@ -30,7 +34,27 @@ const EditProfile = () => {
   const [isOldPasswordVisible, setOldIsPasswordVisible] = useState(false);
   return (
     <View style={styles.main}>
-      <View style={{width: '100%', alignItems: 'center'}}>
+      <View style={{ padding: 12, ...rowCenter, marginBottom: 12, backgroundColor: generalColor.primary }}>
+        <Pressable onPress={goBack}>
+          <AntDesign
+            name="left"
+            size={24}
+            color='white'></AntDesign>
+        </Pressable>
+        <Text
+          style={{
+            textTransform: 'uppercase',
+            color: "white",
+            ...textStyle.h[2],
+            flex: 1,
+            textAlign: 'center',
+            marginRight: 20,
+            fontFamily: 'serif',
+          }}>
+          Chỉnh sửa 
+        </Text>
+      </View>
+      <View style={{ width: '100%', alignItems: 'center' }}>
         <TouchableOpacity
           style={{
             backgroundColor: 'white',
@@ -39,12 +63,11 @@ const EditProfile = () => {
             borderRadius: 75,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: -40,
           }}
           onPress={async () => {
             setVisible(() => true);
           }}>
-          <Avatar.Image size={130} source={{uri: images}} />
+          <Avatar.Image size={130} source={{ uri: images }} />
         </TouchableOpacity>
       </View>
 
@@ -56,7 +79,7 @@ const EditProfile = () => {
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
-              setNewAgent({...newagent, name: text});
+              setNewAgent({ ...newagent, name: text });
             }}
             marginBottom={0}
             styleTextInput={[
@@ -78,7 +101,7 @@ const EditProfile = () => {
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
-              setNewAgent({...newagent, gmail: text});
+              setNewAgent({ ...newagent, gmail: text });
             }}
             marginBottom={0}
             styleTextInput={[
@@ -99,7 +122,7 @@ const EditProfile = () => {
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
-              setNewAgent({...newagent, phone: text});
+              setNewAgent({ ...newagent, phone: text });
             }}
             marginBottom={0}
             styleTextInput={[
@@ -167,7 +190,7 @@ const EditProfile = () => {
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
-              setNewAgent({...newagent, password: text});
+              setNewAgent({ ...newagent, password: text });
             }}
             marginBottom={0}
             styleTextInput={[
@@ -189,7 +212,7 @@ const EditProfile = () => {
         style={{
           width: '50%',
           marginLeft: '25%',
-          marginTop: '40%',
+          marginTop: '58%',
           backgroundColor: generalColor.primary,
           borderRadius: 30,
         }}
@@ -246,7 +269,6 @@ const styles = StyleSheet.create({
     top: 30,
   },
   main: {
-    paddingTop: '30%',
     backgroundColor: 'white',
     flex: 1,
   },

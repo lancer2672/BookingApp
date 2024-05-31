@@ -4,12 +4,14 @@ import authApi from '@src/api/auth';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
+import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
 import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
 import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
 import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
 import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
+import Staff from '@src/screens/AgentScreens/components/Staff';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import ForgotPassword from '@src/screens/Authentication/ForgotPassword';
 import SignIn from '@src/screens/Authentication/SignIn';
@@ -40,7 +42,6 @@ import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBoo
 import {navigationRef} from './NavigationController';
 import {Tabs} from './NavigationTab';
 import {StaffNavTabs} from './StaffNavTab';
-
 const screenOptions = {
   header: () => null,
   cardOverlayEnabled: true,
@@ -194,6 +195,8 @@ const AgentStack = () => {
           component={Dashboard}
           options={{headerShown: false}}
         />
+        <Stack.Screen name="Staff" component={Staff} />
+        <Stack.Screen name="DetailHotel" component={DetailHotel} />
       </Stack.Group>
     </Stack.Navigator>
   );

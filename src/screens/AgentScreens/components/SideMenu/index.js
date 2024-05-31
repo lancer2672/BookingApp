@@ -1,5 +1,5 @@
-import {navigate} from '@src/navigation/NavigationController';
-import {useEffect} from 'react';
+import { navigate } from '@src/navigation/NavigationController';
+import { useEffect } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -8,16 +8,14 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {Avatar, Divider} from 'react-native-paper';
+import { Avatar, Divider } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from 'styled-components/native';
+import { useTheme } from 'styled-components/native';
 import { generalColor } from '@src/theme/color';
-const user = {
-  nickname: 'John Doe',
-  email: 'john.doe@example.com',
-};
+import authApi from '@src/api/auth';
+import useUserStore from '@src/store/user';
 const menu = [
   {
     text: 'Trang chủ',
@@ -34,7 +32,6 @@ const menu = [
     onClick: 'CreateHotel',
     leftIcon: <Ionicons name="add-circle" size={24} color="white" />,
   },
-
   {
     text: 'Thông tin cá nhân',
     onClick: 'Profile',
@@ -42,11 +39,18 @@ const menu = [
   },
 ];
 
-const SideMenu = ({isVisible, onClose}) => {
+const SideMenu = ({ isVisible, onClose }) => {
   const theme = useTheme();
-
-  useEffect(() => {}, []);
-
+  const removeUser = useUserStore(state => state.setUser);
+  const user = useUserStore(state => state.user);
+  const handleLogout = async () => {
+    try {
+      authApi.logoutUser();
+      removeUser();
+    } catch (er) {
+      console.log('err', er);
+    }
+  };
   return (
     <Modal
       isVisible={isVisible}
@@ -72,9 +76,9 @@ const SideMenu = ({isVisible, onClose}) => {
           <View style={styles.header}>
             <Avatar.Image
               size={60}
-              source={{uri: 'https://picsum.photos/200'}}
+              source={{ uri: 'https://picsum.photos/200' }}
             />
-            <View style={{marginLeft: 8}}>
+            <View style={{ marginLeft: 8 }}>
               <Text
                 style={[
                   styles.name,
@@ -94,9 +98,7 @@ const SideMenu = ({isVisible, onClose}) => {
                 {user.email}
               </Text>
             </View>
-            <TouchableOpacity onPress={onClose} style={{marginLeft: 60}}>
-              <AntDesign name="close" size={30} color={'black'}></AntDesign>
-            </TouchableOpacity>
+
           </View>
         </View>
         <Divider
@@ -126,25 +128,27 @@ const SideMenu = ({isVisible, onClose}) => {
             backgroundColor: 'black',
           }}
         />
-        <SideBarItem
-          text="Đăng xuất"
-          leftIcon={<AntDesign name="logout" size={24} color="white" />}
-          style={styles.logout}></SideBarItem>
+        <Pressable onPress={handleLogout} rippleColor="rgba(0, 0, 0, .32)">
+          <View style={[itemStyles.container, { backgroundColor: generalColor.primary }]}>
+            <AntDesign name="logout" size={24} color="white" />
+            <Text style={[itemStyles.text, { color: 'white' }]}>Đăng xuất</Text>
+          </View>
+        </Pressable>
       </View>
     </Modal>
   );
 };
 
-const SideBarItem = ({text, onClick, leftIcon, onclose}) => {
+const SideBarItem = ({ text, onClick, leftIcon, onclose }) => {
   const theme = useTheme();
   const handlePress = () => {
     onclose(), navigate(onClick);
   };
   return (
     <Pressable onPress={handlePress} rippleColor="rgba(0, 0, 0, .32)">
-      <View style={[itemStyles.container, {backgroundColor: generalColor.primary}]}>
+      <View style={[itemStyles.container, { backgroundColor: generalColor.primary }]}>
         {leftIcon}
-        <Text style={[itemStyles.text, {color: 'white'}]}>{text}</Text>
+        <Text style={[itemStyles.text, { color: 'white' }]}>{text}</Text>
       </View>
     </Pressable>
   );
@@ -172,8 +176,8 @@ const styles = StyleSheet.create({
     margin: 0,
     alignItems: 'flex-end',
   },
-  name: {fontWeight: '500', fontSize: 16},
-  email: {fontSize: 14},
+  name: { fontWeight: '500', fontSize: 16 },
+  email: { fontSize: 14 },
   menuContainer: {
     backgroundColor: 'white',
     width: '80%',

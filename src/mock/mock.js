@@ -12,14 +12,26 @@ export const agentMock = {
   countBooking: 5,
   password: '123456789',
 };
-export const staffMockData = {
-  id: 1,
-  name: 'staff Name',
-  email: 'staff@email.com',
-  phone: '099999999',
-  identityCard: '123456789',
-  hotelId: 5,
-};
+export const staffMockData = [
+  {
+    id: 1,
+    name: 'staff Name',
+    email: 'staff@email.com',
+    avatar: 'https://picsum.photos/200',
+    phone: '099999999',
+    identityCard: '123456789',
+    hotelId: 5,
+  },
+  {
+    id: 2,
+    name: 'staff Name',
+    email: 'staff@email.com',
+    avatar: 'https://picsum.photos/200',
+    phone: '099999999',
+    identityCard: '123456789',
+    hotelId: 4,
+  }
+]
 export const userMock = {
   id: 111,
   name: 'User Name',

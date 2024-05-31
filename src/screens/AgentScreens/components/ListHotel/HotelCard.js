@@ -7,7 +7,7 @@ import Swiper from 'react-native-swiper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const HotelCard = ({hotels}) => {
   const navigateToDetail = () => {
-    navigate('ListRoom', hotels);
+    navigate('DetailHotel', hotels);
   };
   return (
     <View style={styles.container}>

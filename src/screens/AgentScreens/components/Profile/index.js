@@ -7,43 +7,62 @@ import AgentHeader from '../Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { generalColor } from '@src/theme/color';
 import { agentMock } from '@src/mock/mock';
+import authApi from '@src/api/auth';
+import useUserStore from '@src/store/user';
 const Profile = () => {
   const navigateToProfile = () => {
     navigate('EditProfile', agentMock);
   };
+  const removeUser = useUserStore(state => state.setUser);
+  const user = useUserStore(state => state.user);
+  const handleLogout = async () => {
+    try {
+      authApi.logoutUser();
+      removeUser();
+    } catch (er) {
+      console.log('err', er);
+    }
+  };
   return (
-    <View style={{ backgroundColor: 'white', flex:1 }}>
+    <View style={{ backgroundColor: 'white', flex: 1 }}>
       <AgentHeader active="TÀI KHOẢN"></AgentHeader>
-      <View style={{ width: '100%', alignItems: 'center' }}>
+      <View style={{ width: '80%', alignItems: 'center', display: 'flex', flexDirection: 'row', height: 150, textAlign:'center', justifyContent:'space-between', marginLeft:'10%' }}>
         <View
           style={{
             backgroundColor: 'white',
-            width: 140,
-            height: 140,
+            width: '50%',
+            height: 70,
             borderRadius: 75,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20,
+            display: 'flex',
+            flexDirection: 'row',
+            
           }}>
           <Avatar.Image
-            size={130}
+            size={70}
             source={{ uri: 'https://picsum.photos/200' }}
+            style={{marginRight:10}}
           />
+          <View>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                marginTop: 10,
+              }}>
+              {agentMock.name}
+            </Text>
+            <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 20 }}>
+              {agentMock.gmail}
+            </Text>
+          </View>
         </View>
+        <AntDesign name='right' size={30} onPress={navigateToProfile}></AntDesign>    
       </View>
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginTop: 10,
-        }}>
-        {agentMock.name}
-      </Text>
-      <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 20 }}>
-        {agentMock.gmail}
-      </Text>
-      <View style={styles.title}>
+
+      <View style={[styles.title, { flexDirection: 'row', justifyContent: 'space-between' }]}>
         <Text style={styles.text}>Thông tin cá nhân</Text>
       </View>
       <View style={styles.main}>
@@ -85,17 +104,18 @@ const Profile = () => {
         <Text style={styles.textmain}>Darkmode</Text>
       </View>
       <ButtonComponent
-        onPress={navigateToProfile}
+        onPress={handleLogout}
         style={{
           width: '60%',
           height: 50,
           marginLeft: '20%',
-          marginTop: '20%',
+          marginTop: '40%',
           backgroundColor: generalColor.primary,
           borderRadius: 30,
         }}
-        text="Sửa Thông Tin Cá Nhân"
+        text="Đăng xuất"
       />
+
     </View>
   );
 };
