@@ -1,24 +1,20 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import authApi from '@src/api/auth';
-import { useChatClient } from '@src/hooks/useChatClient';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
-import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
 import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
 import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
 import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
 import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
-import Staff from '@src/screens/AgentScreens/components/Staff';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import ForgotPassword from '@src/screens/Authentication/ForgotPassword';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
-import ChannelScreen from '@src/screens/Chat/Channel';
-import ListChannel from '@src/screens/Chat/ListChannel';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import BookingResult from '@src/screens/UserScreens/BookingResult/BookingResult';
 import ViewOnMap from '@src/screens/UserScreens/BookingResult/ViewOnMap';
@@ -45,6 +41,10 @@ import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBoo
 import { navigationRef } from './NavigationController';
 import { Tabs } from './NavigationTab';
 import { StaffNavTabs } from './StaffNavTab';
+import Staff from '@src/screens/AgentScreens/components/Staff';
+import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
+import CreateStaff from '@src/screens/AgentScreens/components/Staff/createStaff';
+import BillAgent from '@src/screens/AgentScreens/components/BillAgent';
 const screenOptions = {
   header: () => null,
   cardOverlayEnabled: true,
@@ -66,7 +66,7 @@ const AuthenticationStack = () => {
   );
 };
 const MainStack = () => {
-  const {rooms, setRoom, removeRoom} = useRoomStore();
+  const { rooms, setRoom, removeRoom } = useRoomStore();
   useEffect(() => {
     getAllValuesMatchingPattern('room').then(data => {
       setRoom(data);
@@ -75,14 +75,13 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Tabs'}
-      screenOptions={{presentation: 'card', ...screenOptions}}>
+      screenOptions={{ presentation: 'card', ...screenOptions }}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
         name={'UserSearchDetailScreen'}
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
-
       <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
@@ -110,39 +109,40 @@ const MainStack = () => {
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{title: 'Chỉnh sửa thông tin'}}
+          options={{ title: 'Chỉnh sửa thông tin' }}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{title: 'Chi tiết khách sạn'}}
+          options={{ title: 'Chi tiết khách sạn' }}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{title: 'Thông báo'}}
+          options={{ title: 'Thông báo' }}
         />
 
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{title: 'Danh sách phòng'}}
+          options={{ title: 'Danh sách phòng' }}
         />
+
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -151,57 +151,70 @@ const AgentStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Dashboard'}
-      screenOptions={{presentation: 'card', ...screenOptions}}>
+      screenOptions={{ presentation: 'card', ...screenOptions }}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{title: 'Chỉnh sửa thông tin'}}
+          options={{ title: 'Chỉnh sửa thông tin' }}
         />
-
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{title: 'Chi tiết khách sạn'}}
+          options={{ title: 'Chi tiết khách sạn' }}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{title: 'Thông báo'}}
+          options={{ title: 'Thông báo' }}
         />
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{title: 'Danh sách phòng'}}
+          options={{ title: 'Danh sách phòng' }}
         />
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="Staff" component={Staff} />
-        <Stack.Screen name="DetailHotel" component={DetailHotel} />
+        <Stack.Screen
+          name="Staff"
+          component={Staff}
+        />
+        <Stack.Screen
+          name="DetailHotel"
+          component={DetailHotel}
+        />
+        <Stack.Screen
+          name="CreateStaff"
+          component={CreateStaff}
+        />
+         <Stack.Screen
+          name="BillAgent"
+          component={BillAgent}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -211,19 +224,19 @@ const StaffStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'StaffNavTabs'}
-      screenOptions={{presentation: 'card', ...screenOptions}}>
+      screenOptions={{ presentation: 'card', ...screenOptions }}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="StaffNavTabs"
           component={StaffNavTabs}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       </Stack.Group>
     </Stack.Navigator>
@@ -234,13 +247,10 @@ const Root = () => {
   const setUser = useUserStore(state => state.setUser);
   useEffect(() => {
     (async () => {
-      try {
-        const resProfile = await authApi.getProfileUser();
-        if (resProfile) {
-          console.log('resProfile', resProfile);
-          setUser(resProfile);
-        }
-      } catch {}
+      await AsyncStorage.setItem('accessToken', res.accessToken);
+      const resProfile = await authApi.getProfileUser();
+      console.log('resProfile', resProfile);
+      setUser(resProfile);
     })();
   }, []);
   const getStackByRole = role => {
@@ -253,8 +263,6 @@ const Root = () => {
         return <Stack.Screen name={'StaffStack'} component={StaffStack} />;
     }
   };
-  const {clientIsReady} = useChatClient();
-  console.log('User', user);
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={screenOptions}>
@@ -271,8 +279,6 @@ const Root = () => {
         )}
         <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
         <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
-        <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
-        <Stack.Screen name="ListChannel" component={ListChannel} />
       </Stack.Navigator>
     </NavigationContainer>
   );

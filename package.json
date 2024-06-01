@@ -81,7 +81,7 @@
     "rn-range-slider": "^2.2.2",
     "socket.io-client": "^4.7.5",
     "stream-chat": "^8.33.0",
-    "stream-chat-react-native": "^5.31.0",
+    "stream-chat-react-native": "^5.31.1",
     "styled-components": "^6.1.8",
     "yup": "^1.4.0",
     "zustand": "^4.5.2"

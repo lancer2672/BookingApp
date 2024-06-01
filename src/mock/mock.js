@@ -15,20 +15,24 @@ export const agentMock = {
 export const staffMockData = [
   {
     id: 1,
-    name: 'staff Name',
+    name: 'staff hotel 5',
     email: 'staff@email.com',
     avatar: 'https://picsum.photos/200',
     phone: '099999999',
     identityCard: '123456789',
+    frontIdentityCard: 'https://picsum.photos/200',
+    backIdentityCard: 'https://picsum.photos/200',
     hotelId: 5,
   },
   {
     id: 2,
-    name: 'staff Name',
+    name: 'staff hotel 4',
     email: 'staff@email.com',
     avatar: 'https://picsum.photos/200',
     phone: '099999999',
     identityCard: '123456789',
+    frontIdentityCard: 'https://picsum.photos/200',
+    backIdentityCard: 'https://picsum.photos/200',
     hotelId: 4,
   }
 ]
@@ -386,3 +390,35 @@ export const bookingHistoryMock = [
     status: History_Status.CHECKED_OUT,
   },
 ];
+export const billAgent =[
+  {
+    id:1,
+    agentId: 1,
+    countRoom: 15,
+    countBooking: 82,
+    revenue: '$ 1.000.000',
+    dayPay: '2024-05-28T12:34:56.789Z',
+    price: '$300',
+    status: false
+  },
+  {
+    id:2,
+    agentId: 1,
+    countRoom: 15,
+    countBooking: 82,
+    revenue: '$ 1.000.000',
+    dayPay: '2024-04-28T12:34:56.789Z',
+    price: '$300',
+    status: true
+  },
+  {
+    id:2,
+    agentId: 1,
+    countRoom: 15,
+    countBooking: 82,
+    revenue: '$ 1.000.000',
+    dayPay: '2024-03-28T12:34:56.789Z',
+    price: '$300',
+    status: true
+  },
+]

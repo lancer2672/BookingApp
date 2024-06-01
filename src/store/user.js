@@ -4,7 +4,7 @@ import create from 'zustand';
 
 const useUserStore = create(set => ({
   // user: null,
-  user: {email: 'admin@gmail.com', password: '20', role: ROLE.USER},
+  user: {email: 'admin@gmail.com', password: '20', role: ROLE.AGENT},
   setUser: user => set({user: user}),
   removeUser: async () => {
     await AsyncStorage.removeItem('accessToken');
