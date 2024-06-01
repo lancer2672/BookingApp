@@ -200,12 +200,13 @@ const DetailHotel = () => {
             fontSize: 25,
             fontWeight: 'bold',
             color: generalColor.primary,
+            marginBottom:10,
           }}>
           {hotel.name}
         </Text>
         <Text style={{ fontSize: 18 }}>{hotel.address}</Text>
         <TouchableOpacity onPress={handlePress} style={{}}>
-          <Text style={{ color: 'blue', fontSize: 18 }}>
+          <Text style={{ color: 'blue', fontSize: 18 ,marginTop:2}}>
             Hiển thị trên bản đồ
           </Text>
         </TouchableOpacity>
@@ -221,6 +222,8 @@ const DetailHotel = () => {
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
+            marginBottom:10,
+            marginTop:10
           }}>
           Mô tả hotel
         </Text>
@@ -230,6 +233,7 @@ const DetailHotel = () => {
             fontSize: 22,
             fontWeight: 'bold',
             color: generalColor.primary,
+            marginTop:10
           }}>
           Các tiện ích
         </Text>
@@ -252,6 +256,7 @@ const DetailHotel = () => {
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
+            marginBottom:10,
           }}>
           Chính sách và quy định
         </Text>
@@ -261,6 +266,8 @@ const DetailHotel = () => {
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
+            marginBottom:15,
+            marginTop:10
           }}>
           Xung quanh Hotel
         </Text>

@@ -8,17 +8,16 @@ import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import { billAgent } from '@src/mock/mock';
 import ButtonComponent from '@src/components/Button';
+import Bill from './bill';
 const BillAgent = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [daysDiff, setDaysDiff] = useState()
-    const [bill, setBill] = useState()
     const handlePay = (item) => {
         const startDateTimestamp = Date.parse(item.dayPay);
         const currentDateTimestamp = Date.now();
         const timeDiff = currentDateTimestamp - startDateTimestamp;
         const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
         setDaysDiff(daysDiff.toFixed(0))
-        setBill(item)
         setModalVisible(true)
     }
 
@@ -49,24 +48,21 @@ const BillAgent = () => {
                 const month = dateObject.getMonth() + 1;
                 const year = dateObject.getFullYear();
                 const day = dateObject.getDate()
-                const hours = dateObject.getHours();
-                const minutes = dateObject.getMinutes();
                 return (
                     <View style={styles.main}>
                         {/* <AntDesign name='warning' size={40} color="#F0E601"></AntDesign> */}
                         <View style={{ width: "63%", marginLeft: 20 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", paddingBottom:10 }}>Tháng {month} năm {year}</Text>
-                            <View style={{height:1, backgroundColor:'black', width:'80%', marginBottom:20}}></View>
+                            <Text style={{ fontSize: 20, fontWeight: "bold", paddingBottom: 10 }}>Tháng {month} năm {year}</Text>
+                            <View style={{ height: 1, backgroundColor: 'black', width: '80%', marginBottom: 20 }}></View>
                             <Text>Số phòng: {item.countRoom}</Text>
                             <Text>Số lượt thuê: {item.countBooking}</Text>
                             <Text>Doanh thu: {item.revenue}</Text>
-                            <Text>Ngày thanh toán: </Text>
-                            <Text>{hours}h : {minutes}p || {day}-{month}-{year}</Text>
+                            <Text>Ngày thanh toán: {day}-{month}-{year}</Text>
                         </View>
-                        <View style={{width:1, backgroundColor:'black', height:'90%', marginRight:10, marginLeft:-10}}></View>
+                        <View style={{ width: 1, backgroundColor: 'black', height: '90%', marginRight: 10, marginLeft: -10 }}></View>
                         <View style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 18, fontWeight: "bold", paddingBottom:5 }}>Tổng chi phí</Text>
-                            <Text style={{ fontSize: 18 , paddingBottom:5}}>{item.price}</Text>
+                            <Text style={{ fontSize: 18, fontWeight: "bold", paddingBottom: 5 }}>Tổng chi phí</Text>
+                            <Text style={{ fontSize: 18, paddingBottom: 5 }}>{item.price}</Text>
                             {!item.status ? <Text style={{ color: 'red' }} onPress={() => handlePay(item)}>Chưa thanh toán</Text> : <Text style={{ color: 'green' }}>Đã thanh toán</Text>}
                         </View>
                         <Modal
@@ -83,17 +79,7 @@ const BillAgent = () => {
                                     >
                                         <AntDesign name='close' size={20}></AntDesign>
                                     </TouchableOpacity>
-                                    <View style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <Text style={{ fontSize: 22, fontWeight: "bold", paddingBottom:10 }}>Tháng {month} năm {year}</Text>
-                                        <View style={{height:1, backgroundColor:'black', width:'100%', marginBottom:20}}></View>
-                                        <Text  style={{ fontSize: 18,paddingBottom:5 }}>Số phòng: {bill.countRoom}</Text>
-                                        <Text  style={{ fontSize: 18, paddingBottom:5}}>Số lượt thuê: {bill.countBooking}</Text>
-                                        <Text  style={{ fontSize: 18, paddingBottom:5}}>Doanh thu: {bill.revenue}</Text>
-                                        <Text style={{ fontSize: 18,paddingBottom:5 }}>Ngày thanh toán: </Text>
-                                        <Text style={{ fontSize: 18, paddingBottom:5}}>{hours}h : {minutes}p || {day}-{month}-{year}</Text>
-                                        <Text style={{ flexWrap: 'wrap',  fontWeight:'bold', color:'tomato', fontSize:18,paddingBottom:5 }}>Đã quá hạn: {daysDiff} ngày</Text>
-                                        <Text style={{ color: 'red', flexWrap: 'wrap', fontSize:17,paddingBottom:5 }}>( Quá hạn 15 ngày sẽ bị khoá tài khoản )</Text>
-                                    </View>
+                                    <Bill bill={item} days={daysDiff}></Bill>
                                     <ButtonComponent text='Thanh toán ngay' style={{ marginTop: 20 }}></ButtonComponent>
                                 </View>
                             </View>
@@ -132,8 +118,8 @@ const styles = StyleSheet.create({
         borderColor: generalColor.primary,
         borderWidth: 1,
         padding: 5,
-        paddingTop:20,
-        paddingBottom:20
+        paddingTop: 20,
+        paddingBottom: 20
     },
     modalContainer: {
         flex: 1,

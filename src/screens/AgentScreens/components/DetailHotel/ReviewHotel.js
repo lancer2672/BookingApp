@@ -8,9 +8,12 @@ import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 
 const ReviewHotel = ({ review, hotel }) => {
-    const [isVisible,setIsVisible] = useState(false)
+    const [isVisible,setIsVisible] = useState(true)
     const handlePress = () => {
-        setIsVisible(true)
+        if(isVisible == false)
+            setIsVisible(true)  
+        else
+            setIsVisible(false)
     }
     const reviewHotel = review.filter(item => item.hotelId == hotel);
     return (
@@ -31,15 +34,13 @@ const ReviewHotel = ({ review, hotel }) => {
                                 </View>
                                 <TouchableOpacity onPress={handlePress}>
                                     <Text style={{ color: 'black', fontSize: 15  , marginTop:10, marginBottom:-5}}>
-                                        Hiển thị trên bản đồ
+                                        Hiển thị thêm 
                                     </Text>
                                 </TouchableOpacity>
                             </View>
 
                         </View>
-                        
-                        {item.children.map((item, index) => {
-                            
+                        {!isVisible && item.children.map((item) => {
                             return (
                                <View style={styles.children}>
                                    <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 50, width: 50, borderRadius: 25 }}></Image>
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
         height: 'auto',
         width: "90%",
         marginLeft: "10%",
-        padding: 20
+        padding: 20,
     }
 });
 export default ReviewHotel;
