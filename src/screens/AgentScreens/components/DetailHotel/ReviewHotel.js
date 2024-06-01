@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text, Image } from 'react-native';
+import { View, StyleSheet, TextInput, Text, Image, TouchableOpacity } from 'react-native';
 import { goBack } from '@src/navigation/NavigationController';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Pressable } from 'react-native';
@@ -8,7 +8,13 @@ import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 
 const ReviewHotel = ({ review, hotel }) => {
-   
+    const [isVisible,setIsVisible] = useState(true)
+    const handlePress = () => {
+        if(isVisible == false)
+            setIsVisible(true)  
+        else
+            setIsVisible(false)
+    }
     const reviewHotel = review.filter(item => item.hotelId == hotel);
     return (
         <View style={styles.container}>
@@ -26,28 +32,33 @@ const ReviewHotel = ({ review, hotel }) => {
                                         <Image source={{ uri: item }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
                                     ))}
                                 </View>
+                                <TouchableOpacity onPress={handlePress}>
+                                    <Text style={{ color: 'black', fontSize: 15  , marginTop:10, marginBottom:-5}}>
+                                        Hiển thị thêm 
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
 
                         </View>
-                        {item.children.map((item, index) => {
+                        {!isVisible && item.children.map((item) => {
                             return (
-                                <View style={styles.children}>
-                                    <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 50, width: 50, borderRadius: 25 }}></Image>
-                                    <View style={{ marginLeft: 20, width: '80%' }}>
-                                        <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item.userId} - Phòng {item.roomId}</Text>
-                                        <Text>{item.createdAt}</Text>
-                                        <Text style={{ fontSize: 18 }}>{item.description}</Text>
-                                        <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
-                                            {item.images.map(item => (
-                                                <Image source={{ uri: item }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
-                                            ))}
-                                        </View>
-                                    </View>
+                               <View style={styles.children}>
+                                   <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 50, width: 50, borderRadius: 25 }}></Image>
+                                   <View style={{ marginLeft: 20, width: '80%' }}>
+                                       <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item.userId} - Phòng {item.roomId}</Text>
+                                       <Text>{item.createdAt}</Text>
+                                       <Text style={{ fontSize: 18 }}>{item.description}</Text>
+                                       <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
+                                           {item.images.map(item => (
+                                               <Image source={{ uri: item }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
+                                           ))}
+                                       </View>
+                                   </View>
 
-                                </View>
+                               </View>
 
-                            )
-                        })}
+                           )
+                       })}
                     </>
 
                 )
@@ -82,12 +93,12 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         borderBottomColor: 'black',
-        borderBottomWidth:1,
+        borderBottomWidth: 1,
         marginTop: 10,
         height: 'auto',
         width: "90%",
         marginLeft: "10%",
-        padding: 20
+        padding: 20,
     }
 });
 export default ReviewHotel;

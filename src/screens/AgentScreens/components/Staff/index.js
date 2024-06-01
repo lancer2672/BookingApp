@@ -8,12 +8,15 @@ import { rowCenter } from '@src/theme/style';
 import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { goBack } from '@src/navigation/NavigationController';
+import { goBack, navigate } from '@src/navigation/NavigationController';
+import { useRoute } from '@react-navigation/native';
 const Staff = () => {
     const renderItem = ({ item }) => (
         <StaffCard staff={item} />
     );
-
+    const route = useRoute();
+    const hotel = route.params;
+    const staff = staffMockData.filter(item => item.hotelId == hotel.id)
     return (
         <View style={styles.container}>
             <View
@@ -38,7 +41,7 @@ const Staff = () => {
                 </Text>
                 <Pressable
                     onPress={() => {
-                        setIsVisible(true);
+                       navigate('CreateStaff', hotel);
                     }}>
                     <AntDesign
                         name="pluscircleo"
@@ -49,7 +52,7 @@ const Staff = () => {
             <View style={styles.hotelCards}>
                 <FlatList
                     style={styles.flatList}
-                    data={staffMockData}
+                    data={staff}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                     showsHorizontalScrollIndicator={false}

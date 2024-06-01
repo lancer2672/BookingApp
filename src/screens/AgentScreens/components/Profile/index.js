@@ -9,6 +9,7 @@ import { generalColor } from '@src/theme/color';
 import { agentMock } from '@src/mock/mock';
 import authApi from '@src/api/auth';
 import useUserStore from '@src/store/user';
+import BillAgent from '../BillAgent';
 const Profile = () => {
   const navigateToProfile = () => {
     navigate('EditProfile', agentMock);
@@ -90,11 +91,11 @@ const Profile = () => {
       </View>
       <View style={styles.main}>
         <FontAwesome5 name='hotel' size={20}></FontAwesome5>
-        <Text style={styles.textmain}>{agentMock.countHotelManager}</Text>
+        <Text style={styles.textmain}>2 khách sạn quản lý</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="right" size={20} ></AntDesign>
-        <Text style={styles.textmain}>{agentMock.countBooking}</Text>
+        <Text style={styles.textmain}>{agentMock.countBooking} lượt đặt phòng</Text>
       </View>
       <View style={styles.title}>
         <Text style={styles.text}>Giao diện</Text>

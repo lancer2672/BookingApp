@@ -212,7 +212,7 @@ const EditProfile = () => {
         style={{
           width: '50%',
           marginLeft: '25%',
-          marginTop: '58%',
+          marginTop: '%',
           backgroundColor: generalColor.primary,
           borderRadius: 30,
         }}

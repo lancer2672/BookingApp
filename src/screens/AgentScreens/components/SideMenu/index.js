@@ -41,6 +41,11 @@ const menu = [
       />
     ),
   },
+  {
+    text: 'Hoá đơn',
+    onClick: 'BillAgent',
+    leftIcon: <AntDesign name="user" size={24} color="white" />,
+  },
 ];
 
 const SideMenu = ({isVisible, onClose}) => {

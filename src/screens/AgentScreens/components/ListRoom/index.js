@@ -65,6 +65,7 @@ const ListRoom = () => {
             color: generalColor.primary,
             fontWeight: 'bold',
           }}>
+          Danh sách các phòng
         </Text>
         <View style={styles.hotelCards}>
           {hotel.rooms.map(item => (
