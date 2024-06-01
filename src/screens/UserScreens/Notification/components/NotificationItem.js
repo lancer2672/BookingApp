@@ -1,9 +1,9 @@
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {addItem, getNotiKey} from '@src/store/as/as';
-import {generalColor} from '@src/theme/color';
-import {useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import { addItem, getNotiKey, removeItem } from '@src/store/as/as';
+import { generalColor } from '@src/theme/color';
+import { useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
 
 export const getTimeDifference = pastDate => {
@@ -80,8 +80,9 @@ const NotificationItem = ({notification = {}, onUpdate}) => {
         </NotificationContent>
       </View>
       <TouchableOpacity
-        onPress={() => {
-          setBottomMenuVisible(true);
+        onPress={async() => {
+          await removeItem(getNotiKey(notification.createdAt.toString()))
+          await onUpdate()
         }}
         style={{
           paddingHorizontal: 4,

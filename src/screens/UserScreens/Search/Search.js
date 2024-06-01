@@ -1,14 +1,38 @@
-import {ClockSVG, PinSVG, TargetSVG} from '@src/assets/icons';
-import {navigate} from '@src/navigation/NavigationController';
-import {generalColor} from '@src/theme/color';
+import Geolocation from '@react-native-community/geolocation';
+import { ClockSVG, PinSVG, TargetSVG } from '@src/assets/icons';
+import { navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
-import {Searchbar} from 'react-native-paper';
-import {useTheme} from 'styled-components';
-
+import { useEffect, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Searchbar } from 'react-native-paper';
+import { useTheme } from 'styled-components';
 const UserSearchScreen = () => {
   const theme = useTheme();
-
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [region, setRegion] = useState(null);
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        // const {latitude, longitude} = position.coords;
+        const latitude = 10.878307605540192,
+          longitude = 106.80622622219741;
+        setRegion({
+          // latitude,
+          // longitude,
+          latitude,
+          longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+        setMarkerPosition({latitude, longitude});
+        console.log('position', position.coords);
+      },
+      error => console.log('getCurrentPosition failed', error),
+      {enableHighAccuracy: true, timeout: 20000},
+    );
+  }, []);
   return (
     <View style={{flex: 1}}>
       <View
@@ -52,7 +76,7 @@ const UserSearchScreen = () => {
           />
         </Pressable>
       </View>
-      <View style={{flex: 1, padding: 20}}>
+      <View style={{flex: 1}}>
         <Pressable
           onPress={() => {
             navigate('GGMap');
@@ -65,13 +89,23 @@ const UserSearchScreen = () => {
                 //   color: theme.color.text.primary,
                 ...textStyle.content.medium,
                 marginLeft: 6,
+            
               }}>
               Khách sạn xung quanh bạn
             </Text>
           </View>
+          <View style={{height:120}}>
+              
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={{flex: 1, width: '100%'}}
+            region={region}>
+            <Marker coordinate={markerPosition} />
+          </MapView>
+          </View>
         </Pressable>
 
-        <View style={{marginTop: 12}}>
+        <View style={{padding:12,paddingTop:0 }}>
           <RecentSearches></RecentSearches>
         </View>
       </View>
@@ -133,10 +167,12 @@ export default UserSearchScreen;
 const styles = StyleSheet.create({
   item: {
     marginTop: 4,
+    paddingHorizontal: 20,
+    paddingVertical: 4,
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 12,
-    borderBottomWidth: 1,
+  
     borderBottomColor: 'gray',
   },
 });

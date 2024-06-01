@@ -1,9 +1,8 @@
-import {PinSVG} from '@src/assets/icons';
-import ButtonComponent from '@src/components/Button';
-import {generalColor} from '@src/theme/color';
-import {row, rowCenter} from '@src/theme/style';
+import { PinSVG } from '@src/assets/icons';
+import { generalColor } from '@src/theme/color';
+import { row, rowCenter, textShadow } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatCurrency} from '@src/utils/textFormat';
+import { formatCurrency } from '@src/utils/textFormat';
 import {
   FlatList,
   Image,
@@ -16,10 +15,10 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {navigate} from '@src/navigation/NavigationController';
-import {ScrollView} from 'react-native';
+import { navigate } from '@src/navigation/NavigationController';
+import { ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {IconButton} from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 
 const Home = () => {
   const renderItem = ({item, index}) => (
@@ -29,42 +28,62 @@ const Home = () => {
         // onSelect(item);
       }}>
       <View></View>
-      <Image
+      <ImageBackground
         resizeMode="cover"
         source={{uri: 'https://picsum.photos/200'}}
         style={{
           width: 220,
-          height: 130,
-        }}></Image>
-      <Text style={[textStyle.h[4], {color: 'black', paddingTop: 8}]}>
-        ROSEWOOD LITTLE DIX BAY
-      </Text>
-      <View style={[rowCenter, {marginBottom: 4, marginLeft: 4}]}>
-        <AntDesign
-          name="star"
-          color={generalColor.other.star}
-          size={18}></AntDesign>
-        <Text> ( 3,3)</Text>
-      </View>
-      <View></View>
+          height: SCREEN_HEIGHT * 0.4,
+          borderRadius: 4,
+          overflow: 'hidden',
+          padding: 4,
+          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
+        }}>
+        <View style={[rowCenter, {marginBottom: 8}]}>
+          <Text
+            style={[
+              textStyle.h[4],
+              textShadow,
+              {color: 'white', flex: 1, paddingTop: 8},
+            ]}>
+            ROSEWOOD LITTLE DIX BAY
+          </Text>
+          <View style={[rowCenter, {flex: 0.4, marginLeft: 4}]}>
+            <AntDesign
+              name="star"
+              color={generalColor.other.star}
+              size={18}></AntDesign>
+            <Text style={{color: 'white'}}> ( 3,3)</Text>
+          </View>
+          <View></View>
+        </View>
 
-      <View style={[rowCenter]}>
-        <PinSVG height={18} color={generalColor.primary}></PinSVG>
-        <Text>Quận 5 TpHCM</Text>
-      </View>
-      <Text
-        style={[
-          textStyle.h[5],
-          {color: 'black', fontWeight: 'bold', paddingVertical: 8},
-        ]}>
-        {formatCurrency(10000)}/ đêm
-      </Text>
+        <View style={[rowCenter]}>
+          <PinSVG height={18} color={'white'}></PinSVG>
+          <Text style={{color: 'white'}}>Quận 5 TpHCM</Text>
+        </View>
 
-      <ButtonComponent
+        <View style={rowCenter}>
+          <Text
+            style={[
+              textStyle.h[4],
+              textShadow,
+              {color: 'white', fontWeight: '500', paddingVertical: 8},
+            ]}>
+            {formatCurrency(10000)}
+          </Text>
+          <Text style={[{color: 'white', fontSize: 20, paddingVertical: 8}]}>
+            / đêm
+          </Text>
+        </View>
+      </ImageBackground>
+
+      {/* <ButtonComponent
         style={{marginTop: 8}}
         txtStyle={{fontSize: 14}}
         text={'Đặt phòng'}
-        onPress={() => {}}></ButtonComponent>
+        onPress={() => {}}></ButtonComponent> */}
     </TouchableOpacity>
   );
   const [newNoti, setNewNoti] = useState(false);
@@ -242,9 +261,9 @@ const styles = StyleSheet.create({
   },
 });
 
-import {getAllValuesMatchingPattern} from '@src/store/as/as';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '@src/utils/constant';
-import {useEffect, useState} from 'react';
+import { getAllValuesMatchingPattern } from '@src/store/as/as';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
 const RecommendList = () => {
@@ -257,9 +276,14 @@ const RecommendList = () => {
     return (
       <TouchableOpacity
         style={{
-          margin: 4,
-          width: SCREEN_WIDTH,
-          marginHorizontal: 12,
+          borderWidth: 10,
+          borderColor: 'white',
+          width: SCREEN_WIDTH * 0.7,
+          borderRadius: 12,
+          alignItems: 'center',
+          backgroundColor: 'white',
+          // backgroundColor:'',
+          marginHorizontal: SCREEN_WIDTH * 0.15 - 10,
         }}
         onPress={() => {
           // onSelect(item);
@@ -269,49 +293,75 @@ const RecommendList = () => {
           resizeMode="cover"
           source={{uri: 'https://picsum.photos/200'}}
           style={{
-            width: SCREEN_WIDTH - 48,
-            height: 130,
-          }}></Image>
-        <Text style={[textStyle.h[4], {color: 'white', paddingTop: 8}]}>
-          ROSEWOOD LITTLE DIX BAY
-        </Text>
-        <View style={[rowCenter, {marginBottom: 4, marginLeft: 4}]}>
-          <AntDesign
-            name="star"
-            color={generalColor.other.star}
-            size={18}></AntDesign>
-          <Text style={{color: 'white'}}> ( 3,3)</Text>
-        </View>
-        <View></View>
+            width: '100%',
+            height: '66%',
+            // flex:2,
 
-        <View style={[rowCenter]}>
-          <PinSVG height={18} color={'white'}></PinSVG>
-          <Text style={{color: 'white'}}>Quận 5 TpHCM</Text>
+            borderRadius: 12,
+          }}></Image>
+        <View style={{marginTop: 4}}>
+          <View style={[rowCenter, {width: '100%'}]}>
+            <Text
+              style={[
+                textStyle.h[4],
+                {flex: 1, color: generalColor.primary, paddingTop: 8},
+              ]}>
+              ROSEWOOD LITTLE DIX BAY
+            </Text>
+            <View style={[rowCenter, {marginBottom: 4, marginLeft: 4}]}>
+              <AntDesign
+                name="star"
+                color={generalColor.other.star}
+                size={18}></AntDesign>
+              <Text style={{color: generalColor.primary}}> ( 3,3)</Text>
+            </View>
+          </View>
+          <View></View>
+          <View style={[rowCenter]}>
+          <PinSVG height={18} color={generalColor.primary}></PinSVG>
+          <Text style={{color: generalColor.primary}}>Quận 5 TpHCM</Text>
         </View>
-        <Text
-          style={[
-            textStyle.h[5],
-            {
-              color: 'white',
-              fontWeight: 'bold',
-              paddingVertical: 8,
-              paddingBottom: 0,
-            },
-          ]}>
-          {formatCurrency(10000)}/ đêm
-        </Text>
+          <View style={rowCenter}>
+            <Text
+              style={[
+                textStyle.h[4],
+                {
+                  color: generalColor.primary,
+                  fontWeight: '500',
+                  paddingVertical: 8,
+                },
+              ]}>
+              {formatCurrency(10000)}
+            </Text>
+            <Text
+              style={[
+                {color: generalColor.primary, fontSize: 20, paddingVertical: 8},
+              ]}>
+              / đêm
+            </Text>
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
   return (
-    <View>
+    <View
+      style={{
+        marginVertical: 8,
+      }}>
       <Carousel
         loop
         width={SCREEN_WIDTH}
-        height={(SCREEN_HEIGHT * 1) / 3}
+        height={SCREEN_HEIGHT * 0.5}
         autoPlay={true}
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.9,
+          // parallaxScrollingOffset: 1,
+        }}
+        pagingEnabled={false}
         data={data}
-        scrollAnimationDuration={1000}
+        scrollAnimationDuration={2000}
         // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={renderItem}
       />

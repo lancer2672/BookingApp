@@ -1,4 +1,4 @@
-import {PinSVG} from '@src/assets/icons';
+import { PinSVG } from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
 import {
   DistrictModal,
@@ -6,12 +6,12 @@ import {
   WardModal,
 } from '@src/components/LocationModal/LocationModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {goBack, navigate} from '@src/navigation/NavigationController';
-import {generalColor} from '@src/theme/color';
+import { goBack, navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import {formatDate} from '@src/utils/textFormat';
-import {useState} from 'react';
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import { formatDate } from '@src/utils/textFormat';
+import { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChooseRoomAndCustomer from './components/ChooseRoomAndCustomer';
@@ -61,7 +61,7 @@ const UserSearchDetailScreen = () => {
   return (
     <ScrollView style={{flex: 1, padding: 20, backgroundColor: 'white'}}>
       <View
-        style={{paddingTop: 12, flexDirection: 'row', alignItems: 'center'}}>
+        style={{paddingTop: 0, flexDirection: 'row', alignItems: 'center'}}>
         <Pressable onPress={goBack}>
           <AntDesign
             name="left"
@@ -72,13 +72,13 @@ const UserSearchDetailScreen = () => {
       </View>
       <View
         style={{
-          paddingTop: 36,
+          paddingTop: 8,
           flex: 1,
           minHeight: 140,
         }}>
         <Item
           icon={<PinSVG color={generalColor.black[25]}></PinSVG>}
-          label={'Tỉnh'}
+          label={'Tỉnh *'}
           placerholder={'Chọn địa điểm'}
           value={location.province?.provinceName || ''}
           onPress={() => {
@@ -115,7 +115,7 @@ const UserSearchDetailScreen = () => {
               size={24}
               color={generalColor.black[25]}></AntDesign>
           }
-          label={'Ngày'}
+          label={'Ngày *'}
           value={
             date.checkinDate
               ? `${formatDate(date.checkinDate, 'dd')} tháng ${formatDate(
@@ -133,7 +133,7 @@ const UserSearchDetailScreen = () => {
           }}></Item>
         <Item
           placerholder={'Nhấn để chọn'}
-          label={'Phòng và số lượng khách'}
+          label={'Phòng và số lượng khách *'}
           value={roomCustomerText(roomCustomer)}
           onPress={() => setRoomCustomerVisbile(true)}></Item>
       </View>
@@ -209,7 +209,7 @@ const UserSearchDetailScreen = () => {
 const Item = ({icon, label, placerholder, value, onPress}) => {
   return (
     <>
-      <View style={{flexDirection: 'row', marginTop: 12, alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center'}}>
         {icon && <View style={{marginRight: 12}}>{icon}</View>}
         <Text style={styles.label}>{label}</Text>
       </View>
@@ -230,6 +230,7 @@ const Item = ({icon, label, placerholder, value, onPress}) => {
         }
         styleTextInput={{
           ...textStyle.h[5],
+          fontSize:18,
           color: generalColor.black[100],
           fontWeight: '400',
         }}
