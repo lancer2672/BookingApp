@@ -1,11 +1,15 @@
 import ButtonComponent from '@src/components/Button';
-import {generalColor} from '@src/theme/color';
+import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {addItem, getKey, removeItem} from '@src/store/as/as';
+import { useAppContext } from '@src/context/appContext';
+import { chatClient, useChatClient } from '@src/hooks/useChatClient';
+import { agentMock } from '@src/mock/mock';
+import { navigate } from '@src/navigation/NavigationController';
+import { addItem, getKey, removeItem } from '@src/store/as/as';
 import useRoomStore from '@src/store/fav_room';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -18,6 +22,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const RoomItem = ({hotel, room, onPress}) => {
   const {rooms, setRoom, removeRoom} = useRoomStore();
+  const {createOrJoinChannel} = useChatClient()
+  const {setChannel} = useAppContext();
 
   const [isFav, setisFav] = useState(false);
   const toggleFavourite = async () => {
@@ -41,6 +47,23 @@ const RoomItem = ({hotel, room, onPress}) => {
       setisFav(false);
     }
   }, [rooms]);
+  const handleChat= async()=>{
+    try{
+      console.log("chatClient.user",chatClient.user)
+      const agent = agentMock
+      const ch =  await createOrJoinChannel(Date.now().toString(),[
+        chatClient.user,{
+          id: "testagent3",
+          name:`${agent.lastName} ${agent.firstName}`,
+          avatar: agent.avatar,
+        }
+      ])
+      setChannel(ch)
+      navigate("ChannelScreen")
+    }catch (er){
+      console.log("Chat error",er)
+    }
+  }
   return (
     <View style={{marginTop: 12}}>
       <Image
@@ -63,6 +86,26 @@ const RoomItem = ({hotel, room, onPress}) => {
         }}>
         <AntDesign
           name={isFav ? 'heart' : 'hearto'}
+          size={20}
+          color={'white'}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={handleChat}
+        style={{
+          position: 'absolute',
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+
+          backgroundColor: generalColor.primary,
+          top: 60,
+          alignItems: 'center',
+          justifyContent: 'center',
+          right: 12,
+        }}>
+         <Ionicons
+          name={'chatbubble-ellipses-outline'}
           size={20}
           color={'white'}
         />

@@ -1,17 +1,35 @@
-import {useAppContext} from '@src/context/appContext';
-import {chatClient} from '@src/hooks/useChatClient';
-import {generalColor} from '@src/theme/color';
+import { useAppContext } from '@src/context/appContext';
+import { chatClient } from '@src/hooks/useChatClient';
+import useUserStore from '@src/store/user';
+import { generalColor } from '@src/theme/color';
+import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Avatar} from 'react-native-paper';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Avatar } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Channel, MessageInput, MessageList} from 'stream-chat-react-native';
+import { Channel, MessageInput, MessageList } from 'stream-chat-react-native';
 
 const ChannelScreen = () => {
   const {channel} = useAppContext();
   const [userStatus, setUserStatus] = useState('offline');
+  const [member,setMember] =useState({})
+  const user = useUserStore(state => state.user);
 
+  // const { channel:chatChannel } = useChannelStateContext();
+  useEffect(()=>{
+    if(channel){
+      console.log(channel.state);
+        const mem =  Object.values(channel.state.members).map((u) => ({
+          id: u.user_id,
+          avatar: u.user.avatar,
+          name: u.user.name,
+          online:u.user.online,
+        })).find(t=>t.id !=user.id)
+        console.log("mem",mem);
+        setMember(mem);
+    }
+  },[channel])
   useEffect(() => {
     const getUserStatus = async () => {
       if (channel) {
@@ -47,10 +65,13 @@ const ChannelScreen = () => {
         <Avatar.Image
           style={{marginHorizontal: 12}}
           size={46}
-          source={{uri: 'https://picsum.photos/200'}}
+          source={member.avatar?{uri: member.avatar}:require('../../assets/imgs/DefaultAvatar.png')}
         />
         <View>
-          <Text style={[textStyle.h[4], {color: 'white'}]}>Hotel Name</Text>
+          <Text style={[textStyle.h[4], {color: 'white'}]}>{member.name}</Text>
+          <View style={rowCenter}>
+
+          <View style={{width:8,height:8,borderRadius:8, marginRight:8,backgroundColor:userStatus == 'online' ? generalColor.status.notCheckedOut : "gray"}}></View>
           <Text
             style={{
               color:
@@ -60,9 +81,12 @@ const ChannelScreen = () => {
             }}>
             {userStatus == 'online' ? 'Đang hoạt động' : 'Ngoại tuyến'}
           </Text>
+          </View>
         </View>
       </View>
-      <MessageList />
+      <MessageList 
+        
+      />
       <MessageInput giphyActive={false} hasFilePicker={false}></MessageInput>
     </Channel>
   );
