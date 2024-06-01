@@ -158,7 +158,7 @@ const DetailHotel = () => {
     setIsVisible(false)
   };
   const navigateToStaff = () => {
-    navigate('Staff');
+    navigate('Staff',hotel);
     setIsVisible(false)
   };
   return (
