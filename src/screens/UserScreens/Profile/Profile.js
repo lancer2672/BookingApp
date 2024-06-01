@@ -1,20 +1,20 @@
-import React, {useContext} from 'react';
-import {FlatList, Linking, Text, TouchableOpacity, View} from 'react-native';
+import React, { useContext } from 'react';
+import { FlatList, Linking, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {useTheme} from 'styled-components';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTheme } from 'styled-components';
 import styled from 'styled-components/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authApi from '@src/api/auth';
-import {goBack, navigate} from '@src/navigation/NavigationController';
+import { goBack, navigate } from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
-import {generalColor} from '@src/theme/color';
-import {ThemeContext} from '@src/theme/context';
-import {ROLE} from '@src/utils/constant';
-import {Avatar, Divider} from 'react-native-paper';
+import { generalColor } from '@src/theme/color';
+import { ThemeContext } from '@src/theme/context';
+import { Avatar, Divider } from 'react-native-paper';
 import SettingItem from './components/SettingItem';
 const UserProfile = () => {
   const removeUser = useUserStore(state => state.setUser);
@@ -62,27 +62,38 @@ const UserProfile = () => {
       },
     },
   ];
-  const settingOptions2 =
-    user.role !== ROLE.USER
-      ? []
-      : [
-          {
-            name: 'Lịch sử đặt phòng & thanh toán',
-            icon: <FontAwesome5 name={'history'} size={20} color={'white'} />,
-            backgroundIconColor: generalColor.primary,
-            onClick: () => {
-              navigate('BookingHistory');
-            },
-          },
-          {
-            name: 'Danh sách yêu thích',
-            icon: <AntDesign name={'heart'} size={20} color={'white'} />,
-            backgroundIconColor: generalColor.primary,
-            onClick: () => {
-              navigate('FavouriteRooms');
-            },
-          },
-        ];
+  const settingOptions2 = [
+    {
+      name: 'Lịch sử đặt phòng & thanh toán',
+      icon: <FontAwesome5 name={'history'} size={20} color={'white'} />,
+      backgroundIconColor: generalColor.primary,
+      onClick: () => {
+        navigate('BookingHistory');
+      },
+    },
+    {
+      name: 'Danh sách yêu thích',
+      icon: <AntDesign name={'heart'} size={20} color={'white'} />,
+      backgroundIconColor: generalColor.primary,
+      onClick: () => {
+        navigate('FavouriteRooms');
+      },
+    },
+    {
+      name: 'Đoạn chat',
+      icon: (
+        <Ionicons
+          name={'chatbubble-ellipses-outline'}
+          size={20}
+          color={'white'}
+        />
+      ),
+      backgroundIconColor: generalColor.primary,
+      onClick: () => {
+        navigate('ListChannel');
+      },
+    },
+  ];
   return (
     <Container>
       <Animatable.View
