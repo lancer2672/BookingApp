@@ -1,14 +1,21 @@
-import authApi from '@src/api/auth';
 import { navigate } from '@src/navigation/NavigationController';
-import useUserStore from '@src/store/user';
-import { generalColor } from '@src/theme/color';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect } from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { Avatar, Divider } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
+import { generalColor } from '@src/theme/color';
+import authApi from '@src/api/auth';
+import useUserStore from '@src/store/user';
 const menu = [
   {
     text: 'Trang chủ',
@@ -31,24 +38,13 @@ const menu = [
     leftIcon: <AntDesign name="user" size={24} color="white" />,
   },
   {
-    text: 'Đoạn chat',
-    onClick: 'ListChannel',
-    leftIcon: (
-      <Ionicons
-        name={'chatbubble-ellipses-outline'}
-        size={24}
-        color={'white'}
-      />
-    ),
-  },
-  {
     text: 'Hoá đơn',
     onClick: 'BillAgent',
-    leftIcon: <AntDesign name="user" size={24} color="white" />,
+    leftIcon: <AntDesign name="filetext1" size={24} color="white" />,
   },
 ];
 
-const SideMenu = ({isVisible, onClose}) => {
+const SideMenu = ({ isVisible, onClose }) => {
   const theme = useTheme();
   const removeUser = useUserStore(state => state.setUser);
   const user = useUserStore(state => state.user);
@@ -85,9 +81,9 @@ const SideMenu = ({isVisible, onClose}) => {
           <View style={styles.header}>
             <Avatar.Image
               size={60}
-              source={{uri: 'https://picsum.photos/200'}}
+              source={{ uri: 'https://picsum.photos/200' }}
             />
-            <View style={{marginLeft: 8}}>
+            <View style={{ marginLeft: 8 }}>
               <Text
                 style={[
                   styles.name,
@@ -107,6 +103,7 @@ const SideMenu = ({isVisible, onClose}) => {
                 {user.email}
               </Text>
             </View>
+
           </View>
         </View>
         <Divider
@@ -137,13 +134,9 @@ const SideMenu = ({isVisible, onClose}) => {
           }}
         />
         <Pressable onPress={handleLogout} rippleColor="rgba(0, 0, 0, .32)">
-          <View
-            style={[
-              itemStyles.container,
-              {backgroundColor: generalColor.primary},
-            ]}>
+          <View style={[itemStyles.container, { backgroundColor: generalColor.primary }]}>
             <AntDesign name="logout" size={24} color="white" />
-            <Text style={[itemStyles.text, {color: 'white'}]}>Đăng xuất</Text>
+            <Text style={[itemStyles.text, { color: 'white' }]}>Đăng xuất</Text>
           </View>
         </Pressable>
       </View>
@@ -151,17 +144,16 @@ const SideMenu = ({isVisible, onClose}) => {
   );
 };
 
-const SideBarItem = ({text, onClick, leftIcon, onclose}) => {
+const SideBarItem = ({ text, onClick, leftIcon, onclose }) => {
   const theme = useTheme();
   const handlePress = () => {
     onclose(), navigate(onClick);
   };
   return (
     <Pressable onPress={handlePress} rippleColor="rgba(0, 0, 0, .32)">
-      <View
-        style={[itemStyles.container, {backgroundColor: generalColor.primary}]}>
+      <View style={[itemStyles.container, { backgroundColor: generalColor.primary }]}>
         {leftIcon}
-        <Text style={[itemStyles.text, {color: 'white'}]}>{text}</Text>
+        <Text style={[itemStyles.text, { color: 'white' }]}>{text}</Text>
       </View>
     </Pressable>
   );
@@ -189,8 +181,8 @@ const styles = StyleSheet.create({
     margin: 0,
     alignItems: 'flex-end',
   },
-  name: {fontWeight: '500', fontSize: 16},
-  email: {fontSize: 14},
+  name: { fontWeight: '500', fontSize: 16 },
+  email: { fontSize: 14 },
   menuContainer: {
     backgroundColor: 'white',
     width: '80%',

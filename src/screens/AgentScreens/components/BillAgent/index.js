@@ -79,7 +79,7 @@ const BillAgent = () => {
                                     >
                                         <AntDesign name='close' size={20}></AntDesign>
                                     </TouchableOpacity>
-                                    <Bill bill={item} days={daysDiff}></Bill>
+                                    <Bill bill={item.dayPay} days={daysDiff}></Bill>
                                     <ButtonComponent text='Thanh toán ngay' style={{ marginTop: 20 }}></ButtonComponent>
                                 </View>
                             </View>

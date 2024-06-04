@@ -12,7 +12,7 @@ import ButtonComponent from '@src/components/Button';
 
 
 const Bill = ({ bill, days }) => {
-    const dateObject = new Date(bill.dayPay);
+    const dateObject = new Date(bill);
     const month = dateObject.getMonth() + 1;
     const year = dateObject.getFullYear();
     const day = dateObject.getDate()
