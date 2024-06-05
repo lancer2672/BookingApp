@@ -91,7 +91,7 @@ const SideMenu = ({ isVisible, onClose }) => {
                     color: 'black',
                   },
                 ]}>
-                {user.nickname}
+                {/* {user.nickname} */}
               </Text>
               <Text
                 style={[
@@ -100,7 +100,7 @@ const SideMenu = ({ isVisible, onClose }) => {
                     color: 'black',
                   },
                 ]}>
-                {user.email}
+                {/* {user.email} */}
               </Text>
             </View>
 

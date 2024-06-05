@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
-import { Image, StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, ScrollView, Button } from 'react-native';
 import Swiper from 'react-native-swiper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -17,11 +17,41 @@ import { useState } from 'react';
 import { bookingHistoryMock } from '@src/mock/mock';
 import { getStatusText } from '@src/utils/constant';
 import EditRoom from '../EditRoom';
+import DateTimePicker from '@react-native-community/datetimepicker';
 const DetailRoom = () => {
     const route = useRoute();
     const room = route.params;
     const [modalVisible, setModalVisible] = useState(false);
     const [modalEditRoomVisible, setModalEditRoomVisible] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [modalDateVisible, setModalDateVisible] = useState(false);
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setDate(currentDate);
+    };
+    const bookingHistoryYear = bookingHistoryMock.filter(item => {
+        const year = new Date(item.createdAt)
+        return year.getFullYear() == date.getFullYear()
+    })
+    const bookingHistoryMonth = bookingHistoryYear.filter(item => {
+        const month = new Date(item.createdAt)
+        return month.getMonth() == date.getMonth()
+    })
+    const [bookingHistory, setBookingHistory] = useState(bookingHistoryMonth)
+    const pickDate = () => {
+        setModalDateVisible(false);
+        const bookingHistoryYear = bookingHistoryMock.filter(item => {
+            const year = new Date(item.createdAt)
+            return year.getFullYear() == date.getFullYear()
+        })
+        const bookingHistoryMonth = bookingHistoryYear.filter(item => {
+            const month = new Date(item.createdAt)
+            return month.getMonth() == date.getMonth()
+        })
+        setBookingHistory(bookingHistoryMonth)
+
+    }
     return (
         <ScrollView style={{ backgroundColor: "white", flex: 1 }}>
             <View style={{ padding: 12, marginTop: 12, ...rowCenter, marginBottom: 12 }}>
@@ -175,38 +205,77 @@ const DetailRoom = () => {
                 </View>
             </Modal>
             <View style={styles.title}><Text style={styles.text}>Lịch sử đặt phòng</Text></View>
-            {bookingHistoryMock.map(item => (
-                <View style={{ display: 'flex', flexDirection: 'column', width: '90%', marginLeft: '5%', alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderColor: 'black', borderWidth: 1, marginTop: 15 }}>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày tạo: </Text>
-                        <Text style={styles.textmain}>{item.createdAt}</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', width: '90%', marginLeft: '5%', textAlign: 'center' }}>
+                <TouchableOpacity style={styles.pickdates} onPress={() => setModalDateVisible(true)}>
+                    <Text style={[styles.textmain, { fontWeight: 'bold', fontSize: 20 }]}>Tháng: {date.getMonth() + 1} - {date.getFullYear()}</Text>
+                </TouchableOpacity>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalDateVisible}
+                    onRequestClose={() => setModalDateVisible(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <TouchableOpacity
+                                style={styles.closebutton}
+                                onPress={() => setModalDateVisible(false)}
+                            >
+                                <AntDesign name='close' size={20}></AntDesign>
+                            </TouchableOpacity>
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                mode="date"
+                                display="spinner"
+                                onChange={onChange}
+                            />
+                            <ButtonComponent style={styles.pickdate} text="OK" onPress={pickDate}></ButtonComponent>
+                        </View>
                     </View>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày checkin: </Text>
-                        <Text style={styles.textmain}>{item.checkInDate}</Text>
+                </Modal>
+
+            </View>
+
+            {bookingHistory.map(item => {
+                const createDate = new Date(item.createdAt)
+                const checkinDate = new Date(item.checkInDate)
+                const checkoutDate = new Date(item.checkOutDate)
+                return (
+                    <View style={{ display: 'flex', flexDirection: 'column', width: '90%', marginLeft: '5%', alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderColor: 'black', borderWidth: 1, marginTop: 15, padding: 15 }}>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày tạo: </Text>
+                            <Text style={styles.textmain}>{createDate.getDate()} - {createDate.getMonth() + 1} - {createDate.getFullYear()}</Text>
+                        </View>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày checkin: </Text>
+                            <Text style={styles.textmain}>{checkinDate.getDate()} - {checkinDate.getMonth() + 1} - {checkinDate.getFullYear()}</Text>
+                        </View>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày checkout: </Text>
+                            <Text style={styles.textmain}>{checkoutDate.getDate()} - {checkoutDate.getMonth() + 1} - {checkoutDate.getFullYear()}</Text>
+                        </View>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Số lượng khách: </Text>
+                            <Text style={styles.textmain}>{item.roomCustomer.mature} người lớn và {item.roomCustomer.children} trẻ em</Text>
+                        </View>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Tổng chi phí: </Text>
+                            <Text style={styles.textmain}>{item.totalPrice}</Text>
+                        </View>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Thanh toán bằng: </Text>
+                            <Text style={styles.textmain}>{item.paymentMethod}</Text>
+                        </View>
+                        <View style={styles.main}>
+                            <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Trạng thái: </Text>
+                            <Text style={styles.textmain}>{getStatusText(item.status)}</Text>
+                        </View>
                     </View>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Ngày checkout: </Text>
-                        <Text style={styles.textmain}>{item.checkOutDate}</Text>
-                    </View>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Số lượng khách: </Text>
-                        <Text style={styles.textmain}>{item.roomCustomer.mature} người lớn và {item.roomCustomer.children} trẻ em</Text>
-                    </View>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Tổng chi phí: </Text>
-                        <Text style={styles.textmain}>{item.totalPrice}</Text>
-                    </View>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Thanh toán bằng: </Text>
-                        <Text style={styles.textmain}>{item.paymentMethod}</Text>
-                    </View>
-                    <View style={styles.main}>
-                        <Text style={[styles.textmain, { fontWeight: 'bold' }]}>Trạng thái: </Text>
-                        <Text style={styles.textmain}>{getStatusText(item.status)}</Text>
-                    </View>
-                </View>
-            ))}
+                )
+            }
+            )}
+            {bookingHistory.length === 0 && <Text style={[styles.textmain, { marginLeft:'5%', marginTop:20, fontStyle:'italic' }]}>( Không có ai đặt phòng trong tháng này !! ) </Text>}
             <ButtonComponent style={styles.delete} text="Edit" onPress={() => setModalEditRoomVisible(true)}></ButtonComponent>
             <Modal
                 animationType="slide"
@@ -251,14 +320,15 @@ const styles = StyleSheet.create({
     textmain: {
         fontSize: 18,
         marginLeft: 5,
-
+        marginBottom:2,
+        marginBottom:2
     },
     main: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 2.5,
-        marginBottom: 2.5,
+        marginTop: 5,
+        marginBottom: 5,
         height: "auto",
         marginLeft: 20,
         marginRight: 20,
@@ -301,7 +371,24 @@ const styles = StyleSheet.create({
     },
     closebutton: {
         position: 'absolute',
-        top: 10,
-        right: 10
+        top: 15,
+        right: 15
     },
+    date: {
+        marginTop: 10,
+        left: 0,
+    },
+    pickdate: {
+        width: '40%',
+        borderRadius: 10,
+        marginLeft: '30%'
+    },
+    pickdates: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        marginLeft: 20,
+        marginTop: 10
+    }
 });
