@@ -1,5 +1,5 @@
-import {generalColor} from '@src/theme/color';
-import {Dimensions} from 'react-native';
+import { generalColor } from '@src/theme/color';
+import { Dimensions } from 'react-native';
 
 export const URL_API = 'localhost:8080';
 export const REVIEW_TEXT = [
@@ -12,7 +12,9 @@ export const REVIEW_TEXT = [
 ];
 export const ROLE = {
   ADMIN: 'ADMIN',
-  AGENT: 'AGENT',
+  // AGENT: 'AGENT',
+  //TODO: fix typo
+  AGENT: 'ARGENT',
   STAFF: 'STAFF',
   USER: 'USER',
 };

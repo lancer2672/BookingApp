@@ -1,12 +1,12 @@
 import authApi from '@src/api/auth';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
-import {navigate} from '@src/navigation/NavigationController';
-import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import { navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
+import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import PersonalInfoPage from './component/PersonalInfoPage';
 
 const steps = [
@@ -22,6 +22,13 @@ const steps = [
 const random = () => {
   return Math.floor(Math.random() * 1000);
 };
+async function convertFileToBlob(file) {
+  const response = await fetch(file.uri);
+  console.log("convert",response);
+  const blob = await response.blob();
+  return new Blob([blob], { type: file.type });
+}
+
 const AgentSignUp = () => {
   const [agent, setAgent] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
@@ -39,12 +46,25 @@ const AgentSignUp = () => {
       payload.append('email', values.anotherData.email);
       payload.append('identityNumber', values.anotherData.identityNumber);
       payload.append('password', values.anotherData.password);
-      payload.append('selfieImg', values.selfieImg);
-      payload.append('frontIdentityCard', values.frontIdentityCard);
-      payload.append('backIdentityCard', values.backIdentityCard);
+      
+      payload.append('selfieImg', {
+        uri: values.selfieImg.uri,
+        type: values.selfieImg.type,
+        name: values.selfieImg.fileName,
+      });
+      payload.append('frontIdentityCard', {
+        uri: values.frontIdentityCard.uri,
+        type: values.frontIdentityCard.type,
+        name: values.frontIdentityCard.fileName,
+      });
+      payload.append('backIdentityCard', {
+        uri: values.backIdentityCard.uri,
+        type: values.backIdentityCard.type,
+        name: values.backIdentityCard.fileName,
+      });
       console.log('payload', JSON.stringify(payload));
       await authApi.registerAgent(payload);
-
+      navigate('SignIn');
       showMessage({
         message: `Đơn của bạn đã được tạo. Bạn sẽ nhận được phản hồi qua email`,
         type: 'success',
@@ -53,7 +73,7 @@ const AgentSignUp = () => {
         if (seconds < 0) {
           clearTimeout(tm);
           // await agentApi
-          navigate('SignIn');
+        
         }
       }, 1000);
     } catch (er) {

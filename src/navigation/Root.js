@@ -1,20 +1,27 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import authApi from '@src/api/auth';
+import LoadingModal from '@src/components/LoadingModal/LoadingModal';
+import { useChatClient } from '@src/hooks/useChatClient';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
+import BillAgent from '@src/screens/AgentScreens/components/BillAgent';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
+import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
 import DetailRoom from '@src/screens/AgentScreens/components/DetailRoom';
 import EditProfile from '@src/screens/AgentScreens/components/EditProfile';
 import ListHotel from '@src/screens/AgentScreens/components/ListHotel';
 import ListRoom from '@src/screens/AgentScreens/components/ListRoom';
 import Notice from '@src/screens/AgentScreens/components/Notice';
 import Profile from '@src/screens/AgentScreens/components/Profile';
+import Staff from '@src/screens/AgentScreens/components/Staff';
+import CreateStaff from '@src/screens/AgentScreens/components/Staff/createStaff';
 import AgentSignUp from '@src/screens/Authentication/AgentSignUp';
 import ForgotPassword from '@src/screens/Authentication/ForgotPassword';
 import SignIn from '@src/screens/Authentication/SignIn';
 import SignUp from '@src/screens/Authentication/SignUp';
+import ChannelScreen from '@src/screens/Chat/Channel';
+import ListChannel from '@src/screens/Chat/ListChannel';
 import BookingHistory from '@src/screens/UserScreens/BookingHistory/BookingHistory';
 import BookingResult from '@src/screens/UserScreens/BookingResult/BookingResult';
 import ViewOnMap from '@src/screens/UserScreens/BookingResult/ViewOnMap';
@@ -36,15 +43,11 @@ import { getAllValuesMatchingPattern } from '@src/store/as/as';
 import useRoomStore from '@src/store/fav_room';
 import useUserStore from '@src/store/user';
 import { ROLE } from '@src/utils/constant';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBookingHistory';
 import { navigationRef } from './NavigationController';
 import { Tabs } from './NavigationTab';
 import { StaffNavTabs } from './StaffNavTab';
-import Staff from '@src/screens/AgentScreens/components/Staff';
-import DetailHotel from '@src/screens/AgentScreens/components/DetailHotel';
-import CreateStaff from '@src/screens/AgentScreens/components/Staff/createStaff';
-import BillAgent from '@src/screens/AgentScreens/components/BillAgent';
 const screenOptions = {
   header: () => null,
   cardOverlayEnabled: true,
@@ -82,6 +85,10 @@ const MainStack = () => {
         component={UserSearchDetailScreen}
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
+      <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
+        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
+        <Stack.Screen name={'ListChannel'} component={ListChannel} />
+        <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
       <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
@@ -169,6 +176,10 @@ const AgentStack = () => {
           component={ListHotel}
           options={{ headerShown: false }}
         />
+         <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
+        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
+        <Stack.Screen name={'ListChannel'} component={ListChannel} />
+        <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
@@ -232,7 +243,10 @@ const StaffStack = () => {
           component={Profile}
           options={{ headerShown: false }}
         />
-
+ <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
+        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
+        <Stack.Screen name={'ListChannel'} component={ListChannel} />
+        <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
         <Stack.Screen
           name="StaffNavTabs"
           component={StaffNavTabs}
@@ -244,13 +258,17 @@ const StaffStack = () => {
 };
 const Root = () => {
   const user = useUserStore(state => state.user);
+  const [isLoading,setIsloading] = useState(false);
+  const {isClientReady} = useChatClient()
   const setUser = useUserStore(state => state.setUser);
   useEffect(() => {
     (async () => {
-      await AsyncStorage.setItem('accessToken', res.accessToken);
+      setIsloading(true);
       const resProfile = await authApi.getProfileUser();
       console.log('resProfile', resProfile);
       setUser(resProfile);
+      setIsloading(false);
+
     })();
   }, []);
   const getStackByRole = role => {
@@ -261,8 +279,18 @@ const Root = () => {
         return <Stack.Screen name={'MainStack'} component={MainStack} />;
       case ROLE.STAFF:
         return <Stack.Screen name={'StaffStack'} component={StaffStack} />;
+        default: 
+        return <Stack.Screen name={'MainStack'} component={MainStack} />;
+
     }
   };
+  if(isLoading){
+    return <LoadingModal
+    onClose={() => {
+      setIsloading(false);
+    }}
+    visible={isLoading}></LoadingModal>
+  }
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={screenOptions}>
@@ -276,9 +304,8 @@ const Root = () => {
             name={'AuthenticationStack'}
             component={AuthenticationStack}
           />
-        )}
-        <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
-        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
+        )}  
+       
       </Stack.Navigator>
     </NavigationContainer>
   );

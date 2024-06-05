@@ -17,7 +17,7 @@ const authApi = {
       const response = await axiosClient.post(`${authRoute}/login`, data);
       return response.data;
     } catch (error) {
-      console.log('Login error', error);
+      console.log('Login error', error.response);
       throw error;
     }
   },
