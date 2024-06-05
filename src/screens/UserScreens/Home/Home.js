@@ -21,6 +21,17 @@ import LinearGradient from 'react-native-linear-gradient';
 import { IconButton } from 'react-native-paper';
 
 const Home = () => {
+  const [hotels,setHotels] = useState([])
+  useEffect(()=>{
+    hotelApi.getList().then(data=>{
+      console.log("Data",data);
+      setHotels(hotels)
+    })
+    .catch(er=>{
+      console.log("error",er)
+    }
+    )
+  },[])
   const renderItem = ({item, index}) => (
     <TouchableOpacity
       style={{margin: 4, width: 220}}
@@ -61,7 +72,7 @@ const Home = () => {
 
         <View style={[rowCenter]}>
           <PinSVG height={18} color={'white'}></PinSVG>
-          <Text style={{color: 'white'}}>Quận 5 TpHCM</Text>
+          <Text style={{color: 'white'}}>{item.address}</Text>
         </View>
 
         <View style={rowCenter}>
@@ -217,7 +228,7 @@ const Home = () => {
 
         <FlatList
           renderItem={renderItem}
-          data={[1, 2]}
+          data={hotels}
           horizontal
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
@@ -261,6 +272,7 @@ const styles = StyleSheet.create({
   },
 });
 
+import hotelApi from '@src/api/hotel';
 import { getAllValuesMatchingPattern } from '@src/store/as/as';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
 import { useEffect, useState } from 'react';
