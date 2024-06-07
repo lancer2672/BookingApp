@@ -358,7 +358,7 @@ export const bookingHistoryMock = [
     roomId: 7,
     totalPrice: 120 * 5 + 200 * 5,
     paymentMethod: 'Credit Card',
-    createdAt: '2024-05-20T10:00:00.000Z',
+    createdAt: '2024-06-20T10:00:00.000Z',
     updatedAt: '2024-05-22T15:00:00.000Z',
     payment: null,
     roomCustomer: {
@@ -382,7 +382,7 @@ export const bookingHistoryMock = [
     },
     totalPrice: 120 * 5 + 200 * 5,
     paymentMethod: 'Credit Card',
-    createdAt: '2024-05-20T10:00:00.000Z',
+    createdAt: '2024-06-20T10:00:00.000Z',
     updatedAt: '2024-05-22T15:00:00.000Z',
     payment: {
       amount: 200000,

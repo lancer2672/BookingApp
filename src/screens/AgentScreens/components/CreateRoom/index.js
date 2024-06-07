@@ -34,7 +34,7 @@ const CreateRoom = () => {
     const [people, setPeople] = useState(0)
     const [child, setChild] = useState(0)
     const [bed, setBed] = useState(0)
-    
+
     const [images, setImages] = useState([]);
     const [visible, setVisible] = useState(false);
     //noithat
@@ -65,14 +65,14 @@ const CreateRoom = () => {
     }
     const buttonTextStyle = {
         backgroundColor: generalColor.primary,
-        height:35,
-        width:90,
+        height: 35,
+        width: 90,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
         color: 'white',
         textAlign: 'center',
-        padding:7,
+        padding: 7,
     };
     return (
         <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -107,7 +107,7 @@ const CreateRoom = () => {
                 <ProgressSteps completedStepIconColor={generalColor.primary} completedProgressBarColor={generalColor.primary} activeStepIconBorderColor={generalColor.primary} activeLabelColor={generalColor.primary}>
                     <ProgressStep label="First Step" nextBtnTextStyle={buttonTextStyle}>
                         <View style={{}}>
-                            <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%",  fontWeight: "bold", textAlign:'center' }}>* THÔNG TIN CHUNG *</Text>
+                            <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign: 'center' }}>* THÔNG TIN CHUNG *</Text>
                             <View style={styles.container}>
                                 <TextInputComponent
                                     placeholder="Tên phòng ..."
@@ -172,8 +172,8 @@ const CreateRoom = () => {
                             </View>
                         </View>
                     </ProgressStep>
-                    <ProgressStep label="Second Step" nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}> 
-                        <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign:'center' }}>* SỐ LƯỢNG KHÁCH VÀ GIƯỜNG *</Text>
+                    <ProgressStep label="Second Step" nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
+                        <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign: 'center' }}>* SỐ LƯỢNG KHÁCH VÀ GIƯỜNG *</Text>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '70%', marginLeft: '15%', marginTop: 15 }}>
                             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <AntDesign name='minuscircleo' size={28} style={{ marginRight: 10 }} onPress={() => {
@@ -215,7 +215,7 @@ const CreateRoom = () => {
                                 setBed(bed + 1)
                             }}></AntDesign>
                         </View>
-                        <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign:'center', marginTop:20 }}>* THÊM TIỆN TÍCH *</Text>
+                        <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign: 'center', marginTop: 20 }}>* THÊM TIỆN TÍCH *</Text>
                         <View style={{ width: "90%", marginLeft: "5%" }}>
                             <View style={{ marginTop: 12, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                 <Text
@@ -254,14 +254,18 @@ const CreateRoom = () => {
                                         >
                                             <View style={styles.modalContainer}>
                                                 <View style={styles.modalContent}>
-
+                                                    <TouchableOpacity
+                                                        style={styles.closebutton}
+                                                        onPress={() => setModalVisible(false)}>
+                                                        <AntDesign name="close" size={20}></AntDesign>
+                                                    </TouchableOpacity>
                                                     {options.map((option, index) => (
                                                         <TouchableOpacity
                                                             key={index}
                                                             style={styles.optionButton}
                                                             onPress={() => handleSelect(option, inx)}
                                                         >
-                                                            <Text>{option}</Text>
+                                                            <Text style={{ fontSize: 17 }}>{option}</Text>
                                                         </TouchableOpacity>
                                                     ))}
 
@@ -387,8 +391,9 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         backgroundColor: '#fff',
-        padding: 20,
+        padding: 30,
         borderRadius: 10,
+        paddingTop:40,
         elevation: 5,
     },
     optionButton: {
@@ -406,4 +411,9 @@ const styles = StyleSheet.create({
         height: 120,
         backgroundColor: generalColor.other.lightgray,
     },
+    closebutton: {
+        position: 'absolute',
+        top: 15,
+        right: 15,
+      },
 });
