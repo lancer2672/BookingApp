@@ -3,17 +3,18 @@ import authApi from '@src/api/auth';
 import ButtonComponent from '@src/components/Button';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {navigate} from '@src/navigation/NavigationController';
+import { navigate } from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
-import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import { generalColor } from '@src/theme/color';
+import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {Formik} from 'formik';
-import {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import { Formik } from 'formik';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import {accountSchema} from './component/validateSchema';
+import { accountSchema } from './component/validateSchema';
 const SignIn = () => {
   const [value, setValue] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -24,18 +25,43 @@ const SignIn = () => {
   const setUser = useUserStore(state => state.setUser);
   const [isLoading, setIsloading] = useState(false);
 
-  const handleFormSubmit = async values => {
+  const handleFormSubmit = async (values) => {
     console.log('DATA', values);
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     try {
       setIsloading(true);
-      const res = await authApi.loginUser(values);
+
+      // Thêm timeout để hủy bỏ request sau 4 giây
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 4000);
+
+      const res = await authApi.loginUser(values, { signal });
+      clearTimeout(timeoutId);
+
       console.log('res logi', res);
       await AsyncStorage.setItem('accessToken', res.accessToken);
-      const resProfile = await authApi.getProfileUser();
+
+      const resProfile = await authApi.getProfileUser({ signal });
       console.log('resProfile', resProfile);
       setUser(resProfile);
+
+      showMessage({
+        message: 'Đăng nhập thành công',
+        type: 'success',
+      });
     } catch (er) {
-      console.log('er', er);
+      if (er.name === 'AbortError') {
+        console.log('Fetch request was aborted');
+      } else {
+        showMessage({
+          message: 'Đăng nhập thất bại',
+          type: 'warning',
+        });
+        console.log('er', er);
+      }
     } finally {
       setIsloading(false);
     }

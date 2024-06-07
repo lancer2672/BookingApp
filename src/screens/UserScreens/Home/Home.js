@@ -1,102 +1,187 @@
 import { PinSVG } from '@src/assets/icons';
 import { generalColor } from '@src/theme/color';
-import { row, rowCenter, textShadow } from '@src/theme/style';
+import { row, rowCenter, shadowBox, textShadow } from '@src/theme/style';
 import textStyle from '@src/theme/text';
+import LinearGradient from 'react-native-linear-gradient';
+
 import { formatCurrency } from '@src/utils/textFormat';
 import {
   FlatList,
   Image,
   ImageBackground,
+  LayoutAnimation,
   Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import Geolocation from '@react-native-community/geolocation';
 import { navigate } from '@src/navigation/NavigationController';
 import { ScrollView } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { IconButton } from 'react-native-paper';
 
+const toRad = value => {
+  return (value * Math.PI) / 180;
+};
+
+const calculateDistance = (pos1, pos2) => {
+  const R = 6371; // Radius of the Earth in km
+  const dLat = toRad(pos2.latitude - pos1.latitude);
+  const dLon = toRad(pos2.longitude - pos1.longitude);
+  const lat1 = toRad(pos1.latitude);
+  const lat2 = toRad(pos2.latitude);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+};
+
+const getNearbyHotels = (currentPos, hotels, radius) => {
+  return hotels.filter(hotel => {
+    const hotelPos = hotel.location;
+    console.log("Hotel.location",hotel.location);
+    const distance = calculateDistance(currentPos, hotelPos);
+    return distance <= radius;
+  });
+};
+
 const Home = () => {
-  const [hotels,setHotels] = useState([])
-  useEffect(()=>{
-    hotelApi.getList().then(data=>{
-      console.log("Data",data);
-      setHotels(hotels)
-    })
-    .catch(er=>{
-      console.log("error",er)
+  const [hotels, setHotels] = useState([]);
+  const [nearbyHotels, setNearbyHotels] = useState([]);
+  const [currentPosition, setCurrentPosition] = useState(null);
+  useEffect(() => {
+    console.log('Fetch hotels');
+    hotelApi
+      .getList()
+      .then(data => {
+        setHotels(data);
+      })
+      .catch(er => {
+        console.log('>>>fetch hotels err', er);
+      });
+  }, []);
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        // const latitude = 10.878307605540192,
+        //   longitude = 106.80622622219741;
+        // setRegion({
+        //   latitude,
+        //   longitude,
+        //   latitudeDelta: 0.0922,
+        //   longitudeDelta: 0.0421,
+        // });
+        setCurrentPosition({latitude, longitude});
+        console.log('current position', position.coords);
+      },
+      error => Alert.alert('Lỗi. Lấy vị trí không thành công'),
+      {enableHighAccuracy: false, timeout: 20000},
+    );
+  }, []);
+  useEffect(() => {
+    if (currentPosition && hotels.length > 0) {
+      const nearbyHotels = getNearbyHotels(currentPosition, hotels, 3);
+      console.log("nearby hotels",nearbyHotels)
+      setNearbyHotels(nearbyHotels.filter(t=>t.rooms.filter(r => r.status == Room_Status.NOT_BOOKED).length != 0));
     }
-    )
-  },[])
-  const renderItem = ({item, index}) => (
-    <TouchableOpacity
-      style={{margin: 4, width: 220}}
-      onPress={() => {
-        // onSelect(item);
-      }}>
-      <View></View>
-      <ImageBackground
-        resizeMode="cover"
-        source={{uri: 'https://picsum.photos/200'}}
-        style={{
-          width: 220,
-          height: SCREEN_HEIGHT * 0.4,
-          borderRadius: 4,
-          overflow: 'hidden',
-          padding: 4,
-          alignItems: 'flex-start',
-          justifyContent: 'flex-end',
+  }, [currentPosition, hotels]);
+  console.log('hotels', hotels.length);
+  const renderItem = ({item, index}) => {
+    console.log("item.rooms",item.rooms);
+    return (
+      <Pressable
+        style={[{margin: 4, width: 220, elevation: 2}]}
+        onPress={() => {
+          // onSelect(item);
         }}>
-        <View style={[rowCenter, {marginBottom: 8}]}>
-          <Text
-            style={[
-              textStyle.h[4],
-              textShadow,
-              {color: 'white', flex: 1, paddingTop: 8},
-            ]}>
-            ROSEWOOD LITTLE DIX BAY
-          </Text>
-          <View style={[rowCenter, {flex: 0.4, marginLeft: 4}]}>
-            <AntDesign
-              name="star"
-              color={generalColor.other.star}
-              size={18}></AntDesign>
-            <Text style={{color: 'white'}}> ( 3,3)</Text>
+        <View></View>
+        <ImageBackground
+          resizeMode="cover"
+          source={{uri: 'https://picsum.photos/200'}}
+          style={{
+            elevation: 3,
+            ...shadowBox,
+            width: 220,
+            height: SCREEN_HEIGHT * 0.4,
+            borderRadius: 4,
+            overflow: 'hidden',
+            padding: 4,
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+          }}>
+          <View style={[StyleSheet.absoluteFillObject]}>
+            <LinearGradient
+              start={{x: 1, y: 0}}
+              end={{x: 0, y: 0}}
+              style={[StyleSheet.absoluteFillObject, {flex: 1}]}
+              colors={[
+                'rgba(9, 30, 61, 0.3)',
+                'rgba(9, 30, 61, 0.4)',
+                'rgba(9, 30, 61, 0.5)',
+                'rgba(9, 30, 61, 0.6)',
+                'rgba(9, 30, 61, 0.8)',
+              ]}></LinearGradient>
           </View>
-          <View></View>
-        </View>
+          <View style={[rowCenter, {marginBottom: 8}]}>
+            <Text
+              style={[
+                textStyle.h[4],
+                textShadow,
+                {color: 'white', flex: 1, paddingTop: 8},
+              ]}>
+              {item.name}
+            </Text>
+            <View style={[rowCenter, {flex: 0.4, marginLeft: 4}]}>
+              <AntDesign
+                name="star"
+                color={generalColor.other.star}
+                size={18}></AntDesign>
+              <Text style={{color: 'white'}}> ( 3,3)</Text>
+            </View>
+            <View></View>
+          </View>
 
-        <View style={[rowCenter]}>
-          <PinSVG height={18} color={'white'}></PinSVG>
-          <Text style={{color: 'white'}}>{item.address}</Text>
-        </View>
+          <View style={[rowCenter]}>
+            <PinSVG height={18} color={'white'}></PinSVG>
+            <Text style={[{color: 'white', paddingRight: 20}, textShadow]}>
+              {item.address}
+            </Text>
+          </View>
 
-        <View style={rowCenter}>
-          <Text
-            style={[
-              textStyle.h[4],
-              textShadow,
-              {color: 'white', fontWeight: '500', paddingVertical: 8},
-            ]}>
-            {formatCurrency(10000)}
-          </Text>
-          <Text style={[{color: 'white', fontSize: 20, paddingVertical: 8}]}>
-            / đêm
-          </Text>
-        </View>
-      </ImageBackground>
+          <View style={rowCenter}>
+            <Text
+              style={[
+                textStyle.h[4],
+                textShadow,
+                {color: 'white', fontWeight: '500', paddingVertical: 8},
+              ]}>
+              Còn {item.rooms.filter(r=>r.status == Room_Status.NOT_BOOKED).length}
+            </Text>
+            <Text
+              style={[
+                textShadow,
+                {color: 'white', fontSize: 20, paddingVertical: 8},
+              ]}>
+               {" "}phòng trống
+            </Text>
+          </View>
+        </ImageBackground>
 
-      {/* <ButtonComponent
+        {/* <ButtonComponent
         style={{marginTop: 8}}
         txtStyle={{fontSize: 14}}
         text={'Đặt phòng'}
         onPress={() => {}}></ButtonComponent> */}
-    </TouchableOpacity>
-  );
+      </Pressable>
+    );
+  };
+
   const [newNoti, setNewNoti] = useState(false);
   useEffect(() => {
     getAllValuesMatchingPattern('noti').then(data => {
@@ -108,8 +193,11 @@ const Home = () => {
       }
     });
   }, []);
+  useEffect(() => {
+    LayoutAnimation.configureNext(expandAnimation);
+  }, [hotels.length]);
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{flex: 1, backgroundColor:generalColor.primary}}>
       <ImageBackground
         source={require('../../../assets/imgs/bg.png')}
         style={styles.bg}>
@@ -199,42 +287,44 @@ const Home = () => {
         </View>
         <RecommendList></RecommendList>
       </View>
-      <View style={{flex: 2, padding: 12, backgroundColor: 'white'}}>
-        <View style={[rowCenter, {marginVertical: 8}]}>
-          <View
-            style={{
-              width: 3,
-              borderRadius: 25,
+      {nearbyHotels.length > 0 && (
+        <View style={{flex: 2, padding: 12, backgroundColor: 'white'}}>
+          <View style={[rowCenter, {marginVertical: 8}]}>
+            <View
+              style={{
+                width: 3,
+                borderRadius: 25,
 
-              height: 24,
-              marginRight: 12,
-              backgroundColor: generalColor.primary,
-            }}></View>
-          <Text
-            style={[
-              textStyle.h[3],
-              {
-                color: generalColor.primary,
-                flex: 1,
-              },
-            ]}>
-            Chỗ nghỉ gần đây
-          </Text>
+                height: 24,
+                marginRight: 12,
+                backgroundColor: generalColor.primary,
+              }}></View>
+            <Text
+              style={[
+                textStyle.h[3],
+                {
+                  color: generalColor.primary,
+                  flex: 1,
+                },
+              ]}>
+              Chỗ nghỉ gần đây
+            </Text>
 
-          <Pressable onPress={() => {}} style={{marginLeft: 'auto'}}>
-            <Text style={{textDecorationLine: 'underline'}}> Xem tất cả</Text>
-          </Pressable>
+            <Pressable onPress={() => {}} style={{marginLeft: 'auto'}}>
+              <Text style={{textDecorationLine: 'underline'}}> Xem tất cả</Text>
+            </Pressable>
+          </View>
+
+          <FlatList
+            renderItem={renderItem}
+            data={nearbyHotels}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={() => <View style={{margin: 8}} />}
+          />
         </View>
-
-        <FlatList
-          renderItem={renderItem}
-          data={hotels}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => <View style={{margin: 8}} />}
-        />
-      </View>
+      )}
     </ScrollView>
   );
 };
@@ -272,9 +362,10 @@ const styles = StyleSheet.create({
   },
 });
 
+import { expandAnimation } from '@src/animation';
 import hotelApi from '@src/api/hotel';
 import { getAllValuesMatchingPattern } from '@src/store/as/as';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
+import { Room_Status, SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
 import { useEffect, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
@@ -286,7 +377,7 @@ const RecommendList = () => {
   const renderItem = ({item, index}) => {
     console.log('Item', item);
     return (
-      <TouchableOpacity
+      <Pressable
         style={{
           borderWidth: 10,
           borderColor: 'white',
@@ -330,9 +421,9 @@ const RecommendList = () => {
           </View>
           <View></View>
           <View style={[rowCenter]}>
-          <PinSVG height={18} color={generalColor.primary}></PinSVG>
-          <Text style={{color: generalColor.primary}}>Quận 5 TpHCM</Text>
-        </View>
+            <PinSVG height={18} color={generalColor.primary}></PinSVG>
+            <Text style={{color: generalColor.primary}}>Quận 5 TpHCM</Text>
+          </View>
           <View style={rowCenter}>
             <Text
               style={[
@@ -353,7 +444,7 @@ const RecommendList = () => {
             </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   };
   return (

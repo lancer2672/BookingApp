@@ -262,13 +262,25 @@ const Root = () => {
   const {isClientReady} = useChatClient()
   const setUser = useUserStore(state => state.setUser);
   useEffect(() => {
+
     (async () => {
       setIsloading(true);
-      const resProfile = await authApi.getProfileUser();
-      console.log('resProfile', resProfile);
-      setUser(resProfile);
-      setIsloading(false);
-
+      try {
+        console.log("fetching user");
+        const resProfile = await authApi.getProfileUser();
+      
+        console.log('resProfile', resProfile);
+        setUser(resProfile);
+      } catch (er) {
+        if (er.name === 'AbortError') {
+          console.log("Fetch request was aborted");
+        } else {
+          console.log("er", er);
+        }
+      } finally {
+        console.log("fetching user");
+        setIsloading(false);
+      }
     })();
   }, []);
   const getStackByRole = role => {
