@@ -88,7 +88,15 @@ const Home = () => {
     if (currentPosition && hotels.length > 0) {
       const nearbyHotels = getNearbyHotels(currentPosition, hotels, 3);
       console.log("nearby hotels",nearbyHotels)
-      setNearbyHotels(nearbyHotels.filter(t=>t.rooms.filter(r => r.status == Room_Status.NOT_BOOKED).length != 0));
+      //TODO: clean
+      setNearbyHotels(nearbyHotels.filter(t=>t.rooms.filter(r => r.status == Room_Status.NOT_BOOKED).length != 0).map(t =>{
+        const hotelPos = t.location;
+        const distance = calculateDistance(currentPosition, hotelPos);
+        return {
+          ...t,
+          distance
+        }
+      }));
     }
   }, [currentPosition, hotels]);
   console.log('hotels', hotels.length);
@@ -99,6 +107,7 @@ const Home = () => {
         style={[{margin: 4, width: 220, elevation: 2}]}
         onPress={() => {
           // onSelect(item);
+          navigate("HomeListNearbyRoom")
         }}>
         <View></View>
         <ImageBackground
@@ -147,6 +156,9 @@ const Home = () => {
             <View></View>
           </View>
 
+            <Text style={[{color: 'white', paddingRight: 20, marginBottom:12}, textShadow]}>
+              Cách {item.distance.toFixed(1)} km
+            </Text>
           <View style={[rowCenter]}>
             <PinSVG height={18} color={'white'}></PinSVG>
             <Text style={[{color: 'white', paddingRight: 20}, textShadow]}>

@@ -27,6 +27,7 @@ import BookingResult from '@src/screens/UserScreens/BookingResult/BookingResult'
 import ViewOnMap from '@src/screens/UserScreens/BookingResult/ViewOnMap';
 import FavouriteRooms from '@src/screens/UserScreens/FavouriteRooms/FavouriteRooms';
 import GGMap from '@src/screens/UserScreens/GGMap';
+import HomeListNearbyRoom from '@src/screens/UserScreens/Home/ListNearbyRoom';
 import HomeListRoom from '@src/screens/UserScreens/Home/ListRoom';
 import HotelRoomList from '@src/screens/UserScreens/HotelRoomList/HotelRoomList';
 import Notification from '@src/screens/UserScreens/Notification/Notification';
@@ -69,7 +70,7 @@ const AuthenticationStack = () => {
   );
 };
 const MainStack = () => {
-  const { rooms, setRoom, removeRoom } = useRoomStore();
+  const {rooms, setRoom, removeRoom} = useRoomStore();
   useEffect(() => {
     getAllValuesMatchingPattern('room').then(data => {
       setRoom(data);
@@ -78,7 +79,7 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Tabs'}
-      screenOptions={{ presentation: 'card', ...screenOptions }}>
+      screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Screen
         name={'UserSearchDetailScreen'}
@@ -86,9 +87,13 @@ const MainStack = () => {
       />
       <Stack.Screen name={'Tabs'} component={Tabs} />
       <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
-        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
-        <Stack.Screen name={'ListChannel'} component={ListChannel} />
-        <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
+      <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
+      <Stack.Screen name={'ListChannel'} component={ListChannel} />
+      <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
+      <Stack.Screen
+        name={'HomeListNearbyRoom'}
+        component={HomeListNearbyRoom}
+      />
       <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
@@ -116,40 +121,39 @@ const MainStack = () => {
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{ title: 'Chỉnh sửa thông tin' }}
+          options={{title: 'Chỉnh sửa thông tin'}}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{ title: 'Chi tiết khách sạn' }}
+          options={{title: 'Chi tiết khách sạn'}}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{ title: 'Thông báo' }}
+          options={{title: 'Thông báo'}}
         />
 
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{ title: 'Danh sách phòng' }}
+          options={{title: 'Danh sách phòng'}}
         />
-
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -158,74 +162,62 @@ const AgentStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'Dashboard'}
-      screenOptions={{ presentation: 'card', ...screenOptions }}>
+      screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
-          options={{ title: 'Chỉnh sửa thông tin' }}
+          options={{title: 'Chỉnh sửa thông tin'}}
         />
         <Stack.Screen
           name="ListHotel"
           component={ListHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-         <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
+        <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
         <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
         <Stack.Screen name={'ListChannel'} component={ListChannel} />
         <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
         <Stack.Screen
           name="CreateHotel"
           component={CreateHotel}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="CreateRoom"
           component={CreateRoom}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DetailRoom"
           component={DetailRoom}
-          options={{ title: 'Chi tiết khách sạn' }}
+          options={{title: 'Chi tiết khách sạn'}}
         />
         <Stack.Screen
           name="Notice"
           component={Notice}
-          options={{ title: 'Thông báo' }}
+          options={{title: 'Thông báo'}}
         />
         <Stack.Screen
           name="ListRoom"
           component={ListRoom}
-          options={{ title: 'Danh sách phòng' }}
+          options={{title: 'Danh sách phòng'}}
         />
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-        <Stack.Screen
-          name="Staff"
-          component={Staff}
-        />
-        <Stack.Screen
-          name="DetailHotel"
-          component={DetailHotel}
-        />
-        <Stack.Screen
-          name="CreateStaff"
-          component={CreateStaff}
-        />
-         <Stack.Screen
-          name="BillAgent"
-          component={BillAgent}
-        />
+        <Stack.Screen name="Staff" component={Staff} />
+        <Stack.Screen name="DetailHotel" component={DetailHotel} />
+        <Stack.Screen name="CreateStaff" component={CreateStaff} />
+        <Stack.Screen name="BillAgent" component={BillAgent} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -235,22 +227,22 @@ const StaffStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={'StaffNavTabs'}
-      screenOptions={{ presentation: 'card', ...screenOptions }}>
+      screenOptions={{presentation: 'card', ...screenOptions}}>
       {/* <Stack.Screen name={'BottomTab'} component={MyTabs} /> */}
       <Stack.Group screenOptions={screenOptions}>
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
- <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
+        <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
         <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
         <Stack.Screen name={'ListChannel'} component={ListChannel} />
         <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
         <Stack.Screen
           name="StaffNavTabs"
           component={StaffNavTabs}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
       </Stack.Group>
     </Stack.Navigator>
@@ -258,27 +250,26 @@ const StaffStack = () => {
 };
 const Root = () => {
   const user = useUserStore(state => state.user);
-  const [isLoading,setIsloading] = useState(false);
-  const {isClientReady} = useChatClient()
+  const [isLoading, setIsloading] = useState(false);
+  const {isClientReady} = useChatClient();
   const setUser = useUserStore(state => state.setUser);
   useEffect(() => {
-
     (async () => {
       setIsloading(true);
       try {
-        console.log("fetching user");
+        console.log('fetching user');
         const resProfile = await authApi.getProfileUser();
-      
+
         console.log('resProfile', resProfile);
         setUser(resProfile);
       } catch (er) {
         if (er.name === 'AbortError') {
-          console.log("Fetch request was aborted");
+          console.log('Fetch request was aborted');
         } else {
-          console.log("er", er);
+          console.log('er', er);
         }
       } finally {
-        console.log("fetching user");
+        console.log('fetching user');
         setIsloading(false);
       }
     })();
@@ -291,17 +282,18 @@ const Root = () => {
         return <Stack.Screen name={'MainStack'} component={MainStack} />;
       case ROLE.STAFF:
         return <Stack.Screen name={'StaffStack'} component={StaffStack} />;
-        default: 
+      default:
         return <Stack.Screen name={'MainStack'} component={MainStack} />;
-
     }
   };
-  if(isLoading){
-    return <LoadingModal
-    onClose={() => {
-      setIsloading(false);
-    }}
-    visible={isLoading}></LoadingModal>
+  if (isLoading) {
+    return (
+      <LoadingModal
+        onClose={() => {
+          setIsloading(false);
+        }}
+        visible={isLoading}></LoadingModal>
+    );
   }
   return (
     <NavigationContainer ref={navigationRef}>
@@ -316,8 +308,7 @@ const Root = () => {
             name={'AuthenticationStack'}
             component={AuthenticationStack}
           />
-        )}  
-       
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

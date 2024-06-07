@@ -20,7 +20,7 @@ export const useChatClient = () => {
     console.log("user", user);
     if(user){
       const chatUser = {
-        id:user.id,
+        id:user.id.toString(),
         name:`${user.lastName} ${user.firstName}`,
         avatar: user.avatar || 'https://picsum.photos/200',
         image: user.avatar || 'https://picsum.photos/200',
