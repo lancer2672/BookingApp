@@ -294,10 +294,10 @@ const Home = () => {
               backgroundColor: 'white',
             }}></View>
           <Text style={[textStyle.h[3], {color: 'white', flex: 1}]}>
-            Đề xuất cho bạn
+            Nổi bật
           </Text>
         </View>
-        <RecommendList></RecommendList>
+        <RecommendList hotels= {hotels.slice(0,4)}></RecommendList>
       </View>
       {nearbyHotels.length > 0 && (
         <View style={{flex: 2, padding: 12, backgroundColor: 'white'}}>
@@ -327,7 +327,7 @@ const Home = () => {
             </Pressable>
           </View>
 
-          <FlatList
+          <FlatList 
             renderItem={renderItem}
             data={nearbyHotels}
             horizontal
@@ -381,7 +381,7 @@ import { Room_Status, SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
 import { useEffect, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
-const RecommendList = () => {
+const RecommendList = ({hotels}) => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   // Call the useGetRecentMoviesQuery hook to fetch the recent movies

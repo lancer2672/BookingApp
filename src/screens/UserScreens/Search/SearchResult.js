@@ -1,16 +1,16 @@
-import {useRoute} from '@react-navigation/native';
-import {hotelsMock} from '@src/mock/mock';
-import {goBack, navigate} from '@src/navigation/NavigationController';
-import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import { useRoute } from '@react-navigation/native';
+import { hotelsMock } from '@src/mock/mock';
+import { goBack, navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
+import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatDate} from '@src/utils/textFormat';
-import {useCallback, useState} from 'react';
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import { formatDate } from '@src/utils/textFormat';
+import { useCallback, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FilterButton from '../ReviewHotel/components/FilterButton';
-import RoomItem from '../components/RoomItem';
-import FilterModal, {PRICE_CODE, REVIEW_CODE} from './components/FilterModal';
+import HotelItem from '../components/HotelItem';
+import FilterModal, { PRICE_CODE, REVIEW_CODE } from './components/FilterModal';
 
 const getTextFilter = CODE => {
   switch (CODE) {
@@ -182,7 +182,7 @@ const UserSearchResultScreen = () => {
           }}>
           {/* {hotels.map(hotel => (
           ))} */}
-          <RoomItem
+          <HotelItem
             hotel={hotelsMock[0]}
             room={hotelsMock[0].rooms[0]}
             onPress={() => {

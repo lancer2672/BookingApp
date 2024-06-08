@@ -1,21 +1,20 @@
+import authApi from '@src/api/auth';
 import { navigate } from '@src/navigation/NavigationController';
-import { useEffect } from 'react';
+import useUserStore from '@src/store/user';
+import { generalColor } from '@src/theme/color';
 import {
   Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Avatar, Divider } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
-import { generalColor } from '@src/theme/color';
-import authApi from '@src/api/auth';
-import useUserStore from '@src/store/user';
 const menu = [
   {
     text: 'Trang chủ',
@@ -41,6 +40,11 @@ const menu = [
     text: 'Hoá đơn',
     onClick: 'BillAgent',
     leftIcon: <AntDesign name="filetext1" size={24} color="white" />,
+  },
+  {
+    text: 'Tài khoản thanh toán',
+    onClick: 'BankAccount',
+    leftIcon: <FontAwesome name="bank" size={24} color="white" />,
   },
 ];
 

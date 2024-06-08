@@ -1,6 +1,7 @@
 export const generalColor = {
   primary: '#091E3D',
   strongprimary: '#040f1f',
+  active:"#4CAF50",
   secondary: '#747268',
   white: {
     100: '#fff',

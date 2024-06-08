@@ -4,6 +4,7 @@ import authApi from '@src/api/auth';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import { useChatClient } from '@src/hooks/useChatClient';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
+import BankAccount from '@src/screens/AgentScreens/components/BankAccount/BankAccount';
 import BillAgent from '@src/screens/AgentScreens/components/BillAgent';
 import CreateHotel from '@src/screens/AgentScreens/components/CreateHotel';
 import CreateRoom from '@src/screens/AgentScreens/components/CreateRoom';
@@ -183,6 +184,8 @@ const AgentStack = () => {
         <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
         <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
         <Stack.Screen name={'ListChannel'} component={ListChannel} />
+      <Stack.Screen name={'BankAccount'} component={BankAccount} />
+
         <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
         <Stack.Screen
           name="CreateHotel"

@@ -1,30 +1,26 @@
-import { PinSVG } from '@src/assets/icons';
-import { navigate } from '@src/navigation/NavigationController';
+import AskingModel from '@src/components/AskingModal/AskingModal';
 import { generalColor } from '@src/theme/color';
 import { rowCenter, shadowBox } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {
-  History_Status,
-  getStatusColor,
-  getStatusText,
-} from '@src/utils/constant';
-import { formatCurrency, formatDate } from '@src/utils/textFormat';
+import { formatDate } from '@src/utils/textFormat';
 import { useState } from 'react';
 import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    Pressable,
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
-import CreateReviewModal from '../../ReviewHotel/CreateReview';
-import UserReviewModal from './UserReviewModal';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 const isReviewed = (userId, bookingHistory) => {
   return userId == null;
 };
-const BookingHistoryItem = ({item}) => {
+
+const BankAccountItem = ({item,onChange,newDefaultId,onNewDefaultIdChange, isDefault}) => {
   const [visible, setVisible] = useState(false);
+  const [askVisible, setAskVisible] = useState(false);
+
   const [visibleReview, setVisibleReview] = useState(false);
   const reviewClick = () => {
     if (isReviewed(1)) {
@@ -34,11 +30,13 @@ const BookingHistoryItem = ({item}) => {
     }
   };
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => {
-        navigate('DetailBookingHitory', {
-          historyItem: item,
-        });
+        onNewDefaultIdChange(item.id);
+      }}
+      style={{
+        backgroundColor: newDefaultId? generalColor.primary: generalColor.other.lightgray,
+
       }}>
       <View
         style={[
@@ -55,7 +53,7 @@ const BookingHistoryItem = ({item}) => {
                 ...textStyle.content.medium,
                 color: generalColor.primary,
               }}>
-              Ngày đặt phòng:{' '}
+              Ngày tạo:{' '}
             </Text>
             <Text
               style={{
@@ -63,11 +61,12 @@ const BookingHistoryItem = ({item}) => {
                 color: generalColor.primary,
                 fontWeight: '500',
               }}>
-              {formatDate(item.checkInDate, 'dd-MM-yyyy')}
+              {formatDate(item.createdAt, 'dd-MM-yyyy')}
             </Text>
           </View>
 
-          <Text
+          <Pressable
+          onPress={()=>{setAskVisible(true)}}
             style={{
               ...textStyle.content.small,
               textDecorationLine: 'underline',
@@ -75,9 +74,15 @@ const BookingHistoryItem = ({item}) => {
               marginLeft: 'auto',
               color: generalColor.primary,
             }}>
-            xem chi tiết
-          </Text>
+               
+          <AntDesign
+                        name="close"
+                        size={24}
+                        color={generalColor.primary}></AntDesign>
+          </Pressable>
+       
         </View>
+        {isDefault &&
         <View style={rowCenter}>
           <Text
             style={{
@@ -91,32 +96,17 @@ const BookingHistoryItem = ({item}) => {
           <Text
             style={{
               ...textStyle.content.medium,
-              color: getStatusColor(item.status),
+                color:generalColor.active,
               fontWeight: '500',
               marginBottom: 12,
             }}>
-            {getStatusText(item.status)}
+            đang sử dụng
           </Text>
         </View>
+        }
         <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
-          <View style={{alignItems: 'center'}}>
-            <Image
-              source={{uri: item.hotel.avatar}}
-              style={[shadowBox, styles.img]}></Image>
-            <Text
-              style={{
-                ...textStyle.content.medium,
-
-                marginVertical: 8,
-
-                color: generalColor.primary,
-              }}>
-              {formatCurrency(
-                item.hotel.rooms.find(t => t.id === item.roomId).pricePerNight,
-              )}
-            </Text>
-          </View>
-          <View style={{marginLeft: 12, flex: 1}}>
+       
+          <View style={{ flex: 1}}>
             <View style={rowCenter}>
               <Text
                 style={{
@@ -126,63 +116,71 @@ const BookingHistoryItem = ({item}) => {
 
                   color: generalColor.primary,
                 }}>
-                {item.hotel.name}
+               Ngân hàng: {item.bank}
               </Text>
             </View>
-
             <View style={rowCenter}>
-              <PinSVG height={18} color={generalColor.primary}></PinSVG>
-              <Text numberOfLines={2} style={{...textStyle.content.small}}>
-                {item.hotel.address}
+              <Text
+                style={{
+                  ...textStyle.content.medium,
+                  fontWeight: '500',
+                  marginBottom: 8,
+
+                  color: generalColor.primary,
+                }}>
+               Số tài khoản: {item.stk}
               </Text>
             </View>
 
-            {item.status == History_Status.CHECKED_OUT && (
-              <Pressable onPress={reviewClick}>
-                <Text
-                  style={{
-                    marginVertical: 4,
-                    ...textStyle.content.medium,
-                    textDecorationLine: 'underline',
-                    fontWeight: '500',
-                    color: generalColor.primary,
-                  }}>
-                  {isReviewed(1) ? 'Xem đánh giá của bạn' : 'Thêm đánh giá '}
-                </Text>
-              </Pressable>
-            )}
+     
+
+          </View>
+          <View style={{marginLeft: 12,alignItems: 'center'}}>
+            <Image
+              source={{uri: item.qr}}
+              style={[shadowBox, styles.img]}></Image>
+            <Text
+              style={{
+                ...textStyle.content.medium,
+
+                marginVertical: 8,
+
+                color: generalColor.primary,
+              }}>
+                    Mã QR
+            </Text>
           </View>
         </View>
       </View>
-
-      <CreateReviewModal
-        bookingHistory={item}
-        isVisible={visible}
-        onClose={() => {
-          setVisible(false);
-        }}></CreateReviewModal>
-      <UserReviewModal
-        bookingHistory={item}
-        isVisible={visibleReview}
-        onClose={() => {
-          setVisibleReview(false);
-        }}></UserReviewModal>
-    </TouchableOpacity>
+      <AskingModel
+          heading="Bạn có muốn xoá tài khoản này?"
+          onYesClick={()=>{}}
+          onNoClick={() => {
+            setAskVisible(false);
+          }}
+          noText={'Không'}
+          yesText={'Có'}
+          visible={askVisible}
+          onClose={() => {
+            setAskVisible(false);
+          }}></AskingModel>
+        
+    </Pressable>
   );
 };
 
-export default BookingHistoryItem;
+export default BankAccountItem;
 
 const styles = StyleSheet.create({
   container: {
     padding: 12,
   },
   img: {
-    width: 100,
+    width: 80,
     elevation: 2,
-    borderWidth: 1,
     height: 80,
     borderColor:"gray",
+    backgroundColor:"gray",
     borderRadius: 12,
   },
 });
