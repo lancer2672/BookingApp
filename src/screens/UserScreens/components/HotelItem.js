@@ -1,18 +1,25 @@
-import { generalColor } from '@src/theme/color';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { PinSVG } from '@src/assets/icons';
-import { useAppContext } from '@src/context/appContext';
-import { chatClient, useChatClient } from '@src/hooks/useChatClient';
-import { agentMock } from '@src/mock/mock';
-import { navigate } from '@src/navigation/NavigationController';
-import { addItem, getKey, removeItem } from '@src/store/as/as';
+import {PinSVG} from '@src/assets/icons';
+import {useAppContext} from '@src/context/appContext';
+import {chatClient, useChatClient} from '@src/hooks/useChatClient';
+import {agentMock} from '@src/mock/mock';
+import {navigate} from '@src/navigation/NavigationController';
+import {addItem, getKey, removeItem} from '@src/store/as/as';
 import useRoomStore from '@src/store/fav_room';
-import { rowCenter, shadowBox } from '@src/theme/style';
-import { SCREEN_WIDTH } from '@src/utils/constant';
-import { useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {rowCenter, shadowBox} from '@src/theme/style';
+import {SCREEN_WIDTH} from '@src/utils/constant';
+import {useEffect, useState} from 'react';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const HotelItem = ({hotel, room, onPress}) => {
@@ -62,7 +69,17 @@ const HotelItem = ({hotel, room, onPress}) => {
     }
   };
   return (
-    <Pressable onPress={onPress} style={[shadowBox,{marginTop: 12,elevation:2, backgroundColor:generalColor.other.lightgray,paddingBottom:8}]}>
+    <Pressable
+      onPress={onPress}
+      style={[
+        shadowBox,
+        {
+          marginTop: 12,
+          elevation: 2,
+          backgroundColor: generalColor.other.lightgray,
+          paddingBottom: 8,
+        },
+      ]}>
       <View
         style={{
           marginBottom: 8,
@@ -78,7 +95,7 @@ const HotelItem = ({hotel, room, onPress}) => {
             parallaxScrollingOffset: 1,
           }}
           pagingEnabled={false}
-          data={[hotel.avatar, hotel.avatar]}
+          data={hotel.images}
           scrollAnimationDuration={500}
           // onSnapToItem={(index) => console.log("current index:", index)}
           renderItem={({item, index}) => {
@@ -141,7 +158,6 @@ const HotelItem = ({hotel, room, onPress}) => {
             }}>
             {hotel.name}
           </Text>
-         
         </View>
         <View style={rowCenter}>
           <PinSVG height={18} color={generalColor.primary}></PinSVG>
@@ -163,10 +179,9 @@ const HotelItem = ({hotel, room, onPress}) => {
               color: generalColor.primary,
               ...textStyle.content.medium,
             }}>
-               120 lượt đánh giá
+            120 lượt đánh giá
           </Text>
         </View>
-       
       </View>
       <View
         style={{

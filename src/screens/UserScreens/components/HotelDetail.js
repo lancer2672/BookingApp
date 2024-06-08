@@ -1,28 +1,34 @@
-import { useRoute } from '@react-navigation/native';
-import { expandAnimation } from '@src/animation';
+import {useRoute} from '@react-navigation/native';
+import {expandAnimation} from '@src/animation';
+import {PinSVG} from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
-import { useAppContext } from '@src/context/appContext';
-import { chatClient, useChatClient } from '@src/hooks/useChatClient';
-import { agentMock, reviewBookingMock } from '@src/mock/mock';
-import { goBack, navigate } from '@src/navigation/NavigationController';
-import { generalColor } from '@src/theme/color';
-import { rowCenter } from '@src/theme/style';
+import {useAppContext} from '@src/context/appContext';
+import {chatClient, useChatClient} from '@src/hooks/useChatClient';
+import {agentMock, reviewBookingMock} from '@src/mock/mock';
+import {navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
+import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import { formatCurrency, formatDate } from '@src/utils/textFormat';
-import { useState } from 'react';
+import {SCREEN_WIDTH} from '@src/utils/constant';
+import {formatCurrency, formatDate} from '@src/utils/textFormat';
+import {useState} from 'react';
 import {
-    Image,
-    LayoutAnimation,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  LayoutAnimation,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { Divider } from 'react-native-paper';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import Carousel from 'react-native-reanimated-carousel';
+import {Marker} from 'react-native-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DescriptionModal from '../BookingHistory/components/DescriptionModal';
 import ListReview from '../ReviewHotel/components/ListReview';
 
@@ -30,7 +36,7 @@ const HotelDetail = () => {
   const {roomCustomer, date, hotel, room} = useRoute().params;
   const [reviewVisible, setRiewVisible] = useState(false);
   const [desVisible, setDesVisible] = useState(false);
-  const {createOrJoinChannel} = useChatClient()
+  const {createOrJoinChannel} = useChatClient();
   const handleNavigateReviewAll = () => {
     navigate('Review', {hotel});
   };
@@ -58,7 +64,7 @@ const HotelDetail = () => {
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{padding: 12, marginTop: 12, ...rowCenter}}>
+        {/* <View style={{padding: 12, marginTop: 12, ...rowCenter}}>
           <Pressable onPress={goBack}>
             <AntDesign
               name="left"
@@ -77,7 +83,7 @@ const HotelDetail = () => {
             }}>
             Thông tin
           </Text>
-        </View>
+        </View> */}
         <View style={[rowCenter, styles.header]}>
           <View style={{flex: 1}}>
             <Text>Nhận phòng</Text>
@@ -107,95 +113,195 @@ const HotelDetail = () => {
             )}
           </View>
         </View>
+        <View>
+          <Carousel
+            loop
+            width={SCREEN_WIDTH}
+            height={200}
+            autoPlay={false}
+            mode="parallax"
+            modeConfig={{
+              parallaxScrollingScale: 1,
+              parallaxScrollingOffset: 1,
+            }}
+            pagingEnabled={false}
+            data={hotel.images}
+            scrollAnimationDuration={500}
+            // onSnapToItem={(index) => console.log("current index:", index)}
+            renderItem={({item, index}) => {
+              return (
+                <View>
+                  <Image
+                    resizeMode="cover"
+                    source={{uri: item}}
+                    style={{
+                      width: '100%',
+                      height: 200,
+                    }}></Image>
+                </View>
+              );
+            }}
+          />
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 12,
+              flexDirection: 'row',
+
+              justifyContent: 'space-between', // Added for centering
+              alignItems: 'center',
+              left: 12,
+              right: 12,
+              top: 0,
+              bottom: 0,
+            }}>
+            <AntDesign
+              name="left"
+              color={generalColor.black[50]}
+              size={28}></AntDesign>
+            <AntDesign
+              name="right"
+              color={generalColor.black[50]}
+              size={28}></AntDesign>
+          </View>
+        </View>
         <View
           style={{
             flex: 1,
             minHeight: 140,
           }}>
-          <View style={{flexDirection: 'row', padding: 12}}>
-            <View style={{flex: 1.4}}>
-              <Text
-                style={{
-                  textTransform: 'uppercase',
-                  color: generalColor.primary,
-                  ...textStyle.h[2],
-                  textAlign: 'left',
-                }}>
-                {hotel.name}
-              </Text>
-              <Text
-                style={{
-                  color: generalColor.primary,
-                  ...textStyle.h[4],
-                  marginTop: 8,
-                  textAlign: 'left',
-                }}>
-                {formatCurrency(1111111)}/ đêm
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 8,
-                }}>
-                <Ionicons
-                  name="bed-outline"
-                  size={24}
-                  color={generalColor.black[100]}></Ionicons>
-                <Text
-                  style={{
-                    color: generalColor.black[100],
-                    ...textStyle.content.medium,
-                    marginRight: 12,
-                  }}>
-                  room.bed Giường
-                </Text>
-
-                <Ionicons
-                  name="person-outline"
-                  size={24}
-                  color={generalColor.black[100]}></Ionicons>
-                <Text
-                  style={{
-                    color: generalColor.black[100],
-                    ...textStyle.content.medium,
-                  }}>
-                  room.numOfChildren khách
-                </Text>
+          <View>
+            <View style={{flexDirection: 'row', padding: 12}}>
+              <View style={{flex: 1.4}}>
+                <View style={rowCenter}>
+                  <Text
+                    style={{
+                      flex: 1,
+                      textTransform: 'uppercase',
+                      color: generalColor.primary,
+                      ...textStyle.h[2],
+                      textAlign: 'left',
+                    }}>
+                    {hotel.name}
+                  </Text>
+                  <View style={{}}>
+                    <View style={[rowCenter, {marginBottom: 4, marginLeft: 4}]}>
+                      <AntDesign
+                        name="star"
+                        color={generalColor.other.star}
+                        size={18}></AntDesign>
+                      <Text style={{color: generalColor.primary}}>
+                        {' '}
+                        ( 3,3){' '}
+                      </Text>
+                    </View>
+                    <Text
+                      style={{
+                        marginRight: 8,
+                        color: generalColor.primary,
+                        ...textStyle.content.medium,
+                      }}>
+                      120 lượt đánh giá
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
-            <Image
-              style={styles.img}
-              source={{uri: 'https://picsum.photos/200'}}></Image>
-          </View>
-          <Text style={{fontSize: 14, paddingHorizontal: 12}}>
-            {' '}
-            room.description
-          </Text>
-
-
-
-          <View style={[rowCenter, {paddingHorizontal:12}]}>
-                <Text style={styles.policy}>Mô tả khách sạn</Text>
-
-                  <Pressable
-                    onPress={()=>{setDesVisible(true)}}
-                    style={{marginLeft: 'auto'}}>
-                    <Text style={{textDecorationLine: 'underline'}}>
-                      {' '}
-                      Tìm hiểu thêm
-                    </Text>
-                  </Pressable>
-        
+            <View style={[rowCenter, {padding: 8}]}>
+              <View style={[rowCenter, {flex: 1}]}>
+                <PinSVG height={18} color={generalColor.primary}></PinSVG>
+                <Text
+                  numberOfLines={4}
+                  style={{
+                    paddingRight: 24,
+                    color: generalColor.primary,
+                    ...textStyle.content.small,
+                  }}>
+                  {hotel.address}
+                </Text>
+              </View>
+              <View style={{flex: 1, height: 100}}>
+                <MapView
+                  provider={PROVIDER_GOOGLE}
+                  style={{flex: 1, width: '100%'}}
+                  region={{
+                    ...hotel.location,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}>
+                  <Marker
+                    coordinate={
+                      hotel.location || {
+                        longitude: 0,
+                        latitude: 0,
+                      }
+                    }
+                  />
+                </MapView>
+              </View>
             </View>
+          </View>
+          <View style={styles.sep}></View>
+          <View>
+            <View style={[rowCenter, {paddingHorizontal: 12}]}>
+              <Text style={styles.policy}>Các tiện nghi</Text>
 
+              <Pressable
+                onPress={() => {
+                  setDesVisible(true);
+                }}
+                style={{marginLeft: 'auto'}}></Pressable>
+            </View>
+            <View style={[rowCenter, {paddingHorizontal: 12, marginTop: 4}]}>
+              <AntDesign
+                name="wifi"
+                size={18}
+                color={generalColor.primary}></AntDesign>
+              <Text style={styles.txt1}>Wifi miễn phí tất cả phòng</Text>
+            </View>
+            <View style={[rowCenter, {paddingHorizontal: 12, marginTop: 4}]}>
+              <MaterialCommunityIcons
+                name="parking"
+                size={18}
+                color={generalColor.primary}></MaterialCommunityIcons>
+              <Text style={styles.txt1}>Có bãi đỗ xe riêng</Text>
+            </View>
+            <View style={[rowCenter, {paddingHorizontal: 12, marginTop: 4}]}>
+              <AntDesign
+                name="clockcircle"
+                size={18}
+                color={generalColor.primary}></AntDesign>
+              <Text style={styles.txt1}>Bàn tiếp tân 24h</Text>
+            </View>
+          </View>
+          <View style={styles.sep}></View>
+          <View>
+            <View style={[rowCenter, {paddingHorizontal: 12}]}>
+              <Text style={styles.policy}>Mô tả khách sạn</Text>
+
+              <Pressable
+                onPress={() => {
+                  setDesVisible(true);
+                }}
+                style={{marginLeft: 'auto'}}>
+                <Text style={{textDecorationLine: 'underline'}}>
+                  {' '}
+                  Tìm hiểu thêm
+                </Text>
+              </Pressable>
+            </View>
+            <Text
+              numberOfLines={3}
+              style={{lineHeight: 20, color: 'black', paddingHorizontal: 12}}>
+              {hotel.description}
+            </Text>
+          </View>
+          <View style={styles.sep}></View>
           <View
             style={{
-              borderTopWidth: 1,
               paddingHorizontal: 12,
+              paddingTop: 0,
               borderColor: '#DDDDDD',
-              paddingTop: 10,
-              marginTop: 10,
             }}>
             <View>
               <View style={rowCenter}>
@@ -234,60 +340,84 @@ const HotelDetail = () => {
               </View>
             )}
           </View>
-
+          <View style={styles.sep}></View>
           <View style={{marginTop: 12, paddingHorizontal: 12}}>
             <Text style={styles.policy}>Chính sách</Text>
             <PolicyItem></PolicyItem>
           </View>
           {/* SEPERATOR */}
-          <View
-            style={{
-              marginVertical: 8,
-              height: 5,
-              borderRadius: 15,
-              backgroundColor: generalColor.other.lightgray,
-            }}></View>
-          <View style={{paddingHorizontal: 12}}>
-            <FeeItem title="phí A"></FeeItem>
-            <FeeItem title="phí B"></FeeItem>
-            <FeeItem title="phí C"></FeeItem>
-
-            <Divider style={{marginTop: 8}} bold></Divider>
-            <FeeItem title={'Tổng cộng'}></FeeItem>
+        </View>
+        <View style={styles.sep}></View>
+        <View>
+          <View style={[rowCenter, {paddingHorizontal: 12}]}>
+            <Text style={styles.policy}>Một số thông tin hữu ích</Text>
+          </View>
+          <View style={[row, {paddingHorizontal: 12, marginVertical: 12}]}>
+            <FontAwesome5
+              name="user-check"
+              size={24}
+              color={generalColor.primary}></FontAwesome5>
+            <View style={{marginLeft: 8}}>
+              <Text
+                style={[
+                  textStyle.h[4],
+                  {fontSize: 18, color: generalColor.primary},
+                ]}>
+                Nhận phòng/ trả phòng
+              </Text>
+              <Text style={[{fontSize: 16, color: 'black'}]}>
+                Nhận phòng từ: 14:00
+              </Text>
+              <Text style={[{fontSize: 16, color: 'black'}]}>
+                Nhận phòng đến: 3:00
+              </Text>
+              <Text style={[{fontSize: 16, color: 'black'}]}>
+                Trả phòng từ: 12:00
+              </Text>
+            </View>
           </View>
         </View>
       </ScrollView>
-      <View style={{flexDirection: 'row',borderTopColor:generalColor.other.lightgray,borderTopWidth:1, padding: 8}}>
-        <View style={{flex: 2, height: 50}}>
- 
-  <TouchableOpacity
-        onPress={handleChat}
+      <View
         style={{
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          backgroundColor: generalColor.primary,
-          alignItems: 'center',
-          justifyContent: 'center',
+          flexDirection: 'row',
+          borderTopColor: generalColor.other.lightgray,
+          borderTopWidth: 1,
+          padding: 8,
         }}>
-        <Ionicons
-          name={'chatbubble-ellipses-outline'}
-          size={20}
-          color={'white'}
-        />
-      </TouchableOpacity>
-
+        <View style={{flex: 2, height: 50}}>
+          <TouchableOpacity
+            onPress={handleChat}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              backgroundColor: generalColor.primary,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Ionicons
+              name={'chatbubble-ellipses-outline'}
+              size={20}
+              color={'white'}
+            />
+          </TouchableOpacity>
         </View>
         <ButtonComponent
           onPress={() => {
             navigate('Payment', {roomCustomer, date, hotel});
           }}
-          style={{}}
+          style={{
+            borderRadius: 24,
+          }}
           text={'Xem mọi phòng'}></ButtonComponent>
       </View>
-      <DescriptionModal visible={desVisible} onClose={()=>{
-        setDesVisible(false);
-      }} description={hotel.description}></DescriptionModal>
+      <DescriptionModal
+        visible={desVisible}
+        onClose={() => {
+          setDesVisible(false);
+        }}
+        description={hotel.description}></DescriptionModal>
     </View>
   );
 };
@@ -324,7 +454,7 @@ const PolicyItem = ({}) => {
           color: generalColor.black[100],
           textAlign: 'left',
         }}>
-        Yêu cầu thẻ tín dụng khi đặt phòng
+        Yêu cầu thẻ định danh khi đặt phòng
       </Text>
     </View>
   );
@@ -334,10 +464,21 @@ export default HotelDetail;
 const styles = StyleSheet.create({
   header: {
     marginHorizontal: 18,
+    paddingTop: 20,
     borderBottomWidth: 1,
     borderColor: '#DDDDDD',
     paddingBottom: 18,
     justifyContent: 'space-between',
+  },
+  sep: {
+    marginVertical: 8,
+    height: 8,
+    borderRadius: 15,
+    backgroundColor: generalColor.other.lightgray,
+  },
+  txt1: {
+    marginLeft: 8,
+    color: 'black',
   },
   policy: {
     ...textStyle.h[3],
