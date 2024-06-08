@@ -53,7 +53,7 @@ const BankAccountItem = ({item,onChange,newDefaultId,onNewDefaultIdChange, isDef
                 ...textStyle.content.medium,
                 color: generalColor.primary,
               }}>
-              Ngày tạo:{' '}
+              Ngày thêm:{' '}
             </Text>
             <Text
               style={{
@@ -105,32 +105,42 @@ const BankAccountItem = ({item,onChange,newDefaultId,onNewDefaultIdChange, isDef
         </View>
         }
         <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
-       
+        
           <View style={{ flex: 1}}>
             <View style={rowCenter}>
               <Text
-                style={{
-                  ...textStyle.content.medium,
-                  fontWeight: '500',
-                  marginBottom: 8,
-
-                  color: generalColor.primary,
-                }}>
-               Ngân hàng: {item.bank}
+                style={[styles.text1,{fontWeight:"400"}]}>
+               Ngân hàng: {" "}
+              </Text>
+              <Text
+                style={styles.text1}>
+               {item.bank}
               </Text>
             </View>
+
             <View style={rowCenter}>
               <Text
-                style={{
-                  ...textStyle.content.medium,
-                  fontWeight: '500',
-                  marginBottom: 8,
-
-                  color: generalColor.primary,
-                }}>
-               Số tài khoản: {item.stk}
+                style={[styles.text1,{fontWeight:"400"}]}>
+                Số tài khoản:{" "}
+              </Text>
+              <Text
+                style={styles.text1}>
+               {item.stk}
               </Text>
             </View>
+          
+
+            <View style={rowCenter}>
+              <Text
+                style={[styles.text1,{fontWeight:"400"}]}>
+                Tên: {" "}
+              </Text>
+              <Text
+                style={styles.text1}>
+               {item.accountName}
+              </Text>
+            </View>
+          
 
      
 
@@ -183,4 +193,14 @@ const styles = StyleSheet.create({
     backgroundColor:"gray",
     borderRadius: 12,
   },
+  text1:{
+    ...textStyle.content.medium,
+    fontWeight: '500',
+    marginBottom: 8,
+
+    color: generalColor.primary,
+  },
+  text2:{
+
+  }
 });

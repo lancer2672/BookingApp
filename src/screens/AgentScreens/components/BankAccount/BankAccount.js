@@ -27,6 +27,7 @@ const mockAccount = [
     id: 1,
     bank: 'BIDV',
     createdAt: new Date(),
+    accountName: "TRAN QUOC KHANH",
     qr: 'https://picsum.photos/200',
   },
   {
@@ -34,6 +35,7 @@ const mockAccount = [
     id: 2,
     bank: 'AGRIBANK',
     createdAt: new Date(),
+    accountName: "TRAN QUOC KHANH",
     qr: 'https://picsum.photos/200',
   },
   {
@@ -41,6 +43,7 @@ const mockAccount = [
     id: 3,
     bank: 'MBV',
     createdAt: new Date(),
+    accountName: "TRAN QUOC KHANH",
     qr: 'https://picsum.photos/200',
   },
 ];
