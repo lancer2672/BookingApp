@@ -402,7 +402,8 @@ const RecommendList = ({hotels}) => {
         }}
         onPress={() => {
           // onSelect(item);
-          navigate('HomeListRoom', {hotel: item});
+          // navigate('HomeListRoom', {hotel: item});
+          navigate('HomeListNearbyRoom', {hotel: item});
         }}>
         <Image
           resizeMode="cover"

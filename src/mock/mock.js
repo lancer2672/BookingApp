@@ -8,7 +8,8 @@ export const agentMock = {
   phone: '099999999',
   identityCard: '123456789',
   status: 'Đã xác minh',
-  countHotelManager: hotelsMock?.filter(item => item.agentId === agentMock.id).length,
+  countHotelManager: hotelsMock?.filter(item => item.agentId === agentMock.id)
+    .length,
   countBooking: 5,
   password: '123456789',
 };
@@ -34,8 +35,8 @@ export const staffMockData = [
     frontIdentityCard: 'https://picsum.photos/200',
     backIdentityCard: 'https://picsum.photos/200',
     hotelId: 4,
-  }
-]
+  },
+];
 export const userMock = {
   id: 111,
   name: 'User Name',
@@ -48,7 +49,8 @@ export const hotelsMock = [
     agentId: agentMock.id,
     name: 'Hotel 4',
     address: '1600 Amphitheatre Parkway, Mountain View, CA ',
-    description: 'This is a description of Hotel 4.',
+    description:
+      'This is a description of Hotel 4. This is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of Hote',
     policy: 'This is a policy of Hotel 4',
     province: 'Province 4',
     district: 'District 4',
@@ -390,35 +392,35 @@ export const bookingHistoryMock = [
     status: History_Status.CHECKED_OUT,
   },
 ];
-export const billAgent =[
+export const billAgent = [
   {
-    id:1,
+    id: 1,
     agentId: 1,
     countRoom: 15,
     countBooking: 82,
     revenue: '$ 1.000.000',
     dayPay: '2024-05-28T12:34:56.789Z',
     price: '$300',
-    status: false
+    status: false,
   },
   {
-    id:2,
+    id: 2,
     agentId: 1,
     countRoom: 15,
     countBooking: 82,
     revenue: '$ 1.000.000',
     dayPay: '2024-04-28T12:34:56.789Z',
     price: '$300',
-    status: true
+    status: true,
   },
   {
-    id:2,
+    id: 2,
     agentId: 1,
     countRoom: 15,
     countBooking: 82,
     revenue: '$ 1.000.000',
     dayPay: '2024-03-28T12:34:56.789Z',
     price: '$300',
-    status: true
+    status: true,
   },
-]
+];

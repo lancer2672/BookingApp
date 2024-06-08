@@ -41,6 +41,7 @@ import Review from '@src/screens/UserScreens/ReviewHotel/Review';
 import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
+import HotelDetail from '@src/screens/UserScreens/components/HotelDetail';
 import { getAllValuesMatchingPattern } from '@src/store/as/as';
 import useRoomStore from '@src/store/fav_room';
 import useUserStore from '@src/store/user';
@@ -97,6 +98,7 @@ const MainStack = () => {
       />
       <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
+      <Stack.Screen name={'HotelDetail'} component={HotelDetail} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
       <Stack.Screen name={'EditProfileUser'} component={EditProfileUser} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
@@ -184,7 +186,7 @@ const AgentStack = () => {
         <Stack.Screen name={'ResetPassword'} component={ResetPassword} />
         <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
         <Stack.Screen name={'ListChannel'} component={ListChannel} />
-      <Stack.Screen name={'BankAccount'} component={BankAccount} />
+        <Stack.Screen name={'BankAccount'} component={BankAccount} />
 
         <Stack.Screen name={'ChannelScreen'} component={ChannelScreen} />
         <Stack.Screen

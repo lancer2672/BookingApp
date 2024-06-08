@@ -9,7 +9,7 @@ const textStyle = {
       fontWeight: '500',
     },
     3: {
-      fontSize: 24,
+      fontSize: 22,
       fontWeight: '500',
     },
     4: {

@@ -186,11 +186,10 @@ const UserSearchResultScreen = () => {
             hotel={hotelsMock[0]}
             room={hotelsMock[0].rooms[0]}
             onPress={() => {
-              navigate('ReviewBooking', {
+              navigate('HotelDetail', {
                 roomCustomer,
                 date,
                 hotel: hotelsMock[0],
-                room: hotelsMock[0].rooms[0],
               });
             }}
           />

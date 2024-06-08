@@ -10,28 +10,32 @@ import { Searchbar } from 'react-native-paper';
 import { useTheme } from 'styled-components';
 const UserSearchScreen = () => {
   const theme = useTheme();
-  const [markerPosition, setMarkerPosition] = useState(null);
+  const [markerPosition, setMarkerPosition] = useState({});
   const [region, setRegion] = useState(null);
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        // const {latitude, longitude} = position.coords;
-        const latitude = 10.878307605540192,
-          longitude = 106.80622622219741;
-        setRegion({
-          // latitude,
-          // longitude,
-          latitude,
-          longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        });
-        setMarkerPosition({latitude, longitude});
-        console.log('position', position.coords);
-      },
-      error => console.log('getCurrentPosition failed', error),
-      {enableHighAccuracy: true, timeout: 20000},
-    );
+    try{
+
+      Geolocation.getCurrentPosition(
+        position => {
+          const {latitude, longitude} = position.coords;
+          setRegion({
+            // latitude,
+            // longitude,
+            latitude,
+            longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          });
+          setMarkerPosition(()=>{latitude, longitude});
+          console.log('position', position.coords);
+        },
+        error => console.log('getCurrentPosition failed', error),
+        {enableHighAccuracy: true, timeout: 20000},
+      );
+    }
+    catch(er){
+      console.log("error GEO search",er);
+    }
   }, []);
   return (
     <View style={{flex: 1}}>
@@ -97,10 +101,14 @@ const UserSearchScreen = () => {
           <View style={{height:120}}>
               
           <MapView
+
             provider={PROVIDER_GOOGLE}
             style={{flex: 1, width: '100%'}}
             region={region}>
-            <Marker coordinate={markerPosition} />
+            <Marker coordinate={markerPosition || {
+              longitude:0,
+              latitude:0,
+            }} />
           </MapView>
           </View>
         </Pressable>
