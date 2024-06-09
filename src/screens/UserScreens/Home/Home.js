@@ -4,7 +4,6 @@ import {row, rowCenter, shadowBox, textShadow} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {formatCurrency} from '@src/utils/textFormat';
 import {
   FlatList,
   Image,
@@ -115,7 +114,21 @@ const Home = () => {
         style={[{margin: 4, width: 220, elevation: 2}]}
         onPress={() => {
           // onSelect(item);
-          navigate('HomeListNearbyRoom');
+          // navigate('HomeListNearbyRoom');
+          navigate('HotelRoomList', {
+            hotel: item,
+            roomCustomer: {
+              children: 0,
+              room: 1,
+              mature: 2,
+            },
+            date: {
+              checkinDate: new Date(),
+              checkoutDate: new Date(
+                new Date().setDate(new Date().getDate() + 1),
+              ),
+            },
+          });
         }}>
         <View></View>
         <ImageBackground
@@ -399,10 +412,6 @@ import {useEffect, useState} from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
 const RecommendList = ({hotels}) => {
-  const [searchKeyword, setSearchKeyword] = useState('');
-
-  // Call the useGetRecentMoviesQuery hook to fetch the recent movies
-  const data = [1, 2];
   const renderItem = ({item, index}) => {
     console.log('Item', item);
     return (
@@ -420,11 +429,25 @@ const RecommendList = ({hotels}) => {
         onPress={() => {
           // onSelect(item);
           // navigate('HomeListRoom', {hotel: item});
-          navigate('HomeListNearbyRoom', {hotel: item});
+          // navigate('HomeListNearbyRoom', {hotel: item});
+          navigate('HotelRoomList', {
+            hotel: item,
+            roomCustomer: {
+              children: 0,
+              room: 1,
+              mature: 2,
+            },
+            date: {
+              checkinDate: new Date(),
+              checkoutDate: new Date(
+                new Date().setDate(new Date().getDate() + 1),
+              ),
+            },
+          });
         }}>
         <Image
           resizeMode="cover"
-          source={{uri: 'https://picsum.photos/200'}}
+          source={{uri: item.avatar}}
           style={{
             width: '100%',
             height: '66%',
@@ -437,11 +460,16 @@ const RecommendList = ({hotels}) => {
             <Text
               style={[
                 textStyle.h[4],
-                {flex: 1, color: generalColor.primary, paddingTop: 8},
+                {
+                  flex: 1,
+                  color: generalColor.primary,
+                  paddingTop: 8,
+                  paddingHorizontal: 8,
+                },
               ]}>
-              ROSEWOOD LITTLE DIX BAY
+              {item.name}
             </Text>
-            <View style={[rowCenter, {marginBottom: 4, marginLeft: 4}]}>
+            <View style={[rowCenter, {marginLeft: 4}]}>
               <AntDesign
                 name="star"
                 color={generalColor.other.star}
@@ -452,10 +480,14 @@ const RecommendList = ({hotels}) => {
           <View></View>
           <View style={[rowCenter]}>
             <PinSVG height={18} color={generalColor.primary}></PinSVG>
-            <Text style={{color: generalColor.primary}}>Quận 5 TpHCM</Text>
+            <Text
+              numberOfLines={2}
+              style={{color: generalColor.primary, paddingRight: 24}}>
+              {item.address}
+            </Text>
           </View>
           <View style={rowCenter}>
-            <Text
+            {/* <Text
               style={[
                 textStyle.h[4],
                 {
@@ -471,7 +503,7 @@ const RecommendList = ({hotels}) => {
                 {color: generalColor.primary, fontSize: 20, paddingVertical: 8},
               ]}>
               / đêm
-            </Text>
+            </Text> */}
           </View>
         </View>
       </Pressable>
@@ -493,7 +525,7 @@ const RecommendList = ({hotels}) => {
           // parallaxScrollingOffset: 1,
         }}
         pagingEnabled={false}
-        data={data}
+        data={hotels}
         scrollAnimationDuration={2000}
         // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={renderItem}

@@ -17,6 +17,7 @@ import {
   View,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
+import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const BookingResult = () => {
@@ -121,10 +122,10 @@ const BookingResult = () => {
             <Text
               style={{
                 fontSize: 20,
-                color: generalColor.other.star,
+                color: image ? generalColor.other.star : generalColor.active,
               }}>
               {' '}
-              đang chờ xác nhận
+              {image ? 'đang chờ xác nhận' : 'thành công'}
             </Text>
           </View>
 
@@ -174,19 +175,24 @@ const BookingResult = () => {
             label="Tổng"
             content={formatCurrency(amount)}></ResultItem>
 
-          {/* <Text
-            style={{
-              marginTop: 12,
-              ...textStyle.h[4],
-              color: generalColor.primary,
-              textAlign: 'center',
-            }}>
-            Quét mã để nhận phòng
-          </Text>
+          {/* not need deposit -> */}
+          {!image && (
+            <>
+              <Text
+                style={{
+                  marginTop: 12,
+                  ...textStyle.h[4],
+                  color: generalColor.primary,
+                  textAlign: 'center',
+                }}>
+                Quét mã để nhận phòng
+              </Text>
 
-          <View style={{alignSelf: 'center', marginVertical: 8}}>
-            <QRCode></QRCode>
-          </View> */}
+              <View style={{alignSelf: 'center', marginVertical: 8}}>
+                <QRCode></QRCode>
+              </View>
+            </>
+          )}
           <ButtonComponent
             leftIcon={<PinSVG></PinSVG>}
             onPress={() => {

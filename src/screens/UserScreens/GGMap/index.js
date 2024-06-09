@@ -1,5 +1,4 @@
 import Geolocation from '@react-native-community/geolocation';
-import {hotelsMock} from '@src/mock/mock';
 import ChooseRoomAndCustomer from '@src/screens/UserScreens/Search/components/ChooseRoomAndCustomer';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
@@ -15,6 +14,7 @@ import {Avatar} from 'react-native-paper';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import hotelApi from '@src/api/hotel';
 import {navigate} from '@src/navigation/NavigationController';
 import {formatDate} from '@src/utils/textFormat';
 import HotelModal from '../../../components/HotelModal';
@@ -22,8 +22,22 @@ Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
 });
 
-const GGMap = ({hotels = hotelsMock}) => {
+const GGMap = ({}) => {
   const [region, setRegion] = useState(null);
+  const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    console.log('Fetch hotels GG map');
+    hotelApi
+      .getList()
+      .then(data => {
+        setHotels(data);
+      })
+      .catch(er => {
+        console.log('>>>fetch hotels GGmap err', er);
+      });
+  }, []);
+
   const [roomCustomerVisible, setRoomCustomerVisbile] = useState(false);
   const [roomCustomer, setRoomCustomer] = useState({
     children: 0,
@@ -133,7 +147,9 @@ const GGMap = ({hotels = hotelsMock}) => {
                 size={28}
                 style={{borderWidth: 2, borderColor: 'white'}}
                 source={{
-                  uri: hotel.avatar,
+                  uri:
+                    hotel.avatar ||
+                    'https://cdn.icon-icons.com/icons2/2490/PNG/512/hotel_icon_150155.png',
                 }}></Avatar.Image>
             </View>
           </Marker>

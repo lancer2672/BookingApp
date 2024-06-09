@@ -15,6 +15,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import RoomItem from '../components/RoomItem';
 
@@ -46,6 +47,17 @@ const HotelRoomList = () => {
   };
   const createBooking = async () => {
     try {
+      navigate('BookingResult', {
+        date,
+        roomCustomer,
+        roomIds: selectedRooms,
+        hotel,
+        amount: getTotal(),
+      });
+      showMessage({
+        message: `Đặt phòng thành công`,
+        type: 'success',
+      });
     } catch (er) {
       console.log('er', er);
     }
@@ -139,17 +151,17 @@ const HotelRoomList = () => {
         <ButtonComponent
           onPress={async () => {
             if (selectedRooms.length > 0) {
-              navigate('Payment', {
-                roomCustomer,
-                date,
-                hotel,
-                amount: getTotal(),
-                roomIds: selectedRooms,
-              });
-              // if (hotel.deposit_percent > 0) {
-              // } else {
-              //   await createBooking();
-              // }
+              if (hotel.deposit_percent > 0) {
+                navigate('Payment', {
+                  roomCustomer,
+                  date,
+                  hotel,
+                  amount: getTotal(),
+                  roomIds: selectedRooms,
+                });
+              } else {
+                await createBooking();
+              }
             }
           }}
           style={{

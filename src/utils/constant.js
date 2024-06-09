@@ -1,5 +1,5 @@
-import { generalColor } from '@src/theme/color';
-import { Dimensions } from 'react-native';
+import {generalColor} from '@src/theme/color';
+import {Dimensions} from 'react-native';
 
 export const URL_API = 'localhost:8080';
 export const REVIEW_TEXT = [
@@ -23,9 +23,10 @@ export const History_Status = {
   NOT_CHECKED_IN: 0,
   NOT_CHECKED_OUT: 1,
   CHECKED_OUT: 2,
+  PENDING: 3,
 };
 export const Room_Status = {
-  NOT_BOOKED: "AVAILABLE",
+  NOT_BOOKED: 'AVAILABLE',
   BOOKED: 1,
 };
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -40,6 +41,8 @@ export const getStatusText = status => {
       return 'Chưa trả phòng';
     case History_Status.CHECKED_OUT:
       return 'Đã trả phòng';
+    case History_Status.PENDING:
+      return 'Đang chờ xác nhận';
     default:
       return 'Trạng thái không xác định';
   }
@@ -49,6 +52,8 @@ export const getStatusColor = status => {
     case History_Status.CANCELED:
       return generalColor.status.canceled; // Đã huỷ phòng
     case History_Status.NOT_CHECKED_IN:
+      return generalColor.status.notCheckedIn; // Chưa nhận phòng
+    case History_Status.PENDING:
       return generalColor.status.notCheckedIn; // Chưa nhận phòng
     case History_Status.NOT_CHECKED_OUT:
       return generalColor.status.notCheckedOut; // Chưa trả phòng

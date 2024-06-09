@@ -56,7 +56,7 @@ export const hotelsMock = [
     district: 'District 4',
     ward: 'Ward 4',
     rating: 4.2,
-    deposit_percent: 20,
+    deposit_percent: 0,
     avatar: 'https://picsum.photos/200',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
     around: {
