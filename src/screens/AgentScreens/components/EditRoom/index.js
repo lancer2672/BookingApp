@@ -1,23 +1,14 @@
-import TextInputComponent from '@src/components/TextInputComponent';
-import textStyle from '@src/theme/text';
-import { MASK_FORMAT } from '@src/utils/textFormat';
-import { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, Pressable, TouchableOpacity, Modal, Image } from 'react-native';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
-import AgentHeader from '../Header';
-import ButtonComponent from '@src/components/Button';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { IconButton } from 'react-native-paper';
+import TextInputComponent from '@src/components/TextInputComponent';
 import { generalColor } from '@src/theme/color';
-import { ro } from 'date-fns/locale';
-import { center, rowCenter } from '@src/theme/style';
-import { goBack } from '@src/navigation/NavigationController';
-import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
-import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
-import { positionStyle } from 'react-native-flash-message';
+import textStyle from '@src/theme/text';
+import { useState } from 'react';
+import { Image, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const EditRoom = ({ roomDefaut }) => {
     const [room, setRoom] = useState(roomDefaut)
     const handlesSetValue = (index, value) => {
@@ -106,11 +97,11 @@ const EditRoom = ({ roomDefaut }) => {
                                     placeholderColor="black"
                                 />
                                 <TextInputComponent
-                                    value={room.pricePerNight.toString()}
+                                    value={room.price.toString()}
                                     widthTextInput={"80%"}
                                     heightTextInput={40}
                                     onChangeText={text => {
-                                        handlesSetValue('pricePerNight', text);
+                                        handlesSetValue('', text);
                                     }}
 
                                     marginBottom={0}

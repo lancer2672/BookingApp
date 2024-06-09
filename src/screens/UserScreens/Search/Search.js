@@ -1,20 +1,18 @@
 import Geolocation from '@react-native-community/geolocation';
-import { ClockSVG, PinSVG, TargetSVG } from '@src/assets/icons';
-import { navigate } from '@src/navigation/NavigationController';
-import { generalColor } from '@src/theme/color';
+import {ClockSVG, PinSVG, TargetSVG} from '@src/assets/icons';
+import {navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Searchbar } from 'react-native-paper';
-import { useTheme } from 'styled-components';
+import {useEffect, useState} from 'react';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Searchbar} from 'react-native-paper';
+import {useTheme} from 'styled-components';
 const UserSearchScreen = () => {
   const theme = useTheme();
   const [markerPosition, setMarkerPosition] = useState({});
   const [region, setRegion] = useState(null);
   useEffect(() => {
-    try{
-
+    try {
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
@@ -26,15 +24,16 @@ const UserSearchScreen = () => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           });
-          setMarkerPosition(()=>{latitude, longitude});
+          setMarkerPosition(() => {
+            latitude, longitude;
+          });
           console.log('position', position.coords);
         },
         error => console.log('getCurrentPosition failed', error),
         {enableHighAccuracy: true, timeout: 20000},
       );
-    }
-    catch(er){
-      console.log("error GEO search",er);
+    } catch (er) {
+      console.log('error GEO search', er);
     }
   }, []);
   return (
@@ -86,19 +85,18 @@ const UserSearchScreen = () => {
             navigate('GGMap');
             console.log('GGMAP');
           }}>
-          <View style={styles.item}>
+          <View style={[styles.item, {paddingBottom: 0, paddingTop: 4}]}>
             <TargetSVG></TargetSVG>
             <Text
               style={{
                 //   color: theme.color.text.primary,
                 ...textStyle.content.medium,
                 marginLeft: 6,
-            
               }}>
               Khách sạn xung quanh bạn
             </Text>
           </View>
-          <View style={{height:120}}>
+          {/* <View style={{height:120}}>
               
           <MapView
 
@@ -110,10 +108,10 @@ const UserSearchScreen = () => {
               latitude:0,
             }} />
           </MapView>
-          </View>
+          </View> */}
         </Pressable>
 
-        <View style={{padding:12,paddingTop:0 }}>
+        <View style={{padding: 12, paddingTop: 0}}>
           <RecentSearches></RecentSearches>
         </View>
       </View>
@@ -180,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 12,
-  
+
     borderBottomColor: 'gray',
   },
 });

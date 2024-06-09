@@ -2,10 +2,12 @@ import {useRoute} from '@react-navigation/native';
 import {PinSVG} from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
 import {goBack, navigate} from '@src/navigation/NavigationController';
+import useUserStore from '@src/store/user';
 import {generalColor} from '@src/theme/color';
 import {row, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatDate} from '@src/utils/textFormat';
+import {formatCurrency, formatDate} from '@src/utils/textFormat';
+import {useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -15,12 +17,17 @@ import {
   View,
 } from 'react-native';
 import {Divider} from 'react-native-paper';
-import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const BookingResult = () => {
-  const {date, roomCustomer, room, hotel} = useRoute().params;
+  const {date, roomCustomer, roomIds, hotel, amount, image} = useRoute().params;
+  const [roomsBooked, setRoomBooked] = useState([]);
+  const user = useUserStore(state => state.user);
 
+  useEffect(() => {
+    const rooms = hotel.rooms.filter(t => roomIds.includes(t.id));
+    setRoomBooked(rooms);
+  }, []);
   const handleBooking = () => {
     navigate('Home');
   };
@@ -100,13 +107,74 @@ const BookingResult = () => {
               </View>
             </View>
           </View>
+          <ResultItem
+            label={`Số lượng phòng`}
+            content={roomsBooked.length}></ResultItem>
+          <View style={[rowCenter, {alignItems: 'center', marginVertical: 8}]}>
+            <Text
+              style={{
+                ...textStyle.h[4],
+                color: generalColor.primary,
+              }}>
+              Trạng thái:
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: generalColor.other.star,
+              }}>
+              {' '}
+              đang chờ xác nhận
+            </Text>
+          </View>
 
-          <ResultItem label="Mã phòng" content={room.id}></ResultItem>
-          <ResultItem label="Tên phòng" content={room.name}></ResultItem>
-          <ResultItem label="Tên khách hàng" content={'012312312'}></ResultItem>
-          <ResultItem label="Email" content={'012312312'}></ResultItem>
-          <ResultItem label="Số điện thoại" content={'012312312'}></ResultItem>
-          <Text
+          {roomsBooked.map((t, i) => {
+            return (
+              <>
+                <ResultItem
+                  label={`Mã phòng số ${i + 1}`}
+                  content={t.id}></ResultItem>
+                <ResultItem
+                  label={`Tên phòng số ${i + 1}`}
+                  content={t.name}></ResultItem>
+                <ResultItem
+                  label={`Giá phòng số ${i + 1}`}
+                  content={formatCurrency(t.pricePerNight)}></ResultItem>
+              </>
+            );
+          })}
+          <ResultItem
+            label="Tên khách hàng"
+            content={`${user.lastName} ${user.firstName}`}></ResultItem>
+          <ResultItem label="Email" content={user.email}></ResultItem>
+          <ResultItem
+            label="Số điện thoại"
+            content={user.phoneNumber}></ResultItem>
+
+          {image && (
+            <>
+              <ResultItem
+                label="Số tiền đã cọc"
+                content={formatCurrency(
+                  Math.floor(Number((amount * hotel.deposit_percent) / 100)),
+                )}></ResultItem>
+              <Image
+                source={{uri: image.uri}}
+                style={{
+                  marginVertical: 6,
+                  height: 120,
+                  width: 120,
+                  borderRadius: 4,
+                  alignSelf: 'center',
+                }}></Image>
+            </>
+          )}
+
+          <ResultItem
+            label="Tổng"
+            content={formatCurrency(amount)}></ResultItem>
+
+          {/* <Text
             style={{
               marginTop: 12,
               ...textStyle.h[4],
@@ -118,7 +186,7 @@ const BookingResult = () => {
 
           <View style={{alignSelf: 'center', marginVertical: 8}}>
             <QRCode></QRCode>
-          </View>
+          </View> */}
           <ButtonComponent
             leftIcon={<PinSVG></PinSVG>}
             onPress={() => {

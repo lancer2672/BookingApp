@@ -1,95 +1,111 @@
 import ButtonComponent from '@src/components/Button';
-import { generalColor } from '@src/theme/color';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { useAppContext } from '@src/context/appContext';
-import { chatClient, useChatClient } from '@src/hooks/useChatClient';
-import { agentMock } from '@src/mock/mock';
-import { navigate } from '@src/navigation/NavigationController';
-import { addItem, getKey, removeItem } from '@src/store/as/as';
-import useRoomStore from '@src/store/fav_room';
-import { useEffect, useState } from 'react';
+import {useAppContext} from '@src/context/appContext';
+import {chatClient, useChatClient} from '@src/hooks/useChatClient';
+import {agentMock} from '@src/mock/mock';
+import {navigate} from '@src/navigation/NavigationController';
+import {formatCurrency} from '@src/utils/textFormat';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+
+import {expandAnimation} from '@src/animation';
+import {rowCenter} from '@src/theme/style';
+import {useState} from 'react';
 import {
   Dimensions,
   Image,
+  LayoutAnimation,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {TextWithIcon} from '../HotelRoomList/HotelRoomList';
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const RoomItem = ({hotel, room, onPress}) => {
-  const {rooms, setRoom, removeRoom} = useRoomStore();
-  const {createOrJoinChannel} = useChatClient()
+const ITEM_COUNT = 2;
+const RoomItem = ({room, isSelected, onPress}) => {
+  const {createOrJoinChannel} = useChatClient();
   const {setChannel} = useAppContext();
-
-  const [isFav, setisFav] = useState(false);
-  const toggleFavourite = async () => {
+  const [numsItem, setNumsItem] = useState(ITEM_COUNT);
+  const handleChat = async () => {
     try {
-      if (isFav) {
-        console.log('isFav', isFav, hotel);
-        await removeItem(getKey(hotel.id, room.id));
-        setRoom(rooms.filter(t => t.room.id != room.id));
-        setisFav(() => false);
-      } else {
-        await addItem(getKey(hotel.id, room.id), {room, hotel});
-        setRoom([...rooms, {room, hotel}]);
-        setisFav(() => true);
-      }
-    } catch {}
-  };
-  useEffect(() => {
-    if (rooms.find(t => t.room.id == room.id)) {
-      setisFav(true);
-    } else {
-      setisFav(false);
-    }
-  }, [rooms]);
-  const handleChat= async()=>{
-    try{
-      console.log("chatClient.user",chatClient.user)
-      const agent = agentMock
-      const ch =  await createOrJoinChannel(Date.now().toString(),[
-        chatClient.user,{
-          id: "testagent3",
-          name:`${agent.lastName} ${agent.firstName}`,
+      console.log('chatClient.user', chatClient.user);
+      const agent = agentMock;
+      const ch = await createOrJoinChannel(Date.now().toString(), [
+        chatClient.user,
+        {
+          id: 'testagent3',
+          name: `${agent.lastName} ${agent.firstName}`,
           avatar: agent.avatar,
-        }
-      ])
-      setChannel(ch)
-      navigate("ChannelScreen")
-    }catch (er){
-      console.log("Chat error",er)
+        },
+      ]);
+      setChannel(ch);
+      navigate('ChannelScreen');
+    } catch (er) {
+      console.log('Chat error', er);
     }
-  }
+  };
+  console.log('amenities', room.name, room.amenities);
   return (
-    <View style={{marginTop: 12}}>
-      <Image
-        resizeMode="cover"
-        source={{uri: hotel.avatar}}
-        style={styles.image}></Image>
-      <TouchableOpacity
-        onPress={toggleFavourite}
-        style={{
-          position: 'absolute',
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-
-          backgroundColor: generalColor.primary,
-          top: 12,
-          alignItems: 'center',
-          justifyContent: 'center',
-          right: 12,
-        }}>
-        <AntDesign
-          name={isFav ? 'heart' : 'hearto'}
-          size={20}
-          color={'white'}
+    <Pressable onPress={onPress} style={{marginTop: 12}}>
+      <View>
+        <Carousel
+          loop
+          width={SCREEN_WIDTH}
+          height={180}
+          autoPlay={false}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 1,
+            parallaxScrollingOffset: 1,
+          }}
+          pagingEnabled={false}
+          data={room.images}
+          scrollAnimationDuration={500}
+          // onSnapToItem={(index) => console.log("current index:", index)}
+          renderItem={({item, index}) => {
+            return (
+              <View>
+                <Image
+                  resizeMode="cover"
+                  source={{uri: item}}
+                  style={{
+                    width: '100%',
+                    height: 180,
+                  }}></Image>
+              </View>
+            );
+          }}
         />
-      </TouchableOpacity>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 12,
+            flexDirection: 'row',
+
+            justifyContent: 'space-between', // Added for centering
+            alignItems: 'center',
+            left: 12,
+            right: 12,
+            top: 0,
+            bottom: 0,
+          }}>
+          <AntDesign
+            name="left"
+            color={generalColor.black[50]}
+            size={28}></AntDesign>
+          <AntDesign
+            name="right"
+            color={generalColor.black[50]}
+            size={28}></AntDesign>
+        </View>
+      </View>
+
       <TouchableOpacity
         onPress={handleChat}
         style={{
@@ -97,26 +113,47 @@ const RoomItem = ({hotel, room, onPress}) => {
           width: 40,
           height: 40,
           borderRadius: 20,
-
           backgroundColor: generalColor.primary,
-          top: 60,
+          top: 12,
           alignItems: 'center',
           justifyContent: 'center',
           right: 12,
         }}>
-         <Ionicons
+        <Ionicons
           name={'chatbubble-ellipses-outline'}
           size={20}
           color={'white'}
         />
       </TouchableOpacity>
+
       <View style={styles.itemContainer}>
-        <Text style={{color: generalColor.primary, ...textStyle.h[3]}}>
-          {hotel.name}
-        </Text>
-        <Text style={{color: generalColor.primary, ...textStyle.content.small}}>
-          {hotel.description}
-        </Text>
+        <View style={rowCenter}>
+          <Text
+            style={{
+              color: generalColor.primary,
+              marginRight: 12,
+              ...textStyle.h[3],
+            }}>
+            {room.name}
+          </Text>
+          {isSelected && (
+            <>
+              <AntDesign
+                name="check"
+                size={24}
+                color={generalColor.active}></AntDesign>
+              <Text
+                style={{
+                  color: generalColor.active,
+
+                  ...textStyle.h[3],
+                }}>
+                đã chọn
+              </Text>
+            </>
+          )}
+        </View>
+
         <Text
           style={{
             marginTop: 12,
@@ -125,8 +162,22 @@ const RoomItem = ({hotel, room, onPress}) => {
             ...textStyle.content.large,
             marginRight: 12,
           }}>
-          {room.pricePerNight}/ 1 đêm
+          {formatCurrency(room.pricePerNight)}/ 1 đêm
         </Text>
+      </View>
+      <View style={{paddingHorizontal: 12}}>
+        {room.amenities?.slice(0, numsItem).map(t => {
+          return (
+            <TextWithIcon
+              icon={
+                <AntDesign
+                  name="check"
+                  color={generalColor.black[50]}
+                  size={20}></AntDesign>
+              }
+              text={t.name}></TextWithIcon>
+          );
+        })}
       </View>
       <View
         style={{
@@ -134,20 +185,21 @@ const RoomItem = ({hotel, room, onPress}) => {
           alignItems: 'center',
           paddingHorizontal: 12,
         }}>
-        <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
-          <Ionicons
-            name="bed-outline"
-            size={24}
-            color={generalColor.black[100]}></Ionicons>
-          <Text
-            style={{
-              color: generalColor.black[100],
-              ...textStyle.content.medium,
-              marginRight: 12,
-            }}>
-            {room.bed} Giường
-          </Text>
-
+        {/* {room.bed && (
+          <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
+            <Ionicons
+              name="bed-outline"
+              size={24}
+              color={generalColor.black[100]}></Ionicons>
+            <Text
+              style={{
+                color: generalColor.black[100],
+                ...textStyle.content.medium,
+                marginRight: 12,
+              }}>
+              {room.bed} Giường
+            </Text>
+            
           <Ionicons
             name="person-outline"
             size={24}
@@ -159,14 +211,38 @@ const RoomItem = ({hotel, room, onPress}) => {
             }}>
             {room.numOfPeople} khách
           </Text>
-        </View>
+          </View>
+        )} */}
+
         <ButtonComponent
-          onPress={onPress}
-          style={{width: 100, marginLeft: 'auto'}}
+          outline
+          onPress={() => {
+            setNumsItem(prev => {
+              if (prev == ITEM_COUNT) {
+                return room.amenities.length;
+              } else {
+                // return ITEM_COUNT;
+              }
+            });
+            LayoutAnimation.configureNext(expandAnimation);
+          }}
+          leftIcon={
+            <Entypo
+              name="chevron-down"
+              color={generalColor.black[50]}
+              size={28}></Entypo>
+          }
+          style={{
+            width: 120,
+            marginLeft: 'auto',
+            alignSelf: 'flex-end',
+            marginTop: 8,
+            padding: 0,
+          }}
           txtStyle={textStyle.content.medium}
-          text={'Đặt phòng'}></ButtonComponent>
+          text={'Xem thêm'}></ButtonComponent>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

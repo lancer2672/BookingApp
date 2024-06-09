@@ -1,15 +1,15 @@
-import { PinSVG } from '@src/assets/icons';
-import { navigate } from '@src/navigation/NavigationController';
-import { generalColor } from '@src/theme/color';
-import { rowCenter, shadowBox } from '@src/theme/style';
+import {PinSVG} from '@src/assets/icons';
+import {navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
+import {rowCenter, shadowBox} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {
   History_Status,
   getStatusColor,
   getStatusText,
 } from '@src/utils/constant';
-import { formatCurrency, formatDate } from '@src/utils/textFormat';
-import { useState } from 'react';
+import {formatCurrency, formatDate} from '@src/utils/textFormat';
+import {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderWidth: 1,
     height: 80,
-    borderColor:"gray",
+    borderColor: 'gray',
     borderRadius: 12,
   },
 });

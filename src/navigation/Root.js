@@ -1,8 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import authApi from '@src/api/auth';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
-import { useChatClient } from '@src/hooks/useChatClient';
+import {useChatClient} from '@src/hooks/useChatClient';
 import Dashboard from '@src/screens/AgentScreens/Dashboard';
 import BankAccount from '@src/screens/AgentScreens/components/BankAccount/BankAccount';
 import BillAgent from '@src/screens/AgentScreens/components/BillAgent';
@@ -42,15 +42,15 @@ import UserSearchScreen from '@src/screens/UserScreens/Search/Search';
 import UserSearchDetailScreen from '@src/screens/UserScreens/Search/SearchDetail';
 import UserSearchResultScreen from '@src/screens/UserScreens/Search/SearchResult';
 import HotelDetail from '@src/screens/UserScreens/components/HotelDetail';
-import { getAllValuesMatchingPattern } from '@src/store/as/as';
+import {getAllValuesMatchingPattern} from '@src/store/as/as';
 import useRoomStore from '@src/store/fav_room';
 import useUserStore from '@src/store/user';
-import { ROLE } from '@src/utils/constant';
-import { useEffect, useState } from 'react';
+import {ROLE} from '@src/utils/constant';
+import {useEffect, useState} from 'react';
 import DetailBookingHitory from '../screens/UserScreens/BookingHistory/DetailBookingHistory';
-import { navigationRef } from './NavigationController';
-import { Tabs } from './NavigationTab';
-import { StaffNavTabs } from './StaffNavTab';
+import {navigationRef} from './NavigationController';
+import {Tabs} from './NavigationTab';
+import {StaffNavTabs} from './StaffNavTab';
 const screenOptions = {
   header: () => null,
   cardOverlayEnabled: true,
@@ -98,8 +98,8 @@ const MainStack = () => {
       />
       <Stack.Screen name={'FavouriteRooms'} component={FavouriteRooms} />
       <Stack.Screen name={'Notification'} component={Notification} />
-      <Stack.Screen name={'HotelDetail'} component={HotelDetail} />
       <Stack.Screen name={'HomeListRoom'} component={HomeListRoom} />
+      <Stack.Screen name={'HotelDetail'} component={HotelDetail} />
       <Stack.Screen name={'EditProfileUser'} component={EditProfileUser} />
       <Stack.Screen name={'UserSearchScreen'} component={UserSearchScreen} />
       <Stack.Screen name={'BookingResult'} component={BookingResult} />

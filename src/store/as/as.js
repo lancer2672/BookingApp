@@ -1,8 +1,9 @@
 // storage.js :)), replace by calling api
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const getKey = (hotelId, roomId) => {
-  return `room/${hotelId}/${roomId}`;
+//TODO: Clean code -> this is hotel not room
+export const getKey = (hotelId, id) => {
+  return `room/${hotelId}/${id}`;
 };
 export const getNotiKey = notiId => {
   return `noti/${notiId}`;

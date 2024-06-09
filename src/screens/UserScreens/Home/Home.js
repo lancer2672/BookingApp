@@ -1,10 +1,10 @@
-import { PinSVG } from '@src/assets/icons';
-import { generalColor } from '@src/theme/color';
-import { row, rowCenter, shadowBox, textShadow } from '@src/theme/style';
+import {PinSVG} from '@src/assets/icons';
+import {generalColor} from '@src/theme/color';
+import {row, rowCenter, shadowBox, textShadow} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { formatCurrency } from '@src/utils/textFormat';
+import {formatCurrency} from '@src/utils/textFormat';
 import {
   FlatList,
   Image,
@@ -18,9 +18,9 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import Geolocation from '@react-native-community/geolocation';
-import { navigate } from '@src/navigation/NavigationController';
-import { ScrollView } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import {navigate} from '@src/navigation/NavigationController';
+import {ScrollView} from 'react-native';
+import {IconButton} from 'react-native-paper';
 
 const toRad = value => {
   return (value * Math.PI) / 180;
@@ -44,7 +44,7 @@ const calculateDistance = (pos1, pos2) => {
 const getNearbyHotels = (currentPos, hotels, radius) => {
   return hotels.filter(hotel => {
     const hotelPos = hotel.location;
-    console.log("Hotel.location",hotel.location);
+    console.log('Hotel.location', hotel.location);
     const distance = calculateDistance(currentPos, hotelPos);
     return distance <= radius;
   });
@@ -87,27 +87,35 @@ const Home = () => {
   useEffect(() => {
     if (currentPosition && hotels.length > 0) {
       const nearbyHotels = getNearbyHotels(currentPosition, hotels, 3);
-      console.log("nearby hotels",nearbyHotels)
+      console.log('nearby hotels', nearbyHotels[0]);
       //TODO: clean
-      setNearbyHotels(nearbyHotels.filter(t=>t.rooms.filter(r => r.status == Room_Status.NOT_BOOKED).length != 0).map(t =>{
-        const hotelPos = t.location;
-        const distance = calculateDistance(currentPosition, hotelPos);
-        return {
-          ...t,
-          distance
-        }
-      }));
+      setNearbyHotels(
+        nearbyHotels
+          .filter(
+            t =>
+              t.rooms.filter(r => r.status == Room_Status.NOT_BOOKED).length !=
+              0,
+          )
+          .map(t => {
+            const hotelPos = t.location;
+            const distance = calculateDistance(currentPosition, hotelPos);
+            return {
+              ...t,
+              distance,
+            };
+          }),
+      );
     }
   }, [currentPosition, hotels]);
   console.log('hotels', hotels.length);
   const renderItem = ({item, index}) => {
-    console.log("item.rooms",item.rooms);
+    console.log('item.rooms', item.rooms);
     return (
       <Pressable
         style={[{margin: 4, width: 220, elevation: 2}]}
         onPress={() => {
           // onSelect(item);
-          navigate("HomeListNearbyRoom")
+          navigate('HomeListNearbyRoom');
         }}>
         <View></View>
         <ImageBackground
@@ -156,9 +164,13 @@ const Home = () => {
             <View></View>
           </View>
 
-            <Text style={[{color: 'white', paddingRight: 20, marginBottom:12}, textShadow]}>
-              Cách {item.distance.toFixed(1)} km
-            </Text>
+          <Text
+            style={[
+              {color: 'white', paddingRight: 20, marginBottom: 12},
+              textShadow,
+            ]}>
+            Cách {item.distance.toFixed(1)} km
+          </Text>
           <View style={[rowCenter]}>
             <PinSVG height={18} color={'white'}></PinSVG>
             <Text style={[{color: 'white', paddingRight: 20}, textShadow]}>
@@ -166,23 +178,28 @@ const Home = () => {
             </Text>
           </View>
 
-          <View style={rowCenter}>
+          {/* <View style={rowCenter}>
             <Text
               style={[
                 textStyle.h[4],
                 textShadow,
                 {color: 'white', fontWeight: '500', paddingVertical: 8},
               ]}>
-              Còn {item.rooms.filter(r=>r.status == Room_Status.NOT_BOOKED).length}
+              Còn{' '}
+              {
+                item.rooms.filter(r => r.status == Room_Status.NOT_BOOKED)
+                  .length
+              }
             </Text>
             <Text
               style={[
                 textShadow,
                 {color: 'white', fontSize: 20, paddingVertical: 8},
               ]}>
-               {" "}phòng trống
+              {' '}
+              phòng trống
             </Text>
-          </View>
+          </View> */}
         </ImageBackground>
 
         {/* <ButtonComponent
@@ -209,7 +226,7 @@ const Home = () => {
     LayoutAnimation.configureNext(expandAnimation);
   }, [hotels.length]);
   return (
-    <ScrollView style={{flex: 1, backgroundColor:generalColor.primary}}>
+    <ScrollView style={{flex: 1, backgroundColor: generalColor.primary}}>
       <ImageBackground
         source={require('../../../assets/imgs/bg.png')}
         style={styles.bg}>
@@ -297,7 +314,7 @@ const Home = () => {
             Nổi bật
           </Text>
         </View>
-        <RecommendList hotels= {hotels.slice(0,4)}></RecommendList>
+        <RecommendList hotels={hotels.slice(0, 4)}></RecommendList>
       </View>
       {nearbyHotels.length > 0 && (
         <View style={{flex: 2, padding: 12, backgroundColor: 'white'}}>
@@ -327,7 +344,7 @@ const Home = () => {
             </Pressable>
           </View>
 
-          <FlatList 
+          <FlatList
             renderItem={renderItem}
             data={nearbyHotels}
             horizontal
@@ -374,11 +391,11 @@ const styles = StyleSheet.create({
   },
 });
 
-import { expandAnimation } from '@src/animation';
+import {expandAnimation} from '@src/animation';
 import hotelApi from '@src/api/hotel';
-import { getAllValuesMatchingPattern } from '@src/store/as/as';
-import { Room_Status, SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
-import { useEffect, useState } from 'react';
+import {getAllValuesMatchingPattern} from '@src/store/as/as';
+import {Room_Status, SCREEN_HEIGHT, SCREEN_WIDTH} from '@src/utils/constant';
+import {useEffect, useState} from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
 const RecommendList = ({hotels}) => {

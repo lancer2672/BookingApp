@@ -1,11 +1,13 @@
 import {useRoute} from '@react-navigation/native';
 import ButtonComponent from '@src/components/Button';
+import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import TextInputComponent from '@src/components/TextInputComponent';
 import {goBack, navigate} from '@src/navigation/NavigationController';
 import {addItem, getNotiKey} from '@src/store/as/as';
 import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import {center, rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
+import {formatCurrency} from '@src/utils/textFormat';
 import {useFormik} from 'formik';
 import {useState} from 'react';
 import {
@@ -19,28 +21,24 @@ import {
 } from 'react-native';
 import {Divider} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {paymentSchema} from './components/validateSchema';
 
 export const PaymentMethod = {
   ATM: 'ATM',
   CASH: 'CASH',
 };
 const Payment = () => {
-  const {date, roomCustomer, room, hotel} = useRoute().params;
-  const handleBooking = async () => {
-    await addItem(getNotiKey(Date.now()), {
-      title: 'Đặt phòng',
-      description: 'Bạn đã đặt phòng thành công',
-      createdAt: Date.now(),
-      isSeen: false,
-    });
-    navigate('BookingResult', {
-      date,
-      roomCustomer,
-      room,
-      hotel,
-    });
-  };
+  const {date, roomCustomer, amount, roomIds, hotel} = useRoute().params;
+  const [uploadImage, setUploadImage] = useState(null);
+  const [visible, setVisible] = useState(false);
+
+  const [agentBank, setAgentBank] = useState({
+    bank_name: 'Vietcombank',
+    account_number: '071 1 00 0261892',
+    qr_code:
+      'https://hotel-booking-storage-30-04-2024.s3.ap-southeast-1.amazonaws.com/image/bank/bank-qr-f7f8357f-a359-43fb-8987-eedf9019149f.png',
+    bank_name: 'Vietcombank',
+  });
+
   const [selectedMethod, setSelectedMethod] = useState(PaymentMethod.CASH);
   const formik = useFormik({
     initialValues: {
@@ -49,7 +47,7 @@ const Payment = () => {
       email: '',
       phoneNumber: '',
     },
-    validationSchema: paymentSchema,
+    // validationSchema: paymentSchema,
     onSubmit: async values => {
       await addItem(getNotiKey(Date.now()), {
         title: 'Đặt phòng',
@@ -60,11 +58,33 @@ const Payment = () => {
       navigate('BookingResult', {
         date,
         roomCustomer,
-        room,
+        roomIds,
         hotel,
+        amount,
+        image: uploadImage,
       });
     },
   });
+  const createBooking = async () => {
+    try {
+      // await addItem(getNotiKey(Date.now()), {
+      //   title: 'Đặt phòng',
+      //   description: 'Bạn đã đặt phòng thành công',
+      //   createdAt: Date.now(),
+      //   isSeen: false,
+      // });
+      navigate('BookingResult', {
+        date,
+        roomCustomer,
+        roomIds,
+        hotel,
+        amount,
+        image: uploadImage,
+      });
+    } catch (er) {
+      console.log('er', er);
+    }
+  };
   console.log('formik.errors', formik.errors);
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 12}}>
@@ -92,12 +112,13 @@ const Payment = () => {
             <View style={{flex: 1}}>
               <TextInputComponent
                 label="Tên"
-                placeholder="Nhập tên"
+                placeholder="Tên chủ tài khoản"
                 placeholderColor="black"
                 labelStyle={{color: generalColor.primary}}
                 style={{...styles.input}}
+                editable={false}
                 styleTextInput={{color: 'black'}}
-                value={formik.values.firstName}
+                value={agentBank.account_number}
                 onChangeText={formik.handleChange('firstName')}
                 onBlur={formik.handleBlur('firstName')}
                 error={formik.touched.firstName || formik.errors.firstName}
@@ -106,44 +127,30 @@ const Payment = () => {
                 }
               />
             </View>
-            <View style={{flex: 1, marginLeft: 20}}>
-              <TextInputComponent
-                label="Họ"
-                placeholder="Nhập Họ"
-                placeholderColor="black"
-                labelStyle={{color: generalColor.primary}}
-                style={{...styles.input}}
-                styleTextInput={{color: 'black'}}
-                value={formik.values.lastName}
-                error={formik.touched.lastName || formik.errors.lastName}
-                onChangeText={formik.handleChange('lastName')}
-                onBlur={formik.handleBlur('lastName')}
-                errorMessage={formik.touched.lastName && formik.errors.lastName}
-              />
-            </View>
           </View>
           <TextInputComponent
-            label="Email"
-            placeholder="Nhập địa chỉ email"
+            label="Tên ngân hàng"
+            placeholder="Tên ngân hàng"
             placeholderColor="black"
+            editable={false}
             labelStyle={{color: generalColor.primary}}
             style={styles.input}
             styleTextInput={{color: 'black'}}
-            value={formik.values.email}
+            value={agentBank.bank_name}
             error={formik.touched.email || formik.errors.email}
             onChangeText={formik.handleChange('email')}
             onBlur={formik.handleBlur('email')}
             errorMessage={formik.touched.email && formik.errors.email}
           />
           <TextInputComponent
-            label="Số điện thoại"
-            placeholder="Nhập số điện thoại"
+            label="Số tài khoản"
+            placeholder="Số tài khoản"
             placeholderColor="black"
             labelStyle={{color: generalColor.primary}}
             style={styles.input}
+            editable={false}
             styleTextInput={{color: 'black'}}
-            keyboardType="numeric"
-            value={formik.values.phoneNumber}
+            value={agentBank.account_number}
             error={formik.touched.phoneNumber || formik.errors.phoneNumber}
             onChangeText={formik.handleChange('phoneNumber')}
             onBlur={formik.handleBlur('phoneNumber')}
@@ -151,6 +158,28 @@ const Payment = () => {
               formik.touched.phoneNumber && formik.errors.phoneNumber
             }
           />
+
+          <Text
+            style={{
+              ...textStyle.h[4],
+              color: generalColor.primary,
+            }}>
+            Số tiền:{' '}
+            {formatCurrency(
+              Math.floor(Number((amount * hotel.deposit_percent) / 100)),
+            )}
+          </Text>
+
+          <Text>Đặt cọc {hotel.deposit_percent}% tiền phòng</Text>
+          <Image
+            source={{uri: agentBank.qr_code}}
+            style={{
+              marginTop: 8,
+              height: 120,
+              width: 120,
+              borderRadius: 4,
+              alignSelf: 'center',
+            }}></Image>
           <Text
             style={{
               marginTop: 12,
@@ -158,9 +187,9 @@ const Payment = () => {
               color: generalColor.primary,
               textAlign: 'left',
             }}>
-            Thanh toán
+            Ảnh chuyển khoản
           </Text>
-          <Item
+          {/* <Item
             methodName="Thẻ tín dụng"
             src={require('../../../assets/icons/atm.png')}
             onClick={() => setSelectedMethod(PaymentMethod.ATM)}
@@ -173,11 +202,37 @@ const Payment = () => {
             onClick={() => setSelectedMethod(PaymentMethod.CASH)}
             isSelected={selectedMethod === PaymentMethod.CASH}
             methodDes="Thanh toán bằng tiền mặt"
-          />
+          /> */}
+          <ImagePickerModal
+            onResult={images => {}}
+            onResultOrigin={images => {
+              console.log('images', images[0]);
+              setUploadImage(() => images[0]);
+            }}
+            visible={visible}
+            onClose={() => setVisible(false)}></ImagePickerModal>
+
+          <TouchableOpacity
+            onPress={async () => {
+              setVisible(() => true);
+            }}
+            style={styles.identityCard}>
+            {uploadImage ? (
+              <Image
+                style={styles.img}
+                source={{
+                  uri: uploadImage.uri,
+                }}></Image>
+            ) : (
+              <View style={center}>
+                <Text style={{color: generalColor.primary}}>tải ảnh lên</Text>
+              </View>
+            )}
+          </TouchableOpacity>
           <ButtonComponent
-            onPress={formik.handleSubmit}
+            onPress={createBooking}
             style={{marginVertical: 24}}
-            text="Đặt phòng"
+            text="Tiếp tục"
           />
         </View>
       </ScrollView>
@@ -242,6 +297,19 @@ const styles = StyleSheet.create({
     ...textStyle.content.large,
     color: generalColor.other.stronggray,
   },
+  img: {width: '100%', height: '100%', resizeMode: 'contain'},
+  identityCard: {
+    borderRadius: 12,
+    flex: 1,
+    width: '50%',
+    alignSelf: 'center',
+    marginTop: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 120,
+    backgroundColor: generalColor.other.lightgray,
+  },
+
   label: {
     textTransform: 'uppercase',
     ...textStyle.h[4],

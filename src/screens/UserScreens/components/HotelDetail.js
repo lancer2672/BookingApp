@@ -405,7 +405,7 @@ const HotelDetail = () => {
         </View>
         <ButtonComponent
           onPress={() => {
-            navigate('Payment', {roomCustomer, date, hotel});
+            navigate('HotelRoomList', {roomCustomer, date, hotel});
           }}
           style={{
             borderRadius: 24,

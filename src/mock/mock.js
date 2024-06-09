@@ -56,6 +56,7 @@ export const hotelsMock = [
     district: 'District 4',
     ward: 'Ward 4',
     rating: 4.2,
+    deposit_percent: 20,
     avatar: 'https://picsum.photos/200',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
     around: {
@@ -79,6 +80,16 @@ export const hotelsMock = [
     },
     provinceCode: 'PC4',
     districtCode: 'DC4',
+    argent: {
+      email: 'xuanvuong@gmail.com',
+      firstName: 'Vuong',
+      id: 5,
+      lastName: 'Truong',
+      phoneNumber: '0393320811',
+      role: 'ARGENT',
+      status: 'ACTIVE',
+    },
+
     rooms: [
       {
         id: 7,
@@ -110,17 +121,27 @@ export const hotelsMock = [
           status: 'Đã thanh toán online',
           note: '(Không có)',
         },
+        amenities: [
+          {id: 18, name: 'Phòng một người ngủ'},
+          {id: 17, name: 'TV'},
+          {id: 14, name: 'Không gian riêng để làm việc'},
+        ],
       },
       {
         id: 8,
         name: 'Phòng đôi',
+        amenities: [
+          {id: 18, name: 'Phòng một người ngủ'},
+          {id: 17, name: 'TV'},
+          {id: 14, name: 'Không gian riêng để làm việc'},
+        ],
         hotelId: 4,
-        pricePerNight: 200,
+        pricePerNight: 220,
         numOfPeople: 4,
         numOfChildren: 2,
         bed: 2,
         images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
-        amenities: ['Air Conditioning', 'Tivi'],
+
         policy: 'Allow to Smoking, Pay before checkin',
         status_code: Room_Status.NOT_BOOKED,
         status: 'Còn trống',

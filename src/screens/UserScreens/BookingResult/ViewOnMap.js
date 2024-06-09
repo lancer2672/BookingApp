@@ -151,17 +151,17 @@ const ViewOnMap = ({}) => {
           <View>
             <Image source={{uri: hotel.avatar}} style={styles.img}></Image>
             <View style={row}>
-              <StarRating
+              {/* <StarRating
                 fullStarColor={generalColor.other.yellow}
                 disabled={true}
                 maxStars={5}
                 containerStyle={{marginTop: 8}}
                 rating={hotel.rating}
                 starSize={16}
-              />
-              <Text style={{lineHeight: 32, color: 'black'}}>
+              /> */}
+              {/* <Text style={{lineHeight: 32, color: 'black'}}>
                 ({hotel.rating})
-              </Text>
+              </Text> */}
             </View>
           </View>
           <View
@@ -267,7 +267,6 @@ export default ViewOnMap;
 import {center, row, rowCenter} from '@src/theme/style';
 import {Image, TouchableOpacity} from 'react-native';
 import {Divider} from 'react-native-paper';
-import StarRating from 'react-native-star-rating';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
@@ -276,7 +275,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const styles = StyleSheet.create({
   container: {
     marginTop: 'auto',
-    height: 230,
+    height: 200,
     position: 'absolute',
     backgroundColor: 'white',
     borderTopLeftRadius: 20,

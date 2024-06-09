@@ -8,7 +8,7 @@ import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChooseRoomAndCustomer from '../Search/components/ChooseRoomAndCustomer';
-import RoomItem from '../components/RoomItem';
+import HotelItem from '../components/HotelItem';
 const FavouriteRooms = () => {
   // const {bookingHistory = bookingHistoryMock} = useRoute().params;
   const {rooms, setRoom, removeRoom} = useRoomStore();
@@ -33,13 +33,12 @@ const FavouriteRooms = () => {
     checkoutDate: null,
   });
   const renderItem = ({item, index}) => (
-    <RoomItem
+    <HotelItem
       onPress={() => {
         setSelectedItem(() => item);
         setDatepickerVisible(true);
       }}
-      room={item.room}
-      hotel={item.hotel}
+      hotel={item}
     />
   );
   return (

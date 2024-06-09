@@ -31,9 +31,10 @@ const GGMap = ({hotels = hotelsMock}) => {
     mature: 2,
   });
   const [date, setDate] = useState({
-    checkinDate: null,
-    checkoutDate: null,
+    checkinDate: new Date(),
+    checkoutDate: new Date(new Date().setDate(new Date().getDate() + 1)),
   });
+
   const [markerPosition, setMarkerPosition] = useState(null);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [datepickerVisible, setDatepickerVisible] = useState(false);
@@ -160,9 +161,11 @@ const GGMap = ({hotels = hotelsMock}) => {
           }}
           style={{...rowCenter, flex: 1}}>
           {!date.checkinDate || !date.checkoutDate ? (
-            <Text style={textStyle.h[4]}>Chọn ngày</Text>
+            <Text style={[textStyle.h[4], {color: generalColor.primary}]}>
+              Chọn ngày
+            </Text>
           ) : (
-            <Text style={textStyle.h[4]}>
+            <Text style={[textStyle.h[4], {color: generalColor.primary}]}>
               {formatDate(date.checkinDate, 'dd/MM')} -{' '}
               {formatDate(date.checkoutDate, 'dd/MM')}
             </Text>

@@ -1,4 +1,4 @@
-import { PinSVG } from '@src/assets/icons';
+import {PinSVG} from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
 import {
   DistrictModal,
@@ -6,12 +6,12 @@ import {
   WardModal,
 } from '@src/components/LocationModal/LocationModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import { goBack, navigate } from '@src/navigation/NavigationController';
-import { generalColor } from '@src/theme/color';
+import {goBack, navigate} from '@src/navigation/NavigationController';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import { formatDate } from '@src/utils/textFormat';
-import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {formatDate} from '@src/utils/textFormat';
+import {useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import DatePicker from 'react-native-date-ranges';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChooseRoomAndCustomer from './components/ChooseRoomAndCustomer';
@@ -49,19 +49,29 @@ const UserSearchDetailScreen = () => {
 
   console.log('datepickerVisible', datepickerVisible);
   const handleSelectDate = ({startDate, endDate}) => {
+    const currentDate = new Date();
+    const selectedStartDate = new Date(startDate);
+
+    // Kiểm tra nếu startDate lớn hơn thời gian hiện tại
+    if (selectedStartDate <= currentDate) {
+      console.error('Error: Start date must be greater than the current date');
+      return;
+    }
+
     console.log('Selected', startDate, new Date('2024-3-15'), {
-      startDate: new Date(startDate),
+      startDate: selectedStartDate,
       endDate,
     });
+
     setDate({
-      checkinDate: new Date(startDate),
+      checkinDate: selectedStartDate,
       checkoutDate: new Date(endDate),
     });
   };
+
   return (
     <ScrollView style={{flex: 1, padding: 20, backgroundColor: 'white'}}>
-      <View
-        style={{paddingTop: 0, flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{paddingTop: 0, flexDirection: 'row', alignItems: 'center'}}>
         <Pressable onPress={goBack}>
           <AntDesign
             name="left"
@@ -230,7 +240,7 @@ const Item = ({icon, label, placerholder, value, onPress}) => {
         }
         styleTextInput={{
           ...textStyle.h[5],
-          fontSize:18,
+          fontSize: 18,
           color: generalColor.black[100],
           fontWeight: '400',
         }}

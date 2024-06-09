@@ -30,20 +30,25 @@ const HotelItem = ({hotel, room, onPress}) => {
   const [isFav, setisFav] = useState(false);
   const toggleFavourite = async () => {
     try {
+      console.log('isFav', isFav);
       if (isFav) {
-        console.log('isFav', isFav, hotel);
-        await removeItem(getKey(hotel.id, room.id));
-        setRoom(rooms.filter(t => t.room.id != room.id));
+        console.log('remove', hotel.id);
+        await removeItem(getKey(hotel.id, hotel.id));
+
+        setRoom(rooms.filter(t => t.id != hotel.id));
         setisFav(() => false);
       } else {
-        await addItem(getKey(hotel.id, room.id), {room, hotel});
-        setRoom([...rooms, {room, hotel}]);
+        console.log('add');
+        await addItem(getKey(hotel.id, hotel.id), hotel);
+        setRoom([...rooms, hotel]);
         setisFav(() => true);
       }
-    } catch {}
+    } catch (er) {
+      console.log('error', er);
+    }
   };
   useEffect(() => {
-    if (rooms.find(t => t.room.id == room.id)) {
+    if (rooms.find(t => t.id == hotel.id)) {
       setisFav(true);
     } else {
       setisFav(false);
