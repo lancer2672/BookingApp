@@ -2,6 +2,7 @@ import {useRoute} from '@react-navigation/native';
 import {expandAnimation} from '@src/animation';
 import ButtonComponent from '@src/components/Button';
 import {goBack, navigate} from '@src/navigation/NavigationController';
+import {addItem, getNotiKey} from '@src/store/as/as';
 import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
@@ -53,6 +54,12 @@ const HotelRoomList = () => {
         roomIds: selectedRooms,
         hotel,
         amount: getTotal(),
+      });
+      await addItem(getNotiKey(Date.now()), {
+        title: 'Đặt phòng',
+        description: 'Bạn đã đặt phòng thành công ở khách sạn ' + hotel.name,
+        createdAt: Date.now(),
+        isSeen: false,
       });
       showMessage({
         message: `Đặt phòng thành công`,
