@@ -4,7 +4,7 @@ import { goBack, navigate } from '@src/navigation/NavigationController';
 import { generalColor } from '@src/theme/color';
 import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Image,
   Pressable,
@@ -21,146 +21,182 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ReviewHotel from './ReviewHotel';
+import LoadingModal from '@src/components/LoadingModal/LoadingModal';
+import useRatingStore from '@src/store/rating';
+import ratingsApi from '@src/api/rating';
 const DetailHotel = () => {
+  const [isLoading, setIsloading] = useState(false);
+  const ratings = useRatingStore(state => state.ratings);
+  const setRatings = useRatingStore(state => state.setRatings);
   const route = useRoute();
   const hotel = route.params;
+  useEffect(() => {
+    (async () => {
+      setIsloading(true);
+      try {
+        const resRatings = await ratingsApi.getRatings(hotel.id);
+        setRatings(resRatings);
+      } catch (er) {
+        if (er.name === 'AbortError') {
+          console.log('Fetch request was aborted');
+        } else {
+          console.log('er', er);
+        }
+      } finally {
+        console.log('fetching user');
+        setIsloading(false);
+      }
+    })();
+  }, hotel.id);
+
+
+
   const [isVisible, setIsVisible] = useState(false)
   const handlePress = () => {
     // This is where you specify the URL you want to link to
     Linking.openURL('https://example.com');
   };
   const [active, setActive] = useState('thamquan');
-  const thamquan = () => {
-    return (
-      <View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
-          <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
-          <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 18 }}>
-            Địa điểm tham quan hàng đầu
-          </Text>
-        </View>
-        {hotel.around.visit.map(item => (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: 30,
-              marginTop: 5,
-              marginLeft: 30,
-            }}>
-            <AntDesign name="pushpino" size={18}></AntDesign>
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 18,
-                width: '60%',
-                flexWrap: 'wrap',
-              }}>
-              {item}
-            </Text>
-            {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
-          </View>
-        ))}
-      </View>
-    );
-  };
-  const anuong = () => {
-    return (
-      <View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
-          <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
-          <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 18 }}>
-            Nhà hàng và Coffee House
-          </Text>
-        </View>
-        {hotel.around.food.map(item => (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: 30,
-              marginTop: 5,
-              marginLeft: 30,
-            }}>
-            <AntDesign name="pushpino" size={18}></AntDesign>
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 18,
-                width: '60%',
-                flexWrap: 'wrap',
-              }}>
-              {item}
-            </Text>
-            {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
-          </View>
-        ))}
-      </View>
-    );
-  };
-  const dichuyen = () => {
-    return (
-      <View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-          }}>
-          <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
-          <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 18 }}>
-            Phương tiện di chuyển
-          </Text>
-        </View>
-        {hotel.around.transport.map(item => (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: 30,
-              marginTop: 5,
-              marginLeft: 30,
-            }}>
-            <AntDesign name="pushpino" size={18}></AntDesign>
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 18,
-                width: '60%',
-                flexWrap: 'wrap',
-              }}>
-              {item}
-            </Text>
-            {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
-          </View>
-        ))}
-      </View>
-    );
-  };
+  // const thamquan = () => {
+  //   return (
+  //     <View>
+  //       <View
+  //         style={{
+  //           display: 'flex',
+  //           flexDirection: 'row',
+  //           alignItems: 'center',
+  //           marginTop: 15,
+  //         }}>
+  //         <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
+  //         <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 18 }}>
+  //           Địa điểm tham quan hàng đầu
+  //         </Text>
+  //       </View>
+  //       {hotel.around.visit.map(item => (
+  //         <View
+  //           style={{
+  //             display: 'flex',
+  //             flexDirection: 'row',
+  //             alignItems: 'center',
+  //             marginRight: 30,
+  //             marginTop: 5,
+  //             marginLeft: 30,
+  //           }}>
+  //           <AntDesign name="pushpino" size={18}></AntDesign>
+  //           <Text
+  //             style={{
+  //               marginLeft: 5,
+  //               fontSize: 18,
+  //               width: '60%',
+  //               flexWrap: 'wrap',
+  //             }}>
+  //             {item}
+  //           </Text>
+  //           {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
+  //         </View>
+  //       ))}
+  //     </View>
+  //   );
+  // };
+  // const anuong = () => {
+  //   return (
+  //     <View>
+  //       <View
+  //         style={{
+  //           display: 'flex',
+  //           flexDirection: 'row',
+  //           alignItems: 'center',
+  //           marginTop: 15,
+  //         }}>
+  //         <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
+  //         <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 18 }}>
+  //           Nhà hàng và Coffee House
+  //         </Text>
+  //       </View>
+  //       {hotel.around.food.map(item => (
+  //         <View
+  //           style={{
+  //             display: 'flex',
+  //             flexDirection: 'row',
+  //             alignItems: 'center',
+  //             marginRight: 30,
+  //             marginTop: 5,
+  //             marginLeft: 30,
+  //           }}>
+  //           <AntDesign name="pushpino" size={18}></AntDesign>
+  //           <Text
+  //             style={{
+  //               marginLeft: 5,
+  //               fontSize: 18,
+  //               width: '60%',
+  //               flexWrap: 'wrap',
+  //             }}>
+  //             {item}
+  //           </Text>
+  //           {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
+  //         </View>
+  //       ))}
+  //     </View>
+  //   );
+  // };
+  // const dichuyen = () => {
+  //   return (
+  //     <View>
+  //       <View
+  //         style={{
+  //           display: 'flex',
+  //           flexDirection: 'row',
+  //           alignItems: 'center',
+  //           marginTop: 15,
+  //         }}>
+  //         <FontAwesome5 name="location-arrow" size={18}></FontAwesome5>
+  //         <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 18 }}>
+  //           Phương tiện di chuyển
+  //         </Text>
+  //       </View>
+  //       {hotel.around.transport.map(item => (
+  //         <View
+  //           style={{
+  //             display: 'flex',
+  //             flexDirection: 'row',
+  //             alignItems: 'center',
+  //             marginRight: 30,
+  //             marginTop: 5,
+  //             marginLeft: 30,
+  //           }}>
+  //           <AntDesign name="pushpino" size={18}></AntDesign>
+  //           <Text
+  //             style={{
+  //               marginLeft: 5,
+  //               fontSize: 18,
+  //               width: '60%',
+  //               flexWrap: 'wrap',
+  //             }}>
+  //             {item}
+  //           </Text>
+  //           {/* <Text style={{ marginLeft: 10, fontSize: 18 }}>16km</Text> */}
+  //         </View>
+  //       ))}
+  //     </View>
+  //   );
+  // };
   const navigateToListRoom = () => {
     navigate('ListRoom', hotel);
     setIsVisible(false)
   };
   const navigateToStaff = () => {
-    navigate('Staff',hotel);
+    navigate('Staff', hotel);
     setIsVisible(false)
   };
+  if (isLoading) {
+    return (
+      <LoadingModal
+        onClose={() => {
+          setIsloading(false);
+        }}
+        visible={isLoading}></LoadingModal>
+    );
+  }
   return (
     <ScrollView style={styles.container}>
       <View
@@ -200,13 +236,13 @@ const DetailHotel = () => {
             fontSize: 25,
             fontWeight: 'bold',
             color: generalColor.primary,
-            marginBottom:10,
+            marginBottom: 10,
           }}>
           {hotel.name}
         </Text>
         <Text style={{ fontSize: 18 }}>{hotel.address}</Text>
         <TouchableOpacity onPress={handlePress} style={{}}>
-          <Text style={{ color: 'blue', fontSize: 18 ,marginTop:2}}>
+          <Text style={{ color: 'blue', fontSize: 18, marginTop: 2 }}>
             Hiển thị trên bản đồ
           </Text>
         </TouchableOpacity>
@@ -222,8 +258,8 @@ const DetailHotel = () => {
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
-            marginBottom:10,
-            marginTop:10
+            marginBottom: 10,
+            marginTop: 10
           }}>
           Mô tả hotel
         </Text>
@@ -233,7 +269,7 @@ const DetailHotel = () => {
             fontSize: 22,
             fontWeight: 'bold',
             color: generalColor.primary,
-            marginTop:10
+            marginTop: 10
           }}>
           Các tiện ích
         </Text>
@@ -256,22 +292,23 @@ const DetailHotel = () => {
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
-            marginBottom:10,
+            marginBottom: 10,
           }}>
           Chính sách và quy định
         </Text>
-        <Text style={{ fontSize: 18 }}>{hotel.policy}</Text>
+        <Text style={{ fontSize: 18 }}>Khong co policy trong database</Text>
         <Text
           style={{
             fontSize: 22,
             color: generalColor.primary,
             fontWeight: 'bold',
-            marginBottom:15,
-            marginTop:10
+            marginBottom: 15,
+            marginTop: 10
           }}>
           Xung quanh Hotel
         </Text>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <Text style={{ fontSize: 18 }}>Khong co Xung quanh hotel trong database</Text>
+        {/* <View style={{ display: 'flex', flexDirection: 'row' }}>
           <Button
             style={[styles.buton, active == 'thamquan' && styles.active]}
             onPress={() => {
@@ -317,7 +354,7 @@ const DetailHotel = () => {
         </View>
         {active == 'thamquan' && thamquan()}
         {active == 'anuong' && anuong()}
-        {active == 'dichuyen' && dichuyen()}
+        {active == 'dichuyen' && dichuyen()} */}
         <View style={styles.hotelCards}>
           <Text
             style={{
@@ -330,8 +367,8 @@ const DetailHotel = () => {
           </Text>
           <View>
             <ReviewHotel
-              review={reviewBookingMock}
-              hotel={hotel.id}></ReviewHotel>
+              review={ratings}
+            ></ReviewHotel>
           </View>
         </View>
       </View>
@@ -456,8 +493,8 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     marginHorizontal: 20,
     padding: 12,
-    borderColor:generalColor.primary,
-    borderWidth:1
+    borderColor: generalColor.primary,
+    borderWidth: 1
   },
   txt: {
     ...textStyle.h[4],

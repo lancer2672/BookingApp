@@ -36,8 +36,9 @@ const RoomCard = ({room}) => {
           marginLeft: 20,
           marginTop: 10,
         }}>
-        {room.bed} giường , tối đa {room.numOfPeople} người và{' '}
-        {room.numOfChildren} trẻ em
+        {/* {room.bed} giường , tối đa {room.numOfPeople} người và{' '}
+        {room.numOfChildren} trẻ em */}
+        Khong co so giuong , sl nguoi trong database
       </Text>
       <Text
         style={{
@@ -49,7 +50,7 @@ const RoomCard = ({room}) => {
           marginTop: 10,
           marginBottom: 10,
         }}>
-        Giá : {room.pricePerNight}/1d $
+        Giá : {room.price}/1d $
       </Text>
       <View
         style={{
@@ -67,7 +68,7 @@ const RoomCard = ({room}) => {
 
       ))} */}
       <Text style={{fontSize: 16, marginLeft: 20, marginTop: 10}}>
-        ( {room.status} )
+        ( {room.status == 'AVAILABLE' ? 'Còn trống' : 'Đã hết'} )
       </Text>
       <ButtonComponent
         style={styles.delete}

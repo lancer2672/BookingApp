@@ -22,6 +22,15 @@ const hotelApi = {
       throw error;
     }
   },
+  createHotel: async data => {
+    try {
+      const response = await axiosClient.post(`${hotelRoute}`, data);
+      return response.data;
+    } catch (error) {
+      console.log('create error', error);
+      throw error;
+    }
+  },
 };
 
 export default hotelApi;

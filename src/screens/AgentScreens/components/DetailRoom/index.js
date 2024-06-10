@@ -103,16 +103,17 @@ const DetailRoom = () => {
       <View style={styles.main}>
         <Entypo name="user" size={20}></Entypo>
         <Text style={styles.textmain}>
-          {room.numOfPeople} người lớn và {room.numOfChildren} trẻ em
+          {/* {room.numOfPeople} người lớn và {room.numOfChildren} trẻ em */}
+          Khong co trong database
         </Text>
       </View>
       <View style={styles.main}>
         <FontAwesome name="money" size={20}></FontAwesome>
-        <Text style={styles.textmain}>{room.pricePerNight} $</Text>
+        <Text style={styles.textmain}>{room.price} $</Text>
       </View>
       <View style={styles.main}>
         <Ionicons name="bed" size={20}></Ionicons>
-        <Text style={styles.textmain}>{room.bed} giường</Text>
+        <Text style={styles.textmain}>Không có trong database</Text>
       </View>
 
       <View style={styles.title}>
@@ -121,7 +122,7 @@ const DetailRoom = () => {
       {room.amenities.map(item => (
         <View style={styles.main}>
           <AntDesign name="right" size={20}></AntDesign>
-          <Text style={styles.textmain}>{item}</Text>
+          <Text style={styles.textmain}>{item.name}</Text>
         </View>
       ))}
       <View style={styles.title}>
@@ -129,15 +130,15 @@ const DetailRoom = () => {
       </View>
       <View style={styles.main}>
         <AntDesign name="exclamationcircleo" size={20}></AntDesign>
-        <Text style={styles.textmain}>{room.policy}</Text>
+        <Text style={styles.textmain}>Không có trong database</Text>
       </View>
       <View style={styles.title}>
         <Text style={styles.text}>Trạng thái</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="infocirlceo" size={20}></AntDesign>
-        <Text style={styles.textmain}>{room.status}</Text>
-        {room.status == 'Đã đặt' && (
+        <Text style={styles.textmain}>{room.status == 'AVAILABLE' ? 'Còn trống' : 'Đã đặt'}</Text>
+        {room.status != 'AVAILABLE' && (
           <TouchableOpacity onPress={() => setModalVisible(true)} style={{}}>
             <Text style={{color: 'blue', fontSize: 18, marginLeft: 10}}>
               Bill
@@ -145,7 +146,7 @@ const DetailRoom = () => {
           </TouchableOpacity>
         )}
       </View>
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -247,7 +248,7 @@ const DetailRoom = () => {
             </View>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       <View style={styles.title}>
         <Text style={styles.text}>Lịch sử đặt phòng</Text>
       </View>

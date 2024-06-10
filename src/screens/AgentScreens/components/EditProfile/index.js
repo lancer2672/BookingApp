@@ -51,7 +51,7 @@ const EditProfile = () => {
             marginRight: 20,
             fontFamily: 'serif',
           }}>
-          Chỉnh sửa 
+          Chỉnh sửa
         </Text>
       </View>
       <View style={{ width: '100%', alignItems: 'center' }}>
@@ -75,7 +75,7 @@ const EditProfile = () => {
         <View style={styles.containerTextInput}>
           <AntDesign name="user" size={20} style={styles.icon}></AntDesign>
           <TextInputComponent
-            placeholder={agent.name}
+            placeholder={agent.firstName}
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
@@ -93,11 +93,31 @@ const EditProfile = () => {
             placeholderColor="black"
           />
         </View>
-
+        <View style={styles.containerTextInput}>
+          <AntDesign name="user" size={20} style={styles.icon}></AntDesign>
+          <TextInputComponent
+            placeholder={agent.lastName}
+            widthTextInput={'80%'}
+            heightTextInput={20}
+            onChangeText={text => {
+              setNewAgent({ ...newagent, name: text });
+            }}
+            marginBottom={0}
+            styleTextInput={[
+              {
+                color: 'black',
+                maxWidth: '100%',
+              },
+              textStyle.h[5],
+            ]}
+            style={styles.textinput}
+            placeholderColor="black"
+          />
+        </View>
         <View style={styles.containerTextInput}>
           <AntDesign name="mail" size={20} style={styles.icon}></AntDesign>
           <TextInputComponent
-            placeholder={agent.gmail}
+            placeholder={agent.email}
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
@@ -118,7 +138,7 @@ const EditProfile = () => {
         <View style={styles.containerTextInput}>
           <AntDesign name="phone" size={20} style={styles.icon}></AntDesign>
           <TextInputComponent
-            placeholder={agent.phone}
+            placeholder={agent.phoneNumber}
             widthTextInput={'80%'}
             heightTextInput={20}
             onChangeText={text => {
@@ -212,7 +232,7 @@ const EditProfile = () => {
         style={{
           width: '50%',
           marginLeft: '25%',
-          marginTop: '%',
+          marginTop: '45%',
           backgroundColor: generalColor.primary,
           borderRadius: 30,
         }}

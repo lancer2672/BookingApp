@@ -7,7 +7,7 @@ import { generalColor } from '@src/theme/color';
 import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 
-const ReviewHotel = ({ review, hotel }) => {
+const ReviewHotel = ({ review }) => {
     const [isVisible,setIsVisible] = useState(true)
     const handlePress = () => {
         if(isVisible == false)
@@ -15,32 +15,31 @@ const ReviewHotel = ({ review, hotel }) => {
         else
             setIsVisible(false)
     }
-    const reviewHotel = review.filter(item => item.hotelId == hotel);
     return (
         <View style={styles.container}>
-            {reviewHotel.map((item, index) => {
+            {review.map((item) => {
                 return (
                     <>
                         <View style={styles.main}>
                             <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 50, width: 50, borderRadius: 25 }}></Image>
                             <View style={{ marginLeft: 20, width: '80%' }}>
-                                <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item.userId}</Text>
-                                <Text>{item.createdAt}</Text>
-                                <Text style={{ fontSize: 18 }}>{item.description}</Text>
-                                <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
+                                <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item.user.firstName} {item.user.lastName}</Text>
+                                <Text>{item.createdDate}</Text>
+                                <Text style={{ fontSize: 18 }}>{item.comment}</Text>
+                                {/* <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10, flexWrap: 'wrap' }}>
                                     {item.images.map(item => (
                                         <Image source={{ uri: item }} style={{ height: 100, width: 100, marginRight: 5, marginBottom: 5 }}></Image>
                                     ))}
-                                </View>
-                                <TouchableOpacity onPress={handlePress}>
+                                </View> */}
+                                {/* <TouchableOpacity onPress={handlePress}>
                                     <Text style={{ color: 'black', fontSize: 15  , marginTop:10, marginBottom:-5}}>
                                         Hiển thị thêm 
                                     </Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
 
                         </View>
-                        {!isVisible && item.children.map((item) => {
+                        {/* {!isVisible && item.children.map((item) => {
                             return (
                                <View style={styles.children}>
                                    <Image source={{ uri: 'https://picsum.photos/200' }} style={{ height: 50, width: 50, borderRadius: 25 }}></Image>
@@ -58,7 +57,7 @@ const ReviewHotel = ({ review, hotel }) => {
                                </View>
 
                            )
-                       })}
+                       })} */}
                     </>
 
                 )

@@ -6,14 +6,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import AgentHeader from '../Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { generalColor } from '@src/theme/color';
-import { agentMock } from '@src/mock/mock';
-import authApi from '@src/api/auth';
 import useUserStore from '@src/store/user';
-import BillAgent from '../BillAgent';
+import authApi from '@src/api/auth';
 const Profile = () => {
-  const navigateToProfile = () => {
-    navigate('EditProfile', agentMock);
-  };
+
   const removeUser = useUserStore(state => state.setUser);
   const user = useUserStore(state => state.user);
   const handleLogout = async () => {
@@ -23,6 +19,9 @@ const Profile = () => {
     } catch (er) {
       console.log('err', er);
     }
+  };
+  const navigateToProfile = () => {
+    navigate('EditProfile', user);
   };
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
@@ -53,10 +52,10 @@ const Profile = () => {
                 textAlign: 'center',
                 marginTop: 10,
               }}>
-              {agentMock.name}
+              {user.firstName} {user.lastName}
             </Text>
             <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 20 }}>
-              {agentMock.gmail}
+              {user.email}
             </Text>
           </View>
         </View>
@@ -68,25 +67,21 @@ const Profile = () => {
       </View>
       <View style={styles.main}>
         <AntDesign name="user" size={20}></AntDesign>
-        <Text style={styles.textmain}>{agentMock.name}</Text>
+        <Text style={styles.textmain}>{user.firstName} {user.lastName}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="mail" size={20}></AntDesign>
-        <Text style={styles.textmain}>{agentMock.gmail}</Text>
+        <Text style={styles.textmain}>{user.email}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="phone" size={20}></AntDesign>
-        <Text style={styles.textmain}>{agentMock.phone}</Text>
-      </View>
-      <View style={styles.main}>
-        <AntDesign name="phone" size={20}></AntDesign>
-        <Text style={styles.textmain}>{agentMock.identityCard}</Text>
+        <Text style={styles.textmain}>{user.phoneNumber}</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="check" size={20}></AntDesign>
-        <Text style={styles.textmain}>{agentMock.status}</Text>
+        <Text style={styles.textmain}>{user.status == 'CREATED' ? 'Đã xác minh' : 'Chưa xác minh'}</Text>
       </View>
-      <View style={styles.title}>
+      {/* <View style={styles.title}>
         <Text style={styles.text}>Thông tin khách sạn</Text>
       </View>
       <View style={styles.main}>
@@ -103,14 +98,14 @@ const Profile = () => {
       <View style={styles.main}>
         <AntDesign name="right" size={20}></AntDesign>
         <Text style={styles.textmain}>Darkmode</Text>
-      </View>
+      </View> */}
       <ButtonComponent
         onPress={handleLogout}
         style={{
           width: '60%',
           height: 50,
           marginLeft: '20%',
-          marginTop: '40%',
+          marginTop: '80%',
           backgroundColor: generalColor.primary,
           borderRadius: 30,
         }}
@@ -127,10 +122,9 @@ const styles = StyleSheet.create({
   title: {
     display: 'flex',
     justifyContent: 'center',
-    height: 30,
+    height: 40,
     backgroundColor: generalColor.primary,
-    marginTop: 2.5,
-    marginBottom: 2.5,
+    alignItems:'center'
   },
   text: {
     fontSize: 18,
@@ -139,7 +133,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   textmain: {
-    fontSize: 16,
+    fontSize: 18,
     marginLeft: 5,
   },
   main: {
@@ -148,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 2.5,
     marginBottom: 2.5,
-    height: 30,
+    height: 40,
     marginLeft: 20,
     marginRight: 20,
   },

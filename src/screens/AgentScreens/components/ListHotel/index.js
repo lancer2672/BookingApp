@@ -3,9 +3,41 @@ import { View, StyleSheet, FlatList, TextInput, Text, Image ,ScrollView} from 'r
 import AgentHeader from '../Header';
 import HotelCard from './HotelCard';
 import { hotelsMock } from '@src/mock/mock';
-
-
+import useHotelStore from '@src/store/hotel';
+import LoadingModal from '@src/components/LoadingModal/LoadingModal';
+import hotelApi from '@src/api/hotel';
+import { useState, useEffect } from 'react';
 const ListHotel = () => {
+  const [isLoading, setIsloading] = useState(false);
+  const hotels = useHotelStore(state => state.hotels);
+  const setHotels = useHotelStore(state => state.setHotels);
+  useEffect(() => {
+    (async () => {
+      setIsloading(true);
+      try {
+        const resHotels = await hotelApi.getList();
+        setHotels(resHotels);
+      } catch (er) {
+        if (er.name === 'AbortError') {
+          console.log('Fetch request was aborted');
+        } else {
+          console.log('er', er);
+        }
+      } finally {
+        console.log('fetching user');
+        setIsloading(false);
+      }
+    })();
+  }, []);
+  if (isLoading) {
+    return (
+      <LoadingModal
+        onClose={() => {
+          setIsloading(false);
+        }}
+        visible={isLoading}></LoadingModal>
+    );
+  }
   const renderItem = ({ item }) => (
     <HotelCard hotels={item} />
   );
@@ -17,7 +49,7 @@ const ListHotel = () => {
       <View style={styles.hotelCards}>
         <FlatList
           style={styles.flatList}
-          data={hotelsMock}
+          data={hotels}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
           showsHorizontalScrollIndicator={false}
