@@ -445,3 +445,79 @@ export const billAgent = [
     status: true,
   },
 ];
+
+
+export const bill = [
+  {
+    "id": 0,
+    "startDate": "2024-06-10T06:24:43.838Z",
+    "endDate": "2024-06-10T06:24:43.838Z",
+    "totalPrice": 0,
+    "depositMoney": 0,
+    "status": "PENDING",
+    "createAt": "2024-06-10T06:24:43.838Z",
+    "banks": [
+      {
+        "id": 0,
+        "bankName": "string",
+        "accountNumber": "string",
+        "accountName": "string",
+        "qrCode": "string",
+        "isDefault": true,
+        "createAt": "2024-06-10T06:24:43.838Z"
+      }
+    ],
+    "property": {
+      "id": 0,
+      "name": "string",
+      "address": "string",
+      "description": "string",
+      "province": {
+        "id": 0,
+        "provinceName": "string",
+        "provinceType": "string",
+        "district": {
+          "id": 0,
+          "districtName": "string",
+          "districtType": "string",
+          "lat": 0,
+          "lng": 0,
+          "ward": {
+            "id": 0,
+            "wardName": "string",
+            "wardType": "string"
+          }
+        }
+      },
+      "longitude": 0,
+      "latitude": 0,
+      "images": [
+        {
+          "id": 0,
+          "imageUrl": "string"
+        }
+      ],
+      "type": "HOTEL",
+      "rooms": [
+        {
+          "id": 0,
+          "name": "string",
+          "price": 0,
+          "status": "AVAILABLE",
+          "images": [
+            {
+              "id": 0,
+              "imageUrl": "string"
+            }
+          ],
+          "amenities": [
+            {
+              "id": 0,
+              "name": "string"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
