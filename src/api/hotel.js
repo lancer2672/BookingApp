@@ -1,4 +1,4 @@
-import {mappingHotel} from '@src/utils/mapper';
+import { mappingHotel } from '@src/utils/mapper';
 import axiosClient from './axiosClient';
 
 const hotelRoute = '/api/properties';
@@ -8,9 +8,11 @@ const hotelApi = {
     try {
       const response = await axiosClient.get(`${hotelRoute}`);
       const hotels = response.data.map(mappingHotel);
-      console.log('>>hotels api', hotels[0].avatar);
+      //todo ???
+      
       return hotels;
     } catch (error) {
+      console.log(">>>hotelApi getList err",error.response);
       throw error;
     }
   },

@@ -1,13 +1,15 @@
-import {useRoute} from '@react-navigation/native';
-import {expandAnimation} from '@src/animation';
+import { useRoute } from '@react-navigation/native';
+import { expandAnimation } from '@src/animation';
+import bookingApi from '@src/api/booking';
 import ButtonComponent from '@src/components/Button';
-import {goBack, navigate} from '@src/navigation/NavigationController';
-import {addItem, getNotiKey} from '@src/store/as/as';
-import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import { goBack, navigate } from '@src/navigation/NavigationController';
+import { addItem, getNotiKey } from '@src/store/as/as';
+import useUserStore from '@src/store/user';
+import { generalColor } from '@src/theme/color';
+import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatCurrency, formatDate} from '@src/utils/textFormat';
-import {useState} from 'react';
+import { formatCurrency, formatDate } from '@src/utils/textFormat';
+import { useState } from 'react';
 import {
   FlatList,
   LayoutAnimation,
@@ -16,13 +18,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import RoomItem from '../components/RoomItem';
 
 const HotelRoomList = () => {
   const {hotel, roomCustomer, date} = useRoute().params;
   const [selectedRooms, setSelectedRooms] = useState([]);
+  const user = useUserStore(state => state.user);
+
   const renderItem = ({item, index}) => (
     <RoomItem
       hotel={hotel}
@@ -48,6 +52,15 @@ const HotelRoomList = () => {
   };
   const createBooking = async () => {
     try {
+      await bookingApi.create({
+        userId: user.id,
+        roomIds: selectedRooms,
+        deposit: 0,
+        propertyId: hotel.id,
+        depositImage: null,
+        startDate: date.checkinDate,
+        endDate: date.checkoutDate,
+      })
       navigate('BookingResult', {
         date,
         roomCustomer,

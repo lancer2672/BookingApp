@@ -1,6 +1,6 @@
-import {hotelsMock} from '@src/mock/mock';
-import {generalColor} from '@src/theme/color';
-import {center, row, rowCenter} from '@src/theme/style';
+import { hotelsMock } from '@src/mock/mock';
+import { generalColor } from '@src/theme/color';
+import { center, row, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {
   Image,
@@ -11,8 +11,7 @@ import {
   View,
 } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
-import {Divider} from 'react-native-paper';
-import StarRating from 'react-native-star-rating';
+import { Divider } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
@@ -25,7 +24,7 @@ const HotelModal = ({
   onClose,
 }) => {
   const callAgent = (phoneNumber = '0846303261') => {
-    Linking.openURL(`tel:${phoneNumber}`);
+    Linking.openURL(`tel:${hotel.argent?.phoneNumber}`);
   };
   const onContinue = () => {
     handleContinue();
@@ -44,7 +43,7 @@ const HotelModal = ({
         <View style={row}>
           <View>
             <Image source={{uri: hotel.avatar}} style={styles.img}></Image>
-            <View style={row}>
+            {/* <View style={row}>
               <StarRating
                 fullStarColor={generalColor.other.yellow}
                 disabled={true}
@@ -56,10 +55,10 @@ const HotelModal = ({
               <Text style={{lineHeight: 32, color: 'black'}}>
                 ({hotel.rating})
               </Text>
-            </View>
-            <Text style={{lineHeight: 18, color: 'black'}}>
+            </View> */}
+            {/* <Text style={{lineHeight: 18, color: 'black'}}>
               (xxx lượt đánh giá)
-            </Text>
+            </Text> */}
           </View>
           <View
             style={{
@@ -90,14 +89,14 @@ const HotelModal = ({
                 {hotel.address}
               </Text>
             </View>
-            <Text
+            {/* <Text
               style={{
                 ...textStyle.content.medium,
                 fontWeight: '500',
                 color: 'black',
               }}>
               Còn xx phòng trống
-            </Text>
+            </Text> */}
           </View>
         </View>
 
@@ -136,7 +135,7 @@ export default HotelModal;
 const styles = StyleSheet.create({
   container: {
     marginTop: 'auto',
-    height: 300,
+    height: 280,
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

@@ -1,23 +1,24 @@
 import Geolocation from '@react-native-community/geolocation';
 import ChooseRoomAndCustomer from '@src/screens/UserScreens/Search/components/ChooseRoomAndCustomer';
-import {generalColor} from '@src/theme/color';
-import {rowCenter} from '@src/theme/style';
+import { generalColor } from '@src/theme/color';
+import { rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {useEffect, useRef, useState} from 'react';
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-date-ranges';
-import {API_KEY} from 'react-native-dotenv';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import { API_KEY } from 'react-native-dotenv';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import {Avatar} from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import hotelApi from '@src/api/hotel';
-import {navigate} from '@src/navigation/NavigationController';
-import {formatDate} from '@src/utils/textFormat';
+import { navigate } from '@src/navigation/NavigationController';
+import { formatDate } from '@src/utils/textFormat';
 import HotelModal from '../../../components/HotelModal';
+import { getNearbyHotels } from '../Home/Home';
 Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
 });
@@ -26,17 +27,17 @@ const GGMap = ({}) => {
   const [region, setRegion] = useState(null);
   const [hotels, setHotels] = useState([]);
 
-  useEffect(() => {
-    console.log('Fetch hotels GG map');
-    hotelApi
-      .getList()
-      .then(data => {
-        setHotels(data);
-      })
-      .catch(er => {
-        console.log('>>>fetch hotels GGmap err', er);
-      });
-  }, []);
+  // useEffect(() => {
+  //   console.log('Fetch hotels GG map');
+  //   hotelApi
+  //     .getList()
+  //     .then(data => {
+  //       setHotels(data);
+  //     })
+  //     .catch(er => {
+  //       console.log('>>>fetch hotels GGmap err', er);
+  //     });
+  // }, []);
 
   const [roomCustomerVisible, setRoomCustomerVisbile] = useState(false);
   const [roomCustomer, setRoomCustomer] = useState({
@@ -66,12 +67,28 @@ const GGMap = ({}) => {
     longitude: 106.80295753522363,
   });
   const mapRef = useRef(null);
+
+  useEffect(() => {
+    if (markerPosition) {
+      console.log('Fetch hotels');
+      hotelApi
+        .getList()
+        .then(data => {
+          const nearbyHotets = getNearbyHotels(markerPosition, data, 6);
+          setHotels(nearbyHotets);
+        })
+        .catch(er => {
+          console.log('>>>fetch hotels err', er);
+        });
+    }
+  }, [markerPosition]);
+
   useEffect(() => {
     Geolocation.getCurrentPosition(
       position => {
-        // const {latitude, longitude} = position.coords;
-        const latitude = 10.878307605540192,
-          longitude = 106.80622622219741;
+        const {latitude, longitude} = position.coords;
+        // const latitude = 10.878307605540192,
+        //   longitude = 106.80622622219741;
         setRegion({
           // latitude,
           // longitude,
@@ -223,14 +240,21 @@ const GGMap = ({}) => {
           onFail={error => console.log('Find place error', error)}
         />
       </View>
-      <HotelModal
-        handleContinue={() => {
-          navigate('HotelRoomList', {hotel: selectedHotel, roomCustomer, date});
-        }}
-        isVisible={selectedHotel != null}
-        onClose={() => {
-          setSelectedHotel(null);
-        }}></HotelModal>
+      {selectedHotel && (
+        <HotelModal
+          hotel={selectedHotel}
+          handleContinue={() => {
+            navigate('HotelRoomList', {
+              hotel: selectedHotel,
+              roomCustomer,
+              date,
+            });
+          }}
+          isVisible={selectedHotel != null}
+          onClose={() => {
+            setSelectedHotel(null);
+          }}></HotelModal>
+      )}
       <View style={{position: 'absolute', bottom: 0}}>
         <DatePicker
           style={{width: 350, height: 45}}

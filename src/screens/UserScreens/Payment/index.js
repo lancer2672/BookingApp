@@ -1,15 +1,17 @@
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+import bookingApi from '@src/api/booking';
 import ButtonComponent from '@src/components/Button';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {goBack, navigate} from '@src/navigation/NavigationController';
-import {addItem, getNotiKey} from '@src/store/as/as';
-import {generalColor} from '@src/theme/color';
-import {center, rowCenter} from '@src/theme/style';
+import { goBack, navigate } from '@src/navigation/NavigationController';
+import { addItem, getNotiKey } from '@src/store/as/as';
+import useUserStore from '@src/store/user';
+import { generalColor } from '@src/theme/color';
+import { center, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatCurrency} from '@src/utils/textFormat';
-import {useFormik} from 'formik';
-import {useState} from 'react';
+import { formatCurrency } from '@src/utils/textFormat';
+import { useFormik } from 'formik';
+import { useState } from 'react';
 import {
   Image,
   Pressable,
@@ -19,7 +21,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Divider} from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export const PaymentMethod = {
@@ -30,6 +32,7 @@ const Payment = () => {
   const {date, roomCustomer, amount, roomIds, hotel} = useRoute().params;
   const [uploadImage, setUploadImage] = useState(null);
   const [visible, setVisible] = useState(false);
+  const user = useUserStore(state => state.user);
 
   const [agentBank, setAgentBank] = useState({
     bank_name: 'Vietcombank',
@@ -49,30 +52,40 @@ const Payment = () => {
     },
     // validationSchema: paymentSchema,
     onSubmit: async values => {
+      // await addItem(getNotiKey(Date.now()), {
+      //   title: 'Đặt phòng',
+      //   description: 'Bạn đã đặt phòng thành công',
+      //   createdAt: Date.now(),
+      //   isSeen: false,
+
+      // });
+      // navigate('BookingResult', {
+      //   date,
+      //   roomCustomer,
+      //   roomIds,
+      //   hotel,
+      //   amount,
+      //   image: uploadImage,
+      // });
+    },
+  });
+  const createBooking = async () => {
+    try {
+      await bookingApi.create({
+        userId: user.id,
+        roomIds,
+        deposit: hotel.deposit_percent == 0 ? 0 :(amount * hotel.deposit_percent) / 100,
+        propertyId: hotel.id,
+        depositImage: uploadImage,
+        startDate: date.checkinDate,
+        endDate: date.checkoutDate,
+      })
       await addItem(getNotiKey(Date.now()), {
         title: 'Đặt phòng',
         description: 'Bạn đã đặt phòng thành công',
         createdAt: Date.now(),
         isSeen: false,
       });
-      navigate('BookingResult', {
-        date,
-        roomCustomer,
-        roomIds,
-        hotel,
-        amount,
-        image: uploadImage,
-      });
-    },
-  });
-  const createBooking = async () => {
-    try {
-      // await addItem(getNotiKey(Date.now()), {
-      //   title: 'Đặt phòng',
-      //   description: 'Bạn đã đặt phòng thành công',
-      //   createdAt: Date.now(),
-      //   isSeen: false,
-      // });
       navigate('BookingResult', {
         date,
         roomCustomer,

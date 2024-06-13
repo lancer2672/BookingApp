@@ -1,6 +1,6 @@
-import {PinSVG} from '@src/assets/icons';
-import {generalColor} from '@src/theme/color';
-import {row, rowCenter, shadowBox, textShadow} from '@src/theme/style';
+import { PinSVG } from '@src/assets/icons';
+import { generalColor } from '@src/theme/color';
+import { row, rowCenter, shadowBox, textShadow } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -17,9 +17,9 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import Geolocation from '@react-native-community/geolocation';
-import {navigate} from '@src/navigation/NavigationController';
-import {ScrollView} from 'react-native';
-import {IconButton} from 'react-native-paper';
+import { navigate } from '@src/navigation/NavigationController';
+import { ScrollView } from 'react-native';
+import { IconButton } from 'react-native-paper';
 
 const toRad = value => {
   return (value * Math.PI) / 180;
@@ -40,7 +40,7 @@ const calculateDistance = (pos1, pos2) => {
   return distance;
 };
 
-const getNearbyHotels = (currentPos, hotels, radius) => {
+export const getNearbyHotels = (currentPos, hotels, radius) => {
   return hotels.filter(hotel => {
     const hotelPos = hotel.location;
     console.log('Hotel.location', hotel.location);
@@ -85,7 +85,7 @@ const Home = () => {
   }, []);
   useEffect(() => {
     if (currentPosition && hotels.length > 0) {
-      const nearbyHotels = getNearbyHotels(currentPosition, hotels, 3);
+      const nearbyHotels = getNearbyHotels(currentPosition, hotels, 7);
       console.log('nearby hotels', nearbyHotels[0]);
       //TODO: clean
       setNearbyHotels(
@@ -109,6 +109,15 @@ const Home = () => {
   console.log('hotels', hotels.length);
   const renderItem = ({item, index}) => {
     console.log('item.rooms', item.rooms);
+    // const [rating,setRating] = useState('');
+    // useEffect(()=>{
+    //     ratingsApi.getRatings(item.id).then(data=>{
+    //       console.log("rating data ", {id:item.id, responsedata:data})
+    //     }).
+    //     catch(er=>{
+    //       console.log("er",er);
+    //     })
+    // },[])
     return (
       <Pressable
         style={[{margin: 4, width: 220, elevation: 2}]}
@@ -404,11 +413,11 @@ const styles = StyleSheet.create({
   },
 });
 
-import {expandAnimation} from '@src/animation';
+import { expandAnimation } from '@src/animation';
 import hotelApi from '@src/api/hotel';
-import {getAllValuesMatchingPattern} from '@src/store/as/as';
-import {Room_Status, SCREEN_HEIGHT, SCREEN_WIDTH} from '@src/utils/constant';
-import {useEffect, useState} from 'react';
+import { getAllValuesMatchingPattern } from '@src/store/as/as';
+import { Room_Status, SCREEN_HEIGHT, SCREEN_WIDTH } from '@src/utils/constant';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
 const RecommendList = ({hotels}) => {

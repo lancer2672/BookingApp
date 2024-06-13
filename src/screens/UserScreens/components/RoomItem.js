@@ -1,18 +1,18 @@
 import ButtonComponent from '@src/components/Button';
-import {generalColor} from '@src/theme/color';
+import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
 
-import {useAppContext} from '@src/context/appContext';
-import {chatClient, useChatClient} from '@src/hooks/useChatClient';
-import {agentMock} from '@src/mock/mock';
-import {navigate} from '@src/navigation/NavigationController';
-import {formatCurrency} from '@src/utils/textFormat';
+import { useAppContext } from '@src/context/appContext';
+import { chatClient, useChatClient } from '@src/hooks/useChatClient';
+import { agentMock } from '@src/mock/mock';
+import { navigate } from '@src/navigation/NavigationController';
+import { formatCurrency } from '@src/utils/textFormat';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import {expandAnimation} from '@src/animation';
-import {rowCenter} from '@src/theme/style';
-import {useState} from 'react';
+import { expandAnimation } from '@src/animation';
+import { rowCenter } from '@src/theme/style';
+import { useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -25,7 +25,7 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {TextWithIcon} from '../HotelRoomList/HotelRoomList';
+import { TextWithIcon } from '../HotelRoomList/HotelRoomList';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const ITEM_COUNT = 2;
 const RoomItem = ({room, isSelected, onPress}) => {
@@ -214,7 +214,10 @@ const RoomItem = ({room, isSelected, onPress}) => {
           </View>
         )} */}
 
-        <ButtonComponent
+          {
+            room.amenities.length > ITEM_COUNT
+            
+ &&        <ButtonComponent
           outline
           onPress={() => {
             setNumsItem(prev => {
@@ -241,6 +244,7 @@ const RoomItem = ({room, isSelected, onPress}) => {
           }}
           txtStyle={textStyle.content.medium}
           text={'Xem thêm'}></ButtonComponent>
+          }
       </View>
     </Pressable>
   );

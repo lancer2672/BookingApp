@@ -1,20 +1,20 @@
-import {useRoute} from '@react-navigation/native';
-import {expandAnimation} from '@src/animation';
+import { useRoute } from '@react-navigation/native';
+import { expandAnimation } from '@src/animation';
 import AskingModel from '@src/components/AskingModal/AskingModal';
 import ButtonComponent from '@src/components/Button';
-import {reviewBookingMock} from '@src/mock/mock';
-import {goBack, navigate} from '@src/navigation/NavigationController';
-import {addItem, getNotiKey} from '@src/store/as/as';
-import {generalColor} from '@src/theme/color';
-import {center, rowCenter} from '@src/theme/style';
+import { reviewBookingMock } from '@src/mock/mock';
+import { goBack, navigate } from '@src/navigation/NavigationController';
+import { addItem, getNotiKey } from '@src/store/as/as';
+import { generalColor } from '@src/theme/color';
+import { center, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {
   History_Status,
   getStatusColor,
   getStatusText,
 } from '@src/utils/constant';
-import {formatCurrency, formatDate} from '@src/utils/textFormat';
-import {useState} from 'react';
+import { formatCurrency, formatDate } from '@src/utils/textFormat';
+import { useState } from 'react';
 import {
   Image,
   LayoutAnimation,
@@ -24,8 +24,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import {showMessage} from 'react-native-flash-message';
-import {Divider} from 'react-native-paper';
+import { showMessage } from 'react-native-flash-message';
+import { Divider } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -47,6 +47,7 @@ const DetailBookingHitory = ({}) => {
   const handleNavigateReviewAll = () => {
     navigate('Review', {hotel});
   };
+ 
   const getQRTEXT = status => {
     switch (status) {
       case History_Status.NOT_CHECKED_IN:
