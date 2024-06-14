@@ -72,20 +72,20 @@ const CreateRoom = () => {
     });
     setModalVisible(false);
   };
-  const createRoom = async data => {
-    try {
-      await roomApi.createRoom(data);
-      showMessage({
-        message: `Tao thành công`,
-        type: 'success',
-      });
-    } catch {
-      showMessage({
-        message: `Tao thất bại`,
-        type: 'danger',
-      });
-    }
-  };
+  // const createRoom = async data => {
+  //   try {
+  //     await roomApi.createRoom(data);
+  //     showMessage({
+  //       message: `Tao thành công`,
+  //       type: 'success',
+  //     });
+  //   } catch {
+  //     showMessage({
+  //       message: `Tao thất bại`,
+  //       type: 'danger',
+  //     });
+  //   }
+  // };
 
 
   const handleCreateRoom = () => {

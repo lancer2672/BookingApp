@@ -23,6 +23,15 @@ const hotelApi = {
         console.log(error.response);
         throw error;
     }
+  },
+  deleteHotel: async  hotelId => {
+    try {
+        const response = await axios.delete(`${URL_API_SUB}${hotelRoute}/hotels/${hotelId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error.response);
+        throw error;
+    }
   }
 };
 

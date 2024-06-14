@@ -27,11 +27,11 @@ const CreateHotel = () => {
     address: '',
     description: '',
     amenityIds: [],
-    wardId: 2,
-    districtId:2,
-    provinceId:42,
-    longitude:123,
-    latitude:321,
+    wardId: '2',
+    districtId:'2',
+    provinceId:'42',
+    longitude:'123',
+    latitude:'321',
     agentId:user.id,
     type: 'HOTEL',
     images: [],
@@ -49,7 +49,7 @@ const CreateHotel = () => {
     payload.append('name',hotel.name);
     payload.append('address', hotel.address);
     payload.append('description', hotel.description);
-    payload.append('amenityIds', hotel.amenityIds);
+    payload.append('amenityIds', '1');
     payload.append('wardId', hotel.wardId);
     payload.append('districtId', hotel.districtId);
     payload.append('provinceId', hotel.provinceId);
@@ -57,7 +57,7 @@ const CreateHotel = () => {
     payload.append('latitude', hotel.latitude);
     payload.append('agentId', hotel.agentId);
     payload.append('type', hotel.type);
-    payload.append('images', hotel.images);
+    payload.append('images', 'https://picsum.photos/200');
     console.log('payload', JSON.stringify(payload));
     
     hotelApi.createHotel(payload).then(data=>{  
@@ -66,7 +66,6 @@ const CreateHotel = () => {
     }).catch(er=>{
       console.log('err',er.response);
     })
-    console.log(hotel);
   };
   const [visible, setVisible] = useState(false);
   const [images, setImages] = useState([]);

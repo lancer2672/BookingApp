@@ -24,6 +24,8 @@ import ReviewHotel from './ReviewHotel';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import useRatingStore from '@src/store/rating';
 import ratingsApi from '@src/api/rating';
+import ButtonComponent from '@src/components/Button';
+import hotelApi from '@src/api/hotel';
 const DetailHotel = () => {
   const [isLoading, setIsloading] = useState(false);
   const ratings = useRatingStore(state => state.ratings);
@@ -180,6 +182,7 @@ const DetailHotel = () => {
   //     </View>
   //   );
   // };
+  const iddelete = hotel.agentId
   const navigateToListRoom = () => {
     navigate('ListRoom', hotel);
     setIsVisible(false)
@@ -196,6 +199,20 @@ const DetailHotel = () => {
         }}
         visible={isLoading}></LoadingModal>
     );
+  }
+  const handleDeleteHotel = () => {
+    hotelApi.deleteHotel(hotel.id).then(data=>{  
+      // hotelApi.getList(iddelete).then(data=>{
+      //   setHotels(data.hotels)
+      //   console.log("respose",data.hotels);
+      // }).catch(er=>{
+      //   console.log('err',er.response);
+      // })
+      navigate('ListHotel')
+      console.log("Delete",data);
+  }).catch(er=>{
+    console.log('err',er.response);
+  })
   }
   return (
     <ScrollView style={styles.container}>
@@ -370,7 +387,9 @@ const DetailHotel = () => {
               review={ratings}
             ></ReviewHotel>
           </View>
+          <ButtonComponent style={{marginBottom:40}} text='Xoá' onPress={handleDeleteHotel}></ButtonComponent>
         </View>
+        
       </View>
       <Modal
         animationType="slide"
@@ -396,6 +415,7 @@ const DetailHotel = () => {
           </View>
         </View>
       </Modal>
+     
     </ScrollView>
   );
 };
