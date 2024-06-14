@@ -114,7 +114,7 @@ const BankAccountItem = ({item,onChange,newDefaultId,onNewDefaultIdChange, isDef
               </Text>
               <Text
                 style={styles.text1}>
-               {item.bank}
+               {item.bankName}
               </Text>
             </View>
 
@@ -125,7 +125,7 @@ const BankAccountItem = ({item,onChange,newDefaultId,onNewDefaultIdChange, isDef
               </Text>
               <Text
                 style={styles.text1}>
-               {item.stk}
+               {item.accountNumber}
               </Text>
             </View>
           

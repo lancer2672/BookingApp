@@ -18,22 +18,34 @@ import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { object, string } from 'yup';
 export const bankSchema = object({
-  stk: string().required('số tài khoản không được để trống'),
-  bank: string().required('tên ngân hàng không được để trống'),
+  accountNumber: string().required('số tài khoản không được để trống'),
+  bankName: string().required('tên ngân hàng không được để trống'),
   accountName: string().required('tên không được để trống'),
 });
+import bankApi from '@src/api/bank';
 
-const CreateNewBank = ({visible, onYesClick, onClose}) => {
+const CreateNewBank = ({visible, onYesClick, onClose, account}) => {
+  const day = new Date()
   const formik = useFormik({
     initialValues: {
-      stk: '',
-      bank: '',
-      qr: '',
       accountName: '',
+      accountNumber: '',
+      agentId: account.agentId,
+      bankName: '',
+      createdAt: day,
+      id: account.length + 4,
+      isDefault: false,
+      qrCode: image
     },
     validationSchema: bankSchema,
     onSubmit: async values => {
-      onYesClick();
+      console.log('ahihi')
+      bankApi.createBank(values).then(values=>{
+        console.log("respose",values);
+      }).catch(er=>{
+        console.log('err',er.response);
+      })
+      
     },
   });
   const [imgVisible, setImgVisible] = useState(false);
@@ -104,9 +116,9 @@ const CreateNewBank = ({visible, onYesClick, onClose}) => {
               labelStyle={{color: generalColor.primary}}
               style={{...styles.input}}
               styleTextInput={{color: 'black'}}
-              value={formik.values.bank}
-              onChangeText={formik.handleChange('bank')}
-              onBlur={formik.handleBlur('bank')}
+              value={formik.values.bankName}
+              onChangeText={formik.handleChange('bankName')}
+              onBlur={formik.handleBlur('bankName')}
               error={formik.touched.bank || formik.errors.bank}
               errorMessage={formik.touched.bank && formik.errors.bank}
             />
@@ -133,9 +145,9 @@ const CreateNewBank = ({visible, onYesClick, onClose}) => {
               style={{...styles.input}}
               styleTextInput={{color: 'black'}}
               keyboardType={'numeric'}
-              value={formik.values.stk}
-              onChangeText={formik.handleChange('stk')}
-              onBlur={formik.handleBlur('stk')}
+              value={formik.values.accountNumber}
+              onChangeText={formik.handleChange('accountNumber')}
+              onBlur={formik.handleBlur('accountNumber')}
               error={formik.touched.stk || formik.errors.stk}
               errorMessage={formik.touched.stk && formik.errors.stk}
             />

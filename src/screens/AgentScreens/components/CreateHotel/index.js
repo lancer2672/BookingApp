@@ -1,10 +1,9 @@
 import ButtonComponent from '@src/components/Button';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import { navigate } from '@src/navigation/NavigationController';
-import { generalColor } from '@src/theme/color';
+import {generalColor} from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
   Image,
   Modal,
@@ -14,38 +13,60 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
+import {ProgressStep, ProgressSteps} from 'react-native-progress-steps';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgentHeader from '../Header';
-
+import useUserStore from '@src/store/user';
+import hotelApi from '@src/api/hotel';
 const CreateHotel = () => {
   const [data, setData] = useState([]);
-  useEffect(() => {
-    fetch('http://54.255.249.131:8080/api/hotel-services')
-      .then(response => response.json())
-      .then(json => {
-        setData(json);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, []);
+  const user = useUserStore(state=>state.user)
   const [hotel, setHotel] = useState({
     name: '',
     address: '',
     description: '',
-    ameniteis: [],
-    around: {
-      visit: [],
-      food: [],
-      transport: [],
-    },
-    policy: '',
+    amenityIds: [],
+    wardId: 2,
+    districtId:2,
+    provinceId:42,
+    longitude:123,
+    latitude:321,
+    agentId:user.id,
+    type: 'HOTEL',
     images: [],
   });
   const handlesSetValue = (index, value) => {
     setHotel({...hotel, [index]: value});
+  };
+  const handleAddHotel = () => {
+    const newHotel = {
+      ...hotel,
+      amenityIds: tiennghi,
+    };
+    setHotel(newHotel);
+    const payload = new FormData();
+    payload.append('name',hotel.name);
+    payload.append('address', hotel.address);
+    payload.append('description', hotel.description);
+    payload.append('amenityIds', hotel.amenityIds);
+    payload.append('wardId', hotel.wardId);
+    payload.append('districtId', hotel.districtId);
+    payload.append('provinceId', hotel.provinceId);
+    payload.append('longitude', hotel.longitude);
+    payload.append('latitude', hotel.latitude);
+    payload.append('agentId', hotel.agentId);
+    payload.append('type', hotel.type);
+    payload.append('images', hotel.images);
+    console.log('payload', JSON.stringify(payload));
+    
+    hotelApi.createHotel(payload).then(data=>{  
+        // navigate('Staff')
+        console.log("Created",data);
+    }).catch(er=>{
+      console.log('err',er.response);
+    })
+    console.log(hotel);
   };
   const [visible, setVisible] = useState(false);
   const [images, setImages] = useState([]);
@@ -88,7 +109,7 @@ const CreateHotel = () => {
   };
   const [modalVisible, setModalVisible] = useState(false);
   const [inx, setInx] = useState(0);
-  const options = data;
+  const options = ['1','2','3'];
 
   const handleSelect = (value, index) => {
     setTiennghi(prevItems => {
@@ -98,15 +119,7 @@ const CreateHotel = () => {
     });
     setModalVisible(false);
   };
-  const handleAddHotel = () => {
-    const newHotel = {
-      ...hotel,
-      around: {visit: thamquan, food: anuong, transport: dichuyen},
-      ameniteis: tiennghi,
-    };
-    setHotel(newHotel);
-    console.log(hotel);
-  };
+
   const buttonTextStyle = {
     backgroundColor: generalColor.primary,
     height: 35,
@@ -126,7 +139,7 @@ const CreateHotel = () => {
         completedProgressBarColor={generalColor.primary}
         activeStepIconBorderColor={generalColor.primary}
         activeLabelColor={generalColor.primary}>
-        <ProgressStep label="First Step" nextBtnTextStyle={buttonTextStyle}>
+        <ProgressStep label="Bước 1" nextBtnTextStyle={buttonTextStyle}>
           <Text
             style={{
               fontSize: 18,
@@ -186,9 +199,6 @@ const CreateHotel = () => {
               </View>
               <View style={{marginTop: 12}}>
                 <ButtonComponent
-                onPress={()=>{
-                  navigate("AgentGGMap")
-                }}
                   // style={styles.buttonLocation}
                   text="MAP"></ButtonComponent>
               </View>
@@ -215,7 +225,7 @@ const CreateHotel = () => {
           </View>
         </ProgressStep>
         <ProgressStep
-          label="Second Step"
+          label="Bước 2"
           nextBtnTextStyle={buttonTextStyle}
           previousBtnTextStyle={buttonTextStyle}>
           <Text
@@ -282,8 +292,8 @@ const CreateHotel = () => {
                           <TouchableOpacity
                             key={index}
                             style={styles.optionButton}
-                            onPress={() => handleSelect(option.name, inx)}>
-                            <Text style={{fontSize: 16}}>{option.name}</Text>
+                            onPress={() => handleSelect(option, inx)}>
+                            <Text style={{fontSize: 16}}>{option}</Text>
                           </TouchableOpacity>
                         ))}
                       </View>
@@ -299,7 +309,7 @@ const CreateHotel = () => {
               ))}
             </View>
           </View>
-          <Text
+          {/* <Text
             style={{
               fontSize: 18,
               width: '100%',
@@ -523,10 +533,10 @@ const CreateHotel = () => {
                 ))}
               </View>
             </View>
-          </View>
+          </View> */}
         </ProgressStep>
         <ProgressStep
-          label="Third Step"
+          label="Bước 3 "
           onSubmit={handleAddHotel}
           nextBtnTextStyle={buttonTextStyle}
           previousBtnTextStyle={buttonTextStyle}>
@@ -546,7 +556,7 @@ const CreateHotel = () => {
               placeholder="........"
               value={hotel.policy}
               widthTextInput={'80%'}
-              heightTextInput={50}
+              heightTextInput={30}
               onChangeText={text => {
                 handlesSetValue('policy', text);
               }}

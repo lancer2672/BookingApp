@@ -7,28 +7,20 @@ import useHotelStore from '@src/store/hotel';
 import LoadingModal from '@src/components/LoadingModal/LoadingModal';
 import hotelApi from '@src/api/hotel';
 import { useState, useEffect } from 'react';
+import useUserStore from '@src/store/user';
 const ListHotel = () => {
   const [isLoading, setIsloading] = useState(false);
   const hotels = useHotelStore(state => state.hotels);
   const setHotels = useHotelStore(state => state.setHotels);
-  useEffect(() => {
-    (async () => {
-      setIsloading(true);
-      try {
-        const resHotels = await hotelApi.getList();
-        setHotels(resHotels);
-      } catch (er) {
-        if (er.name === 'AbortError') {
-          console.log('Fetch request was aborted');
-        } else {
-          console.log('er', er);
-        }
-      } finally {
-        console.log('fetching user');
-        setIsloading(false);
-      }
-    })();
-  }, []);
+  const agentid = useUserStore(state => state.user)
+  useEffect(()=>{
+    hotelApi.getList(agentid.id).then(data=>{
+      setHotels(data.hotels)
+      console.log("respose",data.hotels);
+    }).catch(er=>{
+      console.log('err',er.response);
+    })
+  },[])
   if (isLoading) {
     return (
       <LoadingModal

@@ -30,24 +30,24 @@ const DetailHotel = () => {
   const setRatings = useRatingStore(state => state.setRatings);
   const route = useRoute();
   const hotel = route.params;
-  useEffect(() => {
-    (async () => {
-      setIsloading(true);
-      try {
-        const resRatings = await ratingsApi.getRatings(hotel.id);
-        setRatings(resRatings);
-      } catch (er) {
-        if (er.name === 'AbortError') {
-          console.log('Fetch request was aborted');
-        } else {
-          console.log('er', er);
-        }
-      } finally {
-        console.log('fetching user');
-        setIsloading(false);
-      }
-    })();
-  }, hotel.id);
+  // useEffect(() => {
+  //   (async () => {
+  //     setIsloading(true);
+  //     try {
+  //       const resRatings = await ratingsApi.getRatings(hotel.id);
+  //       setRatings(resRatings);
+  //     } catch (er) {
+  //       if (er.name === 'AbortError') {
+  //         console.log('Fetch request was aborted');
+  //       } else {
+  //         console.log('er', er);
+  //       }
+  //     } finally {
+  //       console.log('fetching user');
+  //       setIsloading(false);
+  //     }
+  //   })();
+  // }, hotel.id);
 
 
 
@@ -249,7 +249,7 @@ const DetailHotel = () => {
         <Swiper style={styles.slider} autoplay={true} autoplayTimeout={3}>
           {hotel.images.map((image, index) => (
             <View key={index} style={styles.slide}>
-              <Image source={{ uri: image }} style={styles.imageslider} />
+              <Image source={{ uri: image.imageUrl }} style={styles.imageslider} />
             </View>
           ))}
         </Swiper>
@@ -287,7 +287,7 @@ const DetailHotel = () => {
             </View>
           ))}
         </View>
-        <Text
+        {/* <Text
           style={{
             fontSize: 22,
             color: generalColor.primary,
@@ -296,8 +296,8 @@ const DetailHotel = () => {
           }}>
           Chính sách và quy định
         </Text>
-        <Text style={{ fontSize: 18 }}>Khong co policy trong database</Text>
-        <Text
+        <Text style={{ fontSize: 18 }}>Khong co policy trong database</Text> */}
+        {/* <Text
           style={{
             fontSize: 22,
             color: generalColor.primary,
@@ -307,7 +307,7 @@ const DetailHotel = () => {
           }}>
           Xung quanh Hotel
         </Text>
-        <Text style={{ fontSize: 18 }}>Khong co Xung quanh hotel trong database</Text>
+        <Text style={{ fontSize: 18 }}>Khong co Xung quanh hotel trong database</Text> */}
         {/* <View style={{ display: 'flex', flexDirection: 'row' }}>
           <Button
             style={[styles.buton, active == 'thamquan' && styles.active]}

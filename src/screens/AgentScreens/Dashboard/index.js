@@ -3,12 +3,13 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LineChart, ProgressChart} from 'react-native-chart-kit';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AgentHeader from '../components/Header';
-
+import useUserStore from '@src/store/user';
 const Dashboard = () => {
   const datas = {
     labels: [''], // optional
     data: [0.67],
   };
+  const user = useUserStore(state=> state.user)
   return (
     <View style={styles.container}>
       <AgentHeader
@@ -22,11 +23,11 @@ const Dashboard = () => {
           marginLeft: 20,
           marginTop: 20,
         }}>
-        Welcome, Sia!
+        Xin chào, {user.firstName}!
       </Text>
       <Text
         style={{color: generalColor.secondary, fontSize: 30, marginLeft: 20}}>
-        How you doin ?
+         Một ngày tốt lành !
       </Text>
 
       <View style={{marginTop: 20}}>
@@ -232,7 +233,7 @@ const Dashboard = () => {
             fontWeight: 'bold',
             alignItems: 'center',
           }}>
-          Doanh thu 6 thang
+          Doanh thu 
         </Text>
       </View>
     </View>

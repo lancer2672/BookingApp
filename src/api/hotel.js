@@ -1,38 +1,29 @@
 import { mappingHotel } from '@src/utils/mapper';
 import axiosClient from './axiosClient';
+import { URL_API_SUB } from '@src/utils/constant';
+import axios from 'axios';
 
-const hotelRoute = '/api/properties';
+const hotelRoute = '/api';
 
 const hotelApi = {
-  getList: async () => {
+  getList: async (userId) => {
     try {
-      const response = await axiosClient.get(`${hotelRoute}`);
-      const hotels = response.data.map(mappingHotel);
-      //todo ???
-      
-      return hotels;
+      const response = await axios.get(`${URL_API_SUB}${hotelRoute}/hotels/${userId}`); 
+      return response.data;
     } catch (error) {
       console.log(">>>hotelApi getList err",error.response);
       throw error;
     }
   },
-  getById: async id => {
+  createHotel: async  body => {
     try {
-      const response = await axiosClient.get(`${hotelRoute}/${id}`);
-      return mappingHotel(response.data);
+        const response = await axios.post(`${URL_API_SUB}${hotelRoute}/hotels`, body);
+        return response.data;
     } catch (error) {
-      throw error;
+        console.log(error.response);
+        throw error;
     }
-  },
-  createHotel: async data => {
-    try {
-      const response = await axiosClient.post(`${hotelRoute}`, data);
-      return response.data;
-    } catch (error) {
-      console.log('create error', error);
-      throw error;
-    }
-  },
+  }
 };
 
 export default hotelApi;

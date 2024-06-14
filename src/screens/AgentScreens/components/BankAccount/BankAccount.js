@@ -20,51 +20,87 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import BankAccountItem from './BankAccountItem';
 import CreateNewBank from './CreateNewBank';
-
-const mockAccount = [
-  {
-    stk: '123123123',
-    id: 1,
-    bank: 'BIDV',
-    createdAt: new Date(),
-    accountName: "TRAN QUOC KHANH",
-    qr: 'https://picsum.photos/200',
-  },
-  {
-    stk: '123123123',
-    id: 2,
-    bank: 'AGRIBANK',
-    createdAt: new Date(),
-    accountName: "TRAN QUOC KHANH",
-    qr: 'https://picsum.photos/200',
-  },
-  {
-    stk: '123123123',
-    id: 3,
-    bank: 'MBV',
-    createdAt: new Date(),
-    accountName: "TRAN QUOC KHANH",
-    qr: 'https://picsum.photos/200',
-  },
-];
-
+import bankApi from '@src/api/bank';
+import { create } from 'zustand';
+import QRCode from 'react-native-qrcode-svg';
 
 const BankAccount = () => {
   // const {bookingHistory = bookingHistoryMock} = useRoute().params;
-  const user = useUserStore(state => state.user);
+
   const [defaultId, setDefaultId] = useState(1);
   const [newDefaultId, setNewDefaultId] = useState(1);
-  useEffect(() => {}, []);
   const [askVisible, setAskVisible] = useState(false);
   const [createVisible, setCreateVisible] = useState(false);
+  const [account , setAccount] = useState([])
+  const user = useUserStore(state => state.user);
+  useEffect(()=>{
+    bankApi.getList(user.id).then(data=>{
+      for (const bankAccount of data.bankAccounts) {
+        if(bankAccount.isDefault == true)
+            setDefaultId(bankAccount.id)
+      }
+      setAccount(data.bankAccounts)
+      console.log("respose",data);
+    }).catch(er=>{
+      console.log('err',er.response);
+    })
+  },[])
+  const updateBank = (newDefaultId, defaultId)  => {
+    const defaultBank = account.filter(item => item.id == defaultId)
+    const updatedefaultBank = {...defaultBank, isDefault: false}
+    const newdefaultBank = account.filter(item => item.id == newDefaultId)
+    const updatenewdefaultBank = {...newdefaultBank, isDefault: true}
+    async function updateDefaultBank() {
+      bankApi.updateBank(updatedefaultBank, defaultId).then(data=>{
+        console.log("respose",data);
+      }).catch(er=>{
+        console.log('err',er.response);
+      })
+    }
+    async function updateNewDefaultBank() {
+      bankApi.updateBank(updatenewdefaultBank, newDefaultId).then(data=>{
+        console.log("respose",data);
+      }).catch(er=>{
+        console.log('err',er.response);
+      })
+    }
+    updateDefaultBank(defaultId)
+    updateNewDefaultBank(newDefaultId)
+  }
 
+  const mockAccount = [
+    {
+      stk: '123123123',
+      id: 1,
+      bank: 'BIDV',
+      createdAt: new Date(),
+      accountName: "TRAN QUOC KHANH",
+      qr: 'https://picsum.photos/200',
+    },
+    {
+      stk: '123123123',
+      id: 2,
+      bank: 'AGRIBANK',
+      createdAt: new Date(),
+      accountName: "TRAN QUOC KHANH",
+      qr: 'https://picsum.photos/200',
+    },
+    {
+      stk: '123123123',
+      id: 3,
+      bank: 'MBV',
+      createdAt: new Date(),
+      accountName: "TRAN QUOC KHANH",
+      qr: 'https://picsum.photos/200',
+    },
+  ];
   const bookingHistory = bookingHistoryMock;
   const renderItem = ({item, index}) => (
     <BankAccountItem
       onNewDefaultIdChange={id => setNewDefaultId(id)}
       newDefaultId={newDefaultId == item.id}
       onChange={id => setDefaultId(id)}
-      isDefault={item.id == defaultId}
+      isDefault= {item.isDefault}
       item={item}
     />
   );
@@ -97,7 +133,7 @@ const BankAccount = () => {
       <View style={{flex: 1}}>
         <FlatList
           renderItem={renderItem}
-          data={mockAccount}
+          data={account}
           keyExtractor={(item, index) => index.toString()}
           showVertical={false}
           ItemSeparatorComponent={() => <View style={{marginVertical: 8}} />}
@@ -106,13 +142,16 @@ const BankAccount = () => {
           onPress={() => {
             setCreateVisible(true);
           }}
-          leftIcon={<Feather name="plus" size={24} color={'white'}></Feather>}
+          leftIcon={<AntDesign name="plus" size={24} color={'white'}></AntDesign>}
           style={{marginVertical: 12, marginHorizontal: 12}}
           text={'Thêm tài khoản mới'}></ButtonComponent>
         <AskingModel
           heading="Bạn có muốn thay đổi tài khoản?"
           onYesClick={() => {
             setDefaultId(() => newDefaultId);
+            console.log(newDefaultId)
+            console.log(defaultId)
+            updateBank(newDefaultId, defaultId)
             setAskVisible(false);
             LayoutAnimation.configureNext(expandAnimation);
           }}
@@ -127,6 +166,7 @@ const BankAccount = () => {
             setAskVisible(false);
           }}></AskingModel>
         <CreateNewBank
+          account={account}
           onYesClick={() => {}}
           visible={createVisible}
           onClose={() => {

@@ -48,7 +48,7 @@ const ListRoom = () => {
         </Text>
         <Pressable
           onPress={() => {
-            navigate('CreateRoom');
+            navigate('CreateRoom', hotel);
           }}>
           <Ionicons
             name="add-circle"

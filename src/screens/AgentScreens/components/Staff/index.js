@@ -10,13 +10,26 @@ import textStyle from '@src/theme/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { goBack, navigate } from '@src/navigation/NavigationController';
 import { useRoute } from '@react-navigation/native';
+import staffApi from '@src/api/staff';
+import { useEffect } from 'react';
 const Staff = () => {
     const renderItem = ({ item }) => (
         <StaffCard staff={item} />
     );
     const route = useRoute();
     const hotel = route.params;
-    const staff = staffMockData.filter(item => item.hotelId == hotel.id)
+    const hotelId = hotel.id
+    const [staff, setStaff] = useState()
+    
+    useEffect(()=>{
+        staffApi.getStaff(hotelId).then(data=>{     
+            setStaff(data)
+            console.log("respose",data);
+        }).catch(er=>{
+          console.log('err',er.response);
+        })
+      },[])
+
     return (
         <View style={styles.container}>
             <View
@@ -41,7 +54,7 @@ const Staff = () => {
                 </Text>
                 <Pressable
                     onPress={() => {
-                       navigate('CreateStaff', hotel);
+                        navigate('CreateStaff', {hotelId, staff});
                     }}>
                     <AntDesign
                         name="pluscircleo"

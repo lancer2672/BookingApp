@@ -5,6 +5,7 @@ import {generalColor} from '@src/theme/color';
 import {rowCenter} from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {useState} from 'react';
+import { useRoute } from '@react-navigation/native';
 import {
   Image,
   Modal,
@@ -20,16 +21,18 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import roomApi from '@src/api/room';
+import { ro } from 'date-fns/locale';
+import axios from 'axios';
 const CreateRoom = () => {
+  const route = useRoute();
+  const hotel = route.params;
   const [room, setRoom] = useState({
     name: '',
-    pricePerNight: 0,
-    numOfPeople: 0,
-    numOfChildren: 0,
-    bed: 0,
-    images: [],
+    price: 0,
+    imgList: [],
     amenities: [],
-    policy: '',
+    propertyId: hotel.id
   });
   const handlesSetValue = (index, value) => {
     setRoom({...room, [index]: value});
@@ -69,15 +72,29 @@ const CreateRoom = () => {
     });
     setModalVisible(false);
   };
+  const createRoom = async data => {
+    try {
+      await roomApi.createRoom(data);
+      showMessage({
+        message: `Tao thành công`,
+        type: 'success',
+      });
+    } catch {
+      showMessage({
+        message: `Tao thất bại`,
+        type: 'danger',
+      });
+    }
+  };
+
+
   const handleCreateRoom = () => {
     const newroom = {
       ...room,
       amenities: tienich,
-      numOfChildren: child,
-      numOfPeople: people,
-      bed: bed,
     };
     setRoom(newroom);
+    createRoom(room)
   };
   const buttonTextStyle = {
     backgroundColor: generalColor.primary,
@@ -125,7 +142,7 @@ const CreateRoom = () => {
           completedProgressBarColor={generalColor.primary}
           activeStepIconBorderColor={generalColor.primary}
           activeLabelColor={generalColor.primary}>
-          <ProgressStep label="First Step" nextBtnTextStyle={buttonTextStyle}>
+          <ProgressStep label="Bước 1" nextBtnTextStyle={buttonTextStyle}>
             <View style={{}}>
               <Text
                 style={{
@@ -163,7 +180,7 @@ const CreateRoom = () => {
                   widthTextInput={'80%'}
                   heightTextInput={40}
                   onChangeText={text => {
-                    handlesSetValue('', text);
+                    handlesSetValue('price', text);
                   }}
                   marginBottom={0}
                   styleTextInput={[
@@ -199,10 +216,10 @@ const CreateRoom = () => {
             </View>
           </ProgressStep>
           <ProgressStep
-            label="Second Step"
+            label="Bước 2"
             nextBtnTextStyle={buttonTextStyle}
             previousBtnTextStyle={buttonTextStyle}>
-            <Text
+            {/* <Text
               style={{
                 fontSize: 18,
                 width: '90%',
@@ -296,7 +313,7 @@ const CreateRoom = () => {
                 onPress={() => {
                   setBed(bed + 1);
                 }}></AntDesign>
-            </View>
+            </View> */}
             <Text
               style={{
                 fontSize: 18,
@@ -379,7 +396,7 @@ const CreateRoom = () => {
             </View>
           </ProgressStep>
           <ProgressStep
-            label="Third Step"
+            label="Bước 3"
             onSubmit={handleCreateRoom}
             nextBtnTextStyle={buttonTextStyle}
             previousBtnTextStyle={buttonTextStyle}>

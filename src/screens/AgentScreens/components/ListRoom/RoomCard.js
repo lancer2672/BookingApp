@@ -29,17 +29,17 @@ const RoomCard = ({room}) => {
         }}>
         {room.name}
       </Text>
-      <Text
+    {room.amenities.map(item => (
+        <Text
         style={{
           fontSize: 16,
 
           marginLeft: 20,
           marginTop: 10,
         }}>
-        {/* {room.bed} giường , tối đa {room.numOfPeople} người và{' '}
-        {room.numOfChildren} trẻ em */}
-        Khong co so giuong , sl nguoi trong database
+        {item.name}
       </Text>
+    ))}
       <Text
         style={{
           fontSize: 20,

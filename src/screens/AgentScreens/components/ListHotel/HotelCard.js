@@ -15,7 +15,7 @@ const HotelCard = ({hotels}) => {
         <Swiper style={styles.wrapper}>
           {hotels.images.map((image, index) => (
             <View key={index} style={styles.slide}>
-              <Image source={{uri: image}} style={styles.imageslider} />
+              <Image source={{uri: image.imageUrl}} style={styles.imageslider} />
             </View>
           ))}
         </Swiper>

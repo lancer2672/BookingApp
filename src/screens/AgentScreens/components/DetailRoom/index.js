@@ -100,21 +100,21 @@ const DetailRoom = () => {
         <FontAwesome5 name="hotel" size={20}></FontAwesome5>
         <Text style={styles.textmain}>{room.name}</Text>
       </View>
-      <View style={styles.main}>
+      {/* <View style={styles.main}>
         <Entypo name="user" size={20}></Entypo>
         <Text style={styles.textmain}>
-          {/* {room.numOfPeople} người lớn và {room.numOfChildren} trẻ em */}
+        
           Khong co trong database
         </Text>
-      </View>
+      </View> */}
       <View style={styles.main}>
         <FontAwesome name="money" size={20}></FontAwesome>
         <Text style={styles.textmain}>{room.price} $</Text>
       </View>
-      <View style={styles.main}>
+      {/* <View style={styles.main}>
         <Ionicons name="bed" size={20}></Ionicons>
         <Text style={styles.textmain}>Không có trong database</Text>
-      </View>
+      </View> */}
 
       <View style={styles.title}>
         <Text style={styles.text}>Chi tiết tiện tích</Text>
@@ -125,13 +125,13 @@ const DetailRoom = () => {
           <Text style={styles.textmain}>{item.name}</Text>
         </View>
       ))}
-      <View style={styles.title}>
+      {/* <View style={styles.title}>
         <Text style={styles.text}>Quy định</Text>
       </View>
       <View style={styles.main}>
         <AntDesign name="exclamationcircleo" size={20}></AntDesign>
         <Text style={styles.textmain}>Không có trong database</Text>
-      </View>
+      </View> */}
       <View style={styles.title}>
         <Text style={styles.text}>Trạng thái</Text>
       </View>

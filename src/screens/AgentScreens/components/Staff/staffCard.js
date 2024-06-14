@@ -13,21 +13,24 @@ const StaffCard = ({staff}) => {
     <View style={styles.container}>
       <Text
         style={{
-          fontSize: 26,
+          fontSize: 23,
           fontWeight: 'bold',
           marginLeft: 20,
           color: generalColor.primary,
           marginTop: 20,
         }}>
-        {staff.name}
+        {staff.first_name} {staff.last_name}
       </Text>
-      <Text style={{fontSize: 15, marginLeft: 20, marginTop: 10}}>
-        {staff.phone}
+      <Text style={{fontSize: 18, marginLeft: 20, marginTop: 10}}>
+        Gmail: {staff.email}
       </Text>
-      <ButtonComponent
+      <Text style={{fontSize: 18, marginLeft: 20, marginTop: 10}}>
+        Lh: {staff.phone_number}
+      </Text>
+      {/* <ButtonComponent
         style={styles.delete}
         text="Chi tiết"
-        onPress={()=>{}}></ButtonComponent>
+        onPress={()=>{}}></ButtonComponent> */}
     </View>
   );
 };

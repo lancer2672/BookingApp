@@ -14,57 +14,58 @@ import { IconButton } from 'react-native-paper';
 import { generalColor } from '@src/theme/color';
 import { ro } from 'date-fns/locale';
 import { center, rowCenter } from '@src/theme/style';
-import { goBack } from '@src/navigation/NavigationController';
+import { goBack, navigate } from '@src/navigation/NavigationController';
 import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
-import authApi from '@src/api/auth';
+import staffApi from '@src/api/staff';
 import { useRoute } from '@react-navigation/native';
+
 const CreateStaff = () => {
     const route = useRoute();
-    const hotel = route.params;
+    const data = route.params;
+    let count = 0;
+    if(data.staff == null)
+        count = 0
+    else 
+        count = data.staff.length + 1
     const [staff, setStaff] = useState({
-        name: '',
+        first_name: '',
+        last_name: '',
         email: '',
-        password: '',
         avatar: '',
-        phone: '',
-        identityCard: '',
-        frontIdentityCard: '',
-        backIdentityCard: '',
-        hotelId: hotel.id,
+        phone_number: '',
+        id: count,   
     })
     const handlesSetValue = (index, value) => {
         setStaff({ ...staff, [index]: value })
     }
 
-    const [images1, setImages1] = useState('');
-    const [images2, setImages2] = useState('');
+    const [images1, setImages1] = useState('https://picsum.photos/200');
     const [visible, setVisible] = useState(false);
+    
+    
     const handleCreateStaff = () => {
-        const newstaff = { ...staff, frontIdentityCard: images1, backIdentityCard: images2 }
+     
+        const newstaff = { ...staff , avatar:images1}
         setStaff(newstaff)
+        const payload = new FormData();
 
+        payload.append('first_name',staff.first_name);
+        payload.append('last_name', staff.last_name);
+        payload.append('phone_number', staff.phone_number);
+        payload.append('email', staff.email);
+        payload.append('avatar', staff.avatar);
+        payload.append('agentId', data.hotelId);
+        console.log('payload', JSON.stringify(payload));
+        staffApi.createStaff(payload).then(data=>{  
+            navigate('Staff')
+            console.log("Created",data);
+        }).catch(er=>{
+          console.log('err',er.response);
+        })
         // handleFormSubmit(staff)
     }
-    const handleFormSubmit = async data => {
-        console.log('DATA', data);
-        try {
-            setIsloading(true);
-            await authApi.registerUser(data);
-            showMessage({
-                message: `Đăng ký thành công`,
-                type: 'success',
-            });
-            navigate('SignIn');
-        } catch {
-            showMessage({
-                message: `Đăng ký thất bại`,
-                type: 'danger',
-            });
-        } finally {
-            setIsloading(false);
-        }
-    }
+
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isOldPasswordVisible, setOldIsPasswordVisible] = useState(false);
     const [password, setPassword] = useState('')
@@ -120,27 +121,48 @@ const CreateStaff = () => {
                         <View style={{}}>
                             <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign: 'center' }}>* THÔNG TIN ĐĂNG NHẬP *</Text>
                             <View style={styles.container}>
-                                <TextInputComponent
-                                    placeholder="Email ..."
-                                    value={staff.email}
-                                    widthTextInput={"80%"}
-                                    heightTextInput={40}
-                                    onChangeText={text => {
-                                        handlesSetValue('email', text);
-                                    }}
+                               
+                                 <TextInputComponent
+                                placeholder="Họ ..."
+                                value={staff.first_name}
+                                widthTextInput={"80%"}
+                                heightTextInput={40}
+                                onChangeText={text => {
+                                    handlesSetValue('first_name', text);
+                                }}
 
-                                    marginBottom={0}
-                                    styleTextInput={[
-                                        {
-                                            color: 'black',
-                                            maxWidth: '100%',
-                                        },
-                                        textStyle.h[5],
-                                    ]}
-                                    style={styles.textinput}
-                                    placeholderColor="black"
-                                />
-                                <View style={styles.containerTextInput}>
+                                marginBottom={0}
+                                styleTextInput={[
+                                    {
+                                        color: 'black',
+                                        maxWidth: '100%',
+                                    },
+                                    textStyle.h[5],
+                                ]}
+                                style={styles.textinput}
+                                placeholderColor="black"
+                            />
+                             <TextInputComponent
+                                placeholder="Tên ..."
+                                value={staff.last_name}
+                                widthTextInput={"80%"}
+                                heightTextInput={40}
+                                onChangeText={text => {
+                                    handlesSetValue('last_name', text);
+                                }}
+
+                                marginBottom={0}
+                                styleTextInput={[
+                                    {
+                                        color: 'black',
+                                        maxWidth: '100%',
+                                    },
+                                    textStyle.h[5],
+                                ]}
+                                style={styles.textinput}
+                                placeholderColor="black"
+                            />
+                                {/* <View style={styles.containerTextInput}>
                                     {!isOldPasswordVisible ? (
                                         <Entypo
                                             name="eye-with-line"
@@ -207,40 +229,21 @@ const CreateStaff = () => {
                                         style={styles.textinput}
                                         placeholderColor="black"
                                     />
-                                </View>
+                                </View> */}
                             </View>
                         </View>
                     </ProgressStep>
                     <ProgressStep label="Second Step" nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
                         <Text style={{ fontSize: 18, width: "90%", marginLeft: "5%", fontWeight: "bold", textAlign: 'center' }}>* Thông tin cá nhân *</Text>
                         <View style={styles.container}>
-                            <TextInputComponent
-                                placeholder="Họ và tên ..."
-                                value={staff.name}
-                                widthTextInput={"80%"}
-                                heightTextInput={40}
-                                onChangeText={text => {
-                                    handlesSetValue('name', text);
-                                }}
-
-                                marginBottom={0}
-                                styleTextInput={[
-                                    {
-                                        color: 'black',
-                                        maxWidth: '100%',
-                                    },
-                                    textStyle.h[5],
-                                ]}
-                                style={styles.textinput}
-                                placeholderColor="black"
-                            />
+                           
                             <TextInputComponent
                                 placeholder="Số điện thoại ..."
-                                value={staff.phone}
+                                value={staff.phone_number}
                                 widthTextInput={"80%"}
                                 heightTextInput={40}
                                 onChangeText={text => {
-                                    handlesSetValue('phone', text);
+                                    handlesSetValue('phone_number', text);
                                 }}
 
                                 marginBottom={0}
@@ -254,7 +257,27 @@ const CreateStaff = () => {
                                 style={styles.textinput}
                                 placeholderColor="black"
                             />
-                            <TextInputComponent
+                             <TextInputComponent
+                                    placeholder="Email ..."
+                                    value={staff.email}
+                                    widthTextInput={"80%"}
+                                    heightTextInput={40}
+                                    onChangeText={text => {
+                                        handlesSetValue('email', text);
+                                    }}
+
+                                    marginBottom={0}
+                                    styleTextInput={[
+                                        {
+                                            color: 'black',
+                                            maxWidth: '100%',
+                                        },
+                                        textStyle.h[5],
+                                    ]}
+                                    style={styles.textinput}
+                                    placeholderColor="black"
+                                />
+                            {/* <TextInputComponent
                                 placeholder="Số CCCD ..."
                                 value={staff.identityCard}
                                 widthTextInput="80%"
@@ -273,7 +296,7 @@ const CreateStaff = () => {
                                 ]}
                                 style={styles.textinput}
                                 placeholderColor="black"
-                            />
+                            /> */}
                         </View>
                     </ProgressStep>
                     <ProgressStep label="Third Step" onSubmit={handleCreateStaff} nextBtnTextStyle={buttonTextStyle} previousBtnTextStyle={buttonTextStyle}>
@@ -300,7 +323,7 @@ const CreateStaff = () => {
                                 style={styles.textinput}
                                 placeholderColor="black"
                             /> */}
-                            <Text style={{ fontSize: 18, width: "100%", marginTop: 10, marginBottom: 10, fontWeight: "bold", textAlign: 'center' }}>* Mặt trước CCCD *</Text>
+                            <Text style={{ fontSize: 18, width: "100%", marginTop: 10, marginBottom: 10, fontWeight: "bold", textAlign: 'center' }}>* Thêm Avatar *</Text>
                             <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                                 <TouchableOpacity
                                     onPress={async () => {
@@ -319,7 +342,7 @@ const CreateStaff = () => {
                                 visible={visible}
                                 onClose={() => setVisible(false)}></ImagePickerModal>
                         </View>
-                        <View style={styles.imageChose}>
+                        {/* <View style={styles.imageChose}>
                             <Text style={{ fontSize: 18, width: "100%", marginTop: 10, marginBottom: 10, fontWeight: "bold", textAlign: 'center' }}>* Mặt sau CCCD *</Text>
                             <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                                 <TouchableOpacity
@@ -338,7 +361,7 @@ const CreateStaff = () => {
                                 }}
                                 visible={visible}
                                 onClose={() => setVisible(false)}></ImagePickerModal>
-                        </View>
+                        </View> */}
                     </ProgressStep>
                 </ProgressSteps>
             </View>
@@ -447,7 +470,7 @@ const styles = StyleSheet.create({
     },
     avatar: {
         borderRadius: 12,
-        width: '80%',
+        width: '50%',
         justifyContent: 'center',
         marginTop: 12,
         alignItems: 'center',
