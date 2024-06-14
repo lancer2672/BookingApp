@@ -22,10 +22,11 @@ export const ROLE = {
 };
 export const History_Status = {
   CANCELED: -1,
-  NOT_CHECKED_IN: 0,
+  NOT_CHECKED_IN:"CONFIRMED",
   NOT_CHECKED_OUT: 1,
   CHECKED_OUT: 2,
   PENDING: 3,
+  CONFIRMED:  "CONFIRMED",
 };
 export const Room_Status = {
   NOT_BOOKED: 'AVAILABLE',
@@ -39,6 +40,8 @@ export const getStatusText = status => {
       return 'Đã huỷ phòng';
     case History_Status.NOT_CHECKED_IN:
       return 'Chưa nhận phòng';
+    // case History_Status.CONFIRMED:
+    //   return 'Đặt phòng thành công';
     case History_Status.NOT_CHECKED_OUT:
       return 'Chưa trả phòng';
     case History_Status.CHECKED_OUT:

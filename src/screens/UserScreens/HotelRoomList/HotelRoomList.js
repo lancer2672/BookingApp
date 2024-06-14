@@ -25,6 +25,7 @@ import RoomItem from '../components/RoomItem';
 const HotelRoomList = () => {
   const {hotel, roomCustomer, date} = useRoute().params;
   const [selectedRooms, setSelectedRooms] = useState([]);
+  const [loading,setLoading] = useState(false);
   const user = useUserStore(state => state.user);
 
   const renderItem = ({item, index}) => (
@@ -52,19 +53,29 @@ const HotelRoomList = () => {
   };
   const createBooking = async () => {
     try {
-      const formData = new FormData();
-      formData.append('userId', user.id);
-      selectedRooms.forEach((id)=>{
+      setLoading(true);
+      // const formData = new FormData();
+      // formData.append('userId', user.id);
+      // selectedRooms.forEach((id)=>{
         
-        formData.append('roomIds', id) // Convert array to JSON string
-      })
-      formData.append('deposit', 0);
-      formData.append('propertyId', hotel.id);
-      formData.append('image', null); // Assuming no image for deposit
-      formData.append('startDate', date.checkinDate);
-      formData.append('endDate', date.checkoutDate);
+      //   formData.append('roomIds', id) // Convert array to JSON string
+      // })
+      // formData.append('deposit', 0);
+      // formData.append('propertyId', hotel.id);
+      // formData.append('image', null); // Assuming no image for deposit
+      // formData.append('startDate', date.checkinDate);
+      // formData.append('endDate', date.checkoutDate);
+        
+      // await bookingApi.create(formData)
 
-      await bookingApi.create(formData)
+      await bookingApi.createv2({
+        userId:user.id,
+        roomIds: selectedRooms  , 
+        deposit: 0 ,
+        propertyId: hotel.id,
+        startDate:date.checkinDate,
+        endDate:date.checkoutDate,
+      })
       navigate('BookingResult', {
         date,
         roomCustomer,
@@ -83,7 +94,15 @@ const HotelRoomList = () => {
         type: 'success',
       });
     } catch (er) {
+      showMessage({
+        message: `Đặt phòng thất bại`,
+        type: 'danger',
+      });
       console.log('er', er);
+    }
+    finally{
+      setLoading(false);
+
     }
   };
   return (

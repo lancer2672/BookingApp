@@ -14,6 +14,7 @@ import { goBack, navigate } from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
 import { generalColor } from '@src/theme/color';
 import { ThemeContext } from '@src/theme/context';
+import { ROLE } from '@src/utils/constant';
 import { Avatar, Divider } from 'react-native-paper';
 import SettingItem from './components/SettingItem';
 const UserProfile = () => {
@@ -147,11 +148,14 @@ const UserProfile = () => {
           <Divider
             style={{marginTop: 8, backgroundColor: generalColor.primary}}
             bold></Divider>
+            {user.role ==ROLE.USER
+            &&
           <FlatList
             data={settingOptions2}
             renderItem={({item}) => <SettingItem {...item} />}
             keyExtractor={item => item.name}
           />
+            }
         </Body>
         <LogoutButton onPress={handleLogout}>
           <LogoutText>Đăng xuất</LogoutText>

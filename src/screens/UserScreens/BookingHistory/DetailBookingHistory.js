@@ -25,23 +25,25 @@ import {
   View,
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
-import { Divider } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import ListReview from '../ReviewHotel/components/ListReview';
 
 const isReviewed = (userId, bookingHistory) => {};
 const DetailBookingHitory = ({}) => {
   const {historyItem} = useRoute().params;
 
-  const hotel = historyItem.hotel;
-  const room = historyItem.hotel.rooms.find(t => (t.id = historyItem.roomId));
+  const hotel = historyItem.property;
+  const room = historyItem.rooms[0]
   const date = {
-    checkinDate: historyItem.checkInDate,
-    checkoutDate: historyItem.checkOutDate,
+    checkinDate: historyItem.startDate,
+    checkoutDate: historyItem.endDate,
   };
-  const roomCustomer = historyItem.roomCustomer;
+  const roomCustomer = {
+    children: 0,
+    room: 1,
+    mature: 2,
+  }
   const [reviewVisible, setRiewVisible] = useState(false);
   const [visible, setVisible] = useState(false);
   const handleNavigateReviewAll = () => {
@@ -169,9 +171,9 @@ const DetailBookingHitory = ({}) => {
                   marginTop: 8,
                   textAlign: 'left',
                 }}>
-                {formatCurrency(room.pricePerNight)}/ đêm
+                {formatCurrency(room.price)}/ đêm
               </Text>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -201,14 +203,13 @@ const DetailBookingHitory = ({}) => {
                   }}>
                   {Number(room.numOfPeople) + room.numOfChildren} khách
                 </Text>
-              </View>
+              </View> */}
             </View>
             <Image
               style={styles.img}
-              source={{uri: 'https://picsum.photos/200'}}></Image>
+              source={{uri: hotel.images[0]?.url}}></Image>
           </View>
-          <Text style={{fontSize: 14}}>HIỂN THỊ ẢNH Ở ĐÂY</Text>
-          {/* SEPERATOR */}
+       
 
           <View
             style={{
@@ -254,35 +255,21 @@ const DetailBookingHitory = ({}) => {
               </View>
             )}
           </View>
-          <View
-            style={{
-              marginVertical: 8,
-              height: 7,
-              borderRadius: 15,
-              backgroundColor: generalColor.other.lightgray,
-            }}></View>
-          <View style={{marginTop: 12}}>
-            <Text style={styles.policy}>Chính sách</Text>
-            <PolicyItem></PolicyItem>
-          </View>
-          <View
-            style={{
-              marginVertical: 8,
-              height: 7,
-              borderRadius: 15,
-              backgroundColor: generalColor.other.lightgray,
-            }}></View>
-          <FeeItem title="phí A"></FeeItem>
-          <FeeItem title="phí B"></FeeItem>
-          <FeeItem title="phí C"></FeeItem>
 
-          <Divider style={{marginTop: 8}} bold></Divider>
-          <FeeItem title={'Tổng cộng'}></FeeItem>
-          <Divider style={{marginVertical: 8}} bold></Divider>
+          <View
+            style={{
+              marginVertical: 8,
+              height: 7,
+              borderRadius: 15,
+              backgroundColor: generalColor.other.lightgray,
+            }}></View>
+        
+      
+      
           <View style={center}>
             {(historyItem.status === History_Status.NOT_CHECKED_IN ||
               historyItem.status === History_Status.NOT_CHECKED_OUT) && (
-              <QRCode value="http://awesome.link.qr" />
+              <QRCode value={historyItem.id.toString()} />
             )}
             <Text style={{marginTop: 4}}>{getQRTEXT(historyItem.status)}</Text>
           </View>

@@ -15,6 +15,9 @@ import { showMessage } from 'react-native-flash-message';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { accountSchema } from './component/validateSchema';
+const STAFF_EMAIL = "nguyenkhang@gmail.com"
+const STAFF_PASSWORD = "JBdragonfire1135@"
+const staffInfo = {"email": "nguyenkhang@gmail.com",hotelId:16, "firstName": "Khang", "id": 14, "lastName": "Nguyễn", "phoneNumber": "0546128457", "role": "STAFF", "status": "ACTIVE"}
 const SignIn = () => {
   const [value, setValue] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -25,11 +28,19 @@ const SignIn = () => {
   const setUser = useUserStore(state => state.setUser);
   const [isLoading, setIsloading] = useState(false);
 
+  const handleStaffLogin= (values) =>{
+    if(values.password == STAFF_PASSWORD){
+        setUser(staffInfo);
+    }
+  }
   const handleFormSubmit = async (values) => {
     console.log('DATA', values);
     const controller = new AbortController();
     const signal = controller.signal;
-
+    if(values.email == STAFF_EMAIL){
+      handleStaffLogin(values)
+      return 
+    }
     try {
       setIsloading(true);
 

@@ -33,7 +33,7 @@ const bookingApi = {
       }
     },
     create: async data => {
-      console.log("data",data);
+      console.log("API CALLED",data);
       try {
         const response = await axios.post(
           `${URL_API_SUB}${bookingRoute}`,
@@ -45,6 +45,21 @@ const bookingApi = {
           },
         );
 
+        return response.data;
+      } catch (error) {
+        console.log('booking error', JSON.stringify(error));
+
+        throw error;
+      }
+    },
+    createv2: async data => {
+      console.log("API CALLED",data);
+      try {
+        const response = await axios.post(
+          `${URL_API_SUB}/api/booking/v2`,
+          data,
+        );
+          console.log("response",response);
         return response.data;
       } catch (error) {
         console.log('booking error', JSON.stringify(error));
