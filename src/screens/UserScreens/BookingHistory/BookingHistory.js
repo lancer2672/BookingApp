@@ -16,6 +16,7 @@ const BookingHistory = () => {
   useEffect(()=>{
     bookingApi.getListByUser(user.id).then(data=>{
       console.log("booking respose",data);
+      setBookingHistory(data);
     }).catch(er=>{
       console.log('err',er.response);
     })

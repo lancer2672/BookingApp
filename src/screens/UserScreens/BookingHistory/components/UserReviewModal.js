@@ -1,10 +1,10 @@
 import ButtonComponent from '@src/components/Button';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {generalColor} from '@src/theme/color';
-import {row, rowCenter} from '@src/theme/style';
+import { generalColor } from '@src/theme/color';
+import { row, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {REVIEW_TEXT} from '@src/utils/constant';
-import {useEffect, useState} from 'react';
+import { REVIEW_TEXT } from '@src/utils/constant';
+import { useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -17,9 +17,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {showMessage} from 'react-native-flash-message';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {Avatar} from 'react-native-paper';
+import { showMessage } from 'react-native-flash-message';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { Avatar } from 'react-native-paper';
 import StarRating from 'react-native-star-rating';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -86,12 +86,12 @@ const UserReviewModal = ({bookingHistory, isVisible, onClose}) => {
             </View>
             <View style={styles.row}>
               <Text style={[textStyle.h[2], {color: generalColor.primary}]}>
-                {bookingHistory.hotel.name}
+                {bookingHistory.property.name}
               </Text>
             </View>
             <View style={styles.row}>
               <Text style={[textStyle.content.medium, {textAlign: 'center'}]}>
-                {bookingHistory.hotel.address}
+                {bookingHistory.property.address}
               </Text>
             </View>
             <View style={styles.row}>

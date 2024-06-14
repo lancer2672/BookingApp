@@ -1,4 +1,4 @@
-import {History_Status, Room_Status} from '@src/utils/constant';
+import { History_Status, Room_Status } from '@src/utils/constant';
 
 // Mock data for Agent
 export const agentMock = {
@@ -47,11 +47,11 @@ export const hotelsMock = [
   {
     id: 4,
     agentId: agentMock.id,
-    name: 'Hotel 4',
-    address: '1600 Amphitheatre Parkway, Mountain View, CA ',
+    name: 'The Grace Dalat',
+    address: '51 Nam Kỳ Khởi Nghĩa, Phường 1, Đà Lạt, Tỉnh Lâm Đồng, Việt Nam',
     description:
-      'This is a description of Hotel 4. This is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of HoteThis is a description of Hote',
-    policy: 'This is a policy of Hotel 4',
+      'The Grace Dalat là lựa chọn sáng suốt dành cho những du khách ghé thăm',
+    policy: 'This is a policy of The Grace Dalat',
     province: 'Province 4',
     district: 'District 4',
     ward: 'Ward 4',
@@ -83,7 +83,7 @@ export const hotelsMock = [
     argent: {
       email: 'xuanvuong@gmail.com',
       firstName: 'Vuong',
-      id: 5,
+      id: 6,
       lastName: 'Truong',
       phoneNumber: '0393320811',
       role: 'ARGENT',
@@ -95,7 +95,7 @@ export const hotelsMock = [
         id: 7,
         name: 'Phòng đơn',
         hotelId: 4,
-        pricePerNight: 120,
+        pricePerNight: 120000,
         numOfPeople: 2,
         numOfChildren: 0,
         bed: 1,
@@ -136,7 +136,7 @@ export const hotelsMock = [
           {id: 14, name: 'Không gian riêng để làm việc'},
         ],
         hotelId: 4,
-        pricePerNight: 220,
+        pricePerNight: 220000,
         numOfPeople: 4,
         numOfChildren: 2,
         bed: 2,
@@ -276,7 +276,7 @@ export const reviewBookingMock = [
     checkInDate: '2024-05-10',
     roomId: 7,
     react: [201, 202, 203],
-    hotelId: 4,
+    hotelId: 16,
     parentId: null,
     description: 'Great experience, friendly staff and clean rooms.',
     images: ['https://picsum.photos/200', 'https://picsum.photos/200'],

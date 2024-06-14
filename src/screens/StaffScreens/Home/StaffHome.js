@@ -1,7 +1,7 @@
-import {generalColor} from '@src/theme/color';
-import {row, rowCenter} from '@src/theme/style';
+import { generalColor } from '@src/theme/color';
+import { row, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatCurrency} from '@src/utils/textFormat';
+import { formatCurrency } from '@src/utils/textFormat';
 import {
   Image,
   ImageBackground,
@@ -11,10 +11,10 @@ import {
   View,
 } from 'react-native';
 
-import {navigate} from '@src/navigation/NavigationController';
-import {ScrollView} from 'react-native';
+import { navigate } from '@src/navigation/NavigationController';
+import { ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {IconButton} from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const getColorByRoomStatus = s => {
@@ -23,7 +23,7 @@ export const getColorByRoomStatus = s => {
 };
 const StaffHome = () => {
   const staff = staffMockData;
-  const rooms = hotelsMock.find(t => t.id == staff.hotelId)?.rooms;
+  const rooms = hotelsMock.find(t => t.id == 4)?.rooms;
 
   const renderItem = ({item, index}) => (
     <Pressable
@@ -206,5 +206,6 @@ const styles = StyleSheet.create({
   },
 });
 
-import {hotelsMock, staffMockData} from '@src/mock/mock';
-import {Room_Status, SCREEN_HEIGHT} from '@src/utils/constant';
+import { hotelsMock, staffMockData } from '@src/mock/mock';
+import { Room_Status, SCREEN_HEIGHT } from '@src/utils/constant';
+

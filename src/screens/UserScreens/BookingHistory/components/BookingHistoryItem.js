@@ -1,15 +1,15 @@
-import {PinSVG} from '@src/assets/icons';
-import {navigate} from '@src/navigation/NavigationController';
-import {generalColor} from '@src/theme/color';
-import {rowCenter, shadowBox} from '@src/theme/style';
+import { PinSVG } from '@src/assets/icons';
+import { navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
+import { rowCenter, shadowBox } from '@src/theme/style';
 import textStyle from '@src/theme/text';
 import {
   History_Status,
   getStatusColor,
   getStatusText,
 } from '@src/utils/constant';
-import {formatCurrency, formatDate} from '@src/utils/textFormat';
-import {useState} from 'react';
+import { formatCurrency, formatDate } from '@src/utils/textFormat';
+import { useState } from 'react';
 import {
   Image,
   Pressable,
@@ -63,7 +63,7 @@ const BookingHistoryItem = ({item}) => {
                 color: generalColor.primary,
                 fontWeight: '500',
               }}>
-              {formatDate(item.checkInDate, 'dd-MM-yyyy')}
+              {formatDate(item.startDate, 'dd-MM-yyyy')}
             </Text>
           </View>
 
@@ -101,7 +101,7 @@ const BookingHistoryItem = ({item}) => {
         <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
           <View style={{alignItems: 'center'}}>
             <Image
-              source={{uri: item.hotel.avatar}}
+              source={{uri: item.property?.images.length > 0? item.property?.images[0].url: "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg"}}
               style={[shadowBox, styles.img]}></Image>
             <Text
               style={{
@@ -111,8 +111,9 @@ const BookingHistoryItem = ({item}) => {
 
                 color: generalColor.primary,
               }}>
+           
               {formatCurrency(
-                item.hotel.rooms.find(t => t.id === item.roomId).pricePerNight,
+                item.totalPrice
               )}
             </Text>
           </View>
@@ -126,17 +127,17 @@ const BookingHistoryItem = ({item}) => {
 
                   color: generalColor.primary,
                 }}>
-                {item.hotel.name}
+                {item.property.name}
               </Text>
             </View>
 
             <View style={rowCenter}>
               <PinSVG height={18} color={generalColor.primary}></PinSVG>
               <Text numberOfLines={2} style={{...textStyle.content.small}}>
-                {item.hotel.address}
+                {item.property.address}
               </Text>
             </View>
-
+                
             {item.status == History_Status.CHECKED_OUT && (
               <Pressable onPress={reviewClick}>
                 <Text

@@ -87,7 +87,7 @@ const Home = () => {
 
   useEffect(() => {
     if (currentPosition && hotels.length > 0) {
-      const nearbyHotels = getNearbyHotels(currentPosition, hotels, 7);
+      const nearbyHotels = getNearbyHotels(currentPosition, hotels.filter(t=>t.status != "DELETED"), 7);
       console.log('nearby hotels', nearbyHotels[0]);
       //TODO: clean
       setNearbyHotels(

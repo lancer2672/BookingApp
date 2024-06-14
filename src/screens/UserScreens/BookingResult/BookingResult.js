@@ -1,13 +1,13 @@
-import {useRoute} from '@react-navigation/native';
-import {PinSVG} from '@src/assets/icons';
+import { useRoute } from '@react-navigation/native';
+import { PinSVG } from '@src/assets/icons';
 import ButtonComponent from '@src/components/Button';
-import {goBack, navigate} from '@src/navigation/NavigationController';
+import { goBack, navigate } from '@src/navigation/NavigationController';
 import useUserStore from '@src/store/user';
-import {generalColor} from '@src/theme/color';
-import {row, rowCenter} from '@src/theme/style';
+import { generalColor } from '@src/theme/color';
+import { row, rowCenter } from '@src/theme/style';
 import textStyle from '@src/theme/text';
-import {formatCurrency, formatDate} from '@src/utils/textFormat';
-import {useEffect, useState} from 'react';
+import { formatCurrency, formatDate } from '@src/utils/textFormat';
+import { useEffect, useState } from 'react';
 import {
   Image,
   Pressable,
@@ -16,7 +16,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Divider} from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -81,7 +81,7 @@ const BookingResult = () => {
             flex: 1,
           }}>
           <Divider style={{marginVertical: 12}} bold></Divider>
-          <View style={rowCenter}>
+          <View style={[rowCenter,{paddingRight:8}]}>
             <Image
               source={{uri: hotel.avatar}}
               style={{
@@ -99,8 +99,8 @@ const BookingResult = () => {
                 paddingRight: 4,
                 alignItems: 'flex-end',
               }}>
-              <View>
-                <Text style={styles.txt}>{hotel.name}</Text>
+              <View style={{marginRight:8, flex:1,marginRight:20,paddingRight:20}}>
+                <Text numberOfLines={2} style={[styles.txt]}>{hotel.name}</Text>
                 <View style={rowCenter}>
                   <Text style={styles.rating}>{hotel.rating}</Text>
                   <Text> (120 lượt đánh giá)</Text>
@@ -240,10 +240,12 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     borderColor: '#DDDDDD',
     paddingBottom: 2,
+    marginRight:12,
     justifyContent: 'space-between',
   },
   txt: {
-    ...textStyle.content.large,
+    ...textStyle.content.large
+,
     color: generalColor.primary,
   },
   infoText: {

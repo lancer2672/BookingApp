@@ -1,26 +1,27 @@
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import {ScrollView, Text, View} from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 
-import {Avatar} from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
 
-import {useState} from 'react';
+import { useState } from 'react';
 
-import {generalColor} from '@src/theme/color';
+import useUserStore from '@src/store/user';
+import { generalColor } from '@src/theme/color';
 import CustomEditText from './components/EditText';
 
 const dayjs = require('dayjs');
 
 const EditProfileUser = ({navigation}) => {
-  const user = {
-    name: 'keke',
-    email: 'keke@gmail.com',
-    dateOfBirth: new Date(),
-    phoneNumber: '012812384',
-  };
-  const [nickname, setNickname] = useState(user.name);
+  // const user = {
+  //   name: 'username',
+  //   email: 'email@gmail.com',
+  //   phoneNumber: '012812384',
+  // };
+  const user = useUserStore(s => s.user);
+  const [nickname, setNickname] = useState(user.lastName + " "+user.firstName);
   const [dateOfBirth, setDateOfBirth] = useState(new Date(user.dateOfBirth));
   const [email, setEmail] = useState(user.email);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
@@ -79,13 +80,13 @@ const EditProfileUser = ({navigation}) => {
         <CustomEditText
           label={'Tên'}
           style={{width: '100%'}}
-          value={nickname}
+          value={user.firstName}
           onChangeText={newText => setNickname(newText)}></CustomEditText>
         <View style={{flexDirection: 'row'}}></View>
         <CustomEditText
           label={'Họ'}
           style={{width: '100%'}}
-          value={nickname}
+          value={user.lastName}
           onChangeText={newText => setNickname(newText)}></CustomEditText>
         <CustomEditText
           label={'Email'}
