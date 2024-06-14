@@ -1,9 +1,10 @@
 import ButtonComponent from '@src/components/Button';
 import ImagePickerModal from '@src/components/ImagePickerModal/ImagePickerModal';
 import TextInputComponent from '@src/components/TextInputComponent';
-import {generalColor} from '@src/theme/color';
+import { navigate } from '@src/navigation/NavigationController';
+import { generalColor } from '@src/theme/color';
 import textStyle from '@src/theme/text';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
   Image,
   Modal,
@@ -13,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ProgressStep, ProgressSteps} from 'react-native-progress-steps';
+import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgentHeader from '../Header';
@@ -185,6 +186,9 @@ const CreateHotel = () => {
               </View>
               <View style={{marginTop: 12}}>
                 <ButtonComponent
+                onPress={()=>{
+                  navigate("AgentGGMap")
+                }}
                   // style={styles.buttonLocation}
                   text="MAP"></ButtonComponent>
               </View>
@@ -542,7 +546,7 @@ const CreateHotel = () => {
               placeholder="........"
               value={hotel.policy}
               widthTextInput={'80%'}
-              heightTextInput={30}
+              heightTextInput={50}
               onChangeText={text => {
                 handlesSetValue('policy', text);
               }}

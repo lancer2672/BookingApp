@@ -83,6 +83,8 @@ const Home = () => {
       {enableHighAccuracy: false, timeout: 20000},
     );
   }, []);
+  console.log('nearby hotelslist', nearbyHotels);
+
   useEffect(() => {
     if (currentPosition && hotels.length > 0) {
       const nearbyHotels = getNearbyHotels(currentPosition, hotels, 7);
@@ -105,7 +107,7 @@ const Home = () => {
           }),
       );
     }
-  }, [currentPosition, hotels]);
+  }, [currentPosition, hotels.length]);
   console.log('hotels', hotels.length);
   const renderItem = ({item, index}) => {
     console.log('item.rooms', item.rooms);

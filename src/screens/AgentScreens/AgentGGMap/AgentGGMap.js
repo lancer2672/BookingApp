@@ -1,11 +1,12 @@
 import Geolocation from '@react-native-community/geolocation';
 import ButtonComponent from '@src/components/Button';
-import {hotelsMock} from '@src/mock/mock';
-import {useEffect, useRef, useState} from 'react';
-import {View} from 'react-native';
-import {API_KEY} from 'react-native-dotenv';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import { hotelsMock } from '@src/mock/mock';
+import { goBack } from '@src/navigation/NavigationController';
+import { useEffect, useRef, useState } from 'react';
+import { View } from 'react-native';
+import { API_KEY } from 'react-native-dotenv';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 Geolocation.setRNConfiguration({
   skipPermissionRequests: false,
 });
@@ -100,6 +101,7 @@ const AgentGGMap = ({hotels = hotelsMock}) => {
       <ButtonComponent
         onPress={() => {
           console.log('press');
+          goBack()
         }}
         style={{position: 'absolute', bottom: 24, left: 24, right: 24}}
         text="Chọn"

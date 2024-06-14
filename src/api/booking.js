@@ -32,9 +32,19 @@ const bookingApi = {
         throw error;
       }
     },
-    create: async body => {
+    create: async data => {
+      console.log("data",data);
       try {
-        const response = await axios.post(`${URL_API_SUB}${bookingRoute}`,body);
+        const response = await axios.post(
+          `${URL_API_SUB}${bookingRoute}`,
+          data,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          },
+        );
+
         return response.data;
       } catch (error) {
         console.log('booking error', JSON.stringify(error));

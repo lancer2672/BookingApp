@@ -71,15 +71,19 @@ const Payment = () => {
   });
   const createBooking = async () => {
     try {
-      await bookingApi.create({
-        userId: user.id,
-        roomIds,
-        deposit: hotel.deposit_percent == 0 ? 0 :(amount * hotel.deposit_percent) / 100,
-        propertyId: hotel.id,
-        depositImage: uploadImage,
-        startDate: date.checkinDate,
-        endDate: date.checkoutDate,
+      const formData = new FormData();
+      formData.append('userId', user.id);
+      roomIds.forEach((id)=>{
+        
+        formData.append('roomIds', id) // Convert array to JSON string
       })
+      formData.append('deposit', hotel.deposit_percent == 0 ? 0 :(amount * hotel.deposit_percent) / 100,);
+      formData.append('propertyId', hotel.id);
+      formData.append('image', uploadImage); // Assuming no image for deposit
+      formData.append('startDate', date.checkinDate);
+      formData.append('endDate', date.checkoutDate);
+
+      await bookingApi.create(formData)
       await addItem(getNotiKey(Date.now()), {
         title: 'Đặt phòng',
         description: 'Bạn đã đặt phòng thành công',

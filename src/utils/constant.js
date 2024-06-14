@@ -2,7 +2,7 @@ import { generalColor } from '@src/theme/color';
 import { Dimensions } from 'react-native';
 
 export const URL_API = 'localhost:8080';
-// export const URL_API_SUB = '172.29.128.1:8082';
+// export const URL_API_SUB = '192.168.136.104:8082';
 export const URL_API_SUB = 'https://bookingappsubserver.onrender.com';
 export const REVIEW_TEXT = [
   '',

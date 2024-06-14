@@ -52,15 +52,19 @@ const HotelRoomList = () => {
   };
   const createBooking = async () => {
     try {
-      await bookingApi.create({
-        userId: user.id,
-        roomIds: selectedRooms,
-        deposit: 0,
-        propertyId: hotel.id,
-        depositImage: null,
-        startDate: date.checkinDate,
-        endDate: date.checkoutDate,
+      const formData = new FormData();
+      formData.append('userId', user.id);
+      selectedRooms.forEach((id)=>{
+        
+        formData.append('roomIds', id) // Convert array to JSON string
       })
+      formData.append('deposit', 0);
+      formData.append('propertyId', hotel.id);
+      formData.append('image', null); // Assuming no image for deposit
+      formData.append('startDate', date.checkinDate);
+      formData.append('endDate', date.checkoutDate);
+
+      await bookingApi.create(formData)
       navigate('BookingResult', {
         date,
         roomCustomer,
